@@ -13,7 +13,8 @@ class Entity:
 
   def add_component(self, component):
     #TODO: warn if component type already exists on this entity?
-    component.init(self)
+    component.register(self)
+    component.init()
     self.components[component.__class__.__name__] = component
 
   def get_component(self, type):

@@ -1,11 +1,12 @@
 from ecs import Component
-from components import Physics, Sprite
+from components import Physics, Sprite, Stats
 
 class Actor(Component):
   def __init__(self):
     super().__init__()
     self.require(Physics)
     self.require(Sprite)
+    self.require(Stats)
     self.action = None
     self.next_action = None
 
@@ -26,6 +27,6 @@ class Actor(Component):
       self.action.update()
 
       #start new action if old action is finished
-      if not self.action.active:
+      if not self.action.active and self.next_action is not None:
         self.start_action(self.next_action)
         self.next_action = None

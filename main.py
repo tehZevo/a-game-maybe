@@ -1,7 +1,7 @@
 import pygame, sys
 
 from ecs import Entity, World
-from components import Player, Sprite
+from components import Player, Sprite, Enemy
 
 pygame.init()
 screen = pygame.display.set_mode((640, 480))
@@ -12,8 +12,11 @@ world = World()
 player = Entity()
 player.add_component(Player())
 print(player.components)
-
 world.add_entity(player)
+
+enemy = Entity()
+enemy.add_component(Enemy())
+world.add_entity(enemy)
 
 pygame.display.set_caption("Hello World")
 while True:
@@ -29,9 +32,10 @@ while True:
 
   screen.fill((0, 0, 0))
 
-  sprite = player.get_component(Sprite)
-  if sprite is not None:
-    sprite.draw(screen)
+  for e in world.entities:
+    sprite = e.get_component(Sprite)
+    if sprite is not None:
+      sprite.draw(screen)
 
   clock.tick(60) #limit fps TODO: remove
 

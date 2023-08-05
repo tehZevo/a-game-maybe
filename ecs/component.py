@@ -1,4 +1,5 @@
 
+#TODO: find some way to store world on component so we dont have to entity.world every time
 #TODO: make ABC
 class Component:
   def __init__(self):
@@ -12,11 +13,14 @@ class Component:
   def get_component(self, type):
     return self.entity.get_component(type)
 
-  def init(self, entity):
+  def register(self, entity):
     self.entity = entity
     for rc in self.required_components:
       if entity.get_component(rc) is None:
         entity.add_component(rc())
+
+  def init(self):
+    pass
 
   def update(self):
     pass
