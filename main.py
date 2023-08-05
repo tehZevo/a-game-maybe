@@ -1,6 +1,8 @@
 import pygame, sys
 
 from entity import Entity
+#TODO: reorg to from components import Sprite
+from components.sprite import Sprite
 
 pygame.init()
 screen = pygame.display.set_mode((640, 480))
@@ -8,9 +10,7 @@ screen = pygame.display.set_mode((640, 480))
 clock = pygame.time.Clock()
 
 player = Entity()
-
-x = 0
-y = 0
+player.add_component(Sprite())
 
 pygame.display.set_caption("Hello World")
 while True:
@@ -32,7 +32,9 @@ while True:
 
   screen.fill((0, 0, 0))
 
-  player.draw(screen)
+  sprite = player.get_component(Sprite)
+  if sprite is not None:
+    sprite.draw(screen)
 
   clock.tick(60) #limit fps TODO: remove
 

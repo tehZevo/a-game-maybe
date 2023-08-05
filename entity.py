@@ -1,17 +1,16 @@
-import pygame
 
-ENTITY_SIZE = 32
-
-class Entity(pygame.sprite.Sprite):
+class Entity:
   def __init__(self):
-    super().__init__()
-    self.surf = pygame.Surface((ENTITY_SIZE, ENTITY_SIZE))
-    self.surf.fill((255, 255, 255))
-    self.rect = self.surf.get_rect()
+    self.components = {}
 
-  def move(self, dx, dy):
-    x, y = self.rect.center
-    self.rect.center = [x + dx, y + dy]
+  def add_component(self, component):
+    #TODO: warn if component type already exists on this entity?
+    component.init(self)
+    self.components[component.__class__.__name__] = component
 
-  def draw(self, screen):
-    screen.blit(self.surf, self.rect.center)
+  def get_component(self, type):
+    return None if type.__name__ not in self.components else self.components[type.__name__]
+
+  def update(self):
+    for c in self.components.values():
+      c.update(self)
