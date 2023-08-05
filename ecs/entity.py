@@ -1,7 +1,15 @@
 
 class Entity:
   def __init__(self):
+    self.world = None
     self.components = {}
+
+  def init(self, world):
+    self.world = world
+
+  #shorthand
+  def remove(self):
+    self.world.remove_entity(self)
 
   def add_component(self, component):
     #TODO: warn if component type already exists on this entity?
@@ -13,4 +21,4 @@ class Entity:
 
   def update(self):
     for c in self.components.values():
-      c.update(self)
+      c.update()

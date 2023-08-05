@@ -1,12 +1,12 @@
 import pygame
 
 from ecs import Component
-from components import Position, Sprite
+from components import Position, Physics, Sprite
 
 class Player(Component):
   def __init__(self):
     super().__init__()
-    self.require(Position)
+    self.require(Physics)
     self.require(Sprite)
 
   def handle_keys(self, keys):
