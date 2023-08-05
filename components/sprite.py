@@ -13,13 +13,15 @@ class _Sprite(pygame.sprite.Sprite):
     #TODO: rect should be part of position? or make Rect a component that requires Position
     self.rect = self.surf.get_rect()
 
-  #TODO: make set_pos function (or wait till we have position component)
-  def move(self, dx, dy):
-    x, y = self.rect.center
-    self.rect.center = [x + dx, y + dy]
-
-  def draw(self, screen):
-    screen.blit(self.surf, self.rect.center)
+  # #TODO: make set_pos function (or wait till we have position component)
+  # #TODO: remove
+  # def move(self, dx, dy):
+  #   x, y = self.rect.center
+  #   self.rect.center = [x + dx, y + dy]
+  #
+  # #TODO: remove
+  # def draw(self, screen):
+  #   screen.blit(self.surf, self.rect.center)
 
 class Sprite(Component):
   def __init__(self):
@@ -28,4 +30,7 @@ class Sprite(Component):
     self.sprite = _Sprite()
 
   def draw(self, screen):
-    self.sprite.draw(screen)
+    #TODO: update rect position elsewhere..
+    pos = self.entity.get_component(Position)
+    self.sprite.rect.center = pos.get_pos()
+    screen.blit(self.sprite.surf, self.sprite.rect.center)

@@ -2,6 +2,7 @@ import pygame, sys
 
 from entity import Entity
 #TODO: reorg to from components import Sprite
+from components.player import Player
 from components.sprite import Sprite
 
 pygame.init()
@@ -10,7 +11,7 @@ screen = pygame.display.set_mode((640, 480))
 clock = pygame.time.Clock()
 
 player = Entity()
-player.add_component(Sprite())
+player.add_component(Player())
 print(player.components)
 
 pygame.display.set_caption("Hello World")
@@ -22,14 +23,7 @@ while True:
 
   keys = pygame.key.get_pressed()
 
-  if keys[pygame.K_LEFT]:
-    player.move(-1, 0)
-  if keys[pygame.K_RIGHT]:
-    player.move(1, 0)
-  if keys[pygame.K_UP]:
-    player.move(0, -1)
-  if keys[pygame.K_DOWN]:
-    player.move(0, 1)
+  player.get_component(Player).handle_keys(keys)
 
   screen.fill((0, 0, 0))
 
