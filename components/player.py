@@ -1,8 +1,6 @@
 import pygame
 
-from .component import Component
-from .position import Position
-from .sprite import Sprite
+from components import Component, Position, Sprite
 
 class Player(Component):
   def __init__(self):

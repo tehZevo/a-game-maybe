@@ -1,4 +1,4 @@
-from .component import Component
+from components import Component
 
 class Position(Component):
   def __init__(self, x=0, y=0):

@@ -1,9 +1,7 @@
 import pygame, sys
 
 from entity import Entity
-#TODO: reorg to from components import Sprite
-from components.player import Player
-from components.sprite import Sprite
+from components import Player, Sprite
 
 pygame.init()
 screen = pygame.display.set_mode((640, 480))
