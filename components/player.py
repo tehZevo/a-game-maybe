@@ -12,7 +12,7 @@ class Player(Component):
 
   def init(self):
     #TODO: hack for making enemy slower than player
-    self.get_component(Stats).move_speed = 1
+    self.get_component(Stats).move_speed = 100
 
   def handle_keys(self, keys):
     #create move dir from key status

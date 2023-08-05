@@ -1,6 +1,6 @@
 import pygame
 
-from constants import PPU
+from utils.constants import PPU
 from ecs import Component
 from components import Position
 
@@ -21,5 +21,5 @@ class Sprite(Component):
   def draw(self, screen):
     #TODO: update rect position elsewhere..
     pos = self.entity.get_component(Position)
-    self.sprite.rect.center = pos.get_pos()
+    self.sprite.rect.center = [e * PPU for e in pos.get_pos()]
     screen.blit(self.sprite.surf, self.sprite.rect.center)

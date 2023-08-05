@@ -1,6 +1,7 @@
 from ecs import Component
 from components import Position
 from utils import Vector
+from utils.constants import DT
 
 DEFAULT_MASS = 1
 DEFAULT_FRICTION = 0.5
@@ -25,8 +26,8 @@ class Physics(Component):
     p = Vector(x, y)
 
     #integrate
-    self.vel = self.vel + self.force / self.mass
-    p = p + self.vel
+    self.vel = self.vel + self.force / self.mass * DT
+    p = p + self.vel * DT
     pos.set_pos(p.x, p.y)
 
     #reset force

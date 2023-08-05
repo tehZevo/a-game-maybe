@@ -5,3 +5,5 @@ class Stats(Component):
     super().__init__()
     #TODO: calculate
     self.move_speed = 1
+    self.hp = 100
+    self.mp = 100

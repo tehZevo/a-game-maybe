@@ -1,7 +1,8 @@
 import pygame, sys
 
 from ecs import Entity, World
-from components import Player, Sprite, Enemy
+from components import Player, Sprite, Enemy, Position
+from utils.constants import FPS
 
 pygame.init()
 screen = pygame.display.set_mode((640, 480))
@@ -15,6 +16,7 @@ print(player.components)
 world.add_entity(player)
 
 enemy = Entity()
+enemy.add_component(Position(10, 10))
 enemy.add_component(Enemy())
 world.add_entity(enemy)
 
@@ -37,6 +39,6 @@ while True:
     if sprite is not None:
       sprite.draw(screen)
 
-  clock.tick(60) #limit fps TODO: remove
+  clock.tick(FPS) #limit fps TODO: remove and decouple
 
   pygame.display.flip()
