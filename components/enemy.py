@@ -1,7 +1,7 @@
 import random
 
 from ecs import Component
-from components import Actor, Stats, Position, Sprite, Item
+from components import Actor, Stats, Position, Sprite, Item, ItemDropper
 from actions import Move
 from utils import Vector
 
@@ -20,13 +20,12 @@ class Enemy(Component):
     self.get_component(Sprite).set_sprite("assets/enemy.png")
 
   def on_destroy(self):
-    #drop item (this routine might need to be shared, idk)
+    #drop item
+    dropper = self.get_component(ItemDropper)
+    pos = self.get_component(Position).pos
     if random.random() < self.drop_rate:
       item = random.choice(self.drops)
-      self.entity.world.create_entity([
-        Position(self.get_component(Position).pos),
-        item()
-      ])
+      dropper.drop(item, pos)
 
   def update(self):
     #TODO: meh, dodging circular import

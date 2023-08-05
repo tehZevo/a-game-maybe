@@ -1,3 +1,5 @@
+import random
+
 from ecs import Component, Entity
 from components import Position
 from utils import Vector
@@ -19,8 +21,8 @@ class Spawner(Component):
     entity = Entity()
     entity.add_component(self.component_type())
     #assume entity has position
-    #set entity's position
-    spawn_pos = self.get_component(Position).pos + Vector.random() * self.radius
+    #set entity's position radomly in a disc around spawner
+    spawn_pos = self.get_component(Position).pos + Vector.random() * random.random() * self.radius
     entity.get_component(Position).pos = spawn_pos
     self.entity.world.add_entity(entity)
     self.spawned.append(entity)

@@ -5,6 +5,8 @@ from components import Player, Sprite, Enemy, Position, Spawner
 from utils.constants import FPS
 from utils import Vector
 
+#TODO: maybe distinction between world sprite and ui sprite
+
 #TODO: fix circular import issues
 
 #TODO: can i make skill effects components? or should they stay as some kind of game data?

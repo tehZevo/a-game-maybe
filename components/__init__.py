@@ -3,6 +3,8 @@ from .physics import Physics
 from .sprite import Sprite
 from .stats import Stats
 from .item import Item
+from .dropped_item import DroppedItem
+from .item_dropper import ItemDropper
 from .skill import Skill
 from .actor import Actor
 from .enemy import Enemy
