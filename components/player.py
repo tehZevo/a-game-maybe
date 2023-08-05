@@ -1,6 +1,7 @@
 import pygame
 
-from components import Component, Position, Sprite
+from ecs import Component
+from components import Position, Sprite
 
 class Player(Component):
   def __init__(self):

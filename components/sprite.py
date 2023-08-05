@@ -1,7 +1,8 @@
 import pygame
 
 from constants import PPU
-from components import Component, Position
+from ecs import Component
+from components import Position
 
 class _Sprite(pygame.sprite.Sprite):
   def __init__(self):

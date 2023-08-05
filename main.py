@@ -1,6 +1,6 @@
 import pygame, sys
 
-from entity import Entity
+from ecs import Entity
 from components import Player, Sprite
 
 pygame.init()
