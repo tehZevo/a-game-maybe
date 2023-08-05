@@ -22,8 +22,12 @@ class Entity:
     component.register(self)
     self.components[component.__class__.__name__] = component
 
+  #will return subtypes of the given component type
   def get_component(self, type):
-    return None if type.__name__ not in self.components else self.components[type.__name__]
+    #TODO: what if we have two subclasses of the same component on the entity?
+    for component in self.components.values():
+      if issubclass(component.__class__, type):
+        return component
 
   def update(self):
     for c in self.components.values():

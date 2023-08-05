@@ -14,7 +14,6 @@ class Target(SkillEffect):
 
   def start(self):
     #find all actors in range
-    print(self.entity.world)
     actors = self.entity.world.find(Actor)
     #filter actors based on filter condition(s)
     for filter in self.filters:
