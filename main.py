@@ -5,6 +5,32 @@ from components import Player, Sprite, Enemy, Position, Spawner
 from utils.constants import FPS
 from utils import Vector
 
+#TODO: fix circular import issues
+
+#TODO: each skill effect should have a target and children
+#TODO: need a way to create child skill effects so that each skill entity has its own skill effect copy
+# copy method?
+# copy.copy()?
+# store kwargs alongside children? (messy)
+
+#TODO: can i make skill effects components? or should they stay as some kind of game data?
+
+#TODO: chain targets, either:
+# create chain target types (given a target, find more nearby targets)
+# or make all target types take a target implicitly (use skill position if no target)
+# ACTUALLY: better yet, child skill effects should be initialized at their target's location so chaining is natural?
+# do we need a way to omit the original target or? probably not..
+
+#TODO: skill idea: "ally bomb" (or something like that): damage enemies nearby allies (target allies, then target enemies)
+
+#TODO: make targets have a filter type: "enemies" or "allies" or "self"? idk
+
+#TODO: distance based delay effect (delay in seconds per unit)
+#TODO: ranged attacks will feel nicer with a bit of delay (think magic claw from maple story)
+
+#TODO: camera
+#TODO: concept of "teams" so player skill effects automatically target enemies (and vice versa)
+
 pygame.init()
 screen = pygame.display.set_mode((640, 480))
 clock = pygame.time.Clock()

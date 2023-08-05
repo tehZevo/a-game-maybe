@@ -1,5 +1,5 @@
 from ecs import Component
-from components import Actor, Player, Stats, Position
+from components import Actor, Stats, Position
 from actions import Move
 from utils import Vector
 
@@ -10,11 +10,14 @@ class Enemy(Component):
     self.target_distance = 5
     self.target = None
 
-  def init(self):
+  def start(self):
     #TODO: hack for making enemy slower than player
     self.get_component(Stats).move_speed = 50
 
   def update(self):
+    #TODO: meh, dodging circular import
+    from components import Player
+
     move_dir = Vector()
     enemy_pos = self.get_component(Position).pos
 

@@ -3,6 +3,7 @@ class Action:
   def __init__(self):
     self.interruptible = True
     self.entity = None
+    #TODO: rename done?
     self.active = False
 
   #shorthand
@@ -12,7 +13,7 @@ class Action:
   def register(self, entity):
     self.entity = entity
 
-  def init(self):
+  def start(self):
     pass
 
   def update(self):

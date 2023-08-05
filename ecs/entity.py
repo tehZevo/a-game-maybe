@@ -3,10 +3,12 @@ class Entity:
   def __init__(self):
     self.world = None
     self.components = {}
+    #TODO: rename active?
     self.alive = True
 
-  def init(self, world):
-    self.world = world
+  def start(self):
+    for component in self.components.values():
+      component.start()
 
   def remove(self):
     self.alive = False
@@ -14,7 +16,6 @@ class Entity:
   def add_component(self, component):
     #TODO: warn if component type already exists on this entity?
     component.register(self)
-    component.init()
     self.components[component.__class__.__name__] = component
 
   def get_component(self, type):

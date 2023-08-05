@@ -19,7 +19,7 @@ class Component:
       if entity.get_component(rc) is None:
         entity.add_component(rc())
 
-  def init(self):
+  def start(self):
     pass
 
   def update(self):

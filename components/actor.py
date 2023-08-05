@@ -10,10 +10,16 @@ class Actor(Component):
     self.action = None
     self.next_action = None
 
+  def damage(self, amount):
+    stats = self.get_component(Stats)
+    stats.hp -= amount
+    if stats.hp <= 0:
+      self.entity.alive = False
+
   def start_action(self, action):
     self.action = action
-    self.action.register(self)
-    self.action.init()
+    self.action.register(self.entity)
+    self.action.start()
 
   def act(self, action):
     if self.action is None or self.action.interruptible:

@@ -1,20 +1,29 @@
 import pygame
 
 from ecs import Component
-from components import Actor, Stats
-from actions import Move
+from components import Actor, Stats, Enemy
+from actions import Move, UseSkill
+from skills import CircleTarget, Damage
 from utils import Vector
+
+#TODO: hardcoded skill
+SKILL = CircleTarget(component_target=Enemy, radius=5, children=[
+  Damage(1000000)
+])
 
 class Player(Component):
   def __init__(self):
     super().__init__()
     self.require(Actor)
 
-  def init(self):
+  def start(self):
     #TODO: hack for making enemy slower than player
     self.get_component(Stats).move_speed = 100
 
   def handle_keys(self, keys):
+    if keys[pygame.K_a]:
+      self.get_component(Actor).act(UseSkill(SKILL))
+
     #create move dir from key status
     move_dir = Vector(
       keys[pygame.K_RIGHT] - keys[pygame.K_LEFT],

@@ -1,11 +1,19 @@
+from ecs import Entity
 
 class World:
   def __init__(self):
     self.entities = []
 
+  def create_entity(self, components):
+    entity = Entity()
+    for component in components:
+      entity.add_component(component)
+    self.add_entity(entity)
+
   def add_entity(self, entity):
     self.entities.append(entity)
-    entity.init(self)
+    entity.world = self
+    entity.start()
 
   #returns all entities with the given component
   def find(self, component_type):
@@ -13,6 +21,9 @@ class World:
 
   def update(self):
     for e in self.entities:
+      if not e.alive:
+        continue
+
       e.update()
 
     #filter dead entities
