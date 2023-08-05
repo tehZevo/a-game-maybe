@@ -1,8 +1,9 @@
 import pygame, sys
 
 from ecs import Entity, World
-from components import Player, Sprite, Enemy, Position
+from components import Player, Sprite, Enemy, Position, Spawner
 from utils.constants import FPS
+from utils import Vector
 
 pygame.init()
 screen = pygame.display.set_mode((640, 480))
@@ -15,10 +16,10 @@ player.add_component(Player())
 print(player.components)
 world.add_entity(player)
 
-enemy = Entity()
-enemy.add_component(Position(10, 10))
-enemy.add_component(Enemy())
-world.add_entity(enemy)
+spawner = Entity()
+spawner.add_component(Position(Vector(10, 10)))
+spawner.add_component(Spawner(Enemy))
+world.add_entity(spawner)
 
 pygame.display.set_caption("Hello World")
 while True:

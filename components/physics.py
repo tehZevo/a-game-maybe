@@ -20,15 +20,11 @@ class Physics(Component):
     self.force = self.force + Vector(fx, fy)
 
   def update(self):
-    pos = self.get_component(Position)
-    #TODO: return vector from get_pos?
-    x, y = pos.get_pos()
-    p = Vector(x, y)
+    pc = self.get_component(Position)
 
     #integrate
     self.vel = self.vel + self.force / self.mass * DT
-    p = p + self.vel * DT
-    pos.set_pos(p.x, p.y)
+    pc.pos = pc.pos + self.vel * DT
 
     #reset force
     self.force = Vector()

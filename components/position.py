@@ -1,13 +1,7 @@
 from ecs import Component
+from utils import Vector
 
 class Position(Component):
-  def __init__(self, x=0, y=0):
+  def __init__(self, pos=None):
     super().__init__()
-    self.set_pos(x, y)
-
-  def set_pos(self, x, y):
-    self.x = x
-    self.y = y
-
-  def get_pos(self):
-    return [self.x, self.y]
+    self.pos = Vector() if pos is None else pos

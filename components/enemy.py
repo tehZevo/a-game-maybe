@@ -16,7 +16,7 @@ class Enemy(Component):
 
   def update(self):
     move_dir = Vector()
-    enemy_pos = Vector(*self.get_component(Position).get_pos())
+    enemy_pos = self.get_component(Position).pos
 
     #find player
     players = self.entity.world.find(Player)
@@ -24,13 +24,13 @@ class Enemy(Component):
 
     if self.target is None and player is not None:
       #calc distance
-      player_pos = Vector(*player.get_component(Position).get_pos())
+      player_pos = player.get_component(Position).pos
       dist = player_pos.distance(enemy_pos)
       if dist < self.target_distance:
         self.target = player
 
     if self.target is not None:
-      target_pos = Vector(*self.target.get_component(Position).get_pos())
+      target_pos = self.target.get_component(Position).pos
       move_dir = target_pos - enemy_pos
 
       #apply move action

@@ -5,3 +5,4 @@ from .stats import Stats
 from .actor import Actor
 from .player import Player
 from .enemy import Enemy
+from .spawner import Spawner

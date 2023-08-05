@@ -7,10 +7,6 @@ class World:
     self.entities.append(entity)
     entity.init(self)
 
-  def remove_entity(self, entity):
-    #TODO: will this cause iteration issues? might need dead flag
-    self.entities.remove(entity)
-
   #returns all entities with the given component
   def find(self, component_type):
     return [e for e in self.entities if e.get_component(component_type) is not None]
@@ -18,3 +14,6 @@ class World:
   def update(self):
     for e in self.entities:
       e.update()
+
+    #filter dead entities
+    self.entities = [e for e in self.entities if e.alive]

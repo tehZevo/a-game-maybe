@@ -20,6 +20,6 @@ class Sprite(Component):
 
   def draw(self, screen):
     #TODO: update rect position elsewhere..
-    pos = self.entity.get_component(Position)
-    self.sprite.rect.center = [e * PPU for e in pos.get_pos()]
+    pos = self.entity.get_component(Position).pos
+    self.sprite.rect.center = [e * PPU for e in pos.tolist()]
     screen.blit(self.sprite.surf, self.sprite.rect.center)

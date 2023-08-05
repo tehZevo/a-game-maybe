@@ -1,22 +1,31 @@
 import math
+from random import gauss
 
 EPSILON = 1e-4
 
 class Vector:
+  def random():
+    return Vector(gauss(0, 1), gauss(0, 1)).normalized()
+
   def __init__(self, x=0, y=0):
     self.x = x
     self.y = y
 
   def normalized(self):
-    x, y = self.x, self.y
-    mag = math.sqrt(x ** 2 + y ** 2)
+    mag = self.magnitude()
     if mag < EPSILON:
       return Vector(0, 0)
 
-    x = self.x / mag
-    y = self.y / mag
+    return Vector(
+      self.x / mag,
+      self.y / mag
+    )
 
-    return Vector(x, y)
+  def magnitude(self):
+    return math.sqrt(self.x ** 2 + self.y ** 2)
+
+  def tolist(self):
+    return [self.x, self.y]
 
   def distance(self, other):
     return math.sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
