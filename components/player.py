@@ -1,7 +1,7 @@
 import pygame
 
 from ecs import Component
-from components import Actor, Stats, Enemy
+from components import Actor, Stats, Enemy, Sprite
 from actions import Move, UseSkill
 from skills import CircleTarget, Damage
 from utils import Vector
@@ -19,6 +19,7 @@ class Player(Component):
   def start(self):
     #TODO: hack for making enemy slower than player
     self.get_component(Stats).move_speed = 100
+    self.get_component(Sprite).set_sprite("assets/player.png")
 
   def handle_keys(self, keys):
     if keys[pygame.K_a]:

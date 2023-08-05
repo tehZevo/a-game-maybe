@@ -7,12 +7,6 @@ from utils import Vector
 
 #TODO: fix circular import issues
 
-#TODO: each skill effect should have a target and children
-#TODO: need a way to create child skill effects so that each skill entity has its own skill effect copy
-# copy method?
-# copy.copy()?
-# store kwargs alongside children? (messy)
-
 #TODO: can i make skill effects components? or should they stay as some kind of game data?
 
 #TODO: chain targets, either:

@@ -17,9 +17,16 @@ class Sprite(Component):
     super().__init__()
     self.require(Position)
     self.sprite = _Sprite()
+    #TODO: store rect here? or make it part of position? or its own component?
+    self.img = None
+
+  def set_sprite(self, path):
+    self.img = pygame.image.load(path)
 
   def draw(self, screen):
     #TODO: update rect position elsewhere..
     pos = self.entity.get_component(Position).pos
     self.sprite.rect.center = [e * PPU for e in pos.tolist()]
     screen.blit(self.sprite.surf, self.sprite.rect.center)
+    if self.img is not None:
+      screen.blit(self.img, self.sprite.rect.center)

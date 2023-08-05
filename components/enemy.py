@@ -1,5 +1,5 @@
 from ecs import Component
-from components import Actor, Stats, Position
+from components import Actor, Stats, Position, Sprite
 from actions import Move
 from utils import Vector
 
@@ -13,6 +13,7 @@ class Enemy(Component):
   def start(self):
     #TODO: hack for making enemy slower than player
     self.get_component(Stats).move_speed = 50
+    self.get_component(Sprite).set_sprite("assets/enemy.png")
 
   def update(self):
     #TODO: meh, dodging circular import
