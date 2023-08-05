@@ -22,5 +22,8 @@ class Component:
   def start(self):
     pass
 
+  def on_destroy(self):
+    pass
+
   def update(self):
     pass

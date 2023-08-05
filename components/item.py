@@ -1,5 +1,7 @@
 from ecs import Component
-from components import Position
+from components import Position, Sprite
+
+#TODO: where to store drop rate?
 
 class Item(Component):
   def __init__(self):

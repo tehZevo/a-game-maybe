@@ -22,6 +22,7 @@ class World:
   def update(self):
     for e in self.entities:
       if not e.alive:
+        e.on_destroy()
         continue
 
       e.update()

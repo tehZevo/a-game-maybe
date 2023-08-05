@@ -13,6 +13,10 @@ class Entity:
   def remove(self):
     self.alive = False
 
+  def on_destroy(self):
+    for component in self.components.values():
+      component.on_destroy()
+
   def add_component(self, component):
     #TODO: warn if component type already exists on this entity?
     component.register(self)
