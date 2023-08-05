@@ -11,6 +11,7 @@ clock = pygame.time.Clock()
 
 player = Entity()
 player.add_component(Sprite())
+print(player.components)
 
 pygame.display.set_caption("Hello World")
 while True:
