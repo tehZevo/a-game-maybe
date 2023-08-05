@@ -10,16 +10,17 @@ class Player(Component):
     self.require(Sprite)
 
   def handle_keys(self, keys):
-    pos = self.get_component(Position)
-    x, y = pos.get_pos()
+    phys = self.get_component(Physics)
+    fx, fy = 0, 0
 
     if keys[pygame.K_LEFT]:
-      x -= 1
+      fx -= 1
     if keys[pygame.K_RIGHT]:
-      x += 1
+      fx += 1
     if keys[pygame.K_UP]:
-      y -= 1
+      fy -= 1
     if keys[pygame.K_DOWN]:
-      y += 1
+      fy += 1
 
-    pos.set_pos(x, y)
+    #TODO: normalize and use a MOVE_SPEED
+    phys.apply_force(fx, fy)
