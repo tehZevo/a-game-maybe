@@ -1,5 +1,6 @@
 from ecs import Component
 from components import Position
+from utils import Vector
 
 DEFAULT_MASS = 1
 DEFAULT_FRICTION = 0.5
@@ -11,27 +12,25 @@ class Physics(Component):
     self.require(Position)
     self.mass = DEFAULT_MASS
     self.friction = DEFAULT_FRICTION
-    self.force = [0, 0]
-    self.vel = [0, 0]
+    self.force = Vector()
+    self.vel = Vector()
 
   def apply_force(self, fx, fy):
-    self.force[0] += fx
-    self.force[1] += fy
+    self.force = self.force + Vector(fx, fy)
 
   def update(self):
     pos = self.get_component(Position)
+    #TODO: return vector from get_pos?
     x, y = pos.get_pos()
+    p = Vector(x, y)
 
     #integrate
-    self.vel[0] += self.force[0] / self.mass
-    self.vel[1] += self.force[1] / self.mass
-    x += self.vel[0]
-    y += self.vel[1]
-    pos.set_pos(x, y)
+    self.vel = self.vel + self.force / self.mass
+    p = p + self.vel
+    pos.set_pos(p.x, p.y)
 
     #reset force
-    self.force = [0, 0]
+    self.force = Vector()
 
     #apply friction
-    self.vel[0] /= 1 + self.friction
-    self.vel[1] /= 1 + self.friction
+    self.vel = self.vel / (1 + self.friction)

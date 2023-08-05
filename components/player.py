@@ -2,6 +2,7 @@ import pygame
 
 from ecs import Component
 from components import Position, Physics, Sprite
+from utils import Vector
 
 class Player(Component):
   def __init__(self):
@@ -11,16 +12,17 @@ class Player(Component):
 
   def handle_keys(self, keys):
     phys = self.get_component(Physics)
-    fx, fy = 0, 0
+    force = Vector(0, 0)
 
     if keys[pygame.K_LEFT]:
-      fx -= 1
+      force.x -= 1
     if keys[pygame.K_RIGHT]:
-      fx += 1
+      force.x += 1
     if keys[pygame.K_UP]:
-      fy -= 1
+      force.y -= 1
     if keys[pygame.K_DOWN]:
-      fy += 1
+      force.y += 1
 
+    force = force.normalized()
     #TODO: normalize and use a MOVE_SPEED
-    phys.apply_force(fx, fy)
+    phys.apply_force(force.x, force.y)
