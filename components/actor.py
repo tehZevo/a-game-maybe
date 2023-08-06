@@ -1,5 +1,5 @@
 from ecs import Component
-from components import Physics, Sprite, Stats, ItemDropper
+from components import Physics, Sprite, Stats, ItemDropper, Equipment
 
 class Actor(Component):
   def __init__(self):
@@ -8,6 +8,7 @@ class Actor(Component):
     self.require(Sprite)
     self.require(Stats)
     self.require(ItemDropper)
+    self.require(Equipment) #TODO: should only player have equipment?
     self.action = None
     self.next_action = None
 

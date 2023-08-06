@@ -5,6 +5,10 @@ from components import Player, Sprite, Enemy, Position, Spawner
 from utils.constants import FPS
 from utils import Vector
 
+#TODO: gold, health, mana drops: walk over them to pick them up
+
+#TODO: i think items should be game data...
+
 #TODO: maybe distinction between world sprite and ui sprite
 
 #TODO: fix circular import issues

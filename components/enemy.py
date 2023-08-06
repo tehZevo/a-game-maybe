@@ -26,7 +26,7 @@ class Enemy(Component):
     pos = self.get_component(Position).pos
     if random.random() < self.drop_rate:
       item = random.choice(self.drops)
-      dropper.drop(item, pos)
+      dropper.drop(item(), pos)
 
   def update(self):
     #TODO: meh, dodging circular import

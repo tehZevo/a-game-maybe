@@ -5,9 +5,10 @@ class ItemDropper(Component):
   def __init__(self):
     super().__init__()
 
-  def drop(self, item_component_type, pos):
+  def drop(self, item, pos):
+    #TODO: drop with random velocity?
     self.entity.world.create_entity([
       Position(pos),
-      item_component_type(),
+      item,
       DroppedItem()
     ])

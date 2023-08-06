@@ -1,4 +1,4 @@
-
+#by default, actions are interruptible and immediately end
 class Action:
   def __init__(self):
     self.interruptible = True
