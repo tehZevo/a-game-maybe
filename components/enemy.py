@@ -2,7 +2,7 @@ import random
 
 from ecs import Component
 from components import Actor, Stats, Position, Sprite, ItemDropper
-from components.items import Hat, Armor
+from items import Hat, Alpha
 from actions import Move
 from utils import Vector
 
@@ -12,7 +12,7 @@ class Enemy(Component):
     self.require(Actor)
     self.target_distance = 5
     self.target = None
-    self.drops = [Hat, Armor]
+    self.drops = [Hat, Alpha]
     self.drop_rate = 0.25
 
   def start(self):

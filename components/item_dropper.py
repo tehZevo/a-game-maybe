@@ -9,6 +9,5 @@ class ItemDropper(Component):
     #TODO: drop with random velocity?
     self.entity.world.create_entity([
       Position(pos),
-      item,
-      DroppedItem()
+      DroppedItem(item)
     ])

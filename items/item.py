@@ -1,8 +1,7 @@
-from ecs import Component
-
 #TODO: where to store drop rate?
 
-class Item(Component):
+class Item:
   def __init__(self):
     super().__init__()
     self.icon = "assets/item.png"
+    self.slot = None

@@ -1,4 +1,4 @@
-from components import Position, DroppedItem, Equip, Equipment, ItemDropper
+from components import Position, DroppedItem, Equips, ItemDropper
 from actions import Action
 from utils.constants import DT
 
@@ -17,19 +17,14 @@ class Pickup(Action):
     #find dropped items nearby
     items = self.entity.world.find(DroppedItem)
     for item in items:
-      #skip non-equip items TODO: ?? what about skills? technically arent all items equips?
-      if item.get_component(Equip) is None:
-        continue
-
       item_pos = item.get_component(Position).pos
       #if within radius, pickup
       if item_pos.distance(entity_pos) <= PICKUP_RADIUS:
-        equip_comp = item.get_component(Equip)
         item.remove()
-        old_equip = self.entity.get_component(Equipment).set_equip(equip_comp.slot, item)
+        old_equip = self.entity.get_component(Equips).equip(item.get_component(DroppedItem).item)
         #if we had something equipped in that slot, drop it
         if old_equip is not None:
-          self.entity.get_component(ItemDropper).drop(old_equip.get_component(Equip), entity_pos)
+          self.entity.get_component(ItemDropper).drop(old_equip, entity_pos)
         break
 
   def update(self):

@@ -1,15 +1,13 @@
 from ecs import Component
-from components import Sprite, Item
+from components import Sprite
 
 #TODO: ok so equipped items probably shouldnt have a position...
 
 class DroppedItem(Component):
-  def __init__(self):
+  def __init__(self, item):
     super().__init__()
-    self.require(Item)
     self.require(Sprite)
+    self.item = item
 
   def start(self):
-    item = self.get_component(Item)
-    sprite = self.get_component(Sprite)
-    sprite.set_sprite(item.icon)
+    self.get_component(Sprite).set_sprite(self.item.icon)
