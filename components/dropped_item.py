@@ -20,7 +20,6 @@ class DroppedItem(Component, Interactable):
 
     self.entity.remove()
 
-#TODO: ok so equipped items probably shouldnt have a position...
 #TODO: reee
 from components.sprite import Sprite
 from components.position import Position

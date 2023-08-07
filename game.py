@@ -7,11 +7,12 @@ class Game:
     self.clock = pygame.time.Clock()
     pygame.display.set_caption("Game")
 
-    #TODO: store a party (player game/"save" data so player data can be repopulated on the new floor)
+    #TODO: store a party (player game/"save" data) so player data can be repopulated on the new floor
 
-    #TODO: pass game instance to player?
+    #TODO: make setup_world function?
     self.world = floor_transition(TestFloor())
     self.player = self.world.find(Player)[0]
+    self.world.create_entity([GameMaster(self)])
     self.next_world = None
 
   def transition(self, world):
@@ -46,10 +47,12 @@ class Game:
       #swap worlds, create new player (TODO: use generator spawn method? idk)
       self.world = self.next_world
       self.player = self.world.find(Player)[0]
+      self.world.create_entity([GameMaster(self)])
       self.next_world = None
 
 from components.player import Player
 from components.sprite import Sprite
+from components.game_master import GameMaster
 from ecs import Entity, World
 from floor_generators import TestFloor
 from utils.constants import FPS

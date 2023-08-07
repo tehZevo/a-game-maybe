@@ -1,3 +1,4 @@
+from .game_master import GameMaster
 from .interactable import Interactable
 from .position import Position
 from .physics import Physics
