@@ -21,8 +21,8 @@ class Actor(Component):
     self.action.register(self.entity)
     self.action.start()
 
-  def act(self, action):
-    if self.action is None or self.action.interruptible:
+  def act(self, action, force=False):
+    if force or self.action is None or self.action.interruptible:
       self.start_action(action)
     else:
       self.next_action = action

@@ -1,24 +1,19 @@
 import pygame, sys
 
 from ecs import Entity, World
-from components import Player, Sprite, Enemy, Position, Spawner, DungeonFloor
+from components import Player, Sprite, DungeonFloor
 from floor_generators import TestFloor
 from utils.constants import FPS
-from utils import Vector
+from utils.vector import Vector
+from utils.floor_transition import floor_transition
 
 #TODO: use movespeed from stats
 
-#TODO: should only player have equipment? or maybe monsters have some monster-specific equipment
+#TODO: persist player data across floors
 
 #TODO: gold, health, mana drops: walk over them to pick them up
 
 #TODO: maybe distinction between world sprite and ui sprite
-
-#TODO: chain targets, either:
-# create chain target types (given a target, find more nearby targets)
-# or make all target types take a target implicitly (use skill position if no target)
-# ACTUALLY: better yet, child skill effects should be initialized at their target's location so chaining is natural?
-# do we need a way to omit the original target or? probably not..
 
 #TODO: skill idea: "ally bomb" (or something like that): damage enemies nearby allies (target allies, then target enemies)
 
@@ -35,9 +30,10 @@ screen = pygame.display.set_mode((640, 480))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Game")
 
-world = World()
-world.create_entity([DungeonFloor(TestFloor())])
-player = world.find(Player)[0]
+player = Entity()
+player.add_component(Player())
+
+world = floor_transition(player, TestFloor())
 
 while True:
   for event in pygame.event.get():

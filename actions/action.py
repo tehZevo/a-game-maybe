@@ -16,5 +16,7 @@ class Action:
   def start(self):
     pass
 
+  #TODO: have def end or interrupted?
+
   def update(self):
     pass

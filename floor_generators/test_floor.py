@@ -1,5 +1,5 @@
 from floor_generators import FloorGenerator
-from components.tiles import Floor, Wall
+from components.tiles import Floor, Wall, Stairs
 from components import Position, Player, Spawner, Enemy
 from utils import Vector
 
@@ -10,6 +10,7 @@ class TestFloor(FloorGenerator):
     self.height = 20
     self.player_spawn = Vector(2, 2)
     self.spawner_pos = Vector(10, 10)
+    self.stairs_pos = Vector(3, 10)
 
   def generate(self, floor_entity):
     for x in range(self.width):
@@ -19,6 +20,8 @@ class TestFloor(FloorGenerator):
         else:
           floor_entity.world.create_entity([Position(Vector(x, y)), Floor()])
 
-    #TODO: create player and spawner
-    floor_entity.world.create_entity([Position(self.player_spawn), Player()])
+    #create stairs to this generator
+    floor_entity.world.create_entity([Position(self.stairs_pos), Stairs(self)])
+
     floor_entity.world.create_entity([Position(self.spawner_pos), Spawner(Enemy)])
+    # floor_entity.world.create_entity([Position(self.player_spawn), Player()])
