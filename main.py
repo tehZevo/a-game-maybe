@@ -1,5 +1,10 @@
 from game import Game
 
+#TODO: fix subpixel glitchiness
+#TODO: make 0, 0 center of sprites
+#TODO: box camera
+#TODO: use pygame vector https://www.pygame.org/docs/ref/math.html#pygame.math.Vector2
+#TODO: add ysorting to camera
 #TODO: make interactible interface for components
 #TODO: need to create new player anyway... that way he has a reference to the new world
 #TODO: generator should make a player spawn point component, which players are spawned on by the generators spawn method

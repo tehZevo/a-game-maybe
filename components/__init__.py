@@ -13,3 +13,4 @@ from .enemy import Enemy
 from .player import Player
 from .spawner import Spawner
 from .dungeon_floor import DungeonFloor
+from .camera import Camera

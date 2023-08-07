@@ -1,9 +1,12 @@
 import pygame, sys
 
+SCREEN_WIDTH = 640
+SCREEN_HEIGHT = 480
+
 class Game:
   def __init__(self):
     pygame.init()
-    self.screen = pygame.display.set_mode((640, 480))
+    self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     self.clock = pygame.time.Clock()
     pygame.display.set_caption("Game")
 
@@ -11,9 +14,13 @@ class Game:
 
     #TODO: make setup_world function?
     self.world = floor_transition(TestFloor())
+    self.next_world = None
+    self.init_world()
+
+  def init_world(self):
     self.player = self.world.find(Player)[0]
     self.world.create_entity([GameMaster(self)])
-    self.next_world = None
+    self.camera = self.world.create_entity([Camera(target=self.player)])
 
   def transition(self, world):
     self.next_world = world
@@ -38,7 +45,7 @@ class Game:
         for e in self.world.entities:
           sprite = e.get_component(Sprite)
           if sprite is not None:
-            sprite.draw(self.screen)
+            sprite.draw(self.screen, self.camera.get_component(Position).pos)
 
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
 
@@ -46,13 +53,14 @@ class Game:
 
       #swap worlds, create new player (TODO: use generator spawn method? idk)
       self.world = self.next_world
-      self.player = self.world.find(Player)[0]
-      self.world.create_entity([GameMaster(self)])
+      self.init_world()
       self.next_world = None
 
 from components.player import Player
 from components.sprite import Sprite
 from components.game_master import GameMaster
+from components.camera import Camera
+from components.position import Position
 from ecs import Entity, World
 from floor_generators import TestFloor
 from utils.constants import FPS

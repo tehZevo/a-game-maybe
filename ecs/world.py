@@ -9,6 +9,8 @@ class World:
     for component in components:
       entity.add_component(component)
     self.add_entity(entity)
+    
+    return entity
 
   def add_entity(self, entity):
     self.entities.append(entity)

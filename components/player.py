@@ -8,7 +8,7 @@ from utils import Vector
 
 #TODO: hardcoded skill
 SKILL = CircleTarget(component_target=Enemy, radius=5, children=[
-  Damage(100)
+  Damage(300)
 ])
 
 class Player(Component):
