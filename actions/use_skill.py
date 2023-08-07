@@ -15,7 +15,7 @@ class UseSkill(Action):
     #create skill effect in world at user position
     self.entity.world.create_entity([
       Position(self.entity.get_component(Position).pos),
-      Skill(self.effect)
+      Skill(self.effect, user=self.entity)
     ])
 
   def update(self):

@@ -25,4 +25,4 @@ class Target(SkillEffect):
         #TODO: need to actually create a copy?
         child = copy.copy(child) #TODO: test
         child.target = target
-        self.entity.world.create_entity([Skill(child)])
+        self.entity.world.create_entity([Skill(child, self.user)])

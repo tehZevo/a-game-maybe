@@ -5,6 +5,8 @@ from components import Player, Sprite, Enemy, Position, Spawner
 from utils.constants import FPS
 from utils import Vector
 
+#TODO: use movespeed from stats
+
 #TODO: should only player have equipment? or maybe monsters have some monster-specific equipment
 
 #TODO: gold, health, mana drops: walk over them to pick them up

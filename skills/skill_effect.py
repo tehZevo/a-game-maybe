@@ -6,11 +6,13 @@ class SkillEffect:
   def __init__(self):
     self.completed = True
     self.entity = None
+    self.user = None
     self.target = None
     self.children = []
 
-  def register(self, entity):
+  def register(self, entity, user):
     self.entity = entity
+    self.user = user
 
   def start(self):
     pass

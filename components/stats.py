@@ -5,24 +5,19 @@ class Stats(Component):
   def __init__(self):
     super().__init__()
     #TODO: calculate
-    self.move_speed = 100
-    self.hp = 100
-    self.mp = 100
+    self.hp = 1
+    self.mp = 1
     self.primary_stats = self.equip_stats = self.secondary_stats = None
-    #TODO: when to recalc:
-    # whenever equips change
-    # whenever buffs/debuffs get applied
-    # whenever buffs/debuffs end
 
   def start(self):
     self.recalculate()
+    self.hp = self.secondary_stats.hp
+    self.mp = self.secondary_stats.mp
 
   def recalculate(self):
-    print("recalculating stats")
     self.primary_stats, self.equip_stats, self.secondary_stats = calculator.calculate(self.entity)
-    print(self.primary_stats)
-    print(self.equip_stats)
-    print(self.secondary_stats)
+    self.hp = min(self.hp, self.secondary_stats.hp)
+    self.mp = min(self.mp, self.secondary_stats.mp)
 
 #TODO: reee
 from stats import calculator

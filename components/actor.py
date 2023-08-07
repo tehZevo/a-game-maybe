@@ -15,8 +15,6 @@ class Actor(Component):
   def damage(self, amount):
     stats = self.get_component(Stats)
     stats.hp -= amount
-    if stats.hp <= 0:
-      self.entity.alive = False
 
   def start_action(self, action):
     self.action = action
@@ -30,6 +28,13 @@ class Actor(Component):
       self.next_action = action
 
   def update(self):
+    stats = self.get_component(Stats)
+    if stats.hp <= 0:
+      self.entity.alive = False
+
+    if not self.entity.alive:
+      return
+
     #update current action
     if self.action is not None:
       self.action.update()
