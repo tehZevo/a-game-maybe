@@ -1,7 +1,8 @@
 import pygame, sys
 
 from ecs import Entity, World
-from components import Player, Sprite, Enemy, Position, Spawner
+from components import Player, Sprite, Enemy, Position, Spawner, DungeonFloor
+from floor_generators import TestFloor
 from utils.constants import FPS
 from utils import Vector
 
@@ -35,6 +36,8 @@ clock = pygame.time.Clock()
 
 world = World()
 
+world.create_entity([DungeonFloor(TestFloor())])
+
 player = Entity()
 player.add_component(Player())
 print(player.components)
@@ -45,7 +48,7 @@ spawner.add_component(Position(Vector(10, 10)))
 spawner.add_component(Spawner(Enemy))
 world.add_entity(spawner)
 
-pygame.display.set_caption("Hello World")
+pygame.display.set_caption("Game")
 while True:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:

@@ -10,3 +10,4 @@ from .actor import Actor
 from .enemy import Enemy
 from .player import Player
 from .spawner import Spawner
+from .dungeon_floor import DungeonFloor
