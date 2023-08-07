@@ -24,6 +24,11 @@ AGI_MOVE_MULTIPLIER = 1
 
 BASE_EQUIP_STATS = EquipStats(1, 1, 1, 1)
 BASE_PRIMARY_STATS = PrimaryStats(10, 10, 10, 10, 10, 10)
+BASE_SECONDARY_STATS = SecondaryStats(
+  hp=100,
+  mp=50,
+  move_speed=100
+)
 
 def calculate(entity):
   primary_stats = calculate_primary_stats(entity)
@@ -72,7 +77,7 @@ def calculate_secondary_stats(entity, primary_stats, equip_stats):
 
   #TODO: add secondary stats on equips
   #TODO: apply modifiers from passives/buffs/debuffs/etc
-  return SecondaryStats(
+  return BASE_SECONDARY_STATS + SecondaryStats(
     hp=calculate_hp(primary_stats),
     mp=calculate_mp(primary_stats),
     phys_att=calculate_phys_attack(weapon, primary_stats, equip_stats),

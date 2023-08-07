@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
 
+from utils.utils import dict_op
+
 PrimaryStat = Enum("PrimaryStat", ["STR", "VIT", "DEX", "AGI", "INT", "WIS"])
 
 @dataclass
@@ -17,11 +19,4 @@ class PrimaryStats:
     return super().__getattribute__(key)
 
   def __add__(self, other):
-    return PrimaryStats(
-      self.STR + other.STR,
-      self.VIT + other.VIT,
-      self.DEX + other.DEX,
-      self.AGI + other.AGI,
-      self.INT + other.INT,
-      self.WIS + other.WIS,
-    )
+    return PrimaryStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: a + b))

@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from utils.utils import dict_op
+
 @dataclass
 class SecondaryStats:
   hp: int = 0
@@ -17,5 +19,4 @@ class SecondaryStats:
     return super().__getattribute__(key)
 
   def __add__(self, other):
-    pass
-    #TODO
+    return SecondaryStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: a + b))

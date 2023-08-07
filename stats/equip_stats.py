@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
 
+from utils.utils import dict_op
+
 EquipStat = Enum("EquipStat", ["PATT", "MATT", "PDEF", "MDEF"])
 
 @dataclass
@@ -15,9 +17,4 @@ class EquipStats:
     return super().__getattribute__(key)
 
   def __add__(self, other):
-    return EquipStats(
-      self.PATT + other.PATT,
-      self.MATT + other.MATT,
-      self.PDEF + other.PDEF,
-      self.MDEF + other.MDEF,
-    )
+    return EquipStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: a + b))
