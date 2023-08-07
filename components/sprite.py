@@ -29,9 +29,9 @@ class Sprite(Component):
     #TODO: update rect position elsewhere..
     pos = self.entity.get_component(Position).pos
     self.sprite.rect.center = [e * PPU for e in pos.tolist()]
-    # screen.blit(self.sprite.surf, self.sprite.rect.center)
+
     if self.img is not None:
       pos = self.sprite.rect.center
       if offset is not None:
-        pos = pos - Vector2(*(offset * PPU).tolist()) + Vector2(640/2, 480/2)
+        pos = pos - offset
       screen.blit(self.img, pos)

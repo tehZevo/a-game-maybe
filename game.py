@@ -1,4 +1,7 @@
 import pygame, sys
+from pygame.math import Vector2
+
+from utils.constants import PPU
 
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
@@ -42,10 +45,12 @@ class Game:
 
         self.screen.fill((0, 0, 0))
 
+        camera_pos = self.camera.get_component(Position).pos
+        camera_offset = Vector2(*(camera_pos * PPU).tolist()) - Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         for e in self.world.entities:
           sprite = e.get_component(Sprite)
           if sprite is not None:
-            sprite.draw(self.screen, self.camera.get_component(Position).pos)
+            sprite.draw(self.screen, camera_offset)
 
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
 
