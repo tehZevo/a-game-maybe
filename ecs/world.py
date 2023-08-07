@@ -21,11 +21,11 @@ class World:
 
   def update(self):
     for e in self.entities:
+      e.update()
+
+    for e in self.entities:
       if not e.alive:
         e.on_destroy()
-        continue
-
-      e.update()
 
     #filter dead entities
     self.entities = [e for e in self.entities if e.alive]

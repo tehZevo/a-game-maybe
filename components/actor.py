@@ -30,7 +30,7 @@ class Actor(Component):
   def update(self):
     stats = self.get_component(Stats)
     if stats.hp <= 0:
-      self.entity.alive = False
+      self.entity.remove()
 
     if not self.entity.alive:
       return
