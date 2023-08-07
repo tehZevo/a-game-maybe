@@ -1,5 +1,6 @@
 import pygame, sys
 from pygame.math import Vector2
+from save_data import SaveData
 
 from utils.constants import PPU
 
@@ -20,10 +21,16 @@ class Game:
     self.next_world = None
     self.init_world()
 
-  def init_world(self):
+  def init_world(self, save_data=None):
+    #find player (TODO: create new players and load save data)
     self.player = self.world.find(Player)[0]
+    #store reference to game as an entity
     self.world.create_entity([GameMaster(self)])
+    #create camera that targets player
     self.camera = self.world.create_entity([Camera(target=self.player)])
+    #apply save data
+    if save_data is not None:
+      save_data.apply(self.world)
 
   def transition(self, world):
     self.next_world = world
@@ -57,8 +64,9 @@ class Game:
         pygame.display.flip()
 
       #swap worlds, create new player (TODO: use generator spawn method? idk)
+      save_data = SaveData(self.world)
       self.world = self.next_world
-      self.init_world()
+      self.init_world(save_data)
       self.next_world = None
 
 from components.player import Player

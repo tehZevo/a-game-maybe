@@ -2,10 +2,11 @@ from ecs import Component
 from items import Armor, Skill
 from items.slots import ArmorSlot, SkillSlot
 from components.stats import Stats
+from components.savable import Savable
 
 NUM_WEAPONS = 2
 
-class Equips(Component):
+class Equips(Component, Savable):
   def __init__(self):
     super().__init__()
     self.require(Stats)
@@ -37,3 +38,6 @@ class Equips(Component):
       return cur_equip
 
     raise ValueError(f"Cannot equip {item}")
+
+  def save(self):
+    return {"armor", "skills", "weapons", "cur_weapon"}
