@@ -33,22 +33,12 @@ from utils import Vector
 pygame.init()
 screen = pygame.display.set_mode((640, 480))
 clock = pygame.time.Clock()
+pygame.display.set_caption("Game")
 
 world = World()
-
 world.create_entity([DungeonFloor(TestFloor())])
+player = world.find(Player)[0]
 
-player = Entity()
-player.add_component(Player())
-print(player.components)
-world.add_entity(player)
-
-spawner = Entity()
-spawner.add_component(Position(Vector(10, 10)))
-spawner.add_component(Spawner(Enemy))
-world.add_entity(spawner)
-
-pygame.display.set_caption("Game")
 while True:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
@@ -56,6 +46,7 @@ while True:
       sys.exit()
 
   keys = pygame.key.get_pressed()
+
   player.get_component(Player).handle_keys(keys)
 
   world.update()
