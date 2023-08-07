@@ -1,4 +1,4 @@
 from .action import Action
-from .pickup import Pickup
+from .interact import Interact
 from .move import Move
 from .use_skill import UseSkill

@@ -1,6 +1,5 @@
 #TODO: use some defaults instead of an explicit hands item?
 from items import Hands
-from components.equips import Equips
 
 from stats import PrimaryStat, PrimaryStats, SecondaryStats, EquipStat, EquipStats
 
@@ -38,6 +37,8 @@ def calculate(entity):
   return primary_stats, equip_stats, secondary_stats
 
 def calculate_primary_stats(entity):
+  #TODO: reee
+  from components.equips import Equips
   equips = entity.get_component(Equips)
 
   #sum up primary stats
@@ -55,6 +56,8 @@ def calculate_primary_stats(entity):
   return stats
 
 def calculate_equip_stats(entity):
+  #TODO: reee
+  from components.equips import Equips
   equips = entity.get_component(Equips)
 
   #sum up equip stats
@@ -71,6 +74,8 @@ def calculate_equip_stats(entity):
   return stats
 
 def calculate_secondary_stats(entity, primary_stats, equip_stats):
+  #TODO: reee
+  from components.equips import Equips
   weapon = entity.get_component(Equips).get_current_weapon()
   if weapon is None:
     weapon = Hands()

@@ -2,7 +2,7 @@ import pygame
 
 from ecs import Component
 from components import Actor, Stats, Enemy, Sprite
-from actions import Move, UseSkill, Pickup
+from actions import Move, UseSkill, Interact
 from skills import CircleTarget, Damage
 from utils import Vector
 
@@ -26,7 +26,7 @@ class Player(Component):
       self.get_component(Actor).act(UseSkill(SKILL))
 
     if keys[pygame.K_SPACE]:
-      self.get_component(Actor).act(Pickup())
+      self.get_component(Actor).act(Interact())
 
     #create move dir from key status
     move_dir = Vector(

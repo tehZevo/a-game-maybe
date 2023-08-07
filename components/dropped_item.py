@@ -1,9 +1,7 @@
 from ecs import Component
-from components import Sprite
+from components.interactable import Interactable
 
-#TODO: ok so equipped items probably shouldnt have a position...
-
-class DroppedItem(Component):
+class DroppedItem(Component, Interactable):
   def __init__(self, item):
     super().__init__()
     self.require(Sprite)
@@ -11,3 +9,19 @@ class DroppedItem(Component):
 
   def start(self):
     self.get_component(Sprite).set_sprite(self.item.icon)
+
+  def interact(self, entity):
+    #TODO: reee
+    from components.item_dropper import ItemDropper
+    old_equip = entity.get_component(Equips).equip(self.item)
+    #if we had something equipped in that slot, drop it
+    if old_equip is not None:
+      entity.get_component(ItemDropper).drop(old_equip, entity.get_component(Position).pos)
+
+    self.entity.remove()
+
+#TODO: ok so equipped items probably shouldnt have a position...
+#TODO: reee
+from components.sprite import Sprite
+from components.position import Position
+from components.equips import Equips

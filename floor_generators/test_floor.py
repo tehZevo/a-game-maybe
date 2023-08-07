@@ -24,4 +24,5 @@ class TestFloor(FloorGenerator):
     floor_entity.world.create_entity([Position(self.stairs_pos), Stairs(self)])
 
     floor_entity.world.create_entity([Position(self.spawner_pos), Spawner(Enemy)])
-    # floor_entity.world.create_entity([Position(self.player_spawn), Player()])
+    #TODO: need separate spawn function that creates players with given player data
+    floor_entity.world.create_entity([Position(self.player_spawn), Player()])

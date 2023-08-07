@@ -1,6 +1,6 @@
 from ecs import Component
-from stats import PrimaryStats, SecondaryStats, EquipStats
 
+#TODO: solve circular dependencies by implementing equiplistener?
 class Stats(Component):
   def __init__(self):
     super().__init__()
