@@ -5,15 +5,11 @@ from components import Player, Sprite, Enemy, Position, Spawner
 from utils.constants import FPS
 from utils import Vector
 
+#TODO: should only player have equipment? or maybe monsters have some monster-specific equipment
+
 #TODO: gold, health, mana drops: walk over them to pick them up
 
-#TODO: i think items should be game data...
-
 #TODO: maybe distinction between world sprite and ui sprite
-
-#TODO: fix circular import issues
-
-#TODO: can i make skill effects components? or should they stay as some kind of game data?
 
 #TODO: chain targets, either:
 # create chain target types (given a target, find more nearby targets)

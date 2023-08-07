@@ -8,7 +8,7 @@ class Actor(Component):
     self.require(Sprite)
     self.require(Stats)
     self.require(ItemDropper)
-    self.require(Equips) #TODO: should only player have equipment?
+    self.require(Equips)
     self.action = None
     self.next_action = None
 

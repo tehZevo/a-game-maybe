@@ -1,5 +1,5 @@
-from items import Item
+from items import Equip
 
-class Armor(Item):
+class Armor(Equip):
   def __init__(self):
     super().__init__()

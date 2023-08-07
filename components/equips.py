@@ -17,6 +17,9 @@ class Equips(Component):
     self.cur_weapon += 1
     self.cur_weapon %= NUM_WEAPONS
 
+  def get_current_weapon(self):
+    return self.weapons[self.cur_weapon]
+
   def equip(self, item):
     if issubclass(type(item), Armor):
       cur_equip = self.armor[item.slot]
