@@ -16,7 +16,6 @@ from game import Game
 #TODO: make targets have a filter type: "enemies" or "allies" or "self"? idk
 #TODO: distance based delay effect (delay in seconds per unit)
 #TODO: ranged attacks will feel nicer with a bit of delay (think magic claw from maple story)
-#TODO: camera
 #TODO: concept of "teams" so player skill effects automatically target enemies (and vice versa)
 
 Game().run()

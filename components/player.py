@@ -17,8 +17,6 @@ class Player(Component):
     self.require(Actor)
 
   def start(self):
-    #TODO: hack for making enemy slower than player
-    self.get_component(Stats).move_speed = 100
     self.get_component(Sprite).set_sprite("assets/player.png")
 
   def handle_keys(self, keys):

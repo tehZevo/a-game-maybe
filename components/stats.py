@@ -7,6 +7,7 @@ class Stats(Component):
     #TODO: calculate
     self.hp = 1
     self.mp = 1
+    self.move_speed_multiplier = 1
     self.primary_stats = self.equip_stats = self.secondary_stats = None
 
   def start(self):

@@ -16,8 +16,8 @@ class Enemy(Component):
     self.drop_rate = 0.25
 
   def start(self):
-    #TODO: hack for making enemy slower than player
-    self.get_component(Stats).move_speed = 50
+    #make enemies 1/4 base player speed
+    self.get_component(Stats).move_speed_multiplier = 0.25
     self.get_component(Sprite).set_sprite("assets/enemy.png")
 
   def on_destroy(self):
