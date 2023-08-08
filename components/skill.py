@@ -2,6 +2,7 @@ from ecs import Component
 from components import Position
 
 #TODO: store user (actor entity)?
+#TODO: rename to skilleffect?
 class Skill(Component):
   def __init__(self, effect, user):
     super().__init__()

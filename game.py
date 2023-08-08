@@ -26,8 +26,14 @@ class Game:
     self.player = self.world.find(Player)[0]
     #store reference to game as an entity
     self.world.create_entity([GameMaster(self)])
+    #add particle system
+    self.particle_system = self.world.create_entity([ParticleSystem()])
     #create camera that targets player
-    self.camera = self.world.create_entity([Camera(target=self.player)])
+    self.camera = self.world.create_entity([
+      Position(self.player.get_component(Position).pos),
+      Camera(target=self.player)
+    ])
+
     #apply save data
     if save_data is not None:
       save_data.apply(self.world)
@@ -44,20 +50,23 @@ class Game:
             pygame.quit()
             sys.exit()
 
+        #control player
         keys = pygame.key.get_pressed()
-
         self.player.get_component(Player).handle_keys(keys)
 
+        #update world
         self.world.update()
 
-        self.screen.fill((0, 0, 0))
-
+        #render
         camera_pos = self.camera.get_component(Position).pos
         camera_offset = Vector2(*(camera_pos * PPU).tolist()) - Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        self.screen.fill((0, 0, 0))
         for e in self.world.entities:
           sprite = e.get_component(Sprite)
           if sprite is not None:
             sprite.draw(self.screen, camera_offset)
+
+        self.particle_system.get_component(ParticleSystem).draw(self.screen, camera_offset)
 
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
 
@@ -74,6 +83,7 @@ from components.sprite import Sprite
 from components.game_master import GameMaster
 from components.camera import Camera
 from components.position import Position
+from components.particles.particle_system import ParticleSystem
 from ecs import Entity, World
 from floor_generators import TestFloor
 from utils.constants import FPS

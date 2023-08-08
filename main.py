@@ -1,5 +1,8 @@
 from game import Game
 
+#TODO: ECS for particles so i can separate out particle behaviors
+#TODO: collisions
+#TODO: reduce delay on interact (will require handling key pressed events so player cant hold to repeatedly interact)
 #TODO: fix subpixel glitchiness
 #TODO: make 0, 0 center of sprites
 #TODO: box camera

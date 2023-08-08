@@ -3,12 +3,13 @@ import pygame
 from ecs import Component
 from components import Actor, Stats, Enemy, Sprite
 from actions import Move, UseSkill, Interact
-from skills import CircleTarget, Damage
+from skills import CircleTarget, Damage, Particles
 from utils import Vector
 
 #TODO: hardcoded skill
 SKILL = CircleTarget(component_target=Enemy, radius=5, children=[
-  Damage(300)
+  Damage(300),
+  Particles(),
 ])
 
 class Player(Component):

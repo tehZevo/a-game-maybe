@@ -1,7 +1,7 @@
 import copy
 
 from ecs import Entity
-from components import Skill, Actor
+from components import Skill, Actor, Position
 from skills import SkillEffect
 
 #TODO: maybe have target filters passed to a target?
@@ -25,4 +25,7 @@ class Target(SkillEffect):
         #TODO: need to actually create a copy?
         child = copy.copy(child) #TODO: test
         child.target = target
-        self.entity.world.create_entity([Skill(child, self.user)])
+        self.entity.world.create_entity([
+          Position(target.get_component(Position).pos),
+          Skill(child, self.user)
+        ])
