@@ -1,5 +1,6 @@
 from ecs import Component
 from components import Physics, Sprite, Stats, ItemDropper, Equips
+from utils import Vector
 
 class Actor(Component):
   def __init__(self):
@@ -11,6 +12,7 @@ class Actor(Component):
     self.require(Equips)
     self.action = None
     self.next_action = None
+    self.look_dir = Vector(0, -1)
 
   def damage(self, amount):
     stats = self.get_component(Stats)

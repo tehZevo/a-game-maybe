@@ -1,7 +1,7 @@
 from ecs import Component
 from components import Position
 
-#TODO: rename to SkillInstance?
+#TODO: rename to SkillInstance or SkillEffect?
 class Skill(Component):
   def __init__(self, effect, user, parent=None):
     super().__init__()
