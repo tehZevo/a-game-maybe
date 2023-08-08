@@ -28,6 +28,7 @@ class Player(Component):
       keys[pygame.K_RIGHT] - keys[pygame.K_LEFT],
       keys[pygame.K_DOWN] - keys[pygame.K_UP]
     )
-
-    #apply move action
-    self.get_component(Actor).act(Move(move_dir))
+    
+    if move_dir != Vector.ZERO:
+      #apply move action
+      self.get_component(Actor).act(Move(move_dir))

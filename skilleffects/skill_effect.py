@@ -1,6 +1,8 @@
 
 #TODO: sequential, parallel, delay
-#TODO: offset effect or some way to disjoint a target
+#TODO: offset based on actor look direction
+#TODO: delay chain (provide sequence of skill effects)
+#TODO: repeat
 
 class SkillEffect:
   def __init__(self):

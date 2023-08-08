@@ -1,5 +1,13 @@
 from game import Game
 
+#TODO: cache images
+#TODO: draw static dungeon tiles to a surface
+#TODO: knock back enemy if you do more than 10% of its hp?
+#TODO: refactor skill effect targets to be a component on the skill entity
+#TODO: make it possible to buffer a "look" between skills
+# does this mean allowing skills to be used in a certain direction?
+#TODO: maybe make direction component for tileentity facing direction
+# how to handle fine-grained direction for actor though? is that even needed?
 #TODO: fix game slowing down after some time (fixes itself when moving dungeon floors, might be caused by enemies attacking player; leak?)
 # also remidied by killing enemies
 #TODO: make +y up

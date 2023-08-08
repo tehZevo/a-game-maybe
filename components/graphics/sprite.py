@@ -23,7 +23,7 @@ class Sprite(Component):
     self.img = None
 
   def set_sprite(self, path):
-    self.img = pygame.image.load(path)
+    self.img = pygame.image.load(path).convert_alpha()
     self.img = pygame.transform.scale(self.img, (self.img.get_width() * PIXEL_SCALE, self.img.get_height() * PIXEL_SCALE))
 
   def draw(self, screen, offset=None):

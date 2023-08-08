@@ -4,6 +4,7 @@ from random import gauss
 EPSILON = 1e-4
 
 class Vector:
+
   def random():
     return Vector(gauss(0, 1), gauss(0, 1)).normalized()
 
@@ -75,3 +76,7 @@ class Vector:
 
   def __str__(self):
     return f"[Vector] {self.x} {self.y}"
+
+Vector.ZERO = Vector(0, 0)
+Vector.X = Vector(1, 0)
+Vector.Y = Vector(0, 1)

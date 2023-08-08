@@ -13,7 +13,7 @@ from utils import Vector
 class DFSGenerator(FloorGenerator):
   def __init__(self):
     super().__init__()
-    self.floor_size = 8 #in number of rooms wide/tall
+    self.floor_size = 2 #in number of rooms wide/tall
     self.room_size = 8
     self.door_width = 2
     self.player_spawn = Vector(2, 2)
@@ -28,7 +28,7 @@ class DFSGenerator(FloorGenerator):
     grid = [[None for _ in range(self.floor_size)] for _ in range(self.floor_size)]
     queue = []
     visited = set()
-    queue.append((random.randint(0, self.floor_size), random.randint(0, self.floor_size)))
+    queue.append((random.randint(0, self.floor_size - 1), random.randint(0, self.floor_size - 1)))
     dirs = [(-1, 0), (1, 0), (0, 1), (0, -1)]
     while len(queue) > 0:
       #visit tail
