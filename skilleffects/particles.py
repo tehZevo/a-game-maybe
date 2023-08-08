@@ -1,4 +1,4 @@
-from skills import SkillEffect
+from skilleffects import SkillEffect
 from components.particles.particle_emitter import ParticleEmitter
 from components.position import Position
 

@@ -1,4 +1,4 @@
-from skills import SkillEffect
+from skilleffects import SkillEffect
 from components import Actor, Stats
 
 class Damage(SkillEffect):

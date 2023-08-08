@@ -1,5 +1,6 @@
 from game import Game
 
+#TODO: top level skill wrapper that defines things like use delay
 #TODO: ECS for particles so i can separate out particle behaviors
 #TODO: collisions
 #TODO: reduce delay on interact (will require handling key pressed events so player cant hold to repeatedly interact)

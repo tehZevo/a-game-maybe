@@ -1,16 +1,11 @@
 import pygame
 
 from ecs import Component
-from components import Actor, Stats, Enemy, Sprite
+from components import Actor, Sprite
 from actions import Move, UseSkill, Interact
-from skills import CircleTarget, Damage, Particles
 from utils import Vector
 
-#TODO: hardcoded skill
-SKILL = CircleTarget(component_target=Enemy, radius=5, children=[
-  Damage(300),
-  Particles(),
-])
+from skills.test_player_skill import test_player_skill
 
 class Player(Component):
   def __init__(self):
@@ -22,7 +17,7 @@ class Player(Component):
 
   def handle_keys(self, keys):
     if keys[pygame.K_a]:
-      self.get_component(Actor).act(UseSkill(SKILL))
+      self.get_component(Actor).act(UseSkill(test_player_skill))
 
     if keys[pygame.K_SPACE]:
       self.get_component(Actor).act(Interact())

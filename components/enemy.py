@@ -3,7 +3,7 @@ import random
 from ecs import Component
 from components import Actor, Stats, Position, Sprite, ItemDropper
 from items import Hat, Alpha
-from actions import Move
+from actions import Move, UseSkill
 from utils import Vector
 
 class Enemy(Component):
@@ -14,6 +14,10 @@ class Enemy(Component):
     self.target = None
     self.drops = [Hat, Alpha]
     self.drop_rate = 0.25
+    self.follow_dist = 2
+    #TODO: reee
+    from skills.test_enemy_skill import test_enemy_skill
+    self.skill = test_enemy_skill
 
   def start(self):
     #make enemies 1/4 base player speed
@@ -30,7 +34,7 @@ class Enemy(Component):
 
   def update(self):
     #TODO: meh, dodging circular import
-    from components import Player
+    from components.player import Player
 
     move_dir = Vector()
     enemy_pos = self.get_component(Position).pos
@@ -46,9 +50,14 @@ class Enemy(Component):
       if dist < self.target_distance:
         self.target = player
 
+    #follow and use skills
     if self.target is not None:
       target_pos = self.target.get_component(Position).pos
-      move_dir = target_pos - enemy_pos
+      dist = target_pos.distance(enemy_pos)
+      if dist < self.follow_dist:
+        self.get_component(Actor).act(UseSkill(self.skill))
+      else:
+        move_dir = target_pos - enemy_pos
 
       #apply move action
       self.get_component(Actor).act(Move(move_dir))

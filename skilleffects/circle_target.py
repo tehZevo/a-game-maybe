@@ -1,5 +1,5 @@
-from skills import Target
-from skills.target_filters import distance_filter, component_filter
+from skilleffects import Target
+from skilleffects.target_filters import distance_filter, component_filter
 
 class CircleTarget(Target):
   def __init__(self, component_target, radius=2, children=[]):

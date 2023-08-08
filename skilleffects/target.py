@@ -2,8 +2,9 @@ import copy
 
 from ecs import Entity
 from components import Skill, Actor, Position
-from skills import SkillEffect
+from skilleffects import SkillEffect
 
+#TODO: max targets
 #TODO: maybe have target filters passed to a target?
 #TODO: actually, they probably need to be classes so they can be created from game data
 class Target(SkillEffect):
