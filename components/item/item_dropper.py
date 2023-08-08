@@ -1,5 +1,6 @@
 from ecs import Component
-from components import Position, Sprite, DroppedItem
+from components.physics.position import Position
+from .dropped_item import DroppedItem
 
 class ItemDropper(Component):
   def __init__(self):

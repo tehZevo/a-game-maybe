@@ -1,4 +1,5 @@
-from components import Position, Interactable
+from components.physics.position import Position
+from components.core.interactable import Interactable
 from actions import Action
 from utils.constants import DT
 from utils.find_in_range import find_in_range

@@ -78,12 +78,12 @@ class Game:
       self.init_world(save_data)
       self.next_world = None
 
-from components.player import Player
-from components.sprite import Sprite
-from components.game_master import GameMaster
-from components.camera import Camera
-from components.position import Position
+from components.actor.player import Player
+from components.graphics.sprite import Sprite
+from components.graphics.camera import Camera
+from components.physics.position import Position
 from components.particles.particle_system import ParticleSystem
+from components.core.game_master import GameMaster
 from ecs import Entity, World
 from floor_generators import TestFloor
 from utils.constants import FPS

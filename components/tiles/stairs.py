@@ -1,5 +1,7 @@
 from components.tiles import TileEntity
-from components import Sprite, GameMaster, Interactable
+from components.graphics.sprite import Sprite
+from components.core.game_master import GameMaster
+from components.core.interactable import Interactable
 from utils.floor_transition import floor_transition
 
 class Stairs(TileEntity, Interactable):

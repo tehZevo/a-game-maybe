@@ -1,5 +1,5 @@
 from ecs import Component
-from components import Position
+from components.physics.position import Position
 
 #TODO: rename to SkillInstance or SkillEffect?
 class Skill(Component):

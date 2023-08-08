@@ -1,4 +1,5 @@
-from components import Skill, Position
+from components.skill.skill import Skill
+from components.physics.position import Position
 from actions import Action
 from utils.constants import DT
 

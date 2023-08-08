@@ -1,5 +1,5 @@
 from components.tiles import TileEntity
-from components import Sprite
+from components.graphics.sprite import Sprite
 
 class Wall(TileEntity):
   def __init__(self):

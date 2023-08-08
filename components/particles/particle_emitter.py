@@ -3,7 +3,7 @@ import random
 from pygame.math import Vector2
 
 from ecs import Component
-from components.position import Position
+from components.physics.position import Position
 from components.particles.particle_system import ParticleSystem
 from particles.particle import Particle
 from utils import Vector

@@ -1,7 +1,11 @@
 import random
 
 from ecs import Component
-from components import Actor, Stats, Position, Sprite, ItemDropper
+from components.actor.actor import Actor
+from components.actor.stats import Stats
+from components.physics.position import Position
+from components.graphics.sprite import Sprite
+from components.item.item_dropper import ItemDropper
 from items import Hat, Alpha
 from actions import Move, UseSkill
 from utils import Vector
@@ -34,7 +38,7 @@ class Enemy(Component):
 
   def update(self):
     #TODO: meh, dodging circular import
-    from components.player import Player
+    from components.actor.player import Player
 
     move_dir = Vector()
     enemy_pos = self.get_component(Position).pos

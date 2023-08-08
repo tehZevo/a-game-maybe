@@ -1,5 +1,5 @@
 from ecs import Component
-from components import Position
+from components.physics.position import Position
 
 LERP_RATE = 0.05
 

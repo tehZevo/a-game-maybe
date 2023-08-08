@@ -1,9 +1,11 @@
 import random
 
 from ecs import Component, Entity
-from components import Position
+from components.physics.position import Position
 from utils import Vector
 from utils.constants import DT
+
+#TODO: make tile entity?
 
 class Spawner(Component):
   #provide a type of component to spawn

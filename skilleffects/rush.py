@@ -1,5 +1,6 @@
 from skilleffects import SkillEffect
-from components import Position, Physics, Actor
+from components.physics.physics import Physics
+from components.actor.actor import Actor
 
 #rushing = moving in the facing direction
 class Rush(SkillEffect):

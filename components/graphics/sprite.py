@@ -3,7 +3,7 @@ from pygame.math import Vector2
 
 from utils.constants import PPU, PIXEL_SCALE
 from ecs import Component
-from components import Position
+from components.physics.position import Position
 
 class _Sprite(pygame.sprite.Sprite):
   def __init__(self):

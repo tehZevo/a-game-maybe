@@ -1,7 +1,9 @@
 import copy
 
 from ecs import Entity
-from components import Skill, Actor, Position
+from components.skill.skill import Skill
+from components.actor.actor import Actor
+from components.physics.position import Position
 from skilleffects import SkillEffect
 
 #TODO: max targets

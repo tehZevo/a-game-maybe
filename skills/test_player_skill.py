@@ -1,5 +1,5 @@
-from skilleffects import CircleTarget, Damage, Particles, Push, Rush, SelfTarget
-from components.enemy import Enemy
+from skilleffects import CircleTarget, Damage, EmitParticles, Push, Rush, SelfTarget
+from components.actor.enemy import Enemy
 
 test_player_skill = [
   SelfTarget([Rush(force=5000)]),
@@ -9,7 +9,7 @@ test_player_skill = [
     children=[
       Damage(100),
       Push(force=5000),
-      Particles(),
+      EmitParticles(),
     ]
   )
 ]

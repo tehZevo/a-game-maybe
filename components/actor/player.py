@@ -1,7 +1,8 @@
 import pygame
 
 from ecs import Component
-from components import Actor, Sprite
+from components.actor.actor import Actor
+from components.graphics.sprite import Sprite
 from actions import Move, UseSkill, Interact
 from utils import Vector
 

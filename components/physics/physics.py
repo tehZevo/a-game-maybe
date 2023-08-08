@@ -1,5 +1,5 @@
 from ecs import Component
-from components import Position
+from .position import Position
 from utils import Vector
 from utils.constants import DT
 

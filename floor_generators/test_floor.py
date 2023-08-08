@@ -1,9 +1,11 @@
 from floor_generators import FloorGenerator
-from components.tiles import Floor, Wall, Stairs
-from components.position import Position
-from components.player import Player
-from components.spawner import Spawner
-from components.enemy import Enemy
+from components.tiles.floor import Floor
+from components.tiles.wall import Wall
+from components.tiles.stairs import Stairs
+from components.tiles.spawner import Spawner
+from components.physics.position import Position
+from components.actor.player import Player
+from components.actor.enemy import Enemy
 from utils import Vector
 
 class TestFloor(FloorGenerator):

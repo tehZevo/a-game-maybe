@@ -1,5 +1,9 @@
 from ecs import Component
-from components import Physics, Sprite, Stats, ItemDropper, Equips
+from components.physics.physics import Physics
+from components.graphics.sprite import Sprite
+from components.actor.stats import Stats
+from components.item.item_dropper import ItemDropper
+from components.item.equips import Equips
 from utils import Vector
 
 class Actor(Component):

@@ -1,4 +1,4 @@
-from components import Position
+from components.physics.position import Position
 
 def find_in_range(world, component_type, pos, radius):
   ents = world.find(component_type)

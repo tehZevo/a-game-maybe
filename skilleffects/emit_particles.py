@@ -1,9 +1,8 @@
 from skilleffects import SkillEffect
 from components.particles.particle_emitter import ParticleEmitter
-from components.position import Position
+from components.physics.position import Position
 
-#TODO: rename to emitparticles
-class Particles(SkillEffect):
+class EmitParticles(SkillEffect):
   def __init__(self):
     super().__init__()
 
