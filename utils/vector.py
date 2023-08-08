@@ -44,7 +44,7 @@ class Vector:
 
   def __neg__(self):
     return Vector(-self.x, -self.y)
-    
+
   def __add__(self, other):
     if type(other) == Vector:
       return Vector(self.x + other.x, self.y + other.y)

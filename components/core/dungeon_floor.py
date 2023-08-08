@@ -7,5 +7,5 @@ class DungeonFloor(Component):
     self.generator = generator
 
   def start(self):
-    self.generator.generate(self.entity)
-    #TODO: alive=false after running?
+    self.generator.generate(self.entity.world)
+    self.entity.alive = False

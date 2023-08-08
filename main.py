@@ -1,5 +1,8 @@
 from game import Game
 
+#TODO: fix game slowing down after some time (fixes itself when moving dungeon floors, might be caused by enemies attacking player; leak?)
+# also remidied by killing enemies
+#TODO: make +y up
 #TODO: batch sprites more (use groups)
 #TODO: top level skill wrapper that defines things like use delay
 #TODO: ECS for particles so i can separate out particle behaviors

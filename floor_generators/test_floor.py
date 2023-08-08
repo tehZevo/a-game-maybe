@@ -17,17 +17,17 @@ class TestFloor(FloorGenerator):
     self.spawner_pos = Vector(10, 10)
     self.stairs_pos = Vector(3, 10)
 
-  def generate(self, floor_entity):
+  def generate(self, world):
     for x in range(self.width):
       for y in range(self.height):
         if x == 0 or x == self.width - 1 or y == 0 or y == self.height -1:
-          floor_entity.world.create_entity([Position(Vector(x, y)), Wall()])
+          world.create_entity([Position(Vector(x, y)), Wall()])
         else:
-          floor_entity.world.create_entity([Position(Vector(x, y)), Floor()])
+          world.create_entity([Position(Vector(x, y)), Floor()])
 
     #create stairs to this generator
-    floor_entity.world.create_entity([Position(self.stairs_pos), Stairs(self)])
+    world.create_entity([Position(self.stairs_pos), Stairs(self)])
 
-    floor_entity.world.create_entity([Position(self.spawner_pos), Spawner(Enemy)])
+    world.create_entity([Position(self.spawner_pos), Spawner(Enemy)])
     #TODO: need separate spawn function that creates players with given player data
-    floor_entity.world.create_entity([Position(self.player_spawn), Player()])
+    world.create_entity([Position(self.player_spawn), Player()])

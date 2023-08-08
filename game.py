@@ -17,7 +17,7 @@ class Game:
     #TODO: store a party (player game/"save" data) so player data can be repopulated on the new floor
 
     #TODO: make setup_world function?
-    self.world = floor_transition(TestFloor())
+    self.world = floor_transition(DFSGenerator())
     self.next_world = None
     self.init_world()
 
@@ -85,7 +85,7 @@ from components.physics.position import Position
 from components.particles.particle_system import ParticleSystem
 from components.core.game_master import GameMaster
 from ecs import Entity, World
-from floor_generators import TestFloor
+from floor_generators import TestFloor, DFSGenerator
 from utils.constants import FPS
 from utils.vector import Vector
 from utils.floor_transition import floor_transition
