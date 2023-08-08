@@ -11,4 +11,4 @@ class Move(Action):
     phys = self.get_component(Physics)
     stats = self.get_component(Stats)
     force = self.dir.normalized() * stats.secondary_stats.move_speed * stats.move_speed_multiplier
-    phys.apply_force(force.x, force.y)
+    phys.apply_force(force)

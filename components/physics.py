@@ -16,8 +16,10 @@ class Physics(Component):
     self.force = Vector()
     self.vel = Vector()
 
-  def apply_force(self, fx, fy):
-    self.force = self.force + Vector(fx, fy)
+  # def apply_force(self, fx, fy):
+  #   self.force = self.force + Vector(fx, fy)
+  def apply_force(self, force):
+    self.force = self.force + force
 
   def update(self):
     pc = self.get_component(Position)

@@ -6,3 +6,9 @@
 
 ## Usage
 `python main.py`
+
+
+## Attributions
+Some game icons from [game-icons.net](https://game-icons.net) by:
+* DarkZaitzev
+* Lorc

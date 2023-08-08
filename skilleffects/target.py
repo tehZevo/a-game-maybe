@@ -5,8 +5,6 @@ from components import Skill, Actor, Position
 from skilleffects import SkillEffect
 
 #TODO: max targets
-#TODO: maybe have target filters passed to a target?
-#TODO: actually, they probably need to be classes so they can be created from game data
 class Target(SkillEffect):
   def __init__(self, filters=[], children=[]):
     super().__init__()
@@ -23,10 +21,9 @@ class Target(SkillEffect):
     for target in actors:
       for child in self.children:
         #create new skill effect with target
-        #TODO: need to actually create a copy?
-        child = copy.copy(child) #TODO: test
+        child = copy.copy(child)
         child.target = target
         self.entity.world.create_entity([
           Position(target.get_component(Position).pos),
-          Skill(child, self.user)
+          Skill(child, self.user, self.entity)
         ])

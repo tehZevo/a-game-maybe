@@ -9,10 +9,13 @@ class SkillEffect:
     self.user = None
     self.target = None
     self.children = []
+    self.parent = None
 
-  def register(self, entity, user):
+  #TODO: i dont like this.. skill effects shouldnt store state
+  def register(self, entity, user, parent=None):
     self.entity = entity
     self.user = user
+    self.parent = parent
 
   def start(self):
     pass
