@@ -4,8 +4,8 @@ from save_data import SaveData
 
 from utils.constants import PPU
 
-SCREEN_WIDTH = 640
-SCREEN_HEIGHT = 480
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
 
 class Game:
   def __init__(self):

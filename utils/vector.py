@@ -21,6 +21,15 @@ class Vector:
       self.y / mag
     )
 
+  def abs(self):
+    return Vector(abs(self.x), abs(self.y))
+
+  def clip(self, vmin, vmax):
+    return Vector(
+      max(vmin.x, min(self.x, vmax.x)),
+      max(vmin.y, min(self.y, vmax.y)),
+    )
+
   def magnitude(self):
     return math.sqrt(self.x ** 2 + self.y ** 2)
 
@@ -33,6 +42,9 @@ class Vector:
   def copy(self):
     return Vector(self.x, self.y)
 
+  def __neg__(self):
+    return Vector(-self.x, -self.y)
+    
   def __add__(self, other):
     if type(other) == Vector:
       return Vector(self.x + other.x, self.y + other.y)

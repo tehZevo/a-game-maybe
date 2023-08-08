@@ -1,5 +1,5 @@
-# from components.player import Player
-# from components.equips import Equips
+from components.player import Player
+from components.equips import Equips
 
 class SaveData:
   def __init__(self, world):

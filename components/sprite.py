@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2
 
-from utils.constants import PPU
+from utils.constants import PPU, PIXEL_SCALE
 from ecs import Component
 from components import Position
 
@@ -24,6 +24,7 @@ class Sprite(Component):
 
   def set_sprite(self, path):
     self.img = pygame.image.load(path)
+    self.img = pygame.transform.scale(self.img, (self.img.get_width() * PIXEL_SCALE, self.img.get_height() * PIXEL_SCALE))
 
   def draw(self, screen, offset=None):
     #TODO: update rect position elsewhere..
