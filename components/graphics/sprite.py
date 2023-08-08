@@ -4,6 +4,7 @@ from pygame.math import Vector2
 from utils.constants import PPU, PIXEL_SCALE
 from ecs import Component
 from components.physics.position import Position
+from utils.image_cache import get_image
 
 class _Sprite(pygame.sprite.Sprite):
   def __init__(self):
@@ -23,7 +24,7 @@ class Sprite(Component):
     self.img = None
 
   def set_sprite(self, path):
-    self.img = pygame.image.load(path).convert_alpha()
+    self.img = get_image(path)
     self.img = pygame.transform.scale(self.img, (self.img.get_width() * PIXEL_SCALE, self.img.get_height() * PIXEL_SCALE))
 
   def draw(self, screen, offset=None):

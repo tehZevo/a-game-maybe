@@ -2,6 +2,7 @@ import pygame
 from pygame.math import Vector2
 
 from utils.constants import PPU, DT, PIXEL_SCALE
+from utils.image_cache import get_image
 
 #TODO: tintable particles
 #TODO: homing particles
@@ -14,7 +15,7 @@ from utils.constants import PPU, DT, PIXEL_SCALE
 class Particle(pygame.sprite.Sprite):
   def __init__(self, path, pos, vel=Vector2(0, 0), life=1):
     super().__init__()
-    self.image = pygame.image.load(path).convert_alpha()
+    self.image = get_image(path)
     self.image = pygame.transform.scale(self.image, (self.image.get_width() * PIXEL_SCALE, self.image.get_height() * PIXEL_SCALE))
 
     self.pos = pos
