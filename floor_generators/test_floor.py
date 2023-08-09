@@ -4,9 +4,9 @@ from components.tiles.stairs import Stairs
 from components.physics.position import Position
 from components.actor.player import Player
 from components.actor.enemy import Enemy
-from components.graphics.tileset import Tileset
 from tiles.wall import Wall
 from tiles.floor import Floor
+from tiles.tileset import Tileset
 from utils import Vector
 
 class TestFloor(FloorGenerator):

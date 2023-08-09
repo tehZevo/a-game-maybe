@@ -12,7 +12,7 @@ class DroppedItem(Component, Interactable):
 
   def interact(self, entity):
     #TODO: reee
-    from components.item_dropper import ItemDropper
+    from components.item.item_dropper import ItemDropper
     old_equip = entity.get_component(Equips).equip(self.item)
     #if we had something equipped in that slot, drop it
     if old_equip is not None:

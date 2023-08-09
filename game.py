@@ -64,7 +64,7 @@ class Game:
         self.screen.fill((0, 0, 0))
 
         #draw tileset (TODO: make this more generic, give tileset a sprite? idk)
-        self.world.find(Tileset)[0].get_component(Tileset).draw(self.screen, camera_offset)
+        self.world.find(BakedTileset)[0].get_component(BakedTileset).draw(self.screen, camera_offset)
 
         for e in self.world.entities:
           sprite = e.get_component(Sprite)
@@ -87,7 +87,7 @@ class Game:
 from components.actor.player import Player
 from components.graphics.sprite import Sprite
 from components.graphics.camera import Camera
-from components.graphics.tileset import Tileset
+from components.graphics.baked_tileset import BakedTileset
 from components.physics.position import Position
 from components.particles.particle_system import ParticleSystem
 from components.core.game_master import GameMaster

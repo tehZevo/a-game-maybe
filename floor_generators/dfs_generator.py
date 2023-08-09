@@ -6,7 +6,8 @@ from components.tiles.spawner import Spawner
 from components.physics.position import Position
 from components.actor.player import Player
 from components.actor.enemy import Enemy
-from components.graphics.tileset import Tileset
+from components.graphics.baked_tileset import BakedTileset
+from tiles.tileset import Tileset
 from tiles.wall import Wall
 from tiles.floor import Floor
 from utils import Vector
@@ -84,14 +85,16 @@ class DFSGenerator(FloorGenerator):
         is_not_doorway(y, x, 0, north) or \
         is_not_doorway(y, x, self.room_size - 1, south)
 
-    tiles = [[None for _ in range(self.room_size * self.floor_size)] for _ in range(self.room_size * self.floor_size)]
-    for x, y, north, south, east, west in rooms:
-      for rx in range(self.room_size):
-        for ry in range(self.room_size):
-          tile = Wall() if is_wall(rx, ry, north, south, east, west) else Floor()
-          tiles[x * self.room_size + rx][y * self.room_size + ry] = tile
+    tileset = Tileset(self.room_size * self.floor_size, self.room_size * self.floor_size)
+    for rx, ry, north, south, east, west in rooms:
+      for tx in range(self.room_size):
+        for ty in range(self.room_size):
+          tile = Wall() if is_wall(tx, ty, north, south, east, west) else Floor()
+          x = rx * self.room_size + tx
+          y = ry * self.room_size + ty
+          tileset.set_tile(x, y, tile)
 
-    world.create_entity([Tileset(tiles)])
+    world.create_entity([BakedTileset(tileset)])
 
     #create tile entities
     #create stairs to this generator
