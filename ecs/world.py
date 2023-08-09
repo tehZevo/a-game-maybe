@@ -9,7 +9,7 @@ class World:
     for component in components:
       entity.add_component(component)
     self.add_entity(entity)
-    
+
     return entity
 
   def add_entity(self, entity):
@@ -20,6 +20,10 @@ class World:
   #returns all entities with the given component
   def find(self, component_type):
     return [e for e in self.entities if e.get_component(component_type) is not None]
+
+  #shorthand for only returning the components from above
+  def find_components(self, component_type):
+    return [e.get_component(component_type) for e in self.find(component_type)]
 
   def update(self):
     for e in self.entities:

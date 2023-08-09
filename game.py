@@ -27,6 +27,8 @@ class Game:
     self.player = self.world.find(Player)[0]
     #store reference to game as an entity
     self.world.create_entity([GameMaster(self)])
+    #create renderer
+    self.renderer = self.world.create_entity([Renderer(self.screen)])
     #add particle system
     self.particle_system = self.world.create_entity([ParticleSystem()])
     #create camera that targets player
@@ -61,15 +63,8 @@ class Game:
         #render
         camera_pos = self.camera.get_component(Position).pos
         camera_offset = Vector2(*(camera_pos * PPU).tolist()) - Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-        self.screen.fill((0, 0, 0))
 
-        #draw tileset (TODO: make this more generic, give tileset a sprite? idk)
-        self.world.find(BakedTileset)[0].get_component(BakedTileset).draw(self.screen, camera_offset)
-
-        for e in self.world.entities:
-          sprite = e.get_component(Sprite)
-          if sprite is not None:
-            sprite.draw(self.screen, camera_offset)
+        self.renderer.get_component(Renderer).render()
 
         #draw particles
         self.particle_system.get_component(ParticleSystem).draw(self.screen, camera_offset)
@@ -85,14 +80,11 @@ class Game:
       self.next_world = None
 
 from components.actor.player import Player
-from components.graphics.sprite import Sprite
 from components.graphics.camera import Camera
-from components.graphics.baked_tileset import BakedTileset
+from components.graphics.renderer import Renderer
 from components.physics.position import Position
 from components.particles.particle_system import ParticleSystem
 from components.core.game_master import GameMaster
-from ecs import Entity, World
 from floor_generators import TestFloor, DFSGenerator
 from utils.constants import FPS
-from utils.vector import Vector
 from utils.floor_transition import floor_transition

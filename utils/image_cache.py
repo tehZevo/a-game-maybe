@@ -1,7 +1,9 @@
 import pygame
-from utils.constants import PIXEL_SCALE
+from utils.constants import PIXEL_SCALE, PPU
 
 cache = {}
+
+EMPTY_SURFACE = pygame.Surface((PPU, PPU))
 
 def get_image(path):
   if path not in cache:
