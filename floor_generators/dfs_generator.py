@@ -1,19 +1,20 @@
 import random
 
 from floor_generators import FloorGenerator
-from components.tiles.floor import Floor
-from components.tiles.wall import Wall
 from components.tiles.stairs import Stairs
 from components.tiles.spawner import Spawner
 from components.physics.position import Position
 from components.actor.player import Player
 from components.actor.enemy import Enemy
+from components.graphics.tileset import Tileset
+from tiles.wall import Wall
+from tiles.floor import Floor
 from utils import Vector
 
 class DFSGenerator(FloorGenerator):
   def __init__(self):
     super().__init__()
-    self.floor_size = 2 #in number of rooms wide/tall
+    self.floor_size = 8 #in number of rooms wide/tall
     self.room_size = 8
     self.door_width = 2
     self.player_spawn = Vector(2, 2)
@@ -83,14 +84,16 @@ class DFSGenerator(FloorGenerator):
         is_not_doorway(y, x, 0, north) or \
         is_not_doorway(y, x, self.room_size - 1, south)
 
+    tiles = [[None for _ in range(self.room_size * self.floor_size)] for _ in range(self.room_size * self.floor_size)]
     for x, y, north, south, east, west in rooms:
       for rx in range(self.room_size):
         for ry in range(self.room_size):
-          if is_wall(rx, ry, north, south, east, west):
-            world.create_entity([Position(Vector(x * self.room_size + rx, y * self.room_size + ry)), Wall()])
-          else:
-            world.create_entity([Position(Vector(x * self.room_size + rx, y * self.room_size + ry)), Floor()])
+          tile = Wall() if is_wall(rx, ry, north, south, east, west) else Floor()
+          tiles[x * self.room_size + rx][y * self.room_size + ry] = tile
 
+    world.create_entity([Tileset(tiles)])
+
+    #create tile entities
     #create stairs to this generator
     world.create_entity([Position(self.stairs_pos), Stairs(self)])
 

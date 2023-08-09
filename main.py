@@ -1,7 +1,8 @@
 from game import Game
 
-#TODO: cache images
-#TODO: draw static dungeon tiles to a surface
+#TODO: make tileset class with width/height and set_tile(x,y)
+#TODO: then bake tileset onto surface with a BakedTileset (graphics)
+
 #TODO: knock back enemy if you do more than 10% of its hp?
 #TODO: refactor skill effect targets to be a component on the skill entity
 #TODO: make it possible to buffer a "look" between skills

@@ -18,6 +18,7 @@ class Game:
 
     #TODO: make setup_world function?
     self.world = floor_transition(DFSGenerator())
+    # self.world = floor_transition(TestFloor())
     self.next_world = None
     self.init_world()
 
@@ -61,11 +62,16 @@ class Game:
         camera_pos = self.camera.get_component(Position).pos
         camera_offset = Vector2(*(camera_pos * PPU).tolist()) - Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.screen.fill((0, 0, 0))
+
+        #draw tileset (TODO: make this more generic, give tileset a sprite? idk)
+        self.world.find(Tileset)[0].get_component(Tileset).draw(self.screen, camera_offset)
+
         for e in self.world.entities:
           sprite = e.get_component(Sprite)
           if sprite is not None:
             sprite.draw(self.screen, camera_offset)
 
+        #draw particles
         self.particle_system.get_component(ParticleSystem).draw(self.screen, camera_offset)
 
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
@@ -81,6 +87,7 @@ class Game:
 from components.actor.player import Player
 from components.graphics.sprite import Sprite
 from components.graphics.camera import Camera
+from components.graphics.tileset import Tileset
 from components.physics.position import Position
 from components.particles.particle_system import ParticleSystem
 from components.core.game_master import GameMaster

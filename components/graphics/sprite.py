@@ -25,7 +25,6 @@ class Sprite(Component):
 
   def set_sprite(self, path):
     self.img = get_image(path)
-    self.img = pygame.transform.scale(self.img, (self.img.get_width() * PIXEL_SCALE, self.img.get_height() * PIXEL_SCALE))
 
   def draw(self, screen, offset=None):
     #TODO: update rect position elsewhere..

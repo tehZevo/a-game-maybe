@@ -16,7 +16,6 @@ class Particle(pygame.sprite.Sprite):
   def __init__(self, path, pos, vel=Vector2(0, 0), life=1):
     super().__init__()
     self.image = get_image(path)
-    self.image = pygame.transform.scale(self.image, (self.image.get_width() * PIXEL_SCALE, self.image.get_height() * PIXEL_SCALE))
 
     self.pos = pos
     self.vel = vel

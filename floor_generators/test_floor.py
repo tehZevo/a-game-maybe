@@ -1,11 +1,12 @@
 from floor_generators import FloorGenerator
-from components.tiles.floor import Floor
-from components.tiles.wall import Wall
-from components.tiles.stairs import Stairs
 from components.tiles.spawner import Spawner
+from components.tiles.stairs import Stairs
 from components.physics.position import Position
 from components.actor.player import Player
 from components.actor.enemy import Enemy
+from components.graphics.tileset import Tileset
+from tiles.wall import Wall
+from tiles.floor import Floor
 from utils import Vector
 
 class TestFloor(FloorGenerator):
@@ -18,12 +19,18 @@ class TestFloor(FloorGenerator):
     self.stairs_pos = Vector(3, 10)
 
   def generate(self, world):
+    tiles = [[None for _ in range(self.width)] for _ in range(self.height)]
     for x in range(self.width):
       for y in range(self.height):
+        tile = None
         if x == 0 or x == self.width - 1 or y == 0 or y == self.height -1:
-          world.create_entity([Position(Vector(x, y)), Wall()])
+          tile = Wall()
         else:
-          world.create_entity([Position(Vector(x, y)), Floor()])
+          tile = Floor()
+
+        tiles[x][y] = tile
+
+    world.create_entity([Tileset(tiles)])
 
     #create stairs to this generator
     world.create_entity([Position(self.stairs_pos), Stairs(self)])
