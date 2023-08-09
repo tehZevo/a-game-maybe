@@ -3,6 +3,7 @@ from components.physics.physics import Physics
 from components.physics.collisions import Collisions
 from components.graphics.sprite import Sprite
 from components.actor.stats import Stats
+from components.actor.damage_listener import DamageListener
 from components.item.item_dropper import ItemDropper
 from components.item.equips import Equips
 from utils import Vector
@@ -23,6 +24,11 @@ class Actor(Component):
   def damage(self, amount):
     stats = self.get_component(Stats)
     stats.hp -= amount
+    #find all damage listeners and call their on_damage
+    for listener in self.entity.find(DamageListener):
+      #TODO: add source
+      source = None
+      listener.on_damage(source)
 
   def start_action(self, action):
     self.action = action

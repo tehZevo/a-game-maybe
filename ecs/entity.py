@@ -22,6 +22,13 @@ class Entity:
     component.register(self)
     self.components[component.__class__.__name__] = component
 
+  def remove_component(self, component):
+    #TODO: on remove?
+    self.components = {t: c for t, c in self.components.items() if c != component}
+
+  def find(self, component_type):
+    return [c for c in self.components.values() if issubclass(c.__class__, component_type)]
+
   #will return subtypes of the given component type
   def get_component(self, type):
     #TODO: what if we have two subclasses of the same component on the entity?

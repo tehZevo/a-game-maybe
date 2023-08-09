@@ -1,6 +1,7 @@
 from skilleffects import SkillEffect
 from components.actor.actor import Actor
 from components.actor.stats import Stats
+from components.actor.invulnerable import Invulnerable
 
 class Damage(SkillEffect):
   def __init__(self, power=100):
@@ -9,6 +10,9 @@ class Damage(SkillEffect):
     self.power = power
 
   def start(self):
+    if self.target.get_component(Invulnerable) is not None:
+      return
+
     #calc damage
     user_stats = self.user.get_component(Stats).secondary_stats
     target_stats = self.target.get_component(Stats).secondary_stats

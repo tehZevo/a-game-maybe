@@ -5,7 +5,7 @@ test_enemy_skill = CircleTarget(
   component_target=Player,
   radius=3,
   children=[
-    Damage(100),
+    Damage(75),
     EmitParticles(),
   ]
 )

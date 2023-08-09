@@ -18,9 +18,6 @@ class DFSGenerator(FloorGenerator):
     self.floor_size = 4 #in number of rooms wide/tall
     self.room_size = 8
     self.door_width = 2
-    # self.player_spawn = Vector(2, 2)
-    # self.spawner_pos = Vector(10, 10)
-    # self.stairs_pos = Vector(3, 10)
 
   def build_dfs(self):
     def oob(x, y):
@@ -101,7 +98,6 @@ class DFSGenerator(FloorGenerator):
           tileset.set_tile(x, y, tile)
 
     world.create_entity([BakedTileset(tileset)])
-
 
     #choose random room to put stairs in
     x, y, _, _, _, _ = random.choice(rooms)
