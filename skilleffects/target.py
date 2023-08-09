@@ -1,6 +1,5 @@
 import copy
 
-from ecs import Entity
 from components.skill.skill import Skill
 from components.actor.actor import Actor
 from components.physics.position import Position
@@ -12,13 +11,15 @@ class Target(SkillEffect):
     super().__init__()
     self.filters = filters
     self.children = children
+    self.user = None
 
   def start(self):
     #find all actors in range
     actors = self.entity.world.find(Actor)
     #filter actors based on filter condition(s)
+    skill_comp = self.entity.get_component(Skill)
     for filter in self.filters:
-      actors = [a for a in actors if filter(self.entity, a)]
+      actors = [a for a in actors if filter(skill_comp)(a)]
 
     for target in actors:
       for child in self.children:

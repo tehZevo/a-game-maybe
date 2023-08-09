@@ -1,4 +1,5 @@
 from ecs import Component
+from stats import calculator
 
 #TODO: solve circular dependencies by implementing equiplistener?
 class Stats(Component):
@@ -31,6 +32,3 @@ class Stats(Component):
     self.primary_stats, self.equip_stats, self.secondary_stats = calculator.calculate(self.entity)
     self.hp = min(self.hp, self.secondary_stats.hp)
     self.mp = min(self.mp, self.secondary_stats.mp)
-
-#TODO: reee
-from stats import calculator

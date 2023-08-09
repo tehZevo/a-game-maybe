@@ -6,18 +6,24 @@ from components.actor.stats import Stats
 from components.physics.position import Position
 from components.graphics.sprite import Sprite
 from components.item.item_dropper import ItemDropper
-from items import Hat, Alpha
+from components.teams.team import Team
+from items import Hat, SkillItem
 from actions import Move, UseSkill
 from utils import Vector
+from utils.teams import ENEMY
 
 class Enemy(Component):
   def __init__(self):
     super().__init__()
+    #TODO: reee
+    from skills.test_alpha_skill import test_alpha_skill
+
     self.require(Actor)
     self.target_distance = 5
     self.target = None
-    self.drops = [Hat, Alpha]
-    self.drop_rate = 0.25
+    #drops are instantiated here, and have a drop_rate chance of dropping each
+    #TODO: store this in a "inventory" (which can be shared with chest tileentity)?
+    self.drops = [Hat(), SkillItem(test_alpha_skill)]
     self.follow_dist = 2
     #TODO: reee
     from skills.test_enemy_skill import test_enemy_skill
@@ -27,14 +33,16 @@ class Enemy(Component):
     #make enemies 1/4 base player speed
     self.get_component(Stats).move_speed_multiplier = 0.25
     self.get_component(Sprite).set_sprite("assets/enemy.png")
+    self.get_component(Team).team = ENEMY
 
   def on_destroy(self):
-    #drop item
+    #drop items
     dropper = self.get_component(ItemDropper)
     pos = self.get_component(Position).pos
-    if random.random() < self.drop_rate:
-      item = random.choice(self.drops)
-      dropper.drop(item(), pos)
+    #chance to drop each item based on its drop rate
+    for item in self.drops:
+      if random.random() < item.drop_rate:
+        dropper.drop(item, pos)
 
   def update(self):
     #TODO: meh, dodging circular import

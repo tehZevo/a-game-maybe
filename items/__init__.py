@@ -7,5 +7,4 @@ from .hat import Hat
 from .weapon import Weapon
 from .hands import Hands
 
-from .skill import Skill
-from .alpha import Alpha
+from .skill_item import SkillItem

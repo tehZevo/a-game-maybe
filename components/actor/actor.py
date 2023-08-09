@@ -6,6 +6,7 @@ from components.actor.stats import Stats
 from components.actor.damage_listener import DamageListener
 from components.item.item_dropper import ItemDropper
 from components.item.equips import Equips
+from components.teams.team import Team
 from utils import Vector
 
 class Actor(Component):
@@ -17,6 +18,7 @@ class Actor(Component):
     self.require(ItemDropper)
     self.require(Equips)
     self.require(Collisions)
+    self.require(Team)
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)

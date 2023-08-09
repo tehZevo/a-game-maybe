@@ -1,5 +1,8 @@
 from ecs import Component
 from components.core import Interactable
+from components.graphics.sprite import Sprite
+from components.physics.position import Position
+from components.item.equips import Equips
 
 class DroppedItem(Component, Interactable):
   def __init__(self, item):
@@ -19,8 +22,3 @@ class DroppedItem(Component, Interactable):
       entity.get_component(ItemDropper).drop(old_equip, entity.get_component(Position).pos)
 
     self.entity.remove()
-
-#TODO: reee
-from components.graphics.sprite import Sprite
-from components.physics.position import Position
-from components.item.equips import Equips

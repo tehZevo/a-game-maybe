@@ -1,11 +1,14 @@
 from ecs import Component
-from items import Armor, Skill
+from items import Armor, SkillItem
 from items.slots import ArmorSlot, SkillSlot
 from components.actor.stats import Stats
 from components.core.savable import Savable
 
 NUM_WEAPONS = 2
 
+#TODO: separate skills from equips?
+# maybe monsters shouldnt have skills in "slots", but should still "wear" equips (to better control their stats)
+# that or have monster archetypes that just have stats...
 class Equips(Component, Savable):
   def __init__(self):
     super().__init__()
@@ -25,15 +28,17 @@ class Equips(Component, Savable):
     return self.weapons[self.cur_weapon]
 
   def equip(self, item):
+    #TODO: equipping weapons
+
     if issubclass(type(item), Armor):
       cur_equip = self.armor[item.slot]
       self.armor[item.slot] = item
       self.get_component(Stats).recalculate()
       return cur_equip
 
-    if issubclass(type(item), Skill):
-      cur_equip = self.skills[item.slot]
-      self.skills[item.slot] = item
+    if issubclass(type(item), SkillItem):
+      cur_equip = self.skills[item.skilldef.slot]
+      self.skills[item.skilldef.slot] = item
       self.get_component(Stats).recalculate()
       return cur_equip
 
