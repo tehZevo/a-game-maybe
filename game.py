@@ -16,7 +16,11 @@ class Game:
 
     #TODO: store a party (player game/"save" data) so player data can be repopulated on the new floor
 
-    #TODO: make setup_world function?
+    #create ui world and manager
+    self.ui_world = World()
+    self.ui_manager = self.ui_world.create_entity([UIManager()])
+
+    #TODO: rename to game_world?
     self.world = floor_transition(DFSGenerator())
     # self.world = floor_transition(TestFloor())
     self.next_world = None
@@ -40,6 +44,11 @@ class Game:
     #apply save data
     if save_data is not None:
       save_data.apply(self.world)
+
+    #set ui manager world and player
+    uim_comp = self.ui_manager.get_component(UIManager)
+    uim_comp.game_world = self.world
+    uim_comp.set_player(self.player)
 
   def transition(self, world):
     self.next_world = world
@@ -69,6 +78,10 @@ class Game:
         #draw particles
         self.particle_system.get_component(ParticleSystem).draw(self.screen, camera_offset)
 
+        #draw UI
+        self.ui_world.update()
+        self.ui_manager.get_component(UIManager).draw(self.screen)
+
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
 
         pygame.display.flip()
@@ -79,12 +92,14 @@ class Game:
       self.init_world(save_data)
       self.next_world = None
 
+from ecs import World
 from components.actor.player import Player
 from components.graphics.camera import Camera
 from components.graphics.renderer import Renderer
 from components.physics.position import Position
 from components.particles.particle_system import ParticleSystem
 from components.core.game_master import GameMaster
+from components.ui.ui_manager import UIManager
 from floor_generators import TestFloor, DFSGenerator
 from utils.constants import FPS
 from utils.floor_transition import floor_transition

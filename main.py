@@ -1,5 +1,10 @@
 from game import Game
 
+#TODO: icon ui component to draw equips and skills
+#TODO: make ui components mountable to screen corners/edges and then use position as an offset
+#TODO: use drawable in renderer
+#TODO: make debug skill that restores all health and mana
+
 #TODO: improve collisions (remove small pixel gap on bottom/right collisions)
 #TODO: make collision debug drawing
 #TODO: merge solid tile rects greedily

@@ -14,4 +14,6 @@ class Damage(SkillEffect):
     target_stats = self.target.get_component(Stats).secondary_stats
     #TODO: assumes physical, add constructor param for phys/mag
     damage = user_stats.phys_att * self.power / 100. - target_stats.phys_def
+    #dont heal lol
+    damage = max(damage, 0)
     self.target.get_component(Actor).damage(damage)
