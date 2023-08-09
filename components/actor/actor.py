@@ -1,5 +1,6 @@
 from ecs import Component
 from components.physics.physics import Physics
+from components.physics.collisions import Collisions
 from components.graphics.sprite import Sprite
 from components.actor.stats import Stats
 from components.item.item_dropper import ItemDropper
@@ -14,6 +15,7 @@ class Actor(Component):
     self.require(Stats)
     self.require(ItemDropper)
     self.require(Equips)
+    self.require(Collisions)
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)

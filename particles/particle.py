@@ -20,6 +20,7 @@ class Particle(pygame.sprite.Sprite):
     self.pos = pos
     self.vel = vel
     self.life = life
+    #TODO: do particles actually need a rect? just use position
     self.rect = pygame.Rect(0, 0, 0, 0)
 
   def update(self):

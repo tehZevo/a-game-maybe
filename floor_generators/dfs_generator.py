@@ -15,12 +15,12 @@ from utils import Vector
 class DFSGenerator(FloorGenerator):
   def __init__(self):
     super().__init__()
-    self.floor_size = 8 #in number of rooms wide/tall
+    self.floor_size = 4 #in number of rooms wide/tall
     self.room_size = 8
     self.door_width = 2
-    self.player_spawn = Vector(2, 2)
-    self.spawner_pos = Vector(10, 10)
-    self.stairs_pos = Vector(3, 10)
+    # self.player_spawn = Vector(2, 2)
+    # self.spawner_pos = Vector(10, 10)
+    # self.stairs_pos = Vector(3, 10)
 
   def build_dfs(self):
     def oob(x, y):
@@ -87,6 +87,12 @@ class DFSGenerator(FloorGenerator):
 
     tileset = Tileset(self.room_size * self.floor_size, self.room_size * self.floor_size)
     for rx, ry, north, south, east, west in rooms:
+      #randomly create spawners
+      if random.random() < 0.5:
+        world.create_entity([
+          Position(Vector(rx * self.room_size + self.room_size / 2, ry * self.room_size + self.room_size / 2)),
+          Spawner(Enemy, radius=2, wave_time=2, wave_count=1, spawn_max=3)
+        ])
       for tx in range(self.room_size):
         for ty in range(self.room_size):
           tile = Wall() if is_wall(tx, ty, north, south, east, west) else Floor()
@@ -96,10 +102,13 @@ class DFSGenerator(FloorGenerator):
 
     world.create_entity([BakedTileset(tileset)])
 
-    #create tile entities
-    #create stairs to this generator
-    world.create_entity([Position(self.stairs_pos), Stairs(self)])
 
-    world.create_entity([Position(self.spawner_pos), Spawner(Enemy)])
+    #choose random room to put stairs in
+    x, y, _, _, _, _ = random.choice(rooms)
+    #create stairs to this generator
+    world.create_entity([Position(Vector(x * self.room_size + self.room_size / 2, x * self.room_size + self.room_size / 2)), Stairs(self)])
+
+    #choose random room to spawn player in
+    x, y, _, _, _, _ = random.choice(rooms)
     #TODO: need separate spawn function that creates players with given player data
-    world.create_entity([Position(self.player_spawn), Player()])
+    world.create_entity([Position(Vector(x * self.room_size + self.room_size / 2, x * self.room_size + self.room_size / 2)), Player()])

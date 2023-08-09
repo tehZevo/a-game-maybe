@@ -1,18 +1,19 @@
 from game import Game
 
+#TODO: improve collisions (remove small pixel gap on bottom/right collisions)
+#TODO: make collision debug drawing
+#TODO: merge solid tile rects greedily
 #TODO: knock back enemy if you do more than 10% of its hp?
 #TODO: refactor skill effect targets to be a component on the skill entity
-#TODO: make it possible to buffer a "look" between skills
+#TODO: make it possible to buffer a "face direction" between skills
 # does this mean allowing skills to be used in a certain direction?
 #TODO: maybe make direction component for tileentity facing direction
 # how to handle fine-grained direction for actor though? is that even needed?
 #TODO: fix game slowing down after some time (fixes itself when moving dungeon floors, might be caused by enemies attacking player; leak?)
 # also remidied by killing enemies
 #TODO: make +y up
-#TODO: batch sprites more (use groups)
 #TODO: top level skill wrapper that defines things like use delay
 #TODO: ECS for particles so i can separate out particle behaviors
-#TODO: collisions
 #TODO: reduce delay on interact (will require handling key pressed events so player cant hold to repeatedly interact)
 #TODO: fix subpixel glitchiness
 #TODO: make 0, 0 center of sprites

@@ -23,6 +23,7 @@ class Renderer(Component):
     camera_offset = Vector2(*(camera_pos * PPU).tolist()) - Vector2(self.width / 2, self.height / 2)
 
     for entity in self.entity.world.find(Sprite):
-      sprite = entity.get_component(Sprite)
       surface = entity.get_component(Surface)
-      self.screen.blit(surface.surface, sprite.rect.center - camera_offset)
+      pos = entity.get_component(Position).pos
+      pos = Vector2(*(e * PPU for e in pos.tolist()))
+      self.screen.blit(surface.surface, pos - camera_offset)
