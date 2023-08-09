@@ -1,5 +1,8 @@
 from game import Game
 
+#TODO: make it so target effects require LOS (flag?)
+#TODO: damage hits (basically a delay+repeat of damage)
+#TODO: add invulnerability animation
 #TODO: icon ui component to draw equips and skills
 #TODO: make ui components mountable to screen corners/edges and then use position as an offset
 #TODO: use drawable in renderer

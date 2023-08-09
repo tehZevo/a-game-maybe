@@ -6,3 +6,5 @@ from skilleffects.self_target import SelfTarget
 from skilleffects.emit_particles import EmitParticles
 from skilleffects.push import Push
 from skilleffects.rush import Rush
+from skilleffects.restore_health import RestoreHealth
+from skilleffects.restore_mana import RestoreMana

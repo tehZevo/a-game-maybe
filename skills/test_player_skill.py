@@ -1,7 +1,8 @@
 from skilleffects import CircleTarget, Damage, EmitParticles, Push, Rush, SelfTarget
+from .skilldef import SkillDef
 from components.actor.enemy import Enemy
 
-test_player_skill = [
+test_player_skill = SkillDef([
   SelfTarget([Rush(force=5000)]),
   CircleTarget(
     component_target=Enemy,
@@ -12,4 +13,4 @@ test_player_skill = [
       EmitParticles(),
     ]
   )
-]
+], mp_cost=10, use_time=0.25)

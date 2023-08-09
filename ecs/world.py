@@ -1,3 +1,4 @@
+from itertools import chain
 from ecs import Entity
 
 class World:
@@ -21,9 +22,9 @@ class World:
   def find(self, component_type):
     return [e for e in self.entities if e.get_component(component_type) is not None]
 
-  #shorthand for only returning the components from above
   def find_components(self, component_type):
-    return [e.get_component(component_type) for e in self.find(component_type)]
+    #return ALL components that match
+    return list(chain.from_iterable([e.find(component_type) for e in self.find(component_type)]))
 
   def update(self):
     for e in self.entities:

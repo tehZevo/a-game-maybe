@@ -1,20 +1,33 @@
 from components.skill.skill import Skill
 from components.physics.position import Position
+from components.actor.stats import Stats
 from actions import Action
 from utils.constants import DT
 
 class UseSkill(Action):
-  def __init__(self, effects):
+  def __init__(self, skilldef):
     super().__init__()
     self.interruptible = False
-    self.active = True
-    #TODO: really should wrap effects in a skill object
-    self.effects = [effects] if type(effects) != list else effects
-    #TODO: hardcoded use time (should be member of skill class)
-    self.use_time = 0.5
+    self.active = False
+    self.skilldef = skilldef
+    self.use_time = self.skilldef.use_time
 
   def start(self):
-    for effect in self.effects:
+    stats = self.entity.get_component(Stats)
+
+    #check hp/mp cost
+    if stats.hp < self.skilldef.hp_cost:
+      return
+    if stats.mp < self.skilldef.mp_cost:
+      return
+
+    self.active = True
+
+    #deduct hp/mp cost
+    stats.add_hp(-self.skilldef.hp_cost)
+    stats.add_mp(-self.skilldef.mp_cost)
+
+    for effect in self.skilldef.effects:
       #create skill effect in world at user position
       self.entity.world.create_entity([
         Position(self.entity.get_component(Position).pos),
@@ -22,6 +35,9 @@ class UseSkill(Action):
       ])
 
   def update(self):
+    if not self.active:
+      return
+
     self.use_time -= DT
     if self.use_time <= 0:
       self.active = False

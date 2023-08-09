@@ -15,6 +15,18 @@ class Stats(Component):
     self.hp = self.secondary_stats.hp
     self.mp = self.secondary_stats.mp
 
+  def add_hp(self, hp):
+    self.set_hp(self.hp + hp)
+
+  def add_mp(self, mp):
+    self.set_mp(self.mp + mp)
+
+  def set_hp(self, hp):
+    self.hp = max(0, min(hp, self.secondary_stats.hp))
+
+  def set_mp(self, mp):
+    self.mp = max(0, min(mp, self.secondary_stats.mp))
+
   def recalculate(self):
     self.primary_stats, self.equip_stats, self.secondary_stats = calculator.calculate(self.entity)
     self.hp = min(self.hp, self.secondary_stats.hp)

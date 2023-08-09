@@ -9,6 +9,7 @@ from actions import Move, UseSkill, Interact
 from utils import Vector
 
 from skills.test_player_skill import test_player_skill
+from skills.hax_heal import hax_heal
 
 PLAYER_INVULN_TIME = 1 #seconds
 
@@ -27,6 +28,8 @@ class Player(Component, DamageListener):
   def handle_keys(self, keys):
     if keys[pygame.K_a]:
       self.get_component(Actor).act(UseSkill(test_player_skill))
+    if keys[pygame.K_s]:
+      self.get_component(Actor).act(UseSkill(hax_heal))
 
     if keys[pygame.K_SPACE]:
       self.get_component(Actor).act(Interact())
