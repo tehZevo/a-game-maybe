@@ -9,6 +9,7 @@ from game.components.physics import Position
 from game.components.particles import ParticleSystem
 from game.components.core import GameMaster
 from game.components.ui import UIManager
+from game.components.networking import ServerManager
 from game.utils.constants import FPS, PPU
 from game.utils.floor_transition import floor_transition
 from game.floor_generators import TestFloor, DFSGenerator
@@ -58,6 +59,13 @@ class Game:
     uim_comp = self.ui_manager.get_component(UIManager)
     uim_comp.game_world = self.world
     uim_comp.set_player(self.player)
+
+    #create server
+    #TODO: actually.. maybe server should exist outside lol...
+    # that or we should create a server first and then pass the existing one to the Server component
+    self.world.create_entity([
+      ServerManager()
+    ])
 
   def transition(self, world):
     self.next_world = world

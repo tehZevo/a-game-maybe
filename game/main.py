@@ -8,6 +8,10 @@ from .game import Game
 #- server has an ECS with a Server entity (or one per player?) to determine what events to send
 #- client has its own ECS with a Client entity (receives events and takes the appropriate action (creating ents/components, etc))
 #- client and server likely have separate components (eg client may have a "dummy physics" that just interpolates physics from server)
+#- push events/commands from client/server onto a queue
+#- usher events to their respective handlers (components should implement handler types)
+#TODO: receive events, dump onto queue, pop off queue during update and.. do server stuff
+#TODO: component for marking networked entities (store ID here!)
 
 #TODO: refactor skill effect targets to be a component on the skill entity
 #TODO: refactor skill effects to not store state
