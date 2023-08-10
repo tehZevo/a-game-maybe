@@ -14,7 +14,7 @@ class ClientManager(Component):
   def start(self):
     self.client = Client(
       connect_handlers=[TestConnectHandler()],
-      event_handlers=[TilesetUpdatedHandler()]
+      event_handlers=[TilesetUpdatedHandler(self)]
     )
     self.client.connect()
     # self.client.send(TestCommand)

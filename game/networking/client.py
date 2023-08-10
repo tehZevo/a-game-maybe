@@ -1,6 +1,8 @@
 from collections import defaultdict
 import json
 
+import dacite
+
 from game.utils.networking import create_ws_client
 
 class Client:
@@ -39,7 +41,9 @@ class Client:
     message = json.loads(message)
     event_type_name = message["type"]
     #construct event
-    event = self.event_types[event_type_name](**message["data"])
+    # event = self.event_types[event_type_name](**message["data"])
+    event = dacite.from_dict(self.event_types[event_type_name], message["data"])
+    print(event)
     #tell all handlers about event
     for handler in self.event_handlers[event.__class__]:
       handler.handle(self, event)

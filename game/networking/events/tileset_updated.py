@@ -8,8 +8,9 @@ class TilesetUpdated:
   tileset: Tileset
 
 class TilesetUpdatedHandler(EventHandler):
-  def __init__(self):
+  def __init__(self, client_manager):
     super().__init__(TilesetUpdated)
+    self.client_manager = client_manager
 
   def handle(self, client, event):
-    print("received tileset", event)
+    print(type(event.tileset))
