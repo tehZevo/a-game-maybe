@@ -18,7 +18,7 @@ class Client:
     #add handler to list of handlers for given event type
     self.event_handlers[handler.event_type].append(handler)
     #store event type for quick retrieval
-    self.event_types[handler.event_types.__name__] = handler.event_types
+    self.event_types[handler.event_type.__name__] = handler.event_type
 
   def connect(self, host="localhost", port=8765):
     create_ws_client(self.on_connect, self.on_disconnect, self.on_message, host, port)
@@ -36,14 +36,13 @@ class Client:
 
   def on_message(self, message):
     #parse and read event type
-    message = json.reads(message)
-    event_type = message["type"]
+    message = json.loads(message)
+    event_type_name = message["type"]
     #construct event
-    event = self.event_types[event_type](**message["data"])
-
+    event = self.event_types[event_type_name](**message["data"])
     #tell all handlers about event
-    for handler in self.event_handlers[event_type]:
-      handler.handle(server, event)
+    for handler in self.event_handlers[event.__class__]:
+      handler.handle(self, event)
 
   def build_command(self, command):
     command_type = command.__class__.__name__
@@ -51,7 +50,7 @@ class Client:
       "type": command_type,
       "data": command.__dict__
     }
-    return json.dumps(command)
+    return json.dumps(command, default=lambda o: o.__dict__)
 
   def send(self, command):
     self.ws.send(self.build_command(command))

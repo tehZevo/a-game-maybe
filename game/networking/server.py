@@ -51,7 +51,7 @@ class Server:
       "type": event_type,
       "data": event.__dict__
     }
-    return json.dumps(event)
+    return json.dumps(event, default=lambda o: o.__dict__)
 
   def send(self, id, event):
     self.clients[id].send(self.build_event(event))
