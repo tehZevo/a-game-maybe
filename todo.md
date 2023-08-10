@@ -1,0 +1,47 @@
+- EntityEvent type that takes a Networked component include entity's id with event
+- target effects should have a selection order (nearest/random)
+- networking
+  - commands: sent from client to server
+  - events: sent from server to client
+  - server has an ECS with a Server entity (or one per player?) to determine what events to send
+  - client has its own ECS with a Client entity (receives events and takes the appropriate action (creating ents/components, etc))
+  - client and server likely have separate components (eg client may have a "dummy physics" that just interpolates physics from server)
+  - push events/commands from client/server onto a queue
+  - usher events to their respective handlers (components should implement handler types)
+- receive events, dump onto queue, pop off queue during update and.. do server stuff
+- component for marking networked entities (store ID here!)
+- refactor skill effect targets to be a component on the skill entity
+- refactor skill effects to not store state
+- add "target type" to target skill effects to avoid referencing player/enemy in skills themselves and to make skills user agnostic
+- fix items getting stuck to player on pickup
+- cache component -> entity mapping so we can find entities in constant time
+- make it so target effects require LOS (flag?)
+- damage hits (basically a delay+repeat of damage)
+- add invulnerability animation
+- icon ui component to draw equips and skills
+- make ui components mountable to screen corners/edges and then use position as an offset
+- use drawable in renderer
+- improve collisions (remove small pixel gap on bottom/right collisions)
+- make collision debug drawing
+- merge solid tile rects greedily
+- knock back enemy if you do more than 10% of its hp?
+- make it possible to buffer a "face direction" between skills
+  - does this mean allowing skills to be used in a certain direction?
+- maybe make direction component for tileentity facing direction
+  - how to handle fine-grained direction for actor though? is that even needed?
+- fix game slowing down after some time (fixes itself when moving dungeon floors, might be caused by enemies attacking player; leak?)
+  - also remidied by killing enemies
+- make +y up
+- ECS for particles so i can separate out particle behaviors
+- reduce delay on interact (will require handling key pressed events so player cant hold to repeatedly interact)
+- fix subpixel glitchiness
+- make 0, 0 center of sprites
+- box camera
+- add ysorting to camera
+- generator should make a player spawn point component, which players are spawned on by the generators spawn method
+- gold, health, mana drops: walk over them to pick them up
+- maybe distinction between world sprite and ui sprite
+- skill idea: "ally bomb" (or something like that): damage enemies nearby allies (target allies, then target enemies)
+- make targets have a filter type: "enemies" or "allies" or "self"? idk
+- distance based delay effect (delay in seconds per unit)
+- ranged attacks will feel nicer with a bit of delay (think magic claw from maple story)

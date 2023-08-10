@@ -1,5 +1,7 @@
 from .networking import Server, Client
 
+#TODO: update to use events/commands/handlers or remove
+
 class TestServer(Server):
   def __init__(self):
     super().__init__(self.on_connect, self.on_disconnect, self.on_message)

@@ -25,14 +25,5 @@ class BakedTileset(Component):
         image = get_image(tile.image_path)
         self.bake(image, x, y)
 
-  # def update(self):
-  #   #debug rects
-  #   screen = self.entity.world.find_components(Renderer)[0].screen
-  #   for rect in self.rects:
-  #     pygame.draw.rect(screen, (255, 0, 0), rect)
-  #
-  #   pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(1, 1, 1, 1))
-  #   pygame.display.flip()
-
   def bake(self, image, x, y):
     self.surface.surface.blit(image, (x * PPU, y * PPU))

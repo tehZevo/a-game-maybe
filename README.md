@@ -8,8 +8,10 @@
 `pip install -r requirements.txt`
 
 ## Usage
-`python -m game.main`
-
+*Server development is ongoing, currently this spawns 2 "games"*
+```
+python -m game.main
+```
 
 ## Attributions
 Some game icons from [game-icons.net](https://game-icons.net) by:

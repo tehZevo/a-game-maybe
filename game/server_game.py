@@ -17,7 +17,7 @@ from game.floor_generators import TestFloor, DFSGenerator
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
-class Game:
+class ServerGame:
   def __init__(self):
     pygame.init()
     self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
