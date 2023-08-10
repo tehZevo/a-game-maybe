@@ -1,5 +1,5 @@
-from ecs import Component
-from utils.image_cache import EMPTY_SURFACE
+from game.ecs import Component
+from game.utils.image_cache import EMPTY_SURFACE
 
 class Surface(Component):
   def __init__(self):

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 
-from utils.utils import dict_op
+from game.utils.utils import dict_op
 
 EquipStat = Enum("EquipStat", ["PATT", "MATT", "PDEF", "MDEF"])
 

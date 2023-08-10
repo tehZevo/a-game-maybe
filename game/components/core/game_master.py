@@ -1,5 +1,5 @@
-from ecs import Component
-from components.teams.team_manager import TeamManager, Disposition
+from game.ecs import Component
+from ..teams.team_manager import TeamManager, Disposition
 
 class GameMaster(Component):
   def __init__(self, game):

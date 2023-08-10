@@ -1,5 +1,5 @@
-from items import Item
-from stats import EquipStats, PrimaryStats, SecondaryStats
+from game.stats import EquipStats, PrimaryStats, SecondaryStats
+from . import Item
 
 class Equip(Item):
   def __init__(self):

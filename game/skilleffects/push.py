@@ -1,6 +1,5 @@
-from skilleffects import SkillEffect
-from components.physics.position import Position
-from components.physics.physics import Physics
+from game.components.physics import Position, Physics
+from . import SkillEffect
 
 #push effect pushes away from a given point
 #can also be used as a pull by using a negative force

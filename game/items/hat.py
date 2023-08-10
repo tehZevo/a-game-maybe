@@ -1,5 +1,5 @@
-from items import Armor
-from items.slots import ArmorSlot
+from .slots import ArmorSlot
+from . import Armor
 
 class Hat(Armor):
   def __init__(self):

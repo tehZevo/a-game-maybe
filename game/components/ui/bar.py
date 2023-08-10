@@ -1,6 +1,7 @@
 import pygame
+
+from ..physics import Position
 from .ui_component import UIComponent
-from components.physics.position import Position
 
 class Bar(UIComponent):
   def __init__(self):

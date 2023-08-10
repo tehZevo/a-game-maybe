@@ -1,5 +1,6 @@
 import pygame
-from utils.constants import PIXEL_SCALE, PPU
+
+from game.utils.constants import PIXEL_SCALE, PPU
 
 cache = {}
 

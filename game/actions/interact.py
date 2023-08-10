@@ -1,8 +1,8 @@
-from components.physics.position import Position
-from components.core.interactable import Interactable
-from actions import Action
-from utils.constants import DT
-from utils.find_in_range import find_in_range
+from . import Action
+from game.utils.constants import DT
+from game.utils.find_in_range import find_in_range
+from game.components.physics.position import Position
+from game.components.core.interactable import Interactable
 
 INTERACT_RADIUS = 1
 

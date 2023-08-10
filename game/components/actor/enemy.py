@@ -1,23 +1,21 @@
 import random
 
-from ecs import Component
-from components.actor.actor import Actor
-from components.actor.stats import Stats
-from components.physics.position import Position
-from components.graphics.sprite import Sprite
-from components.item.item_dropper import ItemDropper
-from components.teams.team import Team
-from items import Hat, SkillItem
-from actions import Move, UseSkill
-from utils import Vector
-from utils.teams import ENEMY
+from game.ecs import Component
+from game.items import Hat, SkillItem
+from game.actions import Move, UseSkill
+from game.skills import test_alpha_skill, test_enemy_skill
+from game.utils import Vector
+from game.utils.teams import ENEMY
+from ..physics import Position
+from ..graphics import Sprite
+from ..item import ItemDropper
+from ..teams import Team
+from . import Actor, Stats
+from .player import Player
 
 class Enemy(Component):
   def __init__(self):
     super().__init__()
-    #TODO: reee
-    from skills.test_alpha_skill import test_alpha_skill
-
     self.require(Actor)
     self.target_distance = 5
     self.target = None
@@ -25,8 +23,6 @@ class Enemy(Component):
     #TODO: store this in a "inventory" (which can be shared with chest tileentity)?
     self.drops = [Hat(), SkillItem(test_alpha_skill)]
     self.follow_dist = 2
-    #TODO: reee
-    from skills.test_enemy_skill import test_enemy_skill
     self.skill = test_enemy_skill
 
   def start(self):
@@ -45,8 +41,7 @@ class Enemy(Component):
         dropper.drop(item, pos)
 
   def update(self):
-    #TODO: meh, dodging circular import
-    from components.actor.player import Player
+
 
     move_dir = Vector()
     enemy_pos = self.get_component(Position).pos

@@ -1,6 +1,6 @@
-from ecs import Component, World
-from components.physics.position import Position
-from components.core.drawable import Drawable
+from game.ecs import Component, World
+from ..physics import Position
+from . import Drawable
 
 class UIComponent(Component, Drawable):
   def __init__(self):

@@ -1,10 +1,8 @@
-from ecs import Component
-from .position import Position
-from .collisions import Collisions
-from .rect import Rect
-from components.graphics.baked_tileset import BakedTileset
-from utils import Vector
-from utils.constants import DT, PHYS_SCALE
+from game.ecs import Component
+from game.utils import Vector
+from game.utils.constants import DT, PHYS_SCALE
+from . import Position, Collisions, Rect
+from ..graphics import BakedTileset
 
 DEFAULT_MASS = 1
 DEFAULT_FRICTION = 0.5

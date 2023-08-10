@@ -1,4 +1,4 @@
-from ecs import Component
+from game.ecs import Component
 
 #TODO: rename dungeon generator?
 class DungeonFloor(Component):

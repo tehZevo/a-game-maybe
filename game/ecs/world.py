@@ -1,5 +1,6 @@
 from itertools import chain
-from ecs import Entity
+
+from game.ecs import Entity
 
 class World:
   def __init__(self):

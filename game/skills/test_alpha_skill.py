@@ -1,7 +1,6 @@
-from skilleffects import CircleTarget, Damage, EmitParticles, Push, Rush, SelfTarget
-from .skilldef import SkillDef
-from .target_type import TargetType
-from items.slots import SkillSlot
+from game.skilleffects import CircleTarget, Damage, EmitParticles, Push, Rush, SelfTarget
+from game.items.slots import SkillSlot
+from . import SkillDef, TargetType
 
 test_alpha_skill = SkillDef([
   SelfTarget([Rush(force=5000)]),

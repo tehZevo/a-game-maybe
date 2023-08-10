@@ -1,13 +1,9 @@
-from floor_generators import FloorGenerator
-from components.tiles.spawner import Spawner
-from components.tiles.stairs import Stairs
-from components.physics.position import Position
-from components.actor.player import Player
-from components.actor.enemy import Enemy
-from tiles.wall import Wall
-from tiles.floor import Floor
-from tiles.tileset import Tileset
-from utils import Vector
+from game.components.tiles import Spawner, Stairs
+from game.components.physics import Position
+from game.components.actor import Player, Enemy
+from game.tiles import Wall, Floor, Tileset
+from game.utils import Vector
+from . import FloorGenerator
 
 class TestFloor(FloorGenerator):
   def __init__(self):

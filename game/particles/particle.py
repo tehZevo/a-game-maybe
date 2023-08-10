@@ -1,8 +1,8 @@
 import pygame
 from pygame.math import Vector2
 
-from utils.constants import PPU, DT, PIXEL_SCALE
-from utils.image_cache import get_image
+from game.utils.constants import PPU, DT, PIXEL_SCALE
+from game.utils.image_cache import get_image
 
 #TODO: tintable particles
 #TODO: homing particles

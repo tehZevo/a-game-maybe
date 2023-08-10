@@ -1,4 +1,4 @@
-from items import Item
+from . import Item
 
 class SkillItem(Item):
   def __init__(self, skilldef):

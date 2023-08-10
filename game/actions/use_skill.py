@@ -1,8 +1,8 @@
-from components.skill.skill import Skill
-from components.physics.position import Position
-from components.actor.stats import Stats
-from actions import Action
-from utils.constants import DT
+from game.components.skill.skill import Skill
+from game.components.physics.position import Position
+from game.components.actor.stats import Stats
+from game.utils.constants import DT
+from . import Action
 
 class UseSkill(Action):
   def __init__(self, skilldef):

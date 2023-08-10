@@ -1,8 +1,6 @@
-from ecs import Component
-from components.ui.health_bar import HealthBar
-from components.ui.mana_bar import ManaBar
-from components.core.drawable import Drawable
-from components.actor.player import Player
+from game.ecs import Component
+from ..actor.player import Player
+from . import HealthBar, ManaBar, Drawable
 
 class UIManager(Component):
   def __init__(self):

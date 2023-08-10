@@ -1,8 +1,8 @@
-from ecs import Component
-from .bar import Bar
-from components.actor.stats import Stats
-from components.physics.position import Position
-from utils import Vector
+from game.ecs import Component
+from game.utils import Vector
+from ..actor import Stats
+from ..physics import Position
+from . import Bar
 
 class ManaBar(Component):
   def __init__(self):

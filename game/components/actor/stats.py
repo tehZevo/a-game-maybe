@@ -1,5 +1,4 @@
-from ecs import Component
-from stats import calculator
+from game.ecs import Component
 
 #TODO: solve circular dependencies by implementing equiplistener?
 class Stats(Component):
@@ -29,6 +28,8 @@ class Stats(Component):
     self.mp = max(0, min(mp, self.secondary_stats.mp))
 
   def recalculate(self):
+    #TODO: circlular import
+    from game.stats import calculator
     self.primary_stats, self.equip_stats, self.secondary_stats = calculator.calculate(self.entity)
     self.hp = min(self.hp, self.secondary_stats.hp)
     self.mp = min(self.mp, self.secondary_stats.mp)

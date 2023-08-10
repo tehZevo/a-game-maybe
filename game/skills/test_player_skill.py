@@ -1,6 +1,5 @@
-from skilleffects import CircleTarget, Damage, EmitParticles, Push, Rush, SelfTarget
-from .skilldef import SkillDef
-from .target_type import TargetType
+from game.skilleffects import CircleTarget, Damage, EmitParticles, Push, Rush, SelfTarget
+from . import SkillDef, TargetType
 
 test_player_skill = SkillDef([
   SelfTarget([Rush(force=5000)]),

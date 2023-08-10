@@ -1,5 +1,5 @@
-from skilleffects import SkillEffect
-from components.actor.stats import Stats
+from game.components.actor import Stats
+from . import SkillEffect
 
 class RestoreHealth(SkillEffect):
   def __init__(self, percent=100):

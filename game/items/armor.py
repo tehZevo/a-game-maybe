@@ -1,4 +1,4 @@
-from items import Equip
+from . import Equip
 
 class Armor(Equip):
   def __init__(self):

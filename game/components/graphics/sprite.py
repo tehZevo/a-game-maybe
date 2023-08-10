@@ -1,9 +1,9 @@
 import pygame
 
-from ecs import Component
-from components.physics.position import Position
-from components.graphics.surface import Surface
-from utils.image_cache import get_image
+from game.ecs import Component
+from ..physics import Position
+from . import Surface
+from game.utils.image_cache import get_image
 
 class Sprite(Component):
   def __init__(self):

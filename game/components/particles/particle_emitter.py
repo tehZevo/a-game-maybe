@@ -2,13 +2,12 @@ import random
 
 from pygame.math import Vector2
 
-from ecs import Component
-from components.physics.position import Position
-from components.particles.particle_system import ParticleSystem
-from particles.particle import Particle
-from utils import Vector
-
-from utils.constants import DT
+from game.ecs import Component
+from game.particles.particle import Particle
+from game.utils import Vector
+from ..physics import Position
+from . import ParticleSystem
+from game.utils.constants import DT
 
 #TODO: more emitter styles
 class ParticleEmitter(Component):

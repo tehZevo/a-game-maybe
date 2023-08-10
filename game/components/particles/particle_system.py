@@ -1,6 +1,6 @@
 import pygame
 
-from ecs import Component
+from game.ecs import Component
 
 class ParticleSystem(Component):
   def __init__(self):

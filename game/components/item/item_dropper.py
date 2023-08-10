@@ -1,5 +1,5 @@
-from ecs import Component
-from components.physics.position import Position
+from game.ecs import Component
+from ..physics import Position
 from .dropped_item import DroppedItem
 
 class ItemDropper(Component):

@@ -1,7 +1,7 @@
-from actions import Action
-from components.physics.physics import Physics
-from components.actor.stats import Stats
-from utils import Vector
+from game.components.physics.physics import Physics
+from game.components.actor import Stats, Actor
+from game.utils import Vector
+from . import Action
 
 class Move(Action):
   def __init__(self, dir):
@@ -10,9 +10,7 @@ class Move(Action):
     self.dir = dir
 
   def update(self):
-    from components.actor.actor import Actor
-    #TODO: lol
-    #TODO: if we somehow move(0, 0), dont update look_dir
+    #NOTE: if we somehow move(0, 0), dont update look_dir
     look_dir = Vector(0, 1) if self.dir.y > 0.5 else Vector(0, -1) if self.dir.y < -0.5 else Vector(1, 0) if self.dir.x > 0.5 else Vector(-1, 0) if self.dir.x < -0.5 else None
     if look_dir is not None:
       self.get_component(Actor).look_dir = look_dir

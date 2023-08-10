@@ -1,8 +1,8 @@
 import pygame
 
-from ecs import Component
-from components.physics.position import Position
-from utils.constants import PHYS_SCALE
+from game.ecs import Component
+from ..physics.position import Position
+from game.utils.constants import PHYS_SCALE
 
 class Rect(Component):
   def __init__(self):

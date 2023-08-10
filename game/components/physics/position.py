@@ -1,5 +1,5 @@
-from ecs import Component
-from utils import Vector
+from game.ecs import Component
+from game.utils import Vector
 
 class Position(Component):
   def __init__(self, pos=None):

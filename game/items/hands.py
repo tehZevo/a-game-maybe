@@ -1,4 +1,4 @@
-from items import Weapon
+from . import Weapon
 
 #a "dummy" weapon for when you have no weapon equipped
 class Hands(Weapon):

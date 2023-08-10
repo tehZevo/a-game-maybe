@@ -1,8 +1,17 @@
 import pygame, sys
 from pygame.math import Vector2
-from save_data import SaveData
 
-from utils.constants import PPU
+from game.ecs import World
+from game.save_data import SaveData
+from game.components.actor import Player
+from game.components.graphics import Camera, Renderer
+from game.components.physics import Position
+from game.components.particles import ParticleSystem
+from game.components.core import GameMaster
+from game.components.ui import UIManager
+from game.utils.constants import FPS, PPU
+from game.utils.floor_transition import floor_transition
+from game.floor_generators import TestFloor, DFSGenerator
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -91,15 +100,3 @@ class Game:
       self.world = self.next_world
       self.init_world(save_data)
       self.next_world = None
-
-from ecs import World
-from components.actor.player import Player
-from components.graphics.camera import Camera
-from components.graphics.renderer import Renderer
-from components.physics.position import Position
-from components.particles.particle_system import ParticleSystem
-from components.core.game_master import GameMaster
-from components.ui.ui_manager import UIManager
-from floor_generators import TestFloor, DFSGenerator
-from utils.constants import FPS
-from utils.floor_transition import floor_transition

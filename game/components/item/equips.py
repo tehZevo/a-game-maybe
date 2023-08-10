@@ -1,8 +1,8 @@
-from ecs import Component
-from items import Armor, SkillItem
-from items.slots import ArmorSlot, SkillSlot
-from components.actor.stats import Stats
-from components.core.savable import Savable
+from game.ecs import Component
+from game.items import Armor, SkillItem
+from game.items.slots import ArmorSlot, SkillSlot
+from ..actor.stats import Stats
+from ..core.savable import Savable
 
 NUM_WEAPONS = 2
 

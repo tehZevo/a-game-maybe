@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 
-from utils.utils import dict_op
+from game.utils.utils import dict_op
 
 PrimaryStat = Enum("PrimaryStat", ["STR", "VIT", "DEX", "AGI", "INT", "WIS"])
 

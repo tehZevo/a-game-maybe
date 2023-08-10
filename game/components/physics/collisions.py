@@ -1,5 +1,5 @@
-from ecs import Component
-from components.physics.rect import Rect
+from game.ecs import Component
+from ..physics.rect import Rect
 
 #just a flag component for physics
 class Collisions(Component):

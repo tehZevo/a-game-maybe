@@ -1,16 +1,14 @@
 import pygame
 
-from ecs import Component
-from components.actor.actor import Actor
-from components.graphics.sprite import Sprite
-from .invulnerable import Invulnerable
-from .damage_listener import DamageListener
-from components.teams.team import Team
-from skills.test_player_skill import test_player_skill
-from skills.hax_heal import hax_heal
-from actions import Move, UseSkill, Interact
-from utils import Vector
-from utils.teams import PLAYER
+from game.ecs import Component
+from .actor import Actor
+from ..graphics.sprite import Sprite
+from ..teams import Team
+from game.skills import test_player_skill, hax_heal
+from game.actions import Move, UseSkill, Interact
+from game.utils import Vector
+from game.utils.teams import PLAYER
+from . import Invulnerable, DamageListener
 
 PLAYER_INVULN_TIME = 1 #seconds
 

@@ -1,9 +1,8 @@
-from ecs import World
+from game.ecs import World
+from game.components.physics import Position
+from game.components.core import DungeonFloor
 
 def floor_transition(generator):
-  #TODO: reee
-  from components.physics.position import Position
-  from components.core.dungeon_floor import DungeonFloor
 
   world = World()
   world.create_entity([DungeonFloor(generator)])

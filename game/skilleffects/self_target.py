@@ -1,4 +1,4 @@
-from skilleffects import Target
+from . import Target
 
 class SelfTarget(Target):
   def __init__(self, children=[]):

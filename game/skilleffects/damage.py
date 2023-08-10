@@ -1,7 +1,5 @@
-from skilleffects import SkillEffect
-from components.actor.actor import Actor
-from components.actor.stats import Stats
-from components.actor.invulnerable import Invulnerable
+from game.components.actor import Actor, Stats, Invulnerable
+from . import SkillEffect
 
 class Damage(SkillEffect):
   def __init__(self, power=100):

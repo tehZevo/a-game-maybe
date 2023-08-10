@@ -1,6 +1,6 @@
-from skilleffects import SkillEffect
-from components.particles.particle_emitter import ParticleEmitter
-from components.physics.position import Position
+from game.components.particles import ParticleEmitter
+from game.components.physics import Position
+from . import SkillEffect
 
 class EmitParticles(SkillEffect):
   def __init__(self):

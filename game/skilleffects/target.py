@@ -1,9 +1,9 @@
 import copy
 
-from components.skill.skill import Skill
-from components.actor.actor import Actor
-from components.physics.position import Position
-from skilleffects import SkillEffect
+from game.components.skill import Skill
+from game.components.actor import Actor
+from game.components.physics import Position
+from . import SkillEffect
 
 #TODO: max targets
 class Target(SkillEffect):

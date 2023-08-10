@@ -1,12 +1,10 @@
 import pygame
 from pygame.math import Vector2
 
-from ecs import Component
-from utils.constants import PPU
-from components.graphics.camera import Camera
-from components.graphics.surface import Surface
-from components.graphics.sprite import Sprite
-from components.physics.position import Position
+from game.ecs import Component
+from ..graphics import Camera, Surface, Sprite
+from ..physics import Position
+from game.utils.constants import PPU
 
 #draws sprites
 class Renderer(Component):

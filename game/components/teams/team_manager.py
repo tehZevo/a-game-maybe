@@ -1,6 +1,7 @@
 from collections import defaultdict
-from ecs import Component
-from utils.teams import Disposition
+
+from game.ecs import Component
+from game.utils.teams import Disposition
 
 #:^)
 def make_key(a, b):

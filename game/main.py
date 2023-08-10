@@ -1,4 +1,4 @@
-from game import Game
+from .game import Game
 
 #handling teams:
 #TODO: idea for how to handle:

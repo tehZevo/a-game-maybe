@@ -8,3 +8,5 @@ from .weapon import Weapon
 from .hands import Hands
 
 from .skill_item import SkillItem
+
+from .slots import *

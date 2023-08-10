@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from utils.utils import dict_op
+from game.utils.utils import dict_op
 
 @dataclass
 class SecondaryStats:

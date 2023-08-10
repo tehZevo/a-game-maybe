@@ -1,11 +1,9 @@
 import pygame
 
-from ecs import Component
-from components.graphics.sprite import Sprite
-from components.graphics.surface import Surface
-from components.graphics.renderer import Renderer
-from utils.image_cache import get_image
-from utils.constants import PPU, PHYS_SCALE
+from game.ecs import Component
+from game.utils.image_cache import get_image
+from game.utils.constants import PPU, PHYS_SCALE
+from ..graphics import Sprite, Surface, Renderer
 
 #TODO: dunno where this belongs, probably in core or tiles if this creates collision rects
 class BakedTileset(Component):

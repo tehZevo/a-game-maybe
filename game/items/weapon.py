@@ -1,5 +1,5 @@
-from items import Equip
-from stats import PrimaryStat
+from . import Equip
+from game.stats import PrimaryStat
 
 class Weapon(Equip):
   def __init__(self):

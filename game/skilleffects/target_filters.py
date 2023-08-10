@@ -1,7 +1,7 @@
-from components.physics.position import Position
-from components.teams import Team, TeamManager
-from utils.teams import Disposition
-from skills.target_type import TargetType
+from game.components.physics import Position
+from game.components.teams import Team, TeamManager
+from game.utils.teams import Disposition
+from game.skills.target_type import TargetType
 
 #target filters are of the form (skill) => (actor) => bool
 

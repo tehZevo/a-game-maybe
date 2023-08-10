@@ -1,16 +1,12 @@
 import random
 
-from floor_generators import FloorGenerator
-from components.tiles.stairs import Stairs
-from components.tiles.spawner import Spawner
-from components.physics.position import Position
-from components.actor.player import Player
-from components.actor.enemy import Enemy
-from components.graphics.baked_tileset import BakedTileset
-from tiles.tileset import Tileset
-from tiles.wall import Wall
-from tiles.floor import Floor
-from utils import Vector
+from game.floor_generators import FloorGenerator
+from game.components.tiles import Stairs, Spawner
+from game.components.physics import Position
+from game.components.actor import Enemy, Player
+from game.components.graphics import BakedTileset
+from game.tiles import Tileset, Wall, Floor
+from game.utils import Vector
 
 class DFSGenerator(FloorGenerator):
   def __init__(self):

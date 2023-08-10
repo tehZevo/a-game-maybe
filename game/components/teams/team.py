@@ -1,4 +1,4 @@
-from ecs import Component
+from game.ecs import Component
 
 class Team(Component):
   def __init__(self, team=None):
