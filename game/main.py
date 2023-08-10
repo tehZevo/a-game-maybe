@@ -1,12 +1,5 @@
 from .game import Game
 
-#handling teams:
-#TODO: idea for how to handle:
-# TeamManager entity
-# enemies assign their Team component the value "enemy" (or some other team), and players get "player", etc
-# TeamManager has a mapping of teams to their disposition (ally, enemy, neutral)
-# target effects then query the team manager and filter entities with a given Team (component)
-
 #TODO: target effects should have a selection order (nearest/random)
 
 #TODO: networking

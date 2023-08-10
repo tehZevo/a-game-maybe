@@ -8,7 +8,7 @@
 `pip install -r requirements.txt`
 
 ## Usage
-`python main.py`
+`python -m game.main`
 
 
 ## Attributions
