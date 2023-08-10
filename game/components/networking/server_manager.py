@@ -1,5 +1,6 @@
 from game.ecs import Component
-from game.utils.networking import Server, TestClient
+from game.utils.networking import Server
+from game.utils.test_networking import TestClient
 
 WARN_MESSAGES = 1000
 
@@ -10,7 +11,6 @@ class ServerManager(Component):
     self.server = None
 
   def start(self):
-    # create_server(add_to_queue)
     self.server = Server(self.on_connect, self.on_disconnect, self.on_message)
     self.server.start()
 

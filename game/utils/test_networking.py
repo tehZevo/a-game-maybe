@@ -1,27 +1,31 @@
-from .networking import create_server, create_client
+from .networking import Server, Client
 
-#TODO: idk
-# def server_connect(id, ws):
-#   print("[server]", id, "connected")
-#   ws.send("[server] hello world")
-#
-# def server_disconnect(id):
-#   print("[server]", id, "disconnected")
-#
-# def server_message(id, message):
-#   print("[server]", id, ":", message)
-#
-# def client_connect(ws):
-#   print("[server]", id, "connected")
-#   ws.send("[server] hello world")
-#
-# def client_disconnect():
-#   print("[client] disconnected")
-#
-# def client_message(message):
-#   print("[client] received", message)
-#
-# create_server(server_connect, server_disconnect, server_message)
-#
-#
-# create_client(lambda x: None)
+class TestServer(Server):
+  def __init__(self):
+    super().__init__(self.on_connect, self.on_disconnect, self.on_message)
+
+  def on_connect(self, id):
+    print("[server]", id, "connected")
+
+  def on_disconnect(self, id):
+    print("[server]", id, "disconnected")
+
+  def on_message(self, id, message):
+    print(f"[server] ({id}):", message)
+    print("[server] sending pong")
+    self.send(id, "pong")
+
+class TestClient(Client):
+  def __init__(self):
+    super().__init__()
+
+  def on_connect(self):
+    print("[client] sending ping")
+    self.send("ping")
+
+  def on_message(self, message):
+    print("[client] received", message)
+    self.disconnect()
+
+# TestServer().start()
+# TestClient().connect()

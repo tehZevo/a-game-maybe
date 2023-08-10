@@ -7,38 +7,8 @@ from websockets.sync.client import connect
 
 #TODO: look into the fact that Queue has `block` and `timeout`
 
-# class Server:
-#   def __init__(self):
-#     self.clients = {}
-#
-#   def start(self, host="localhost", port=8765):
-#     start_server(self._on_connect, self._on_disconnect, self.on_message, host, port)
-#
-#   def _on_connect(self, id, ws):
-#     self.clients[id] = ws
-#     self.on_connect(id)
-#
-#   def _on_disconnect(self, id):
-#     del self.clients[id]
-#     self.on_disconnect(id)
-#
-#   def send(self, id, message):
-#     self.clients[id].send(message)
-#
-#   def broadcast(self, message):
-#     for client in self.clients.values():
-#       client.send(message)
-#
-#   def on_connect(self, id):
-#     pass
-#
-#   def on_disconnect(self, id):
-#     pass
-#
-#   def on_message(self, id, message):
-#     pass
-
 class Server:
+  #provide callbacks
   def __init__(self, on_connect, on_disconnect, on_message):
     self.clients = {}
     self.on_connect = on_connect
@@ -63,6 +33,7 @@ class Server:
     for client in self.clients.values():
       client.send(message)
 
+#TODO: update client to be like server above
 class Client:
   def __init__(self):
     self.ws = None
@@ -77,6 +48,9 @@ class Client:
   def send(self, message):
     self.ws.send(message)
 
+  def disconnect(self):
+    self.ws.close()
+
   def on_connect(self):
     pass
 
@@ -85,7 +59,6 @@ class Client:
 
   def on_message(self):
     pass
-
 
 def create_server(on_connect, on_disconnect, on_message, host="localhost", port=8765):
   def coro():
@@ -114,19 +87,7 @@ def create_client(on_connect, on_disconnect, on_message, host="localhost", port=
       on_connect(websocket)
       for message in websocket:
         on_message(message)
-        #TODO: remove
-        # message = websocket.recv()
     on_disconnect()
 
   t = Thread(target=coro, daemon=True)
   t.start()
-
-class TestClient(Client):
-  def __init__(self):
-    super().__init__()
-
-  def on_connect(self):
-    self.send("hello server!")
-    
-  def on_message(self, message):
-    print("hey cool, i got it!", message)
