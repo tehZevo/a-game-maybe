@@ -13,6 +13,7 @@ class Vector:
     return Vector(gauss(0, 1), gauss(0, 1)).normalized()
 
   def __init__(self, x=0, y=0):
+    super().__init__()
     self.x = x
     self.y = y
 

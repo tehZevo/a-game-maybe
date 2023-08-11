@@ -2,7 +2,7 @@
 FPS = 60
 DT = 1. / FPS
 BASE_SPRITE_SIZE = 32
-PIXEL_SCALE = 2
+PIXEL_SCALE = 1
 PPU = BASE_SPRITE_SIZE * PIXEL_SCALE
 
 #scale factor to use since pygame rects are int-only

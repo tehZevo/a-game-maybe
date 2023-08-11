@@ -4,6 +4,9 @@ from ..event_handler import EventHandler
 from game.components.actor import Actor
 from game.components.networking import Id
 from game.components.graphics import Sprite
+from game.components.core import PlayerController
+
+import pprint
 
 #TODO: make this a generic entity_spawned?
 #TODO: then how would i choose which components to create on the client side?
@@ -24,6 +27,8 @@ class ActorSpawnedHandler(EventHandler):
       #TODO: dont give the entity a hat sprite by default
       Sprite(),
       Actor(),
+      PlayerController() #TODO: doesnt belong here, need "player spawned" event
     ])
+    pprint.pprint(entity.components)
     entity.get_component(Sprite).set_sprite("assets/items/armor/hat.png")
     print("actor created:", entity)

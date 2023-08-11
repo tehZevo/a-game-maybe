@@ -17,7 +17,7 @@ class PositionUpdatedHandler(EventHandler):
     self.client_manager = client_manager
 
   def handle(self, client, event):
-    ent = find_entity_by_id(self.client_manager.entity.world, id)
+    ent = find_entity_by_id(self.client_manager.entity.world, event.id)
     if ent is not None:
       #TODO: lerp?
       ent.get_component(Position).pos = event.pos

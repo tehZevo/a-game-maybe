@@ -1,3 +1,5 @@
+- fix rect-related crash when trying to update a rect while iterating.. has something to do with another thread creating an entity with a rect during world.update
+- split project into client, server, and common packages
 - how to keep track of entites when they spawn?
   - probably dont want to tell player about every entity (or actor) that spawns
   - let client query about nearby entities?

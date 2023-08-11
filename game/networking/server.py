@@ -1,6 +1,8 @@
 from collections import defaultdict
 import json
 
+import dacite
+
 from game.utils.networking import create_ws_server
 
 class Server:
@@ -40,7 +42,7 @@ class Server:
     message = json.loads(message)
     command_type_name = message["type"]
     #construct command
-    command = self.command_types[command_type_name](**message["data"])
+    command = dacite.from_dict(self.command_types[command_type_name], message["data"])
     #tell all handlers about command
     for handler in self.command_handlers[command.__class__]:
       handler.handle(self, id, command)

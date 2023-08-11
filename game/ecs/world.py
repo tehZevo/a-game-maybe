@@ -15,6 +15,9 @@ class World:
     return entity
 
   def add_entity(self, entity):
+    #TODO: need to prevent ability of adding a new entity to the list from another thread
+    # may have to add to a separate list and then concat with main list adfter update
+    #TODO: lock?
     self.entities.append(entity)
     entity.world = self
     entity.start()
@@ -28,12 +31,15 @@ class World:
     return list(chain.from_iterable([e.find(component_type) for e in self.find(component_type)]))
 
   def update(self):
-    for e in self.entities:
+    #copy entity list so we don't iterate over newly created entities
+    ents = self.entities.copy()
+
+    for e in ents:
       e.update()
 
-    for e in self.entities:
+    for e in ents:
       if not e.alive:
         e.on_destroy()
 
-    #filter dead entities
+    #filter dead entities in original entity list
     self.entities = [e for e in self.entities if e.alive]

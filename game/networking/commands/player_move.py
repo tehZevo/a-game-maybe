@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from ..command_handler import CommandHandler
 from game.actions import Move
+from game.components.actor import Actor
 from game.utils import find_entity_by_id, Vector
 
 @dataclass
@@ -16,4 +17,5 @@ class PlayerMoveHandler(CommandHandler):
   def handle(self, server, id, command):
     ent = find_entity_by_id(self.server_manager.entity.world, id)
     if ent is not None:
-      ent.get_component.actor.act(Move(command.dir))
+      print(command)
+      ent.get_component(Actor).act(Move(command.dir))

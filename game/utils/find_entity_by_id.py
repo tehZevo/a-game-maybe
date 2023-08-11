@@ -8,5 +8,5 @@ def find_entity_by_id(world, id):
   # (i kinda like B)
   ents = world.find(Id)
   ents = {ent.get_component(Id).id: ent for ent in ents}
-  ent = ents[event.id] if event.id in ents else None
+  ent = ents[id] if id in ents else None
   return ent

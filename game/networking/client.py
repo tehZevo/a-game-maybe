@@ -41,7 +41,6 @@ class Client:
     message = json.loads(message)
     event_type_name = message["type"]
     #construct event
-    # event = self.event_types[event_type_name](**message["data"])
     event = dacite.from_dict(self.event_types[event_type_name], message["data"])
     #tell all handlers about event
     for handler in self.event_handlers[event.__class__]:

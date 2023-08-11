@@ -14,8 +14,8 @@ from game.utils.constants import FPS, PPU
 from game.utils.floor_transition import floor_transition
 from game.floor_generators import TestFloor, DFSGenerator
 
-SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 720
+SCREEN_WIDTH = 640
+SCREEN_HEIGHT = 480
 
 class ServerGame:
   def __init__(self):

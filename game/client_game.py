@@ -2,20 +2,17 @@ import pygame, sys
 from pygame.math import Vector2
 
 from game.ecs import World
-from game.save_data import SaveData
-from game.components.actor import Player
 from game.components.graphics import Camera, Renderer
 from game.components.physics import Position
 from game.components.particles import ParticleSystem
 from game.components.core import GameMaster
 from game.components.ui import UIManager
 from game.components.networking import ClientManager
+from game.components.core import PlayerController
 from game.utils.constants import FPS, PPU
-from game.utils.floor_transition import floor_transition
-from game.floor_generators import TestFloor, DFSGenerator
 
-SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 720
+SCREEN_WIDTH = 640
+SCREEN_HEIGHT = 480
 
 class ClientGame:
   def __init__(self):
@@ -36,6 +33,7 @@ class ClientGame:
     self.init_world()
 
   def init_world(self, save_data=None):
+    #TODO: remove save_data on client?
     #find player (TODO: create new players and load save data)
     # self.player = self.world.find(Player)[0]
     #store reference to game as an entity
@@ -80,7 +78,11 @@ class ClientGame:
 
         #control player
         keys = pygame.key.get_pressed()
-        # self.player.get_component(Player).handle_keys(keys) #TODO: player wa doko desu ka
+        #TODO: need a find first function (and find first component)
+        pc = self.world.find(PlayerController)
+        if len(pc) > 0:
+          pc = pc[0]
+          pc.get_component(PlayerController).handle_keys(keys)
 
         #update world
         self.world.update()
@@ -103,7 +105,8 @@ class ClientGame:
         pygame.display.flip()
 
       #swap worlds, create new player (TODO: use generator spawn method? idk)
-      save_data = SaveData(self.world)
+      # save_data = SaveData(self.world)
       self.world = self.next_world
-      self.init_world(save_data)
+      # self.init_world(save_data)
+      self.init_world()
       self.next_world = None
