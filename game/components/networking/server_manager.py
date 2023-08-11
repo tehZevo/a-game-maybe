@@ -1,6 +1,6 @@
 from game.ecs import Component
 from game.networking import Server
-from game.networking.events import TilesetUpdated, ActorSpawned, PlayerControl
+from game.networking.events import TilesetUpdated, ActorSpawned, PlayerAssigned
 from game.networking.commands import TestCommandHandler, PlayerMoveHandler
 from ..tiles import TilesetPhysics
 from ..actor import Player
@@ -27,7 +27,7 @@ class ConnectHandler:
     ])
     #spawn an actor and tell the player he controls it
     server.send(id, ActorSpawned(id))
-    server.send(id, PlayerControl(id))
+    server.send(id, PlayerAssigned(id))
 
 class ServerManager(Component):
   def __init__(self):

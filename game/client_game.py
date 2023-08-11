@@ -43,11 +43,7 @@ class ClientGame:
     #add particle system
     self.particle_system = self.world.create_entity([ParticleSystem()])
     #create camera that targets player
-    self.camera = self.world.create_entity([
-      # Position(self.player.get_component(Position).pos), #TODO: player wa doko desu ka
-      # Camera(target=self.player) #TODO: camera needs target eventually
-      Camera()
-    ])
+    self.camera = self.world.create_entity([Camera()])
 
     #apply save data
     if save_data is not None:
