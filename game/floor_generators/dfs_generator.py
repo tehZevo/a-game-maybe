@@ -9,6 +9,8 @@ from game.components.tiles import TilesetPhysics
 from game.tiles import Tileset, Floor, Wall
 from game.utils import Vector
 
+SPAWNER_CHANCE = 0
+
 class DFSGenerator(FloorGenerator):
   def __init__(self):
     super().__init__()
@@ -82,7 +84,7 @@ class DFSGenerator(FloorGenerator):
     tileset = Tileset(self.room_size * self.floor_size, self.room_size * self.floor_size)
     for rx, ry, north, south, east, west in rooms:
       #randomly create spawners
-      if random.random() < 0.5:
+      if random.random() < SPAWNER_CHANCE:
         world.create_entity([
           Position(Vector(rx * self.room_size + self.room_size / 2, ry * self.room_size + self.room_size / 2)),
           Spawner(Enemy, radius=2, wave_time=2, wave_count=1, spawn_max=3)

@@ -8,7 +8,6 @@
 `pip install -r requirements.txt`
 
 ## Usage
-*Server development is ongoing, currently this spawns 2 "games"*
 ```
 python -m game.main
 ```

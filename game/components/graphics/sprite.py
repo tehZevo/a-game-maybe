@@ -13,10 +13,9 @@ class Sprite(Component):
 
   #TODO: rename to set_image and update surface
   def set_sprite(self, path):
-    from ..networking import ClientManager
     #TODO: HACK: determine if we are on the client, and if not, do nothing!
+    from ..networking import ClientManager
     if not self.entity.world.find_component(ClientManager):
       return
 
-    print(self.entity.components)
     self.get_component(Surface).set_surface(get_image(path))

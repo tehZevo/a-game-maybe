@@ -55,7 +55,10 @@ class Actor(Component):
     if self.action is not None:
       self.action.update()
 
+      if not self.action.active:
+        self.action = None
+
       #start new action if old action is finished
-      if not self.action.active and self.next_action is not None:
+      if self.next_action is not None:
         self.start_action(self.next_action)
         self.next_action = None

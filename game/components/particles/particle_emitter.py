@@ -23,10 +23,20 @@ class ParticleEmitter(Component):
     self.particle_life = particle_life
 
   def start(self):
+    #TODO: network (may require dataclassing particle emitter and particle)
+    #TODO: HACK: determine if we are on the client, and if not, do nothing!
+    from ..networking import ClientManager
+    if not self.entity.world.find_component(ClientManager):
+      self.is_server = True
+      return
+
     self.system = self.entity.world.find(ParticleSystem)[0]
     self.system = self.system.get_component(ParticleSystem)
 
   def update(self):
+    if self.is_server:
+      return
+
     pos = Vector2(*self.entity.get_component(Position).pos.tolist())
 
     #add some particles
