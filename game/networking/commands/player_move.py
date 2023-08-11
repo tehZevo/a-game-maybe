@@ -17,5 +17,4 @@ class PlayerMoveHandler(CommandHandler):
   def handle(self, server, id, command):
     ent = find_entity_by_id(self.server_manager.entity.world, id)
     if ent is not None:
-      print(command)
       ent.get_component(Actor).act(Move(command.dir))

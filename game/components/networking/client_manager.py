@@ -1,7 +1,8 @@
 from game.ecs import Component
 from game.networking import Client
 from game.networking.commands.test_command import TestCommand
-from game.networking.events import TilesetUpdatedHandler, ActorSpawnedHandler, PositionUpdatedHandler
+from game.networking.events import TilesetUpdatedHandler, ActorSpawnedHandler, \
+  PositionUpdatedHandler, PlayerControlHandler
 
 class TestConnectHandler:
   def handle_connect(self, client):
@@ -18,6 +19,7 @@ class ClientManager(Component):
         TilesetUpdatedHandler(self),
         ActorSpawnedHandler(self),
         PositionUpdatedHandler(self),
+        PlayerControlHandler(self),
       ]
     )
     self.client.connect()

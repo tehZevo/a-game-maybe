@@ -1,24 +1,23 @@
+- client side prediction :^)
+- make Networked component handle its own spawning (and despawning) on the clients?
 - fix rect-related crash when trying to update a rect while iterating.. has something to do with another thread creating an entity with a rect during world.update
+- center camera on player on client
+- send skill use and interact commands to server
+- dont create a player controller for every actor spawaned
+- network other entities not just actor
 - split project into client, server, and common packages
 - how to keep track of entites when they spawn?
   - probably dont want to tell player about every entity (or actor) that spawns
   - let client query about nearby entities?
   - or periodically send list of ids nearby player?
     - i guess this works for all entity updates, not just spawning/despawning
-- sync position and velocity
-- need playercontroller component for client side and then remove keyboard controls from player in server side
+  - Networked component stores id
+  - client/server manager stores mapping of {id:entity}
+  - Networked on remove removes from manager
+- don't sync position every tick, interpolate
+- sync velocity
 - greedily merge walls when creating tilesetphysics rects
 - target effects should have a selection order (nearest/random)
-- networking
-  - commands: sent from client to server
-  - events: sent from server to client
-  - server has an ECS with a Server entity (or one per player?) to determine what events to send
-  - client has its own ECS with a Client entity (receives events and takes the appropriate action (creating ents/components, etc))
-  - client and server likely have separate components (eg client may have a "dummy physics" that just interpolates physics from server)
-  - push events/commands from client/server onto a queue
-  - usher events to their respective handlers (components should implement handler types)
-- receive events, dump onto queue, pop off queue during update and.. do server stuff
-- component for marking networked entities (store ID here!)
 - refactor skill effect targets to be a component on the skill entity
 - refactor skill effects to not store state
 - add "target type" to target skill effects to avoid referencing player/enemy in skills themselves and to make skills user agnostic

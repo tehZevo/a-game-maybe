@@ -2,17 +2,21 @@ import pygame
 
 from game.ecs import Component
 from game.utils import Vector
+from game.utils import find_entity_by_id
 
 #client side controller, takes keyboard events, sends commands n stuff
 class PlayerController(Component):
-  def __init__(self):
+  def __init__(self, id):
     super().__init__()
+    self.id = id
     self.client = None
+    self.player = None
 
   def start(self):
     #TODO: circular import
     from game.components.networking import ClientManager
     self.client = self.entity.world.find_components(ClientManager)[0].client
+    self.player = find_entity_by_id(self.entity.world, self.id)
 
   def handle_keys(self, keys):
     #TODO: circular import

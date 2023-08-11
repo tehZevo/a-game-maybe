@@ -1,7 +1,6 @@
 # Networking
 * Event-based
-* Client/server handle queues of events
-*
+* Both the client and the server have their own game world
 
 ## `Client`
 * Can register `EventHandler`s
@@ -21,3 +20,6 @@
 
 ## `EventHandler`s
 * Handle events
+
+## `Id` component
+* Stores an entity id for client/server syncing
