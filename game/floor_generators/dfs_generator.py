@@ -94,7 +94,6 @@ class DFSGenerator(FloorGenerator):
           y = ry * self.room_size + ty
           tileset.set_tile(x, y, tile)
 
-    world.create_entity([BakedTileset(tileset)])
     world.create_entity([TilesetPhysics(tileset)])
 
     #choose random room to put stairs in
