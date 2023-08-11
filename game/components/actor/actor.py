@@ -9,6 +9,8 @@ from game.utils import Vector
 class Actor(Component):
   def __init__(self):
     super().__init__()
+    #TODO: circular import
+    from ..networking import ActorNetworking
     self.require(Physics)
     self.require(Sprite)
     self.require(Stats)
@@ -16,6 +18,7 @@ class Actor(Component):
     self.require(Equips)
     self.require(Collisions)
     self.require(Team)
+    self.require(ActorNetworking)
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)

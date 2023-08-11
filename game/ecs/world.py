@@ -30,6 +30,13 @@ class World:
     #return ALL components that match
     return list(chain.from_iterable([e.find(component_type) for e in self.find(component_type)]))
 
+  #shorthand
+  def find_component(self, component_type):
+    comps = self.find_components(component_type)
+    if len(comps) == 0:
+      return None
+    return comps[0]
+    
   def update(self):
     #copy entity list so we don't iterate over newly created entities
     ents = self.entities.copy()

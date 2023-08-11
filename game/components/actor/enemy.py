@@ -41,21 +41,18 @@ class Enemy(Component):
         dropper.drop(item, pos)
 
   def update(self):
-
-
     move_dir = Vector()
     enemy_pos = self.get_component(Position).pos
 
-    #find player
-    players = self.entity.world.find(Player)
-    player = None if len(players) == 0 else players[0]
-
-    if self.target is None and player is not None:
-      #calc distance
-      player_pos = player.get_component(Position).pos
-      dist = player_pos.distance(enemy_pos)
-      if dist < self.target_distance:
-        self.target = player
+    #find player to target
+    if self.target is None:
+      for player in self.entity.world.find(Player):
+        #calc distance
+        player_pos = player.get_component(Position).pos
+        dist = player_pos.distance(enemy_pos)
+        if dist < self.target_distance:
+          self.target = player
+          break
 
     #follow and use skills
     if self.target is not None:

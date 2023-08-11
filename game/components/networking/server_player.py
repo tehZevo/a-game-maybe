@@ -5,6 +5,7 @@ from game.components.networking import Id
 from ..physics import Position
 
 #TODO: maybe merge into player once playercontroller is moved into client code
+#TODO: replaced by actornetworking.. remove?
 class ServerPlayer(Component):
   def __init__(self, server):
     super().__init__()

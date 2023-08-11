@@ -1,7 +1,6 @@
 from game.ecs import Component
 from game.networking import Server
 from game.networking.events import TilesetUpdated, ActorSpawned, PlayerAssigned
-from game.networking.commands import TestCommandHandler, PlayerMoveHandler
 from ..tiles import TilesetPhysics
 from ..actor import Player
 from ..physics import Position
@@ -36,6 +35,9 @@ class ServerManager(Component):
     self.server = None
 
   def start(self):
+    #TODO: circular imports
+    from game.networking.commands import TestCommandHandler, PlayerMoveHandler
+
     #TODO: i guess here is as good a place as any to register some handlers
     self.server = Server(
       connect_handlers=[ConnectHandler(self)],

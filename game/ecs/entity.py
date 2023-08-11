@@ -19,8 +19,8 @@ class Entity:
 
   def add_component(self, component):
     #TODO: warn if component type already exists on this entity?
-    component.register(self)
     self.components[component.__class__.__name__] = component
+    component.register(self)
 
   def remove_component(self, component):
     #TODO: on remove?
