@@ -2,7 +2,7 @@ from game.ecs import Component
 from game.utils import Vector
 from game.utils.constants import DT, PHYS_SCALE
 from . import Position, Collisions, Rect
-from ..graphics import BakedTileset
+from ..tiles import TilesetPhysics
 
 DEFAULT_MASS = 1
 DEFAULT_FRICTION = 0.5
@@ -25,7 +25,7 @@ class Physics(Component):
 
   def start(self):
     #TODO: hmm this is n squared, caching in start for now
-    self.tile_rects = self.entity.world.find_components(BakedTileset)[0].rects
+    self.tile_rects = self.entity.world.find_components(TilesetPhysics)[0].rects
 
   def update(self):
     pc = self.get_component(Position)

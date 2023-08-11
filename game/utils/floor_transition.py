@@ -1,5 +1,4 @@
 from game.ecs import World
-from game.components.physics import Position
 from game.components.core import DungeonFloor
 
 def floor_transition(generator):

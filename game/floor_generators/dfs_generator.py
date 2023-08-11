@@ -5,7 +5,8 @@ from game.components.tiles import Stairs, Spawner
 from game.components.physics import Position
 from game.components.actor import Enemy, Player
 from game.components.graphics import BakedTileset
-from game.tiles import Tileset, Wall, Floor
+from game.components.tiles import TilesetPhysics
+from game.tiles import Tileset, Floor, Wall
 from game.utils import Vector
 
 class DFSGenerator(FloorGenerator):
@@ -94,6 +95,7 @@ class DFSGenerator(FloorGenerator):
           tileset.set_tile(x, y, tile)
 
     world.create_entity([BakedTileset(tileset)])
+    world.create_entity([TilesetPhysics(tileset)])
 
     #choose random room to put stairs in
     x, y, _, _, _, _ = random.choice(rooms)

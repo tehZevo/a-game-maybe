@@ -1,3 +1,4 @@
+- make dungeon generator spit out "Wall" entities (1 per tileset wall for now, TODO: greedy merge with optional max size later)
 - EntityEvent type that takes a Networked component include entity's id with event
 - target effects should have a selection order (nearest/random)
 - networking
