@@ -1,7 +1,7 @@
 from game.ecs import Component
 from game.networking import Server
 from game.networking.events import TilesetUpdated, ActorSpawned
-from game.networking.commands import TestCommandHandler
+from game.networking.commands import TestCommandHandler, PlayerMoveHandler
 from ..tiles import TilesetPhysics
 from ..actor import Player
 from ..physics import Position
@@ -38,7 +38,8 @@ class ServerManager(Component):
     self.server = Server(
       connect_handlers=[ConnectHandler(self)],
       command_handlers=[
-        TestCommandHandler()
+        TestCommandHandler(),
+        PlayerMoveHandler(self),
       ],
     )
     self.server.start()

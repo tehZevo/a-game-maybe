@@ -4,6 +4,7 @@ from game.components.networking import Id
 from game.components.physics import Position
 from game.utils import Vector
 from ..event_handler import EventHandler
+from game.utils import find_entity_by_id
 
 @dataclass
 class PositionUpdated:
@@ -16,14 +17,7 @@ class PositionUpdatedHandler(EventHandler):
     self.client_manager = client_manager
 
   def handle(self, client, event):
-    #TODO: need util for finding entities by specific id
-    # also this is really expensive...
-    #two solutions:
-    #A: make "id" a property of ecs entity (and allow creation of entity with specific id)
-    #B: keep track of networked entities in a component
-    # (i kinda like B)
-    ents = self.client_manager.entity.world.find(Id)
-    ents = {ent.get_component(Id).id: ent for ent in ents}
-    ent = ents[event.id]
-    #TODO: lerp?
-    ent.get_component(Position).pos = event.pos
+    ent = find_entity_by_id(self.client_manager.entity.world, id)
+    if ent is not None:
+      #TODO: lerp?
+      ent.get_component(Position).pos = event.pos
