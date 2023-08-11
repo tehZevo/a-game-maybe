@@ -1,9 +1,13 @@
+from dataclasses import dataclass
 import math
 from random import gauss
 
 EPSILON = 1e-4
 
+@dataclass
 class Vector:
+  x: float
+  y: float
 
   def random():
     return Vector(gauss(0, 1), gauss(0, 1)).normalized()

@@ -1,5 +1,11 @@
-- make dungeon generator spit out "Wall" entities (1 per tileset wall for now, TODO: greedy merge with optional max size later)
-- EntityEvent type that takes a Networked component include entity's id with event
+- how to keep track of entites when they spawn?
+  - probably dont want to tell player about every entity (or actor) that spawns
+  - let client query about nearby entities?
+  - or periodically send list of ids nearby player?
+    - i guess this works for all entity updates, not just spawning/despawning
+- sync position and velocity
+- need playercontroller component for client side and then remove keyboard controls from player in server side
+- greedily merge walls when creating tilesetphysics rects
 - target effects should have a selection order (nearest/random)
 - networking
   - commands: sent from client to server

@@ -8,7 +8,7 @@ def create_ws_server(on_connect, on_disconnect, on_message, host="localhost", po
   def coro():
     def connection_handler(websocket):
       #generate a uuid for the client and call on connect
-      id = uuid.uuid4()
+      id = str(uuid.uuid4())
       on_connect(id, websocket)
 
       #listen for messages until client disconnects

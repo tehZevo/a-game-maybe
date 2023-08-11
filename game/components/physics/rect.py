@@ -22,6 +22,5 @@ class Rect(Component):
   def update(self):
     #keep self in sync with position
     #NOTE: scaling for collisions
-    #self.rect.center = (self.pos.pos * PHYS_SCALE).tolist()
     self.rect.left = self.pos.pos.x * PHYS_SCALE
     self.rect.top = self.pos.pos.y * PHYS_SCALE
