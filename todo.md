@@ -1,9 +1,7 @@
+- spawn networked players with player data when loading new world
 - use eventcatalog to document events?
 - client side prediction :^)
 - make Networked component handle its own spawning (and despawning) on the clients?
-- fix rect-related crash when trying to update a rect while iterating.. has something to do with another thread creating an entity with a rect during world.update
-- center camera on player on client
-- send skill use and interact commands to server
 - network other entities not just actor
 - split project into client, server, and common packages
 - how to keep track of entites when they spawn?

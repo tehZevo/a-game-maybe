@@ -20,5 +20,5 @@ class PlayerAssignedHandler(EventHandler):
     entity = world.create_entity([PlayerController(event.id)])
     #find player and set camera target
     player = find_entity_by_id(world, event.id)
-    self.client_manager.entity.world.find_components(Camera)[0].target = player
+    self.client_manager.entity.world.find_component(Camera).target = player
     print("[Client] Controlling actor with id", event.id)

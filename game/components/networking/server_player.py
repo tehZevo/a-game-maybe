@@ -1,7 +1,7 @@
 from game.ecs import Component
 from game.networking.events import PositionUpdated
 from game.components.actor import Player
-from game.components.networking import Id
+from game.components.networking import Networked
 from ..physics import Position
 
 #TODO: maybe merge into player once playercontroller is moved into client code
@@ -10,13 +10,13 @@ class ServerPlayer(Component):
   def __init__(self, server):
     super().__init__()
     self.require(Player)
-    self.require(Id)
+    self.require(Networked)
     self.server = server
     self.id = None
     self.pos = None
 
   def start(self):
-    self.id = self.get_component(Id).id
+    self.id = self.get_component(Networked).id
     self.pos = self.get_component(Position)
 
   def update(self):

@@ -26,7 +26,7 @@ class Physics(Component):
     #TODO: circular import
     from ..tiles import TilesetPhysics
     #TODO: hmm this is n squared, caching in start for now
-    self.tile_rects = self.entity.world.find_components(TilesetPhysics)[0].rects
+    self.tile_rects = self.entity.world.find_component(TilesetPhysics).rects
 
   def update(self):
     pc = self.get_component(Position)

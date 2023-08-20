@@ -15,7 +15,7 @@ def target_type_filter(target_type):
   def build_filter(skill):
     user_team = skill.user.get_component(Team).team
     #get team manager here so we arent O(N^2) on potential targets
-    team_manager = skill.entity.world.find_components(TeamManager)[0]
+    team_manager = skill.entity.world.find_component(TeamManager)
     def filter(actor):
       target_team = actor.get_component(Team).team
       disposition = team_manager.get_disposition(user_team, target_team)

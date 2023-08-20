@@ -16,7 +16,7 @@ class PlayerController(Component):
   def start(self):
     #TODO: circular import
     from game.components.networking import ClientManager
-    self.client = self.entity.world.find_components(ClientManager)[0].client
+    self.client = self.entity.world.find_component(ClientManager).client
     self.player = find_entity_by_id(self.entity.world, self.id)
 
   def handle_keys(self, keys):

@@ -32,8 +32,7 @@ class ServerGame:
       ServerManager()
     ])
 
-    #find player (TODO: create new players and load save data)
-    self.player = self.world.find(Player)[0] #TODO: dont create player automatically
+    #TODO: load player data
     #store reference to game as an entity
     self.world.create_entity([GameMaster(self)])
 

@@ -4,7 +4,7 @@ from game.networking.events import TilesetUpdated, ActorSpawned, PlayerAssigned
 from ..tiles import TilesetPhysics
 from ..actor import Player
 from ..physics import Position
-from . import Id, ServerPlayer
+from . import Networked, ServerPlayer
 from game.utils import Vector
 
 class ConnectHandler:
@@ -14,18 +14,17 @@ class ConnectHandler:
   def handle_connect(self, server, id):
     #TODO: maybe make Tileset its own component that physics and baked both require?
     # that would make it harder to "change" the tileset without just destroying the entity but idk
-    ts = self.server_manager.entity.world.find_components(TilesetPhysics)[0].tileset
+    ts = self.server_manager.entity.world.find_component(TilesetPhysics).tileset
     server.send(id, TilesetUpdated(ts))
 
     #TODO: create player (this maybe should be a separate handler)
     world = self.server_manager.entity.world
     world.create_entity([
-      Id(id),
+      Networked(id),
       Position(Vector(2, 2)), #TODO: hardcoded position
       ServerPlayer(server)
     ])
-    #spawn an actor and tell the player he controls it
-    server.send(id, ActorSpawned(id))
+    #tell the player he controls the newly spawned actor
     server.send(id, PlayerAssigned(id))
 
 class ServerManager(Component):
@@ -33,6 +32,17 @@ class ServerManager(Component):
     super().__init__()
     self.queue = []
     self.server = None
+    self.networked_entities = {}
+
+  def spawn(self, entity):
+    id = entity.get_component(Networked).id
+    self.networked_entities[id] = entity
+    #TODO: send spawned event (would require networking other entities, not just actor)
+
+  def despawn(self, entity):
+    id = entity.get_component(Networked).id
+    del self.networked_entities[id]
+    #TODO: send spawned event (would require networking other entities, not just actor)
 
   def start(self):
     #TODO: circular imports

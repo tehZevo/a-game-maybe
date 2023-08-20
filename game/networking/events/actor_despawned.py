@@ -1,29 +1,22 @@
 from dataclasses import dataclass
 
-from game.components.physics import Position
-from game.utils import Vector
 from ..event_handler import EventHandler
-from game.utils import find_entity_by_id
 
 @dataclass
-class PositionUpdated:
+class ActorDespawned:
   id: str
-  pos: Vector
 
-class PositionUpdatedHandler(EventHandler):
+class ActorDespawnedHandler(EventHandler):
   def __init__(self, client_manager):
-    super().__init__(PositionUpdated)
+    super().__init__(ActorDespawned)
     self.client_manager = client_manager
 
   def handle(self, client, event):
-    #TODO: remove
-    #ent = find_entity_by_id(self.client_manager.entity.world, event.id)
     #TODO: this is caused by entities not being on client yet.. need to sync them when client first "sees" them
     # this either means sending actor spawned for all ents upon player join, OR having other actors/networked components spawn/despawn themselves on the client
     if event.id not in self.client_manager.networked_entities:
       #print("trying to update entity position with id", event.id, "but not found in networked entities...")
       return
-    ent = self.client_manager.networked_entities[event.id]
-    if ent is not None:
-      #TODO: lerp?
-      ent.get_component(Position).pos = event.pos
+    ent = self.client_manager.despawn(event.id)
+    ent.remove()
+    print("[Client] Actor despawned:", event.id)

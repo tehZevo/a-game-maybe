@@ -1,8 +1,8 @@
 from game.ecs import Component
-from game.networking.events import ActorSpawned, PositionUpdated
+from game.networking.events import ActorSpawned, ActorDespawned, PositionUpdated
 from ..networking import ServerManager
 from ..physics import Position
-from . import Id
+from . import Networked
 
 #TODO: may need to make this more general (eg for tile entities)
 #determine if we are on the client or the server
@@ -12,10 +12,10 @@ class ActorNetworking(Component):
     #TODO: circular import
     from ..actor import Actor
     self.require(Actor)
-    self.require(Id)
+    self.require(Networked)
     self.server = None
     self.pos = None
-    self.id = None
+    self.networking = None
 
   #TODO: generalize this "is server" logic to a "NetworkedComponent"?
   def start(self):
@@ -26,18 +26,21 @@ class ActorNetworking(Component):
       return
 
     self.pos = self.get_component(Position)
-    self.id = self.get_component(Id)
+    self.networking = self.get_component(Networked)
     #TODO: send SpriteChanged?
     #spawn actor on clients
-    self.server.broadcast(ActorSpawned(self.id.id))
+    self.server.broadcast(ActorSpawned(self.networking.id))
 
   def update(self):
     if self.server is None:
       return
 
     #TODO: move to some kind of position/physics sync
-    self.server.broadcast(PositionUpdated(self.id.id, self.pos.pos))
+    self.server.broadcast(PositionUpdated(self.networking.id, self.pos.pos))
 
-  def on_remove(self):
-    #TODO: ActorRemoved
-    pass
+  def on_destroy(self):
+    if self.server is None:
+      return
+
+    print("yeet")
+    self.server.broadcast(ActorDespawned(self.networking.id))

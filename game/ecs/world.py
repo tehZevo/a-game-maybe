@@ -18,9 +18,11 @@ class World:
     #TODO: need to prevent ability of adding a new entity to the list from another thread
     # may have to add to a separate list and then concat with main list adfter update
     #TODO: lock?
-    self.entities.append(entity)
+    #starting entity before adding to world list prevents it from being updated in a separate thread..
+    #this avoids some crashes but feels "weird", as logically, the entity *should* be in the world before starting
     entity.world = self
     entity.start()
+    self.entities.append(entity)
 
   #returns all entities with the given component
   def find(self, component_type):
@@ -36,7 +38,7 @@ class World:
     if len(comps) == 0:
       return None
     return comps[0]
-    
+
   def update(self):
     #copy entity list so we don't iterate over newly created entities
     ents = self.entities.copy()
