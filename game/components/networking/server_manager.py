@@ -1,10 +1,8 @@
 from game.ecs import Component
 from game.networking import Server
-from game.networking.events import TilesetUpdated, ActorSpawned, PlayerAssigned
+from game.networking.events import TilesetUpdated, PlayerAssigned
 from ..tiles import TilesetPhysics
-from ..actor import Player
 from ..physics import Position
-from . import Networked, ServerPlayer
 from game.utils import Vector
 
 class ConnectHandler:
@@ -17,10 +15,12 @@ class ConnectHandler:
     ts = self.server_manager.entity.world.find_component(TilesetPhysics).tileset
     server.send(id, TilesetUpdated(ts))
 
+    #TODO: circular import
+    from . import Id, ServerPlayer
     #TODO: create player (this maybe should be a separate handler)
     world = self.server_manager.entity.world
     world.create_entity([
-      Networked(id),
+      Id(id),
       Position(Vector(2, 2)), #TODO: hardcoded position
       ServerPlayer(server)
     ])
@@ -35,12 +35,16 @@ class ServerManager(Component):
     self.networked_entities = {}
 
   def spawn(self, entity):
-    id = entity.get_component(Networked).id
+    #TODO: circular import
+    from . import Id
+    id = entity.get_component(Id).id
     self.networked_entities[id] = entity
     #TODO: send spawned event (would require networking other entities, not just actor)
 
   def despawn(self, entity):
-    id = entity.get_component(Networked).id
+    #TODO: circular import
+    from . import Id
+    id = entity.get_component(Id).id
     del self.networked_entities[id]
     #TODO: send spawned event (would require networking other entities, not just actor)
 

@@ -1,6 +1,7 @@
 - make Networkable interface
   - calls two separate update/start _client/_server ONLY IF Networked COMPONENT IS PRESENT
   - provides is_client/is_server and client/server manager properties (once again, if networked)
+- make actor networkable
 - make Position networkable and send PositionUpdated in start_server/update_server
 - network hp/mp updates (make stats networkable)
 - network item drops (make dropped item networkable)

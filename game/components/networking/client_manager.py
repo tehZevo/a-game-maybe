@@ -2,7 +2,7 @@ from game.ecs import Component
 from game.networking import Client
 from game.networking.events import TilesetUpdatedHandler, ActorSpawnedHandler, \
   ActorDespawnedHandler, PositionUpdatedHandler, PlayerAssignedHandler
-from . import Networked
+from . import Id
 
 class ClientManager(Component):
   def __init__(self):
@@ -10,7 +10,7 @@ class ClientManager(Component):
     self.networked_entities = {}
 
   def spawn(self, entity):
-    id = entity.get_component(Networked).id
+    id = entity.get_component(Id).id
     self.networked_entities[id] = entity
 
   def despawn(self, id):
