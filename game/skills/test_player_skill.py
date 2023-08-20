@@ -1,4 +1,5 @@
 from game.skilleffects import CircleTarget, Damage, EmitParticles, Push, Rush, SelfTarget
+from game.items.slots import SkillSlot
 from . import SkillDef, TargetType
 
 test_player_skill = SkillDef([
@@ -12,4 +13,4 @@ test_player_skill = SkillDef([
       EmitParticles(),
     ]
   )
-], mp_cost=10, use_time=0.25)
+], mp_cost=10, use_time=0.25, slot=SkillSlot.ALPHA, icon="assets/items/skills/alpha.png")

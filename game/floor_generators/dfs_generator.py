@@ -9,7 +9,7 @@ from game.components.tiles import TilesetPhysics
 from game.tiles import Tileset, Floor, Wall
 from game.utils import Vector
 
-SPAWNER_CHANCE = 0
+SPAWNER_CHANCE = 0.5
 
 class DFSGenerator(FloorGenerator):
   def __init__(self):

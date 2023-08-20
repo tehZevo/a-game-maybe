@@ -36,14 +36,15 @@ class ServerManager(Component):
 
   def start(self):
     #TODO: circular imports
-    from game.networking.commands import TestCommandHandler, PlayerMoveHandler
+    from game.networking.commands import PlayerMoveHandler, \
+      PlayerUseSkillHandler
 
     #TODO: i guess here is as good a place as any to register some handlers
     self.server = Server(
       connect_handlers=[ConnectHandler(self)],
       command_handlers=[
-        TestCommandHandler(),
         PlayerMoveHandler(self),
+        PlayerUseSkillHandler(self),
       ],
     )
     self.server.start()

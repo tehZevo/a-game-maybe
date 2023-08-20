@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from ..command_handler import CommandHandler
 
+#TODO: remove
 @dataclass
 class TestCommand:
   message: str

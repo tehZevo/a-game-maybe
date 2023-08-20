@@ -32,6 +32,14 @@ class Actor(Component):
       source = None
       listener.on_damage(source)
 
+  #TODO: maybe move to equips or skillset
+  def use_skill_in_slot(self, slot):
+    skill = self.get_component(Equips).skills[slot]
+    if skill is None:
+      print("warning: tried to use None skill in slot", slot)
+
+    self.act(UseSkill(skill))
+
   def start_action(self, action):
     self.action = action
     self.action.register(self.entity)

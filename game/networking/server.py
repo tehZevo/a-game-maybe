@@ -1,3 +1,4 @@
+from enum import Enum
 from collections import defaultdict
 import json
 
@@ -42,7 +43,7 @@ class Server:
     message = json.loads(message)
     command_type_name = message["type"]
     #construct command
-    command = dacite.from_dict(self.command_types[command_type_name], message["data"])
+    command = dacite.from_dict(self.command_types[command_type_name], message["data"], config=dacite.Config(cast=[Enum]))
     #tell all handlers about command
     for handler in self.command_handlers[command.__class__]:
       handler.handle(self, id, command)
@@ -51,7 +52,7 @@ class Server:
     event_type = event.__class__.__name__
     event = {
       "type": event_type,
-      "data": event.__dict__
+      "data": event
     }
     return json.dumps(event, default=lambda o: o.__dict__)
 

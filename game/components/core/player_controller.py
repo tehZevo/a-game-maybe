@@ -3,6 +3,7 @@ import pygame
 from game.ecs import Component
 from game.utils import Vector
 from game.utils import find_entity_by_id
+from game.items import SkillSlot
 
 #client side controller, takes keyboard events, sends commands n stuff
 class PlayerController(Component):
@@ -20,14 +21,18 @@ class PlayerController(Component):
 
   def handle_keys(self, keys):
     #TODO: circular import
-    from game.networking.commands import PlayerMove
+    from game.networking.commands import PlayerMove, PlayerUseSkill
     #TODO: skill use
     if keys[pygame.K_a]:
-      #self.get_component(Actor).act(UseSkill(test_player_skill))
-      pass
+      self.client.send(PlayerUseSkill(SkillSlot.ALPHA))
     if keys[pygame.K_s]:
-      #self.get_component(Actor).act(UseSkill(hax_heal))
-      pass
+      self.client.send(PlayerUseSkill(SkillSlot.BETA))
+    if keys[pygame.K_d]:
+      self.client.send(PlayerUseSkill(SkillSlot.GAMMA))
+    if keys[pygame.K_f]:
+      self.client.send(PlayerUseSkill(SkillSlot.DELTA))
+    if keys[pygame.K_q]:
+      self.client.send(PlayerUseSkill(SkillSlot.OMEGA))
 
     #TODO: interact use
     if keys[pygame.K_SPACE]:

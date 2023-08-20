@@ -1,14 +1,15 @@
 import pygame
 
 from game.ecs import Component
-from .actor import Actor
-from ..graphics.sprite import Sprite
-from ..teams import Team
 from game.skills import test_player_skill, hax_heal
 from game.actions import Move, UseSkill, Interact
+from game.items import SkillItem
 from game.utils import Vector
 from game.utils.teams import PLAYER
-from . import Invulnerable, DamageListener
+from ..graphics.sprite import Sprite
+from ..teams import Team
+from ..item import Equips
+from . import Invulnerable, DamageListener, Actor
 
 PLAYER_INVULN_TIME = 1 #seconds
 
@@ -20,6 +21,10 @@ class Player(Component, DamageListener):
   def start(self):
     self.get_component(Sprite).set_sprite("assets/player.png")
     self.get_component(Team).team = PLAYER
+    equips = self.get_component(Equips)
+    #TODO: this should probably be save data, but we would need to inject it in the connect handler?
+    equips.equip(SkillItem(test_player_skill))
+    equips.equip(SkillItem(hax_heal))
 
   def on_damage(self, attacker):
     if self.get_component(Invulnerable) is None:
