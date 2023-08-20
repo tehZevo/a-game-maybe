@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from enum import Enum
+from enum import IntEnum
 
-ArmorSlot = Enum("ArmorSlot", ["HAT", "BODY", "GLOVES", "SHOES", "ACCESSORY"])
-SkillSlot = Enum("SkillSlot", ["ALPHA", "BETA", "GAMMA", "DELTA", "OMEGA"])
+ArmorSlot = IntEnum("ArmorSlot", ["HAT", "BODY", "GLOVES", "SHOES", "ACCESSORY"])
+SkillSlot = IntEnum("SkillSlot", ["ALPHA", "BETA", "GAMMA", "DELTA", "OMEGA"])

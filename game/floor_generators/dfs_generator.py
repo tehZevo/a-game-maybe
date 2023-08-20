@@ -84,11 +84,11 @@ class DFSGenerator(FloorGenerator):
     tileset = Tileset(self.room_size * self.floor_size, self.room_size * self.floor_size)
     for rx, ry, north, south, east, west in rooms:
       #randomly create spawners
-      if random.random() < SPAWNER_CHANCE:
-        world.create_entity([
-          Position(Vector(rx * self.room_size + self.room_size / 2, ry * self.room_size + self.room_size / 2)),
-          Spawner(Enemy, radius=2, wave_time=2, wave_count=1, spawn_max=3)
-        ])
+      # if random.random() < SPAWNER_CHANCE:
+      #   world.create_entity([
+      #     Position(Vector(rx * self.room_size + self.room_size / 2, ry * self.room_size + self.room_size / 2)),
+      #     Spawner(Enemy, radius=2, wave_time=2, wave_count=1, spawn_max=3)
+      #   ])
       for tx in range(self.room_size):
         for ty in range(self.room_size):
           tile = Wall() if is_wall(tx, ty, north, south, east, west) else Floor()

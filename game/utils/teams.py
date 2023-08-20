@@ -1,6 +1,6 @@
-from enum import Enum
+from enum import IntEnum
 
-Disposition = Enum("Disposition", ["ENEMY", "ALLY", "NEUTRAL"])
+Disposition = IntEnum("Disposition", ["ENEMY", "ALLY", "NEUTRAL"])
 
 ENEMY = "enemy"
 PLAYER = "player"

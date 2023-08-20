@@ -1,3 +1,3 @@
-from enum import Enum
+from enum import IntEnum
 
-Direction = Enum("Direction", ["EAST, NORTH, WEST, SOUTH"])
+Direction = IntEnum("Direction", ["EAST, NORTH, WEST, SOUTH"])

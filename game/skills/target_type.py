@@ -1,3 +1,3 @@
-from enum import Enum
+from enum import IntEnum
 
-TargetType = Enum("TargetType", ["ENEMY", "ALLY"])
+TargetType = IntEnum("TargetType", ["ENEMY", "ALLY"])

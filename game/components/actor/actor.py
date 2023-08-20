@@ -34,11 +34,13 @@ class Actor(Component):
 
   #TODO: maybe move to equips or skillset
   def use_skill_in_slot(self, slot):
-    skill = self.get_component(Equips).skills[slot]
-    if skill is None:
+    #TODO: circular reference
+    from game.actions import UseSkill
+    skill_item = self.get_component(Equips).skills[slot]
+    if skill_item is None:
       print("warning: tried to use None skill in slot", slot)
 
-    self.act(UseSkill(skill))
+    self.act(UseSkill(skill_item.skilldef))
 
   def start_action(self, action):
     self.action = action
@@ -66,7 +68,8 @@ class Actor(Component):
       if not self.action.active:
         self.action = None
 
-      #start new action if old action is finished
-      if self.next_action is not None:
-        self.start_action(self.next_action)
-        self.next_action = None
+    #start new action if old action is finished
+    if self.action is None and self.next_action is not None:
+      a = self.next_action
+      self.next_action = None
+      self.start_action(a)

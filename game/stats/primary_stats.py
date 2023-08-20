@@ -1,9 +1,9 @@
 from dataclasses import dataclass
-from enum import Enum
+from enum import IntEnum
 
 from game.utils.utils import dict_op
 
-PrimaryStat = Enum("PrimaryStat", ["STR", "VIT", "DEX", "AGI", "INT", "WIS"])
+PrimaryStat = IntEnum("PrimaryStat", ["STR", "VIT", "DEX", "AGI", "INT", "WIS"])
 
 @dataclass
 class PrimaryStats:
