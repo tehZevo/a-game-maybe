@@ -39,6 +39,7 @@ class Actor(Component):
     skill_item = self.get_component(Equips).skills[slot]
     if skill_item is None:
       print("warning: tried to use None skill in slot", slot)
+      return
 
     self.act(UseSkill(skill_item.skilldef))
 
