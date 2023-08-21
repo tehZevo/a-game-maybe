@@ -4,3 +4,4 @@ from .entity_despawned import EntityDespawned, EntityDespawnedHandler
 from .position_updated import PositionUpdated, PositionUpdatedHandler
 from .player_assigned import PlayerAssigned, PlayerAssignedHandler
 from .item_spawned import ItemSpawned, ItemSpawnedHandler
+from .stats_updated import StatsUpdated, StatsUpdatedHandler

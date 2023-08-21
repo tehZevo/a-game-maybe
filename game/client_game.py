@@ -42,7 +42,7 @@ class ClientGame:
     #find player (TODO: create new players and load save data)
     # self.player = self.world.find(Player)[0]
     #store reference to game as an entity
-    # self.world.create_entity([GameMaster(self)])
+    self.world.create_entity([GameMaster(self)])
     #create renderer
     self.renderer = self.world.create_entity([Renderer(self.screen)])
     #add particle system

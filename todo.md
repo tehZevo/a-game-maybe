@@ -1,18 +1,8 @@
-- reduce WET code of despawning networked entities and updating position
-  - (position extending networkable component made a mess out of dependencies and also made the ui think it should be networked... need a better way)
-  - maybe make certain Networking type components require PositionNetworking?
-- network item drops (make dropped item networkable), have to network Item data..
-  - potential solutions:
-    - make existing Item (and its subtypes) dataclasses
-      - this implies that sending the entire item info to the client is useful in some way (which it shouldnt be unless the item stats/data are generated/random from the serer)
-    - make a "dummy" item class that just contains the item name and sprite path
-    - turn items into loadable data, and then just pass the item id
-  - other issues...
-    - skill items have skilldefs attached on them, and there is no reason to send all that data to the client
-    - seems like i should store a reference id to a skill on the item
-    - maybe store the module name and skilldef name in the item so they can be dynamically loaded?
-    - or maybe have a kind of item/skill/gamedata registry that given an id, constructs an instance of that thing
 - network hp/mp updates (make stats networkable)
+  - make client ui target player
+- fix skill use generating tons of stats updated events
+ - maybe store stat updates per game tick and then send one StatsUpdated on the next tick>
+- network particle emitters
 - spawn networked players with player data when loading new world
 - use eventcatalog to document events?
 - client side prediction :^)

@@ -1,6 +1,9 @@
 # Networking
 * Event-based
 * Both the client and the server have their own game world
+* Networking capabilities are broken up into their own components, eg:
+  * PositionNetworking is responsible for sending PositionUpdated events
+  * DespawnNetworking is responsible for sending EntityDespawned events
 
 ## `Client`
 * Can register `EventHandler`s

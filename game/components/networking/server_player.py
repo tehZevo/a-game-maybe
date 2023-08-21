@@ -11,8 +11,7 @@ class ServerPlayer(Component):
     #TODO: circular import
     from . import Id
     from ..actor import Player
-    self.require(Player)
-    self.require(Id)
+    self.require(Player, Id)
     self.server = server
     self.id = None
     self.pos = None

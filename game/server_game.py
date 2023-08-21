@@ -5,7 +5,7 @@ from game.ecs import World
 from game.save_data import SaveData
 from game.components.core import GameMaster
 from game.components.networking import ServerManager
-from game.utils.constants import FPS, PPU
+from game.utils.constants import FPS
 from game.utils.floor_transition import floor_transition
 from game.floor_generators import TestFloor, DFSGenerator
 

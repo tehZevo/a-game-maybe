@@ -6,8 +6,9 @@ class Component:
     self.entity = None
     self.required_components = set()
 
-  def require(self, type):
-    self.required_components.add(type)
+  #accepts varargs of types
+  def require(self, *types):
+    self.required_components.update(types)
 
   #shorthand
   def get_component(self, type):

@@ -8,8 +8,7 @@ from game.utils.image_cache import get_image
 class Sprite(Component):
   def __init__(self):
     super().__init__()
-    self.require(Position)
-    self.require(Surface)
+    self.require(Position, Surface)
 
   #TODO: rename to set_image and update surface
   def set_sprite(self, path):

@@ -10,21 +10,16 @@ from game.utils import Vector
 class Actor(Component):
   def __init__(self):
     super().__init__()
-    self.require(Physics)
-    self.require(Sprite)
-    self.require(Stats)
-    self.require(ItemDropper)
-    self.require(Equips)
-    self.require(Collisions)
-    self.require(Team)
-    self.require(ActorNetworking)
+    self.require(Physics, Sprite, Stats, ItemDropper, Equips, Collisions, \
+      Team, ActorNetworking)
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)
 
   def damage(self, amount):
     stats = self.get_component(Stats)
-    stats.hp -= amount
+    stats.add_hp(-amount)
+
     #find all damage listeners and call their on_damage
     for listener in self.entity.find(DamageListener):
       #TODO: add source
