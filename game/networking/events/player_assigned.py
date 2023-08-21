@@ -2,7 +2,6 @@ from dataclasses import dataclass
 
 from ..event_handler import EventHandler
 from game.components.core import PlayerController
-from game.components.graphics import Camera
 from game.utils import find_entity_by_id
 #server tells the player which actor he controls
 
@@ -16,6 +15,8 @@ class PlayerAssignedHandler(EventHandler):
     self.client_manager = client_manager
 
   def handle(self, client, event):
+    #TODO: circular imports
+    from game.components.graphics import Camera
     world = self.client_manager.entity.world
     entity = world.create_entity([PlayerController(event.id)])
     #find player and set camera target

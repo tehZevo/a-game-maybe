@@ -1,4 +1,5 @@
-from ..networking import NetworkableComponent, Id
+from game.ecs import Component
+from ..networking import Id, ActorNetworking
 from ..physics import Physics, Collisions, Position
 from ..graphics import Sprite
 from ..item import ItemDropper, Equips
@@ -7,7 +8,7 @@ from . import Stats, DamageListener
 from game.networking.events import ActorSpawned, PositionUpdated, ActorDespawned
 from game.utils import Vector
 
-class Actor(NetworkableComponent):
+class Actor(Component):
   def __init__(self):
     super().__init__()
     self.require(Physics)
@@ -17,6 +18,7 @@ class Actor(NetworkableComponent):
     self.require(Equips)
     self.require(Collisions)
     self.require(Team)
+    self.require(ActorNetworking)
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)
@@ -52,14 +54,7 @@ class Actor(NetworkableComponent):
     else:
       self.next_action = action
 
-  def start_server(self):
-    self.pos = self.get_component(Position)
-    self.id = self.get_component(Id).id
-    #TODO: send SpriteChanged?
-    #spawn actor on clients
-    self.server_manager.server.broadcast(ActorSpawned(self.id))
-
-  def update_server(self):
+  def update(self):
     stats = self.get_component(Stats)
     if stats.hp <= 0:
       self.entity.remove()
@@ -79,10 +74,3 @@ class Actor(NetworkableComponent):
       a = self.next_action
       self.next_action = None
       self.start_action(a)
-
-    #TODO: move to some kind of position/physics sync
-    self.server_manager.server.broadcast(PositionUpdated(self.id, self.pos.pos))
-
-  def on_destroy_server(self):
-    print("yeet")
-    self.server_manager.server.broadcast(ActorDespawned(self.id))

@@ -1,15 +1,16 @@
 from game.ecs import Component
 from game.networking import Server
-from game.networking.events import TilesetUpdated, PlayerAssigned
-from ..tiles import TilesetPhysics
-from ..physics import Position
 from game.utils import Vector
+from ..physics import Position
 
 class ConnectHandler:
   def __init__(self, server_manager):
     self.server_manager = server_manager
 
   def handle_connect(self, server, id):
+    #TODO: circular imports
+    from game.networking.events import TilesetUpdated, PlayerAssigned
+    from ..tiles import TilesetPhysics
     #TODO: maybe make Tileset its own component that physics and baked both require?
     # that would make it harder to "change" the tileset without just destroying the entity but idk
     ts = self.server_manager.entity.world.find_component(TilesetPhysics).tileset

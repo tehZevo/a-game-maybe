@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from ..command_handler import CommandHandler
 from game.actions import Move
 from game.components.actor import Actor
-from game.utils import find_entity_by_id, Vector
+from game.utils import Vector
 
 @dataclass
 class PlayerMove:
@@ -15,6 +15,6 @@ class PlayerMoveHandler(CommandHandler):
     self.server_manager = server_manager
 
   def handle(self, server, id, command):
-    ent = find_entity_by_id(self.server_manager.entity.world, id)
+    ent = self.server_manager.networked_entities[id]
     if ent is not None:
       ent.get_component(Actor).act(Move(command.dir))

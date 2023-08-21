@@ -2,8 +2,6 @@ from dataclasses import dataclass
 
 from ..event_handler import EventHandler
 from game.tiles import Tileset
-from game.components.graphics import BakedTileset
-from game.components.tiles import TilesetPhysics
 
 @dataclass
 class TilesetUpdated:
@@ -15,6 +13,9 @@ class TilesetUpdatedHandler(EventHandler):
     self.client_manager = client_manager
 
   def handle(self, client, event):
+    #TODO: circular imports
+    from game.components.graphics import BakedTileset
+    from game.components.tiles import TilesetPhysics
     #TODO: should i delete the old ones first?
     world = self.client_manager.entity.world
     world.create_entity([

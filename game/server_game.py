@@ -3,8 +3,6 @@ from pygame.math import Vector2
 
 from game.ecs import World
 from game.save_data import SaveData
-from game.components.actor import Player
-from game.components.physics import Position
 from game.components.core import GameMaster
 from game.components.networking import ServerManager
 from game.utils.constants import FPS, PPU
@@ -17,21 +15,26 @@ class ServerGame:
     self.clock = pygame.time.Clock()
 
     #TODO: store a party (player game/"save" data) so player data can be repopulated on the new floor
+    self.world = self.generate_world()
+    floor_transition(self.world, DFSGenerator())
+    # floor_transition(self.world, TestFloor())
 
-    #TODO: rename to game_world?
-    self.world = floor_transition(DFSGenerator())
-    # self.world = floor_transition(TestFloor())
     self.next_world = None
     self.init_world()
 
-  def init_world(self, save_data=None):
+  def generate_world(self):
+    #TODO: rename to game_world?
+    world = World()
+
     #create server
     #TODO: actually.. maybe server should exist outside lol...
     # that or we should create a server first and then pass the existing one to the Server component
-    self.world.create_entity([
+    world.create_entity([
       ServerManager()
     ])
+    return world
 
+  def init_world(self, save_data=None):
     #TODO: load player data
     #store reference to game as an entity
     self.world.create_entity([GameMaster(self)])
@@ -40,7 +43,9 @@ class ServerGame:
     if save_data is not None:
       save_data.apply(self.world)
 
-  def transition(self, world):
+  def transition(self, world_gen_func):
+    world = self.generate_world()
+    world_gen_func(world)
     self.next_world = world
 
   def run(self):

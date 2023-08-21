@@ -1,7 +1,5 @@
 from game.ecs import Component
 from game.networking import Client
-from game.networking.events import TilesetUpdatedHandler, ActorSpawnedHandler, \
-  ActorDespawnedHandler, PositionUpdatedHandler, PlayerAssignedHandler
 from . import Id
 
 class ClientManager(Component):
@@ -19,6 +17,9 @@ class ClientManager(Component):
     return ent
 
   def start(self):
+    #TODO: circular imports
+    from game.networking.events import TilesetUpdatedHandler, ActorSpawnedHandler, \
+    ActorDespawnedHandler, PositionUpdatedHandler, PlayerAssignedHandler
     self.client = Client(
       event_handlers=[
         TilesetUpdatedHandler(self),

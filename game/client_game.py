@@ -29,6 +29,11 @@ class ClientGame:
 
     #TODO: rename to game_world?
     self.world = World()
+    #create client
+    #TODO: create Client as property of ClientGame and pass to ClientManager?
+    self.world.create_entity([
+      ClientManager()
+    ])
     self.next_world = None
     self.init_world()
 
@@ -54,13 +59,8 @@ class ClientGame:
     uim_comp.game_world = self.world
     # uim_comp.set_player(self.player) #TODO: uimanager needs player eventually
 
-    #create client
-    #TODO: create Client as property of ClientGame and pass to ClientManager?
-    self.world.create_entity([
-      ClientManager()
-    ])
-
   def transition(self, world):
+    #TODO: yeet world, wait for server to repopulate
     self.next_world = world
 
   def run(self):

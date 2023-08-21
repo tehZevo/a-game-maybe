@@ -1,21 +1,27 @@
 from game.ecs import Component
-from . import Id
 
-class NetworkableComponent(Component):
+class Networking(Component):
   def __init__(self):
     super().__init__()
+    #TODO: circular import
+    from . import Id
     self.require(Id)
     self.is_client = None
     self.is_server = None
     self.server_manager = None
     self.client_manager = None
+    self.networked = False
+    self.network_id = None
     #TODO: aliases like server, client server.broadcast, server.send, etc
 
   def start(self):
-    #TODO: circular reference
+    #TODO: circular import
     from . import ClientManager, ServerManager, Id
     self.is_client = len(self.entity.world.find_components(ClientManager)) > 0
     self.is_server = not self.is_client
+
+    self.network_id = self.entity.get_component(Id).id
+    self.networked = self.network_id is not None
 
     if self.is_server:
       self.server_manager = self.entity.world.find_component(ServerManager)
