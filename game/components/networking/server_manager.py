@@ -2,6 +2,7 @@ from game.ecs import Component
 from game.networking import Server
 from game.utils import Vector
 from ..physics import Position
+from . import Id
 
 class ConnectHandler:
   def __init__(self, server_manager):
@@ -17,7 +18,7 @@ class ConnectHandler:
     server.send(id, TilesetUpdated(ts))
 
     #TODO: circular import
-    from . import Id, ServerPlayer
+    from . import ServerPlayer
     #TODO: create player (this maybe should be a separate handler)
     world = self.server_manager.entity.world
     world.create_entity([
@@ -36,15 +37,11 @@ class ServerManager(Component):
     self.networked_entities = {}
 
   def spawn(self, entity):
-    #TODO: circular import
-    from . import Id
     id = entity.get_component(Id).id
     self.networked_entities[id] = entity
     #TODO: send spawned event (would require networking other entities, not just actor)
 
   def despawn(self, entity):
-    #TODO: circular import
-    from . import Id
     id = entity.get_component(Id).id
     del self.networked_entities[id]
     #TODO: send spawned event (would require networking other entities, not just actor)
@@ -52,14 +49,14 @@ class ServerManager(Component):
   def start(self):
     #TODO: circular imports
     from game.networking.commands import PlayerMoveHandler, \
-      PlayerUseSkillHandler
+      PlayerUseSkillHandler, PlayerInteractHandler
 
-    #TODO: i guess here is as good a place as any to register some handlers
     self.server = Server(
       connect_handlers=[ConnectHandler(self)],
       command_handlers=[
         PlayerMoveHandler(self),
         PlayerUseSkillHandler(self),
+        PlayerInteractHandler(self),
       ],
     )
     self.server.start()

@@ -11,6 +11,7 @@
     - skill items have skilldefs attached on them, and there is no reason to send all that data to the client
     - seems like i should store a reference id to a skill on the item
     - maybe store the module name and skilldef name in the item so they can be dynamically loaded?
+    - or maybe have a kind of item/skill/gamedata registry that given an id, constructs an instance of that thing
 - network hp/mp updates (make stats networkable)
 - spawn networked players with player data when loading new world
 - use eventcatalog to document events?

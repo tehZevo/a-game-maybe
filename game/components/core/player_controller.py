@@ -21,8 +21,9 @@ class PlayerController(Component):
 
   def handle_keys(self, keys):
     #TODO: circular import
-    from game.networking.commands import PlayerMove, PlayerUseSkill
-    #TODO: skill use
+    from game.networking.commands import PlayerMove, PlayerUseSkill, \
+      PlayerInteract
+
     if keys[pygame.K_a]:
       self.client.send(PlayerUseSkill(SkillSlot.ALPHA))
     if keys[pygame.K_s]:
@@ -33,11 +34,8 @@ class PlayerController(Component):
       self.client.send(PlayerUseSkill(SkillSlot.DELTA))
     if keys[pygame.K_q]:
       self.client.send(PlayerUseSkill(SkillSlot.OMEGA))
-
-    #TODO: interact use
     if keys[pygame.K_SPACE]:
-      # self.get_component(Actor).act(Interact())
-      pass
+      self.client.send(PlayerInteract())
 
     #create move dir from key status
     move_dir = Vector(

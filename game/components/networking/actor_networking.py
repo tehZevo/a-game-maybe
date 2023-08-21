@@ -23,5 +23,4 @@ class ActorNetworking(Networking):
     self.server_manager.server.broadcast(PositionUpdated(self.network_id, self.pos.pos))
 
   def on_destroy_server(self):
-    print("yeet")
     self.server_manager.server.broadcast(EntityDespawned(self.network_id))
