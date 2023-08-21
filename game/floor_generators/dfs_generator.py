@@ -102,8 +102,3 @@ class DFSGenerator(FloorGenerator):
     x, y, _, _, _, _ = random.choice(rooms)
     #create stairs to this generator
     world.create_entity([Position(Vector(x * self.room_size + self.room_size / 2, x * self.room_size + self.room_size / 2)), Stairs(self)])
-
-    # #choose random room to spawn player in
-    # x, y, _, _, _, _ = random.choice(rooms)
-    # #TODO: need separate spawn function that creates players with given player data
-    # world.create_entity([Position(Vector(x * self.room_size + self.room_size / 2, x * self.room_size + self.room_size / 2)), Player()])

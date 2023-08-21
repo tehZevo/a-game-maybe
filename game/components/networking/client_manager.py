@@ -19,14 +19,16 @@ class ClientManager(Component):
   def start(self):
     #TODO: circular imports
     from game.networking.events import TilesetUpdatedHandler, ActorSpawnedHandler, \
-    ActorDespawnedHandler, PositionUpdatedHandler, PlayerAssignedHandler
+    EntityDespawnedHandler, PositionUpdatedHandler, PlayerAssignedHandler, \
+    ItemSpawnedHandler
     self.client = Client(
       event_handlers=[
+        PlayerAssignedHandler(self),
         TilesetUpdatedHandler(self),
         ActorSpawnedHandler(self),
-        ActorDespawnedHandler(self),
+        ItemSpawnedHandler(self),
         PositionUpdatedHandler(self),
-        PlayerAssignedHandler(self),
+        EntityDespawnedHandler(self),
       ]
     )
     self.client.connect()

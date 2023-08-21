@@ -3,12 +3,12 @@ from dataclasses import dataclass
 from ..event_handler import EventHandler
 
 @dataclass
-class ActorDespawned:
+class EntityDespawned:
   id: str
 
-class ActorDespawnedHandler(EventHandler):
+class EntityDespawnedHandler(EventHandler):
   def __init__(self, client_manager):
-    super().__init__(ActorDespawned)
+    super().__init__(EntityDespawned)
     self.client_manager = client_manager
 
   def handle(self, client, event):
@@ -19,4 +19,4 @@ class ActorDespawnedHandler(EventHandler):
       return
     ent = self.client_manager.despawn(event.id)
     ent.remove()
-    print("[Client] Actor despawned:", event.id)
+    print("[Client] entity despawned:", event.id)

@@ -1,10 +1,17 @@
-- make Networkable interface
-  - calls two separate update/start _client/_server ONLY IF Networked COMPONENT IS PRESENT
-  - provides is_client/is_server and client/server manager properties (once again, if networked)
-- make actor networkable
-- make Position networkable and send PositionUpdated in start_server/update_server
+- reduce WET code of despawning networked entities and updating position
+  - (position extending networkable component made a mess out of dependencies and also made the ui think it should be networked... need a better way)
+  - maybe make certain Networking type components require PositionNetworking?
+- network item drops (make dropped item networkable), have to network Item data..
+  - potential solutions:
+    - make existing Item (and its subtypes) dataclasses
+      - this implies that sending the entire item info to the client is useful in some way (which it shouldnt be unless the item stats/data are generated/random from the serer)
+    - make a "dummy" item class that just contains the item name and sprite path
+    - turn items into loadable data, and then just pass the item id
+  - other issues...
+    - skill items have skilldefs attached on them, and there is no reason to send all that data to the client
+    - seems like i should store a reference id to a skill on the item
+    - maybe store the module name and skilldef name in the item so they can be dynamically loaded?
 - network hp/mp updates (make stats networkable)
-- network item drops (make dropped item networkable)
 - spawn networked players with player data when loading new world
 - use eventcatalog to document events?
 - client side prediction :^)

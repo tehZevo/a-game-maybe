@@ -2,12 +2,14 @@ from game.ecs import Component
 from ..core import Interactable
 from ..graphics.sprite import Sprite
 from ..physics.position import Position
+from ..networking import DroppedItemNetworking
 from . import Equips
 
 class DroppedItem(Component, Interactable):
   def __init__(self, item):
     super().__init__()
     self.require(Sprite)
+    self.require(DroppedItemNetworking)
     self.item = item
 
   def start(self):

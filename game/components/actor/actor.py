@@ -5,7 +5,6 @@ from ..graphics import Sprite
 from ..item import ItemDropper, Equips
 from ..teams import Team
 from . import Stats, DamageListener
-from game.networking.events import ActorSpawned, PositionUpdated, ActorDespawned
 from game.utils import Vector
 
 class Actor(Component):

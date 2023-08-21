@@ -1,22 +1,22 @@
-from game.networking.events import ActorSpawned, EntityDespawned, PositionUpdated
+from game.networking.events import ItemSpawned, EntityDespawned, PositionUpdated
 from ..physics import Position
 from . import Networking
 
-#TODO: may need to make this more general (eg for tile entities)
-#determine if we are on the client or the server
-class ActorNetworking(Networking):
+class DroppedItemNetworking(Networking):
   def __init__(self):
     super().__init__()
     #TODO: circular import
-    from ..actor import Actor
-    self.require(Actor)
+    from ..item import DroppedItem
+    self.require(DroppedItem)
     self.pos = None
 
   def start_server(self):
+    #TODO: circular import
+    from ..item import DroppedItem
     self.pos = self.get_component(Position)
     #TODO: send SpriteChanged?
     #spawn actor on clients
-    self.server_manager.server.broadcast(ActorSpawned(self.network_id))
+    self.server_manager.server.broadcast(ItemSpawned(self.network_id, self.get_component(DroppedItem).item))
 
   def update_server(self):
     #TODO: move to some kind of position/physics sync
@@ -24,4 +24,4 @@ class ActorNetworking(Networking):
 
   def on_destroy_server(self):
     print("yeet")
-    self.server_manager.server.broadcast(EntityDespawned(self.network_id))
+    self.server_manager.server.broadcast(EntityDespawned(self.id))
