@@ -39,3 +39,6 @@ class Entity:
   def update(self):
     for c in self.components.values():
       c.update()
+
+  def __repr__(self):
+    return "[" + ", ".join([e for e in self.components.keys()]) + "]"

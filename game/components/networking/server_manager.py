@@ -39,12 +39,14 @@ class ServerManager(Component):
   def spawn(self, entity):
     id = entity.get_component(Id).id
     self.networked_entities[id] = entity
-    #TODO: send spawned event (would require networking other entities, not just actor)
+    #TODO: send spawned event (would require networking other components, not just actor)
 
   def despawn(self, entity):
     id = entity.get_component(Id).id
-    del self.networked_entities[id]
-    #TODO: send spawned event (would require networking other entities, not just actor)
+    try:
+      del self.networked_entities[id]
+    except:
+      print("[Server] ERROR: tried to delete entity that doesn't exist with id " + id)
 
   def start(self):
     #TODO: circular imports

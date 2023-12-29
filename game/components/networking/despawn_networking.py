@@ -6,4 +6,5 @@ class DespawnNetworking(Networking):
     super().__init__()
 
   def on_destroy_server(self):
+    self.server_manager.despawn(self.entity)
     self.server_manager.server.broadcast(EntityDespawned(self.network_id))

@@ -52,7 +52,6 @@ class Networking(Component):
 
   def on_destroy(self):
     if self.is_server:
-      self.server_manager.despawn(self.entity)
       self.on_destroy_server()
     else:
       self.on_destroy_client()
