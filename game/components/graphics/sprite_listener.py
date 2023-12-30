@@ -1,7 +1,7 @@
 
-class Networkable:
+class SpriteListener:
   def __init__(self):
     pass
 
-  def melt(self, entity):
+  def on_sprite_changed(self, sprite):
     raise NotImplementedError

@@ -2,14 +2,14 @@ from dataclasses import dataclass
 
 from ..event_handler import EventHandler
 from ..component_registry import get_component_classes
+import game.components as C
 
-#TODO: make this a generic entity_spawned?
-#TODO: then how would i choose which components to create on the client side?
+#TODO: need the ability to spawn entities on client without networking eg particle emitters or other effects (vfx)
 
 @dataclass
 class EntitySpawned:
   id: str
-  component_data: dict
+  component_names: list
 
 class EntitySpawnedHandler(EventHandler):
   def __init__(self, client_manager):
@@ -17,15 +17,14 @@ class EntitySpawnedHandler(EventHandler):
     self.client_manager = client_manager
 
   def handle(self, client, event):
-    #TODO: circular import
-    from game.components.networking import Id
     classes = get_component_classes()
     #construct components
     classes = get_component_classes()
-    components = [classes[k](**v) for k, v in event.component_data.items()]
+    # components = [classes[k](**v) for k, v in event.component_data.items()]
+    components = [classes[k]() for k in event.component_names]
     #create an entity with the provided id and components
     entity = self.client_manager.entity.world.create_entity([
-      Id(event.id),
+      C.Networked(event.id),
       *components
     ])
     print(f"[Client] Entity spawned with id {event.id}:", entity)

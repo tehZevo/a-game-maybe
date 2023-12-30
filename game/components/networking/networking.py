@@ -1,45 +1,9 @@
-from game.networking.events import EntityDespawned
-from game.ecs import Component
 
-class Networking(Component):
+class Networking:
   def __init__(self):
-    super().__init__()
-    #TODO: circular import
-    from . import Id
-    self.require(Id)
-    self.is_client = None
-    self.is_server = None
-    self.server_manager = None
-    self.client_manager = None
-    self.networked = False
-    self.network_id = None
-    #TODO: aliases like server, client server.broadcast, server.send, etc
+    pass
 
-  def start(self):
-    #TODO: circular import
-    from . import ClientManager, ServerManager, Id
-    #NOTE: possible to be neither client or server.. eg ui world
-    self.is_client = len(self.entity.world.find_components(ClientManager)) > 0
-    self.is_server = len(self.entity.world.find_components(ServerManager)) > 0
-
-    self.network_id = self.entity.get_component(Id).id
-    self.networked = self.network_id is not None
-
-    if self.is_server:
-      self.server_manager = self.entity.world.find_component(ServerManager)
-      self.server_manager.spawn(self.entity)
-      self.start_server()
-    elif self.is_client:
-      self.client_manager = self.entity.world.find_component(ClientManager)
-      self.client_manager.spawn(self.entity)
-      self.start_client()
-
-  def update(self):
-    if self.is_server:
-      self.update_server()
-    else:
-      self.update_client()
-
+  #TODO: maybe pass networking here?
   def start_server(self):
     pass
 
@@ -51,14 +15,6 @@ class Networking(Component):
 
   def update_client(self):
     pass
-
-  def on_destroy(self):
-    if self.is_server:
-      self.server_manager.despawn(self.entity)
-      self.server_manager.server.broadcast(EntityDespawned(self.network_id))
-      self.on_destroy_server()
-    else:
-      self.on_destroy_client()
 
   def on_destroy_server(self):
     pass

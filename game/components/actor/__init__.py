@@ -5,3 +5,5 @@ from game.components.actor.stats import Stats
 from game.components.actor.actor import Actor
 from game.components.actor.enemy import Enemy
 from game.components.actor.player import Player
+from game.components.actor.actor_networking import ActorNetworking
+from game.components.actor.stats_syncing import StatsSyncing

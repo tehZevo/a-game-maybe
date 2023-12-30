@@ -1,13 +1,11 @@
 from game.ecs import Component
 from ..core import Interactable
-from ..networking import Networkable
 import game.components as C
 
-#currently not networkable, but its entity is networked (sprite, position synced)
 class DroppedItem(Component, Interactable):
   def __init__(self, item):
     super().__init__()
-    self.require(C.Sprite, C.Networked)
+    self.require(C.Sprite, C.PositionSyncing, C.SpriteSyncing, C.Networked)
     self.item = item
 
   def start(self):
