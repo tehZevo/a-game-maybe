@@ -11,11 +11,7 @@ from game.utils import Vector
 class Actor(Component, Networkable):
   def __init__(self):
     super().__init__()
-    #TODO: circular import
-    from ..networking import ActorNetworking
-    from ..graphics import Sprite
-    self.require(C.Physics, Sprite, Stats, ItemDropper, Equips, C.Collisions, \
-      # Team, ActorNetworking)
+    self.require(C.Physics, C.Sprite, Stats, ItemDropper, Equips, C.Collisions, \
       Team, Networked)
     self.action = None
     self.next_action = None

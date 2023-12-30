@@ -1,9 +1,10 @@
 from game.ecs import Component
 from ..core import Interactable
+from ..networking import Networkable
 import game.components as C
 from . import Equips
 
-class DroppedItem(Component, Interactable):
+class DroppedItem(Component, Interactable, Networkable):
   def __init__(self, item):
     super().__init__()
     #TODO: circular import
@@ -11,6 +12,11 @@ class DroppedItem(Component, Interactable):
     from ..networking import DroppedItemNetworking
     self.require(Sprite, DroppedItemNetworking)
     self.item = item
+
+  def melt(self):
+    return {
+      "item": self.item
+    }
 
   def start(self):
     #TODO: circular import
