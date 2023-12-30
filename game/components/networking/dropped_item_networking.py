@@ -1,12 +1,11 @@
 from game.networking.events import ItemSpawned
-from . import Networking, PositionNetworking, DespawnNetworking
+import game.components as C
+from . import Networking
 
 class DroppedItemNetworking(Networking):
   def __init__(self):
     super().__init__()
-    #TODO: circular import
-    from ..item import DroppedItem
-    self.require(DroppedItem, PositionNetworking, DespawnNetworking)
+    self.require(C.DroppedItem, C.PositionNetworking, C.DespawnNetworking)
     self.pos = None
 
   def start_server(self):
