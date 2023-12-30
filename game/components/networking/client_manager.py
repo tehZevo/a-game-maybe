@@ -1,7 +1,8 @@
 from game.ecs import Component
 from game.networking import Client
 from . import Id
-from game.networking.events import TilesetUpdatedHandler, ActorSpawnedHandler, \
+# from game.networking.events import TilesetUpdatedHandler, ActorSpawnedHandler, \
+from game.networking.events import TilesetUpdatedHandler, EntitySpawnedHandler, \
 EntityDespawnedHandler, PositionUpdatedHandler, PlayerAssignedHandler, \
 ItemSpawnedHandler, StatsUpdatedHandler
 
@@ -24,7 +25,8 @@ class ClientManager(Component):
       event_handlers=[
         PlayerAssignedHandler(self),
         TilesetUpdatedHandler(self),
-        ActorSpawnedHandler(self),
+        # ActorSpawnedHandler(self),
+        EntitySpawnedHandler(self),
         ItemSpawnedHandler(self),
         PositionUpdatedHandler(self),
         EntityDespawnedHandler(self),

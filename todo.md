@@ -1,5 +1,8 @@
-- network hp/mp updates (make stats networkable)
-  - make client ui target player
+- network floor transitions
+  - network stairs component
+    - add "stairsspawned" because arbitrary spawning requires component registry/more advanced serde
+
+- make client ui target client's player
 - fix skill use generating tons of stats updated events
  - maybe store stat updates per game tick and then send one StatsUpdated on the next tick>
 - network particle emitters

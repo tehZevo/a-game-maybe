@@ -18,6 +18,7 @@ class Stats(Component):
 
   def alert_listeners(self):
     #TODO: a single skill use generates a LOT of stats updated events lol
+    #- maybe add separate events for (current) hp/mp updated
     for listener in self.entity.find(StatsListener):
       listener.on_stats_changed(self)
 
