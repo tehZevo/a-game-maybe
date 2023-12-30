@@ -10,13 +10,13 @@ import game.components as C
 class ServerPlayer(Component):
   def __init__(self, server):
     super().__init__()
-    self.require(C.Player, C.Networked, C.PositionSyncing)
+    self.require(C.Player, C.Networking, C.PositionSyncing)
     # self.server = server
     # self.id = None
     # self.pos = None
 
   # def start(self):
-  #   self.id = self.get_component(C.Networked).id
+  #   self.id = self.get_component(C.Networking).id
   #   self.pos = self.get_component(C.Position)
 
   # def update(self):

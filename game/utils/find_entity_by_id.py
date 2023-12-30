@@ -7,7 +7,7 @@ def find_entity_by_id(world, id):
   #A: make "id" a property of ecs entity (and allow creation of entity with specific id)
   #B: keep track of networked entities in a component
   # (i kinda like B)
-  ents = world.find(C.Networked)
-  ents = {ent.get_component(C.Networked).id: ent for ent in ents}
+  ents = world.find(C.Networking)
+  ents = {ent.get_component(C.Networking).id: ent for ent in ents}
   ent = ents[id] if id in ents else None
   return ent

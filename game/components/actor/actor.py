@@ -1,14 +1,14 @@
 from game.ecs import Component
 import game.components as C
 
-from ..networking.networked import Networked
+from ..networking.networking import Networking
 from game.utils import Vector
 
 class Actor(Component):
   def __init__(self):
     super().__init__()
     self.require(C.Physics, C.Sprite, C.Stats, C.ItemDropper, C.Equips, \
-      C.Collisions, C.Team, C.Networked, C.ActorNetworking)
+      C.Collisions, C.Team, C.Networking, C.ActorNetworking)
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)

@@ -5,10 +5,3 @@
 - Networked handles automatic despawn logic
 
 - Networking components are spawned on client
-
-## TODO
-- create PositionSyncing
-- create SpriteSyncing
-- create StatsSyncing
-- rename Networking to NetworkBehavior
-- rename Networked to Networking

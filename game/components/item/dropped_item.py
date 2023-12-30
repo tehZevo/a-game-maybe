@@ -5,7 +5,7 @@ import game.components as C
 class DroppedItem(Component, Interactable):
   def __init__(self, item):
     super().__init__()
-    self.require(C.Sprite, C.PositionSyncing, C.SpriteSyncing, C.Networked)
+    self.require(C.Sprite, C.PositionSyncing, C.SpriteSyncing, C.Networking)
     self.item = item
 
   def start(self):

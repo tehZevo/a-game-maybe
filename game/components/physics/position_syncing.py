@@ -1,18 +1,16 @@
 from game.ecs import Component
 from game.utils import Vector
 import game.components as C
-from game.components.networking import Networking
+from game.components.networking.network_behavior import NetworkBehavior
 
-class PositionSyncing(Component, Networking):
+class PositionSyncing(Component, NetworkBehavior):
   def __init__(self, pos=None):
     super().__init__()
 
-  def start_server(self):
+  def start_server(self, networking):
     self.pos = self.get_component(C.Position)
 
-  def update_server(self):
+  def update_server(self, networking):
     #TODO: circular import
     from game.networking.events import PositionUpdated
-    #TODO: pass this in instead...
-    networked = self.get_component(C.Networked)
-    networked.server_manager.server.broadcast(PositionUpdated(networked.id, self.pos.pos))
+    networking.server_manager.server.broadcast(PositionUpdated(networking.id, self.pos.pos))

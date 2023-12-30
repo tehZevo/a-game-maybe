@@ -11,7 +11,7 @@ class ClientManager(Component):
     self.networked_entities = {}
 
   def network_register(self, entity):
-    id = entity.get_component(C.Networked).id
+    id = entity.get_component(C.Networking).id
     self.networked_entities[id] = entity
 
   def network_unregister(self, id):

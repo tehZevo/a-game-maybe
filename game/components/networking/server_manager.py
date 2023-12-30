@@ -18,7 +18,7 @@ class ConnectHandler:
     #TODO: create player (this maybe should be a separate handler)
     world = self.server_manager.entity.world
     world.create_entity([
-      C.Networked(id),
+      C.Networking(id),
       C.Position(Vector(2, 2)), #TODO: hardcoded position
       C.ServerPlayer(server)
     ])
@@ -33,12 +33,12 @@ class ServerManager(Component):
     self.networked_entities = {}
 
   def network_register(self, entity):
-    id = entity.get_component(C.Networked).id
+    id = entity.get_component(C.Networking).id
     self.networked_entities[id] = entity
     #TODO: send spawned event (would require networking other components, not just actor)
 
   def network_unregister(self, entity):
-    id = entity.get_component(C.Networked).id
+    id = entity.get_component(C.Networking).id
     try:
       del self.networked_entities[id]
     except:
