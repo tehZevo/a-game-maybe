@@ -1,4 +1,4 @@
-from game.components import physics
+import game.components as C
 from . import SkillEffect
 
 #push effect pushes away from a given point
@@ -12,8 +12,8 @@ class Push(SkillEffect):
 
   def start(self):
     #calc dist and direction, source location is parent skill effect
-    effect_pos = self.parent.get_component(physics.Position).pos
-    target_pos = self.target.get_component(physics.Position).pos
+    effect_pos = self.parent.get_component(C.Position).pos
+    target_pos = self.target.get_component(C.Position).pos
     dist = effect_pos.distance(target_pos)
     dir = (target_pos - effect_pos).normalized()
 
@@ -22,4 +22,4 @@ class Push(SkillEffect):
     if self.scale_with_distance:
       force = force / max(1, dist) #max with 1 to prevent low dist from sending enemies into LEO
 
-    self.target.get_component(physics.Physics).apply_force(dir * force)
+    self.target.get_component(C.Physics).apply_force(dir * force)

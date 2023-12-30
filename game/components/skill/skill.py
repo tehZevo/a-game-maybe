@@ -1,11 +1,11 @@
 from game.ecs import Component
-from game.components import physics
+import game.components as C
 
 #TODO: rename to SkillInstance or SkillEffect?
 class Skill(Component):
   def __init__(self, effect, user, parent=None):
     super().__init__()
-    self.require(physics.Position)
+    self.require(C.Position)
     self.effect = effect
     self.user = user
     self.parent = parent

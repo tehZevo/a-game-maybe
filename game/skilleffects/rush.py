@@ -1,4 +1,4 @@
-from game.components import physics
+import game.components as C
 from game.components.actor import Actor
 from . import SkillEffect
 
@@ -10,4 +10,4 @@ class Rush(SkillEffect):
     self.force = force
 
   def start(self):
-    self.target.get_component(physics.Physics).apply_force(self.target.get_component(Actor).look_dir * self.force)
+    self.target.get_component(C.Physics).apply_force(self.target.get_component(Actor).look_dir * self.force)

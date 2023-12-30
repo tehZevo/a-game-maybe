@@ -1,4 +1,4 @@
-from game.components import physics
+import game.components as C
 from game.components.teams import Team, TeamManager
 from game.utils.teams import Disposition
 from game.skills.target_type import TargetType
@@ -9,7 +9,7 @@ def component_filter(component_type):
   return lambda skill: lambda actor: actor.get_component(component_type) is not None
 
 def distance_filter(radius):
-  return lambda skill: lambda actor: skill.get_component(physics.Position).pos.distance(actor.get_component(physics.Position).pos) <= radius
+  return lambda skill: lambda actor: skill.get_component(C.Position).pos.distance(actor.get_component(C.Position).pos) <= radius
 
 def target_type_filter(target_type):
   def build_filter(skill):

@@ -1,6 +1,6 @@
 from game.ecs import Component
 from ..core import Interactable
-from game.components import physics
+import game.components as C
 from . import Equips
 
 class DroppedItem(Component, Interactable):

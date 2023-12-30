@@ -1,6 +1,6 @@
 from game.ecs import Component
 from ..networking.networkable import Networkable
-from game.components import physics
+import game.components as C
 from ..item import ItemDropper, Equips
 from ..teams import Team
 
@@ -14,7 +14,7 @@ class Actor(Component, Networkable):
     #TODO: circular import
     from ..networking import ActorNetworking
     from ..graphics import Sprite
-    self.require(physics.Physics, Sprite, Stats, ItemDropper, Equips, physics.Collisions, \
+    self.require(C.Physics, Sprite, Stats, ItemDropper, Equips, C.Collisions, \
       # Team, ActorNetworking)
       Team, Networked)
     self.action = None

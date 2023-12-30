@@ -1,7 +1,7 @@
 import pygame
 
 from game.ecs import Component
-from ..physics.position import Position
+import game.components as C
 from . import Surface
 from game.utils.image_cache import get_image
 
@@ -10,7 +10,7 @@ from ..networking.networkable import Networkable
 class Sprite(Component, Networkable):
   def __init__(self, path=None):
     super().__init__()
-    self.require(Position, Surface)
+    self.require(C.Position, Surface)
     self.path = path
 
   def start(self):

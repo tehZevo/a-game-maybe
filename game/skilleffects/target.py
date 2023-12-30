@@ -2,7 +2,7 @@ import copy
 
 from game.components.skill import Skill
 from game.components.actor import Actor
-from game.components import physics
+import game.components as C
 from . import SkillEffect
 
 #TODO: max targets
@@ -27,6 +27,6 @@ class Target(SkillEffect):
         child = copy.copy(child)
         child.target = target
         self.entity.world.create_entity([
-          physics.Position(target.get_component(physics.Position).pos),
+          C.Position(target.get_component(C.Position).pos),
           Skill(child, self.user, self.entity)
         ])
