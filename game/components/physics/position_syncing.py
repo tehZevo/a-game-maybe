@@ -11,6 +11,7 @@ class PositionSyncing(Component, NetworkBehavior):
     self.pos = self.get_component(C.Position)
 
   def update_server(self, networking):
+    #TODO: only send move if distance above a threshold
     #TODO: circular import
     from game.networking.events import PositionUpdated
     networking.server_manager.server.broadcast(PositionUpdated(networking.id, self.pos.pos))

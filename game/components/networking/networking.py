@@ -44,6 +44,10 @@ class Networking(Component):
     elif self.is_client:
       self.on_destroy_client()
 
+  #spawn for specific player id
+  def spawn(self, client_id):
+    self.server_manager.server.send(client_id, EntitySpawned(self.id, self.get_spawn_components()))
+
   def start_server(self):
     #set up id and server manager
     self.id = str(uuid.uuid4()) if self.id is None else self.id

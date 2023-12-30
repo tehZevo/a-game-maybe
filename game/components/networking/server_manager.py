@@ -15,8 +15,12 @@ class ConnectHandler:
     ts = self.server_manager.entity.world.find_component(C.TilesetPhysics).tileset
     server.send(id, TilesetUpdated(ts))
 
-    #TODO: create player (this maybe should be a separate handler)
     world = self.server_manager.entity.world
+    #spawn all other existing for player
+    for networking in world.find_components(C.Networking):
+      networking.spawn(id)
+
+    #TODO: create player (this maybe should be a separate handler)
     world.create_entity([
       C.Networking(id),
       C.Position(Vector(2, 2)), #TODO: hardcoded position
