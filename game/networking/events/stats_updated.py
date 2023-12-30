@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from game.utils import Vector
 from ..event_handler import EventHandler
-from game.components.actor import Stats
+import game.components as C
 from game.stats import PrimaryStats, SecondaryStats, EquipStats
 
 #TODO: maybe need a FullStats dataclass that stores all this data
@@ -26,7 +26,7 @@ class StatsUpdatedHandler(EventHandler):
       return
 
     ent = self.client_manager.networked_entities[event.id]
-    stats = ent.get_component(Stats)
+    stats = ent.get_component(C.Stats)
     stats.hp = event.hp
     stats.mp = event.mp
     stats.move_speed_multiplier = event.move_speed_multiplier

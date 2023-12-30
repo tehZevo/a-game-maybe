@@ -6,4 +6,4 @@ from .networking import Networking
 class ActorNetworking(Networking):
   def __init__(self):
     super().__init__()
-    self.require(C.Actor, C.DespawnNetworking, C.StatsNetworking, C.Networked)
+    self.require(C.Actor, C.DespawnNetworking, C.Networked)

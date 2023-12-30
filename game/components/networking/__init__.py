@@ -7,4 +7,3 @@ from game.components.networking.server_player import ServerPlayer
 from game.components.networking.despawn_networking import DespawnNetworking
 from game.components.networking.actor_networking import ActorNetworking
 from game.components.networking.dropped_item_networking import DroppedItemNetworking
-from game.components.networking.stats_networking import StatsNetworking
