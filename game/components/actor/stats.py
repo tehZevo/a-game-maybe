@@ -1,24 +1,31 @@
+from game.networking.events import StatsUpdated
+
 from game.ecs import Component
-from . import StatsListener
+import game.components as C
 
 #TODO: solve circular dependencies by implementing equiplistener?
 class Stats(Component):
   def __init__(self):
     super().__init__()
     #TODO: calculate
+    #because recalculate (calculate) requires armor, etc, we technically depend on a full actor
+    #but it would be better for actor to have the calculate logic i think idk
+    self.require(C.Actor)
     self.hp = 1
     self.mp = 1
     self.move_speed_multiplier = 1
     self.primary_stats = self.equip_stats = self.secondary_stats = None
 
   def start(self):
+    super().start()
     self.recalculate()
     self.hp = self.secondary_stats.hp
     self.mp = self.secondary_stats.mp
 
   def alert_listeners(self):
     #TODO: a single skill use generates a LOT of stats updated events lol
-    for listener in self.entity.find(StatsListener):
+    #- maybe add separate events for (current) hp/mp updated
+    for listener in self.entity.find(C.StatsListener):
       listener.on_stats_changed(self)
 
   def add_hp(self, hp):

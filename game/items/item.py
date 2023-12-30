@@ -1,6 +1,7 @@
 #TODO: where to store drop rate?
 
-DEFAULT_DROP_RATE = 1/10
+# DEFAULT_DROP_RATE = 1/10
+DEFAULT_DROP_RATE = 1
 
 class Item:
   def __init__(self):

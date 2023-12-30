@@ -1,27 +1,24 @@
 from game.ecs import Component
-from ..networking import Id, ActorNetworking
-from ..physics import Physics, Collisions, Position
-from ..graphics import Sprite
-from ..item import ItemDropper, Equips
-from ..teams import Team
-from . import Stats, DamageListener
+import game.components as C
+
+from ..networking.networking import Networking
 from game.utils import Vector
 
 class Actor(Component):
   def __init__(self):
     super().__init__()
-    self.require(Physics, Sprite, Stats, ItemDropper, Equips, Collisions, \
-      Team, ActorNetworking)
+    self.require(C.Physics, C.Sprite, C.Stats, C.ItemDropper, C.Equips, \
+      C.Collisions, C.Team, C.Networking, C.ActorNetworking)
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)
 
   def damage(self, amount):
-    stats = self.get_component(Stats)
+    stats = self.get_component(C.Stats)
     stats.add_hp(-amount)
 
     #find all damage listeners and call their on_damage
-    for listener in self.entity.find(DamageListener):
+    for listener in self.entity.find(C.DamageListener):
       #TODO: add source
       source = None
       listener.on_damage(source)
@@ -30,7 +27,7 @@ class Actor(Component):
   def use_skill_in_slot(self, slot):
     #TODO: circular reference
     from game.actions import UseSkill
-    skill_item = self.get_component(Equips).skills[slot]
+    skill_item = self.get_component(C.Equips).skills[slot]
     if skill_item is None:
       print("warning: tried to use None skill in slot", slot)
       return
@@ -49,7 +46,7 @@ class Actor(Component):
       self.next_action = action
 
   def update(self):
-    stats = self.get_component(Stats)
+    stats = self.get_component(C.Stats)
     if stats.hp <= 0:
       self.entity.remove()
 

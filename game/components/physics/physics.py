@@ -1,7 +1,7 @@
 from game.ecs import Component
 from game.utils import Vector
 from game.utils.constants import DT, PHYS_SCALE
-from . import Position, Collisions, Rect
+from game.components.physics import Position, Collisions, Rect
 
 DEFAULT_MASS = 1
 DEFAULT_FRICTION = 0.5

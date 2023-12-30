@@ -1,2 +1,2 @@
-from .particle_system import ParticleSystem
-from .particle_emitter import ParticleEmitter
+from game.components.particles.particle_system import ParticleSystem
+from game.components.particles.particle_emitter import ParticleEmitter

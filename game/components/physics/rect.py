@@ -1,13 +1,13 @@
 import pygame
 
 from game.ecs import Component
-from ..physics.position import Position
+import game.components as C
 from game.utils.constants import PHYS_SCALE
 
 class Rect(Component):
   def __init__(self):
     super().__init__()
-    self.require(Position)
+    self.require(C.Position)
     #NOTE: scaling for collisions
     self.rect = pygame.Rect(0, 0, PHYS_SCALE, PHYS_SCALE)
 
@@ -16,7 +16,7 @@ class Rect(Component):
     self.update()
 
   def start(self):
-    self.pos = self.get_component(Position)
+    self.pos = self.get_component(C.Position)
     self.update()
 
   def update(self):

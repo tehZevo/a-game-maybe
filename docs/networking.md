@@ -1,4 +1,16 @@
 # Networking
+
+---
+## TODO integrate this below
+- Networking is an iface that has its methods called by Networked
+- Networking defines behavior for syncing/updating/events/whatever from server to client and vice versa
+- Networked contains an id
+- Networked calls all Networking methods (start/update/on_destroy client/server)
+- Networked handles automatic despawn logic
+
+- Networking components are spawned on client
+---
+
 * Event-based
 * Both the client and the server have their own game world
 * Networking capabilities are broken up into their own components, eg:

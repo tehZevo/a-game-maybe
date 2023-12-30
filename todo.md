@@ -1,5 +1,12 @@
-- network hp/mp updates (make stats networkable)
-  - make client ui target player
+- teleporters
+- network floor transitions
+  - add ability to spawn entities for a certain player
+    - call this method on player join for all entities
+- add "spawn" to network behaviors, which should generate a list of events that should be broadcast/sent to player upon spawn
+
+- fix sprites sometimes being black
+  - i think this is due to component ordering when reconstructing on the client
+- make client ui target client's player
 - fix skill use generating tons of stats updated events
  - maybe store stat updates per game tick and then send one StatsUpdated on the next tick>
 - network particle emitters

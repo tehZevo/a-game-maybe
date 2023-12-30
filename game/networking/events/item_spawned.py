@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from ..event_handler import EventHandler
 from game import items
 
+#TODO: currently unused, as item sprite and positions are networked
 @dataclass
 class ItemSpawned:
   id: str
