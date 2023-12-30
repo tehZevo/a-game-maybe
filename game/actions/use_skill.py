@@ -1,5 +1,5 @@
 from game.components.skill.skill import Skill
-from game.components.physics.position import Position
+from game.components import physics
 from game.components.actor.stats import Stats
 from game.utils.constants import DT
 from . import Action
@@ -30,7 +30,7 @@ class UseSkill(Action):
     for effect in self.skilldef.effects:
       #create skill effect in world at user position
       self.entity.world.create_entity([
-        Position(self.entity.get_component(Position).pos),
+        physics.Position(self.entity.get_component(physics.Position).pos),
         Skill(effect, user=self.entity)
       ])
 

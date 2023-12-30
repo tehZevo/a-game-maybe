@@ -1,11 +1,13 @@
 import pygame
 
 from game.ecs import Component
-from ..physics import Position
+from ..physics.position import Position
 from . import Surface
 from game.utils.image_cache import get_image
 
-class Sprite(Component):
+from ..networking.networkable import Networkable
+
+class Sprite(Component, Networkable):
   def __init__(self, path=None):
     super().__init__()
     self.require(Position, Surface)
@@ -14,6 +16,11 @@ class Sprite(Component):
   def start(self):
     if self.path is not None:
       self.set_sprite(self.path)
+
+  def melt(self):
+    return {
+      "path": self.path
+    }
 
   #TODO: rename to set_image and update surface
   def set_sprite(self, path):

@@ -5,7 +5,7 @@ from pygame.math import Vector2
 from game.ecs import Component
 from game.particles.particle import Particle
 from game.utils import Vector
-from ..physics import Position
+from game.components import physics
 from . import ParticleSystem
 from game.utils.constants import DT
 
@@ -13,7 +13,7 @@ from game.utils.constants import DT
 class ParticleEmitter(Component):
   def __init__(self, particle_path, min_vel=2, max_vel=3, per_tick=10, particle_life=0.25, time=0):
     super().__init__()
-    self.require(Position)
+    self.require(physics.Position)
     self.particle_path = particle_path
     self.system = None
     self.time = time
@@ -37,7 +37,7 @@ class ParticleEmitter(Component):
     if self.is_server:
       return
 
-    pos = Vector2(*self.entity.get_component(Position).pos.tolist())
+    pos = Vector2(*self.entity.get_component(physics.Position).pos.tolist())
 
     #add some particles
     for _ in range(self.per_tick):

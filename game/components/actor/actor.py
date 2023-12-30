@@ -1,20 +1,30 @@
 from game.ecs import Component
-from ..networking import Id, ActorNetworking
-from ..physics import Physics, Collisions, Position
-from ..graphics import Sprite
+from ..networking.networkable import Networkable
+from game.components import physics
 from ..item import ItemDropper, Equips
 from ..teams import Team
+
+from ..networking.networked import Networked
 from . import Stats, DamageListener
 from game.utils import Vector
 
-class Actor(Component):
+class Actor(Component, Networkable):
   def __init__(self):
     super().__init__()
-    self.require(Physics, Sprite, Stats, ItemDropper, Equips, Collisions, \
-      Team, ActorNetworking)
+    #TODO: circular import
+    from ..networking import ActorNetworking
+    from ..graphics import Sprite
+    self.require(physics.Physics, Sprite, Stats, ItemDropper, Equips, physics.Collisions, \
+      # Team, ActorNetworking)
+      Team, Networked)
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)
+
+  #TODO: this is currently needed to ensure an actor component exists on actors,
+  # even though we dont have data to populate on actors atm
+  def melt(self):
+    return {}
 
   def damage(self, amount):
     stats = self.get_component(Stats)

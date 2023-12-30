@@ -1,3 +1,3 @@
-from .component import Component
-from .entity import Entity
-from .world import World
+from game.ecs.component import Component
+from game.ecs.entity import Entity
+from game.ecs.world import World

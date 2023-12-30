@@ -1,7 +1,7 @@
 from . import Action
 from game.utils.constants import DT
 from game.utils.find_in_range import find_in_range
-from game.components.physics.position import Position
+from game.components import physics
 from game.components.core.interactable import Interactable
 
 INTERACT_RADIUS = 1
@@ -14,7 +14,7 @@ class Interact(Action):
     self.use_time = 0.5
 
   def start(self):
-    entity_pos = self.entity.get_component(Position).pos
+    entity_pos = self.entity.get_component(physics.Position).pos
 
     #TODO: sort by distance
     interactables = find_in_range(self.entity.world, Interactable, entity_pos, INTERACT_RADIUS)

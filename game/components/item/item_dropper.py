@@ -1,5 +1,5 @@
 from game.ecs import Component
-from ..physics import Position
+from game.components import physics
 from .dropped_item import DroppedItem
 
 class ItemDropper(Component):
@@ -9,6 +9,6 @@ class ItemDropper(Component):
   def drop(self, item, pos):
     #TODO: drop with random velocity?
     self.entity.world.create_entity([
-      Position(pos),
+      physics.Position(pos),
       DroppedItem(item)
     ])

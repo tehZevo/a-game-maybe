@@ -17,8 +17,9 @@ class Networking(Component):
   def start(self):
     #TODO: circular import
     from . import ClientManager, ServerManager, Id
+    #NOTE: possible to be neither client or server.. eg ui world
     self.is_client = len(self.entity.world.find_components(ClientManager)) > 0
-    self.is_server = not self.is_client
+    self.is_server = len(self.entity.world.find_components(ServerManager)) > 0
 
     self.network_id = self.entity.get_component(Id).id
     self.networked = self.network_id is not None
@@ -27,7 +28,7 @@ class Networking(Component):
       self.server_manager = self.entity.world.find_component(ServerManager)
       self.server_manager.spawn(self.entity)
       self.start_server()
-    else:
+    elif self.is_client:
       self.client_manager = self.entity.world.find_component(ClientManager)
       self.client_manager.spawn(self.entity)
       self.start_client()

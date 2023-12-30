@@ -6,7 +6,6 @@ from game.actions import Move, UseSkill, Interact
 from game.items import SkillItem
 from game.utils import Vector
 from game.utils.teams import PLAYER
-from ..graphics.sprite import Sprite
 from ..teams import Team
 from ..item import Equips
 from . import Invulnerable, DamageListener, Actor
@@ -19,6 +18,8 @@ class Player(Component, DamageListener):
     self.require(Actor)
 
   def start(self):
+    #TODO: circular import
+    from ..graphics.sprite import Sprite
     self.get_component(Sprite).set_sprite("assets/player.png")
     self.get_component(Team).team = PLAYER
     equips = self.get_component(Equips)

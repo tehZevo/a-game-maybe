@@ -1,8 +1,7 @@
 from game.ecs import Component
 from game.networking import Server
 from game.utils import Vector
-from ..physics import Position
-from . import Id
+from .id import Id
 
 class ConnectHandler:
   def __init__(self, server_manager):
@@ -19,6 +18,7 @@ class ConnectHandler:
 
     #TODO: circular import
     from . import ServerPlayer
+    from ..physics import Position
     #TODO: create player (this maybe should be a separate handler)
     world = self.server_manager.entity.world
     world.create_entity([

@@ -6,8 +6,7 @@ from game.actions import Move, UseSkill
 from game.skills import test_alpha_skill, test_enemy_skill
 from game.utils import Vector
 from game.utils.teams import ENEMY
-from ..physics import Position
-from ..graphics import Sprite
+from game.components import physics
 from ..item import ItemDropper
 from ..teams import Team
 from . import Actor, Stats
@@ -26,6 +25,8 @@ class Enemy(Component):
     self.skill = test_enemy_skill
 
   def start(self):
+    #TODO: circular import
+    from ..graphics import Sprite
     #make enemies 1/4 base player speed
     self.get_component(Stats).move_speed_multiplier = 0.25
     self.get_component(Sprite).set_sprite("assets/enemy.png")
@@ -34,7 +35,7 @@ class Enemy(Component):
   def on_destroy(self):
     #drop items
     dropper = self.get_component(ItemDropper)
-    pos = self.get_component(Position).pos
+    pos = self.get_component(physics.Position).pos
     #chance to drop each item based on its drop rate
     for item in self.drops:
       if random.random() < item.drop_rate:
@@ -42,13 +43,13 @@ class Enemy(Component):
 
   def update(self):
     move_dir = Vector()
-    enemy_pos = self.get_component(Position).pos
+    enemy_pos = self.get_component(physics.Position).pos
 
     #find player to target
     if self.target is None:
       for player in self.entity.world.find(Player):
         #calc distance
-        player_pos = player.get_component(Position).pos
+        player_pos = player.get_component(physics.Position).pos
         dist = player_pos.distance(enemy_pos)
         if dist < self.target_distance:
           self.target = player
@@ -56,7 +57,7 @@ class Enemy(Component):
 
     #follow and use skills
     if self.target is not None:
-      target_pos = self.target.get_component(Position).pos
+      target_pos = self.target.get_component(physics.Position).pos
       dist = target_pos.distance(enemy_pos)
       if dist < self.follow_dist:
         self.get_component(Actor).act(UseSkill(self.skill))

@@ -1,18 +1,20 @@
 from game.ecs import Component
 from ..core import Interactable
-from ..graphics.sprite import Sprite
-from ..physics.position import Position
-from ..networking import DroppedItemNetworking
+from game.components import physics
 from . import Equips
 
 class DroppedItem(Component, Interactable):
   def __init__(self, item):
     super().__init__()
-    self.require(Sprite)
-    self.require(DroppedItemNetworking)
+    #TODO: circular import
+    from ..graphics.sprite import Sprite
+    from ..networking import DroppedItemNetworking
+    self.require(Sprite, DroppedItemNetworking)
     self.item = item
 
   def start(self):
+    #TODO: circular import
+    from ..graphics.sprite import Sprite
     self.get_component(Sprite).set_sprite(self.item.icon)
 
   def interact(self, entity):

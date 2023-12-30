@@ -1,5 +1,5 @@
 from game.components.particles import ParticleEmitter
-from game.components.physics import Position
+from game.components import physics
 from . import SkillEffect
 
 class EmitParticles(SkillEffect):
@@ -9,6 +9,6 @@ class EmitParticles(SkillEffect):
   def start(self):
     #TODO: hardcoded particles
     self.entity.world.create_entity([
-      Position(self.entity.get_component(Position).pos),
+      physics.Position(self.entity.get_component(physics.Position).pos),
       ParticleEmitter("assets/particles/spark.png")
     ])

@@ -28,4 +28,4 @@ class EntitySpawnedHandler(EventHandler):
       Id(event.id),
       *components
     ])
-    print(f"[Client] Entity spawned with id {id}:", entity)
+    print(f"[Client] Entity spawned with id {event.id}:", entity)
