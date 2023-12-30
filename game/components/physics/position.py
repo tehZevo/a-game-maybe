@@ -1,4 +1,3 @@
-# from game.ecs import Component
 from game.utils import Vector
 
 from game.components.networking.networking import Networking

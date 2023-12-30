@@ -1,3 +1,4 @@
+from game.networking.events import EntityDespawned
 from game.ecs import Component
 
 class Networking(Component):
@@ -53,6 +54,8 @@ class Networking(Component):
 
   def on_destroy(self):
     if self.is_server:
+      self.server_manager.despawn(self.entity)
+      self.server_manager.server.broadcast(EntityDespawned(self.network_id))
       self.on_destroy_server()
     else:
       self.on_destroy_client()
