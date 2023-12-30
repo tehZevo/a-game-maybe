@@ -2,34 +2,22 @@ from game.ecs import Component
 from ..core import Interactable
 from ..networking import Networkable
 import game.components as C
-from . import Equips
 
-class DroppedItem(Component, Interactable, Networkable):
+#currently not networkable, but its entity is networked (sprite, position synced)
+class DroppedItem(Component, Interactable):
   def __init__(self, item):
     super().__init__()
-    #TODO: circular import
-    from ..graphics.sprite import Sprite
-    from ..networking import DroppedItemNetworking
-    self.require(Sprite, DroppedItemNetworking)
+    self.require(C.Sprite, C.Networked)
     self.item = item
 
-  def melt(self):
-    return {
-      "item": self.item
-    }
-
   def start(self):
-    #TODO: circular import
-    from ..graphics.sprite import Sprite
-    self.get_component(Sprite).set_sprite(self.item.icon)
+    self.get_component(C.Sprite).set_sprite(self.item.icon)
 
   def interact(self, entity):
-    #TODO: have equips drop the item? might fix circular import
-    #TODO: circular import
-    from . import ItemDropper
-    old_equip = entity.get_component(Equips).equip(self.item)
+    #TODO: have equips component drop the item instead?
+    old_equip = entity.get_component(C.Equips).equip(self.item)
     #if we had something equipped in that slot, drop it
     if old_equip is not None:
-      entity.get_component(ItemDropper).drop(old_equip, entity.get_component(Position).pos)
+      entity.get_component(C.ItemDropper).drop(old_equip, entity.get_component(C.Position).pos)
 
     self.entity.remove()
