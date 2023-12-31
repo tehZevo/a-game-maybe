@@ -8,12 +8,13 @@ from game.utils import Vector
 import game.components as C
 from . import ParticleSystem
 from game.utils.constants import DT
+from game.components.networking.network_behavior import NetworkBehavior
 
 #TODO: more emitter styles
-class ParticleEmitter(Component):
-  def __init__(self, particle_path, min_vel=2, max_vel=3, per_tick=10, particle_life=0.25, time=0):
+class ParticleEmitter(Component, NetworkBehavior):
+  def __init__(self, particle_path=None, min_vel=2, max_vel=3, per_tick=10, particle_life=0.25, time=0):
     super().__init__()
-    self.require(C.Position)
+    self.require(C.Position, C.Networking, C.PositionSyncing)
     self.particle_path = particle_path
     self.system = None
     self.time = time
@@ -22,19 +23,25 @@ class ParticleEmitter(Component):
     self.per_tick = per_tick
     self.particle_life = particle_life
 
-  def start(self):
-    #TODO: network (may require dataclassing particle emitter and particle)
-    #TODO: HACK: determine if we are on the client, and if not, do nothing!
-    from ..networking import ClientManager
-    if not self.entity.world.find_component(ClientManager):
-      self.is_server = True
-      return
+  def start_server(self, networking):
+    from game.networking.events import EmitterUpdated
+    networking.server_manager.server.broadcast(EmitterUpdated(
+      id=networking.id,
+      particle_path=self.particle_path,
+      min_vel=self.min_vel,
+      max_vel=self.max_vel,
+      per_tick=self.per_tick,
+      particle_life=self.particle_life,
+      time=self.time
+    ))
 
+  def start_client(self, networking):
     self.system = self.entity.world.find(ParticleSystem)[0]
     self.system = self.system.get_component(ParticleSystem)
 
-  def update(self):
-    if self.is_server:
+  def update_client(self, networking):
+    #TODO: kinda janky -- wait for particle path to be set by EmitterUpdated before acting
+    if self.particle_path == None:
       return
 
     pos = Vector2(*self.entity.get_component(C.Position).pos.tolist())

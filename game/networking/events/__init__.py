@@ -7,3 +7,4 @@ from game.networking.events.player_assigned import PlayerAssigned, PlayerAssigne
 from game.networking.events.item_spawned import ItemSpawned, ItemSpawnedHandler
 from game.networking.events.stats_updated import StatsUpdated, StatsUpdatedHandler
 from game.networking.events.sprite_changed import SpriteChanged, SpriteChangedHandler
+from game.networking.events.emitter_updated import EmitterUpdated, EmitterUpdatedHandler

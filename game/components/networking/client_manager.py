@@ -2,7 +2,8 @@ from game.ecs import Component
 from game.networking import Client
 from game.networking.events import TilesetUpdatedHandler, EntitySpawnedHandler, \
 EntityDespawnedHandler, PositionUpdatedHandler, PlayerAssignedHandler, \
-ItemSpawnedHandler, StatsUpdatedHandler, SpriteChangedHandler
+ItemSpawnedHandler, StatsUpdatedHandler, SpriteChangedHandler, \
+EmitterUpdatedHandler
 import game.components as C
 
 class ClientManager(Component):
@@ -28,6 +29,7 @@ class ClientManager(Component):
         ItemSpawnedHandler(self),
         PositionUpdatedHandler(self),
         SpriteChangedHandler(self),
+        EmitterUpdatedHandler(self),
         EntityDespawnedHandler(self),
         StatsUpdatedHandler(self),
       ]
