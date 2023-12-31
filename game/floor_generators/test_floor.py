@@ -1,14 +1,14 @@
-from game.components.tiles import Spawner, Stairs
-from game.components.physics import Position
-from game.components.actor import Player, Enemy
+import game.components as C
 from game.tiles import Wall, Floor, Tileset
 from game.utils import Vector
 from . import FloorGenerator
 
+from game.monsters import Slime
+
 class TestFloor(FloorGenerator):
   def __init__(self):
     super().__init__()
-    self.width = 20
+    self.width = 40
     self.height = 20
     self.player_spawn = Vector(2, 2)
     self.spawner_pos = Vector(10, 10)
@@ -24,13 +24,15 @@ class TestFloor(FloorGenerator):
         else:
           tile = Floor()
 
-        tiles[x][y] = tile
+        tiles[y][x] = tile
 
-    world.create_entity([Tileset(tiles)])
+    ts = Tileset(self.width, self.height, tiles)
+    world.create_entity([C.TilesetPhysics(ts)])
 
     #create stairs to this generator
-    world.create_entity([Position(self.stairs_pos), Stairs(self)])
+    world.create_entity([C.Position(self.stairs_pos), C.Stairs(self)])
 
-    world.create_entity([Position(self.spawner_pos), Spawner(Enemy)])
-    #TODO: need separate spawn function that creates players with given player data
-    world.create_entity([Position(self.player_spawn), Player()])
+    world.create_entity([C.Position(self.spawner_pos), C.Spawner(Slime())]) #TODO: hardcoded mobdef
+
+    # #TODO: need separate spawn function that creates players with given player data
+    # world.create_entity([C.Position(self.player_spawn), C.Player()])

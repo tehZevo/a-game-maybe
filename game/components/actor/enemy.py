@@ -7,34 +7,31 @@ from game.skills import test_alpha_skill, test_enemy_skill
 from game.utils import Vector
 from game.utils.teams import ENEMY
 import game.components as C
-from ..item import ItemDropper
-from ..teams import Team
-from . import Actor, Stats
-from .player import Player
 
 class Enemy(Component):
-  def __init__(self):
+  def __init__(self, mobdef):
     super().__init__()
-    self.require(Actor)
+    self.require(C.Actor)
     self.target_distance = 5
     self.target = None
+    self.mobdef = mobdef
     #drops are instantiated here, and have a drop_rate chance of dropping each
     #TODO: store this in a "inventory" (which can be shared with chest tileentity)?
+    #TODO: populate from mobdef
     self.drops = [Hat(), SkillItem(test_alpha_skill)]
     self.follow_dist = 2
     self.skill = test_enemy_skill
 
   def start(self):
-    #TODO: circular import
-    from ..graphics import Sprite
     #make enemies 1/4 base player speed
-    self.get_component(Stats).move_speed_multiplier = 0.25
-    self.get_component(Sprite).set_sprite("assets/enemy.png")
-    self.get_component(Team).team = ENEMY
+    self.get_component(C.Stats).move_speed_multiplier = 0.25
+    if self.mobdef.sprite is not None:
+      self.get_component(C.Sprite).set_sprite(self.mobdef.sprite)
+    self.get_component(C.Team).team = ENEMY
 
   def on_destroy(self):
     #drop items
-    dropper = self.get_component(ItemDropper)
+    dropper = self.get_component(C.ItemDropper)
     pos = self.get_component(C.Position).pos
     #chance to drop each item based on its drop rate
     for item in self.drops:
@@ -47,7 +44,7 @@ class Enemy(Component):
 
     #find player to target
     if self.target is None:
-      for player in self.entity.world.find(Player):
+      for player in self.entity.world.find(C.Player):
         #calc distance
         player_pos = player.get_component(C.Position).pos
         dist = player_pos.distance(enemy_pos)
@@ -56,15 +53,16 @@ class Enemy(Component):
           break
 
     #follow and use skills
+    #TODO: make this a behavior and put skill in eqips in mobdef
     if self.target is not None:
       target_pos = self.target.get_component(C.Position).pos
       dist = target_pos.distance(enemy_pos)
       if dist < self.follow_dist:
-        self.get_component(Actor).act(UseSkill(self.skill))
+        self.get_component(C.Actor).act(UseSkill(self.skill))
       else:
         move_dir = target_pos - enemy_pos
 
       #apply move action
-      self.get_component(Actor).act(Move(move_dir))
+      self.get_component(C.Actor).act(Move(move_dir))
 
     #TODO: add wandering behavior

@@ -16,8 +16,8 @@ class ServerGame:
 
     #TODO: store a party (player game/"save" data) so player data can be repopulated on the new floor
     self.world = self.generate_world()
-    floor_transition(self.world, DFSGenerator())
-    # floor_transition(self.world, TestFloor())
+    # floor_transition(self.world, DFSGenerator())
+    floor_transition(self.world, TestFloor())
 
     self.next_world = None
     self.init_world()

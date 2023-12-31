@@ -3,14 +3,14 @@ import random
 from game.ecs import Component, Entity
 from game.utils import Vector
 from game.utils.constants import DT
-from ..physics import Position
 from . import TileEntity
+import game.components as C
 
 class Spawner(TileEntity):
-  #provide a type of component to spawn
-  def __init__(self, component_type, wave_time=2, wave_count=3, radius=4, spawn_max=10):
+  #provide a mobdef to spawn
+  def __init__(self, mobdef, wave_time=2, wave_count=3, radius=4, spawn_max=10):
     super().__init__()
-    self.component_type = component_type
+    self.mobdef = mobdef
     self.wave_time = wave_time
     self.wave_count = wave_count
     self.radius = radius
@@ -20,11 +20,11 @@ class Spawner(TileEntity):
 
   def spawn(self):
     #choose random position around spawner
-    spawn_pos = self.get_component(Position).pos + Vector.random() * random.random() * self.radius
+    spawn_pos = self.get_component(C.Position).pos + Vector.random() * random.random() * self.radius
     #spawn entity
     entity = self.entity.world.create_entity([
-      Position(spawn_pos),
-      self.component_type()
+      C.Position(spawn_pos),
+      C.Enemy(self.mobdef)
     ])
     self.spawned.append(entity)
 
