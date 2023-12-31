@@ -1,10 +1,11 @@
+from game.items.monster_items import create_monster_weapon
+
 #TODO: different equip sets for different difficulty of monster
 #TODO: different mob def templates
 
 class MobDef:
-  def __init__(self, drops=[], armor=[], skills=[], weapons=[], sprite=None):
+  def __init__(self, difficulty=10, archetypes=[], drops=[], skills=[], sprite=None):
+    self.weapon = create_monster_weapon(difficulty, archetypes)
     self.drops = drops
-    self.armor = armor
     self.skills = skills
-    self.weapons = weapons
     self.sprite = sprite

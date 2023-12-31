@@ -42,7 +42,10 @@ class Enemy(Component):
     move_dir = Vector()
     enemy_pos = self.get_component(C.Position).pos
 
+    #TODO: make this a behavior and put skill in eqips in mobdef
+
     #find player to target
+    #TODO: find anything on team we are not friends with
     if self.target is None:
       for player in self.entity.world.find(C.Player):
         #calc distance
@@ -53,16 +56,18 @@ class Enemy(Component):
           break
 
     #follow and use skills
-    #TODO: make this a behavior and put skill in eqips in mobdef
     if self.target is not None:
-      target_pos = self.target.get_component(C.Position).pos
-      dist = target_pos.distance(enemy_pos)
-      if dist < self.follow_dist:
-        self.get_component(C.Actor).act(UseSkill(self.skill))
+      if not self.target.alive:
+        self.target = None
       else:
-        move_dir = target_pos - enemy_pos
+        target_pos = self.target.get_component(C.Position).pos
+        dist = target_pos.distance(enemy_pos)
+        if dist < self.follow_dist:
+          self.get_component(C.Actor).act(UseSkill(self.skill))
+        else:
+          move_dir = target_pos - enemy_pos
 
-      #apply move action
-      self.get_component(C.Actor).act(Move(move_dir))
+        #apply move action
+        self.get_component(C.Actor).act(Move(move_dir))
 
     #TODO: add wandering behavior

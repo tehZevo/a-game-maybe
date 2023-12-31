@@ -20,3 +20,12 @@ class PrimaryStats:
 
   def __add__(self, other):
     return PrimaryStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: a + b))
+
+  def __mul__(self, other):
+    if isinstance(other, PrimaryStats):
+      return PrimaryStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: a * b))
+    return PrimaryStats(
+      self.STR * other, self.VIT * other,
+      self.DEX * other, self.AGI * other,
+      self.INT * other, self.WIS * other,
+    )

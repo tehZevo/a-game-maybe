@@ -9,7 +9,7 @@ from game.components.tiles import TilesetPhysics
 from game.tiles import Tileset, Floor, Wall
 from game.utils import Vector
 
-from game.monsters.slime import Slime
+from game.monsters.slime import slime
 
 SPAWNER_CHANCE = 0.5
 
@@ -89,7 +89,7 @@ class DFSGenerator(FloorGenerator):
       if random.random() < SPAWNER_CHANCE:
         world.create_entity([
           Position(Vector(rx * self.room_size + self.room_size / 2, ry * self.room_size + self.room_size / 2)),
-          Spawner(Slime(), radius=2, wave_time=2, wave_count=1, spawn_max=3) #TODO: hardcoded mobdef
+          Spawner(slime, radius=2, wave_time=2, wave_count=1, spawn_max=3) #TODO: hardcoded mobdef
         ])
       for tx in range(self.room_size):
         for ty in range(self.room_size):

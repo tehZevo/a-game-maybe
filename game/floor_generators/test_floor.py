@@ -3,7 +3,7 @@ from game.tiles import Wall, Floor, Tileset
 from game.utils import Vector
 from . import FloorGenerator
 
-from game.monsters import Slime
+from game.monsters import slime
 
 class TestFloor(FloorGenerator):
   def __init__(self):
@@ -32,7 +32,7 @@ class TestFloor(FloorGenerator):
     #create stairs to this generator
     world.create_entity([C.Position(self.stairs_pos), C.Stairs(self)])
 
-    world.create_entity([C.Position(self.spawner_pos), C.Spawner(Slime())]) #TODO: hardcoded mobdef
+    world.create_entity([C.Position(self.spawner_pos), C.Spawner(slime)]) #TODO: hardcoded mobdef
 
     # #TODO: need separate spawn function that creates players with given player data
     # world.create_entity([C.Position(self.player_spawn), C.Player()])

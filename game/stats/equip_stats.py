@@ -18,3 +18,8 @@ class EquipStats:
 
   def __add__(self, other):
     return EquipStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: a + b))
+
+  def __mul__(self, other):
+    if isinstance(other, EquipStats):
+      return EquipStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: a * b))
+    return EquipStats(self.PATT * other, self.MATT * other, self.PDEF * other, self.MDEF * other)

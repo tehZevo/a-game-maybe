@@ -10,3 +10,5 @@ from game.items.hands import Hands
 from game.items.skill_item import SkillItem
 
 from game.items.slots import *
+
+from game.items.monster_items import create_monster_weapon
