@@ -6,6 +6,6 @@ def get_component_classes():
   from ..components.item import DroppedItem
   from ..components.particles import ParticleEmitter
   from ..components.physics import Position, Rect, Physics, PositionSyncing
-  from ..components.tiles import Stairs, StairsNetworking
+  from ..components.tiles import Stairs, StairsNetworking, ChestNetworking
 
   return locals()

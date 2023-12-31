@@ -4,6 +4,8 @@ from game.utils import Vector
 from . import FloorGenerator
 
 from game.monsters import slime
+from game.items import Hat, SkillItem
+from game.skills import test_alpha_skill
 
 class TestFloor(FloorGenerator):
   def __init__(self):
@@ -31,6 +33,8 @@ class TestFloor(FloorGenerator):
 
     #create stairs to this generator
     world.create_entity([C.Position(self.stairs_pos), C.Stairs(self)])
+
+    world.create_entity([C.Position(Vector(8, 9)), C.Chest([Hat(), SkillItem(test_alpha_skill)])])
 
     world.create_entity([C.Position(self.spawner_pos), C.Spawner(slime)]) #TODO: hardcoded mobdef
 
