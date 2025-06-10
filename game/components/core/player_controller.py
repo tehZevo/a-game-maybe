@@ -14,13 +14,11 @@ class PlayerController(Component):
     self.player = None
 
   def start(self):
-    #TODO: circular import
     from game.components.networking import ClientManager
     self.client = self.entity.world.find_component(ClientManager).client
     self.player = find_entity_by_id(self.entity.world, self.id)
 
   def handle_keys(self, keys):
-    #TODO: circular import
     from game.networking.commands import PlayerMove, PlayerUseSkill, \
       PlayerInteract
 

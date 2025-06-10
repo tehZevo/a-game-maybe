@@ -11,15 +11,15 @@ class StatsSyncing(Component, NetworkBehavior, StatsListener):
     self.require(C.Stats, C.Networking)
 
   def on_stats_changed(self, stats):
-    #TODO: networked seems like a weird name here
-    networked = self.get_component(C.Networking)
-    if networked.is_server:
-      networked.server_manager.server.broadcast(StatsUpdated(
-        id=networked.id,
+    networking = self.get_component(C.Networking)
+    if networking.is_server:
+      evt = StatsUpdated(
+        id=networking.id,
         primary_stats=stats.primary_stats,
         secondary_stats=stats.secondary_stats,
         equip_stats=stats.equip_stats,
         hp=stats.hp,
         mp=stats.mp,
         move_speed_multiplier=stats.move_speed_multiplier,
-      ))
+      )
+      networking.server_manager.server.broadcast(evt)

@@ -15,7 +15,6 @@ class ActorSpawnedHandler(EventHandler):
     self.client_manager = client_manager
 
   def handle(self, client, event):
-    #TODO: circular import
     from game.components.graphics import Sprite
     from game.components.networking import Id
     from game.components.actor import Actor

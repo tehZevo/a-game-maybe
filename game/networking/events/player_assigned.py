@@ -14,7 +14,6 @@ class PlayerAssignedHandler(EventHandler):
     self.client_manager = client_manager
 
   def handle(self, client, event):
-    #TODO: circular imports
     from game.components.graphics import Camera
     from game.components.core import GameMaster
     from game.components.ui import UIManager

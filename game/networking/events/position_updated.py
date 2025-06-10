@@ -14,7 +14,6 @@ class PositionUpdatedHandler(EventHandler):
     self.client_manager = client_manager
 
   def handle(self, client, event):
-    #TODO: circular imports...
     from game.components.physics import Position
     #TODO: this is caused by entities not being on client yet.. need to sync them when client first "sees" them
     # this either means sending actor spawned for all ents upon player join, OR having other actors/networked components spawn/despawn themselves on the client

@@ -18,7 +18,6 @@ class Player(Component, DamageListener):
     self.require(Actor)
 
   def start(self):
-    #TODO: circular import
     from ..graphics.sprite import Sprite
     self.get_component(Sprite).set_sprite("assets/player.png")
     self.get_component(Team).team = PLAYER

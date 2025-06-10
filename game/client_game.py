@@ -21,13 +21,10 @@ class ClientGame:
     self.clock = pygame.time.Clock()
     pygame.display.set_caption("Game")
 
-    #TODO: store a party (player game/"save" data) so player data can be repopulated on the new floor
-
     #create ui world and manager
     self.ui_world = World()
     self.ui_manager = self.ui_world.create_entity([UIManager()])
 
-    #TODO: rename to game_world?
     self.world = World()
     #create client
     #TODO: create Client as property of ClientGame and pass to ClientManager?
@@ -37,10 +34,7 @@ class ClientGame:
     self.next_world = None
     self.init_world()
 
-  def init_world(self, save_data=None):
-    #TODO: remove save_data on client?
-    #find player (TODO: create new players and load save data)
-    # self.player = self.world.find(Player)[0]
+  def init_world(self):
     #store reference to game as an entity
     self.world.create_entity([GameMaster(self)])
     #create renderer
@@ -50,17 +44,12 @@ class ClientGame:
     #create camera that targets player
     self.camera = self.world.create_entity([Camera()])
 
-    #apply save data
-    if save_data is not None:
-      save_data.apply(self.world)
-
     #set ui manager world and player
     uim_comp = self.ui_manager.get_component(UIManager)
     uim_comp.game_world = self.world
     # uim_comp.set_player(self.player) #TODO: uimanager needs player eventually
 
   def transition(self, world):
-    #TODO: yeet world, wait for server to repopulate
     self.next_world = world
 
   def run(self):
@@ -100,9 +89,7 @@ class ClientGame:
 
         pygame.display.flip()
 
-      #swap worlds, create new player (TODO: use generator spawn method? idk)
-      # save_data = SaveData(self.world)
+      #TODO: handle server world transitions
       self.world = self.next_world
-      # self.init_world(save_data)
       self.init_world()
       self.next_world = None

@@ -25,7 +25,6 @@ class Actor(Component):
 
   #TODO: maybe move to equips or skillset
   def use_skill_in_slot(self, slot):
-    #TODO: circular reference
     from game.actions import UseSkill
     skill_item = self.get_component(C.Equips).skills[slot]
     if skill_item is None:

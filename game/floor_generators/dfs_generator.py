@@ -16,7 +16,7 @@ SPAWNER_CHANCE = 0.5
 class DFSGenerator(FloorGenerator):
   def __init__(self):
     super().__init__()
-    self.floor_size = 4 #in number of rooms wide/tall
+    self.floor_size = 2 #in number of rooms wide/tall
     self.room_size = 8
     self.door_width = 2
 

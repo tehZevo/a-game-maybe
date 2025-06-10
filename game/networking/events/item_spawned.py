@@ -17,7 +17,6 @@ class ItemSpawnedHandler(EventHandler):
     self.client_manager = client_manager
 
   def handle(self, client, event):
-    #TODO: circular import
     from game.components.networking import Id
     from game.components.item import DroppedItem
 

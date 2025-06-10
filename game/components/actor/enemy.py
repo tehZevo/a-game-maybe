@@ -16,7 +16,6 @@ class Enemy(Component):
     self.target = None
     self.mobdef = mobdef
     #drops are instantiated here, and have a drop_rate chance of dropping each
-    #TODO: store this in a "inventory" (which can be shared with chest tileentity)?
     #TODO: populate from mobdef
     self.drops = [Hat(), SkillItem(test_alpha_skill)]
     self.follow_dist = 2
@@ -42,7 +41,7 @@ class Enemy(Component):
     move_dir = Vector()
     enemy_pos = self.get_component(C.Position).pos
 
-    #TODO: make this a behavior and put skill in eqips in mobdef
+    #TODO: make this a behavior and put skill in equips in mobdef
 
     #find player to target
     #TODO: find anything on team we are not friends with

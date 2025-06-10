@@ -7,7 +7,6 @@ class EmitParticles(SkillEffect):
     super().__init__()
 
   def start(self):
-    #TODO: hardcoded particles
     pass
     #TODO: was generating lag because server never cleaned up emitters - fix first
     # self.entity.world.create_entity([

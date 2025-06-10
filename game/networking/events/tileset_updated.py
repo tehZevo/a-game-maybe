@@ -13,7 +13,6 @@ class TilesetUpdatedHandler(EventHandler):
     self.client_manager = client_manager
 
   def handle(self, client, event):
-    #TODO: circular imports
     from game.components.graphics import BakedTileset
     from game.components.tiles import TilesetPhysics
     #TODO: should i delete the old ones first?

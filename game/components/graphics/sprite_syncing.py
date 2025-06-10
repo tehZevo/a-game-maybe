@@ -10,14 +10,12 @@ class SpriteSyncing(Component, NetworkBehavior, SpriteListener):
     self.require(C.Sprite, C.Networking)
 
   def on_client_join(self, networking, client_id):
-    #TODO: circular import
     from game.networking.events import SpriteChanged
     sprite = self.get_component(C.Sprite)
     networking = self.get_component(C.Networking)
     networking.send_to_client(client_id, SpriteChanged(networking.id, sprite.path))
   
   def on_sprite_changed(self, sprite):
-    #TODO: circular import
     from game.networking.events import SpriteChanged
 
     networking = self.get_component(C.Networking)

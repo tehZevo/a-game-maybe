@@ -23,7 +23,6 @@ class Physics(Component):
     self.force = self.force + force
 
   def start(self):
-    #TODO: circular import
     from ..tiles import TilesetPhysics
     #TODO: hmm this is n squared, caching in start for now
     self.tile_rects = self.entity.world.find_component(TilesetPhysics).rects

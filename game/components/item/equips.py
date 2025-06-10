@@ -44,5 +44,5 @@ class Equips(Component, Savable):
 
     raise ValueError(f"Cannot equip {item}")
 
-  def save(self):
-    return {"armor", "skills", "weapons", "cur_weapon"}
+  def save_keys(self):
+    return ["armor", "skills", "weapons", "cur_weapon"]

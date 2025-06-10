@@ -1,7 +1,6 @@
 # Networking
 
 ---
-## TODO integrate this below
 - Networking is an iface that has its methods called by Networked
 - Networking defines behavior for syncing/updating/events/whatever from server to client and vice versa
 - Networked contains an id
@@ -24,10 +23,10 @@
 * Can register `CommandHandler`s
 
 ## `Command`s
-* Are sent from the client to the server
+* Are sent from the client to the server and represent player behaviors (move, interact, use skill)
 
 ## `Event`s
-* Are sent from the server to the client
+* Are sent from the server to the client and represent game state updates (position, sprite, velocity)
 
 ## `CommandHandler`s
 * Handle commands

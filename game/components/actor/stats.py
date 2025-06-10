@@ -3,7 +3,6 @@ from game.networking.events import StatsUpdated
 from game.ecs import Component
 import game.components as C
 
-#TODO: solve circular dependencies by implementing equiplistener?
 class Stats(Component):
   def __init__(self):
     super().__init__()
@@ -45,7 +44,6 @@ class Stats(Component):
     self.alert_listeners()
 
   def recalculate(self):
-    #TODO: circlular import
     from game.stats import calculator
     self.primary_stats, self.equip_stats, self.secondary_stats = calculator.calculate(self.entity)
     self.hp = min(self.hp, self.secondary_stats.hp)
