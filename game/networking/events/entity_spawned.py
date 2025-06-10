@@ -17,10 +17,8 @@ class EntitySpawnedHandler(EventHandler):
     self.client_manager = client_manager
 
   def handle(self, client, event):
-    classes = get_component_classes()
     #construct components
     classes = get_component_classes()
-    # components = [classes[k](**v) for k, v in event.component_data.items()]
     components = [classes[k]() for k in event.component_names]
     #create an entity with the provided id and components
     entity = self.client_manager.entity.world.create_entity([

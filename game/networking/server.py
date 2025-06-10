@@ -13,6 +13,7 @@ class Server:
     self.disconnect_handlers = disconnect_handlers
     self.command_handlers = defaultdict(list)
     self.command_types = {}
+    self.server_manager = None
 
     for handler in command_handlers:
       self.register_command_handler(handler)
@@ -30,7 +31,7 @@ class Server:
     #store websocket and tell handlers about connection
     self.clients[id] = ws
     for handler in self.connect_handlers:
-      handler.handle_connect(self, id)
+      handler.handle_connect(self.server_manager, self, id)
 
   def on_disconnect(self, id):
     #forget websocket and tell handlers about disconnect
@@ -46,7 +47,7 @@ class Server:
     command = dacite.from_dict(self.command_types[command_type_name], message["data"], config=dacite.Config(cast=[Enum]))
     #tell all handlers about command
     for handler in self.command_handlers[command.__class__]:
-      handler.handle(self, id, command)
+      handler.handle(self.server_manager, self, id, command)
 
   def build_event(self, event):
     event_type = event.__class__.__name__

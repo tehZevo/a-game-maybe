@@ -10,11 +10,10 @@ class PlayerMove:
   dir: Vector
 
 class PlayerMoveHandler(CommandHandler):
-  def __init__(self, server_manager):
+  def __init__(self):
     super().__init__(PlayerMove)
-    self.server_manager = server_manager
 
-  def handle(self, server, id, command):
-    ent = self.server_manager.networked_entities[id]
+  def handle(self, server_manager, server, id, command):
+    ent = server_manager.networked_entities[id]
     if ent is not None:
       ent.get_component(Actor).act(Move(command.dir))

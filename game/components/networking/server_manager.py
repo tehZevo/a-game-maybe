@@ -1,21 +1,20 @@
 from game.ecs import Component
-from game.networking import Server
 from game.utils import Vector
 import game.components as C
 
 class ConnectHandler:
-  def __init__(self, server_manager):
-    self.server_manager = server_manager
+  def __init__(self):
+    pass
 
-  def handle_connect(self, server, id):
+  def handle_connect(self, server_manager, server, id):
     #TODO: circular imports
     from game.networking.events import TilesetUpdated, PlayerAssigned
     #TODO: maybe make Tileset its own component that physics and baked both require?
     # that would make it harder to "change" the tileset without just destroying the entity but idk
-    ts = self.server_manager.entity.world.find_component(C.TilesetPhysics).tileset
+    ts = server_manager.entity.world.find_component(C.TilesetPhysics).tileset
     server.send(id, TilesetUpdated(ts))
 
-    world = self.server_manager.entity.world
+    world = server_manager.entity.world
     #spawn all other existing for player
     for networking in world.find_components(C.Networking):
       networking.spawn(id)
@@ -48,18 +47,3 @@ class ServerManager(Component):
       del self.networked_entities[id]
     except:
       print("[Server] ERROR: tried to delete entity that doesn't exist with id " + id)
-
-  def start(self):
-    #TODO: circular imports
-    from game.networking.commands import PlayerMoveHandler, \
-      PlayerUseSkillHandler, PlayerInteractHandler
-
-    self.server = Server(
-      connect_handlers=[ConnectHandler(self)],
-      command_handlers=[
-        PlayerMoveHandler(self),
-        PlayerUseSkillHandler(self),
-        PlayerInteractHandler(self),
-      ],
-    )
-    self.server.start()

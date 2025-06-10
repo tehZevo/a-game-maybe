@@ -8,11 +8,24 @@ from game.components.networking import ServerManager
 from game.utils.constants import FPS
 from game.utils.floor_transition import floor_transition
 from game.floor_generators import TestFloor, DFSGenerator
+from game.networking import Server
 
 class ServerGame:
   def __init__(self):
     pygame.init() #TODO: is this needed on the server?
     self.clock = pygame.time.Clock()
+
+    from game.components.networking.server_manager import ConnectHandler
+    from game.networking.commands import PlayerMoveHandler, PlayerUseSkillHandler, PlayerInteractHandler
+    self.server = Server(
+      connect_handlers=[ConnectHandler()],
+      command_handlers=[
+        PlayerMoveHandler(),
+        PlayerUseSkillHandler(),
+        PlayerInteractHandler(),
+      ],
+    )
+    self.server.start()
 
     #TODO: store a party (player game/"save" data) so player data can be repopulated on the new floor
     self.world = self.generate_world()
@@ -29,9 +42,13 @@ class ServerGame:
     #create server
     #TODO: actually.. maybe server should exist outside lol...
     # that or we should create a server first and then pass the existing one to the Server component
+    self.server_manager = ServerManager()
     world.create_entity([
-      ServerManager()
+      self.server_manager
     ])
+    #TODO: remove 2-way coupling
+    self.server.server_manager = self.server_manager
+    self.server_manager.server = self.server
     return world
 
   def init_world(self, save_data=None):

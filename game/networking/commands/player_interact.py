@@ -9,11 +9,10 @@ class PlayerInteract:
   pass
 
 class PlayerInteractHandler(CommandHandler):
-  def __init__(self, server_manager):
+  def __init__(self):
     super().__init__(PlayerInteract)
-    self.server_manager = server_manager
 
-  def handle(self, server, id, command):
-    ent = self.server_manager.networked_entities[id]
+  def handle(self, server_manager, server, id, command):
+    ent = server_manager.networked_entities[id]
     if ent is not None:
       ent.get_component(Actor).act(Interact())
