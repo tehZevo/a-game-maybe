@@ -35,18 +35,29 @@ class Networking(Component):
         continue
       fn(component)
 
+  def broadcast(self, event):
+    #shorthand for self.server_manager.server.broadcast(e)
+    self.server_manager.server.broadcast(event)
+
   def on_destroy(self):
     if self.is_server:
       #auto despawn
       self.server_manager.network_unregister(self.entity)
-      self.server_manager.server.broadcast(EntityDespawned(self.id))
+      self.broadcast(EntityDespawned(self.id))
       self.on_destroy_server()
     elif self.is_client:
       self.on_destroy_client()
 
   #spawn for specific player id
   def spawn(self, client_id):
-    self.server_manager.server.send(client_id, EntitySpawned(self.id, self.get_spawn_components()))
+    self.send_to_client(client_id, EntitySpawned(self.id, self.get_spawn_components()))
+
+  #TODO: naming?
+  def send_to_client(self, client_id, event):
+    self.server_manager.server.send(client_id, event)
+
+  def on_client_join(self, client_id):
+    self.for_all_networking(lambda c: c.on_client_join(self, client_id))
 
   def start_server(self):
     #set up id and server manager
@@ -55,9 +66,9 @@ class Networking(Component):
     self.server_manager.network_register(self.entity)
 
     #spawn entity on start
-    self.server_manager.server.broadcast(EntitySpawned(self.id, self.get_spawn_components()))
+    self.broadcast(EntitySpawned(self.id, self.get_spawn_components()))
 
-    #call start_client on all networking components
+    #call start_server on all networking components
     self.for_all_networking(lambda c: c.start_server(self))
 
   def start_client(self):

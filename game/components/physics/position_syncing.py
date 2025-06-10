@@ -9,9 +9,15 @@ class PositionSyncing(Component, NetworkBehavior):
 
   def start_server(self, networking):
     self.pos = self.get_component(C.Position)
+  
+  def on_client_join(self, networking, client_id):
+    #TODO: circular import
+    from game.networking.events import PositionUpdated
+    networking = self.get_component(C.Networking)
+    networking.send_to_client(client_id, PositionUpdated(networking.id, self.pos.pos))
 
   def update_server(self, networking):
     #TODO: only send move if distance above a threshold
     #TODO: circular import
     from game.networking.events import PositionUpdated
-    networking.server_manager.server.broadcast(PositionUpdated(networking.id, self.pos.pos))
+    networking.broadcast(PositionUpdated(networking.id, self.pos.pos))

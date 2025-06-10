@@ -8,7 +8,9 @@ class EmitParticles(SkillEffect):
 
   def start(self):
     #TODO: hardcoded particles
-    self.entity.world.create_entity([
-      C.Position(self.entity.get_component(C.Position).pos),
-      ParticleEmitter("assets/particles/spark.png")
-    ])
+    pass
+    #TODO: was generating lag because server never cleaned up emitters - fix first
+    # self.entity.world.create_entity([
+    #   C.Position(self.entity.get_component(C.Position).pos),
+    #   ParticleEmitter("assets/particles/spark.png")
+    # ])

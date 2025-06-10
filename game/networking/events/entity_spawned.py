@@ -27,4 +27,4 @@ class EntitySpawnedHandler(EventHandler):
       C.Networking(event.id),
       *components
     ])
-    print(f"[Client] Entity spawned with id {event.id}:", entity)
+    # print(f"[Client] Entity spawned with id {event.id}:", entity)

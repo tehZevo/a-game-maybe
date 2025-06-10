@@ -9,10 +9,17 @@ class SpriteSyncing(Component, NetworkBehavior, SpriteListener):
     super().__init__()
     self.require(C.Sprite, C.Networking)
 
+  def on_client_join(self, networking, client_id):
+    #TODO: circular import
+    from game.networking.events import SpriteChanged
+    sprite = self.get_component(C.Sprite)
+    networking = self.get_component(C.Networking)
+    networking.send_to_client(client_id, SpriteChanged(networking.id, sprite.path))
+  
   def on_sprite_changed(self, sprite):
-    #TODO: networked seems like a weird name...
-    networked = self.get_component(C.Networking)
-    if networked.is_server:
-      #TODO: circular import
-      from game.networking.events import SpriteChanged
-      networked.server_manager.server.broadcast(SpriteChanged(networked.id, sprite.path))
+    #TODO: circular import
+    from game.networking.events import SpriteChanged
+
+    networking = self.get_component(C.Networking)
+    if networking.is_server:
+      networking.broadcast(SpriteChanged(networking.id, sprite.path))

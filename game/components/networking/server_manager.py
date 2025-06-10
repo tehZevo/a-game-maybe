@@ -19,6 +19,7 @@ class ConnectHandler:
     #spawn all other existing for player
     for networking in world.find_components(C.Networking):
       networking.spawn(id)
+      networking.on_client_join(id)
 
     #TODO: create player (this maybe should be a separate handler)
     world.create_entity([

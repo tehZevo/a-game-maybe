@@ -3,6 +3,10 @@ class NetworkBehavior:
   def __init__(self):
     pass
 
+  def on_client_join(self, networking, client_id):
+    """Called on server whenever a client joins, useful for initial state syncing"""
+    pass
+
   def start_server(self, networking):
     pass
 

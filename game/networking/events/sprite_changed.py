@@ -1,3 +1,4 @@
+from typing import Optional
 from dataclasses import dataclass
 
 from ..event_handler import EventHandler
@@ -6,7 +7,7 @@ import game.components as C
 @dataclass
 class SpriteChanged:
   id: str
-  path: str
+  path: Optional[str]
 
 class SpriteChangedHandler(EventHandler):
   def __init__(self, client_manager):
@@ -21,4 +22,5 @@ class SpriteChangedHandler(EventHandler):
       return
     ent = self.client_manager.networked_entities[event.id]
     if ent is not None:
+      print("setting sprite to", event.path)
       ent.get_component(C.Sprite).set_sprite(event.path)

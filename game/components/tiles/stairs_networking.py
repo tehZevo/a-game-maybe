@@ -6,4 +6,4 @@ class StairsNetworking(Component, NetworkBehavior):
   def __init__(self):
     super().__init__()
     #NOTE: doesnt actually spawn stairs component because that requires a generator, which client doesnt have access to...
-    self.require(C.SpriteSyncing)
+    self.require(C.SpriteSyncing, C.PositionSyncing)

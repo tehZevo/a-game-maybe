@@ -25,7 +25,7 @@ class ParticleEmitter(Component, NetworkBehavior):
 
   def start_server(self, networking):
     from game.networking.events import EmitterUpdated
-    networking.server_manager.server.broadcast(EmitterUpdated(
+    networking.broadcast(EmitterUpdated(
       id=networking.id,
       particle_path=self.particle_path,
       min_vel=self.min_vel,
@@ -34,6 +34,11 @@ class ParticleEmitter(Component, NetworkBehavior):
       particle_life=self.particle_life,
       time=self.time
     ))
+    #TODO: how to know when to remove particle emitter?
+    #TODO: do we need a "desync" so the client doesn't despawn?
+    #TODO: or would it be a flag on networkbehavior?
+    self.entity.remove() #?? why no work?
+    print(len(self.entity.world.entities))
 
   def start_client(self, networking):
     self.system = self.entity.world.find(ParticleSystem)[0]

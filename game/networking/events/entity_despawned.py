@@ -19,4 +19,4 @@ class EntityDespawnedHandler(EventHandler):
       return
     ent = self.client_manager.network_unregister(event.id)
     ent.remove()
-    print("[Client] entity despawned:", event.id)
+    # print("[Client] entity despawned:", event.id)

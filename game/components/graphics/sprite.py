@@ -17,6 +17,9 @@ class Sprite(Component):
 
   #TODO: rename to set_image and update surface
   def set_sprite(self, path):
+    if self.path == path:
+      return
+
     self.path = path
 
     for component in self.entity.components.values():
