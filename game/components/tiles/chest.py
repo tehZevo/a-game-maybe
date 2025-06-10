@@ -1,4 +1,3 @@
-from game.utils.floor_transition import floor_transition
 from ..core import Interactable
 from . import TileEntity
 import game.components as C
@@ -9,7 +8,7 @@ SPAWN_FORCE = 1000
 class Chest(TileEntity, Interactable):
   def __init__(self, items=[]):
     super().__init__()
-    self.require(C.Sprite, C.ChestNetworking, C.Networking, C.ItemDropper)
+    self.require(C.Sprite, C.SpriteSyncing, C.PositionSyncing, C.Networking, C.ItemDropper)
     self.items = items
 
   def start(self):

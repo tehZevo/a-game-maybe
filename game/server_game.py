@@ -4,13 +4,12 @@ from pygame.math import Vector2
 from game.ecs import World
 from game.save_data import SaveData
 from game.utils.constants import FPS
-from game.utils.floor_transition import floor_transition
-from game.floor_generators import TestFloor, DFSGenerator
 from game.networking import Server
 from game.networking.server_connect_handler import ServerConnectHandler
 from game.networking.commands import PlayerMoveHandler, PlayerUseSkillHandler, PlayerInteractHandler
 from game.utils import Vector
 import game.components as C
+import game.maps as M
 
 class ServerGame:
   def __init__(self):
@@ -35,8 +34,8 @@ class ServerGame:
     server_manager = self.world.find_component(C.ServerManager)
     self.server.server_manager = server_manager
     
-    floor_transition(self.world, DFSGenerator())
-    # floor_transition(self.world, TestFloor())
+    mapdef = M.maze
+    mapdef.generator.generate(self.world)
 
     self.next_world = None
     self.init_world(self.save_data)
@@ -69,10 +68,9 @@ class ServerGame:
       server_manager.player_register(client_id, entity_id)
       save_data.load_player_data(client_id, player)
   
-  #TODO: use a "mapdef" instead of a world_gen_func
-  def transition(self, world_gen_func):
+  def transition(self, mapdef):
     world = self.generate_world()
-    world_gen_func(world)
+    mapdef.generator.generate(world)
     self.next_world = world
 
   def run(self):

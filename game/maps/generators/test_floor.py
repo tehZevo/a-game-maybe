@@ -1,7 +1,7 @@
 import game.components as C
 from game.tiles import Wall, Floor, Tileset
 from game.utils import Vector
-from . import FloorGenerator
+from .floor_generator import FloorGenerator
 
 from game.monsters import slime
 from game.items import Hat, SkillItem

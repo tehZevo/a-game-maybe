@@ -1,8 +1,7 @@
 
 DEFAULT_USE_TIME = 0.5 #seconds
 
-#TODO: could hp/mp cost and use time be impl'd as skill effects?
-
+#TODO: reimpl hp/mp cost and use time as skill effects
 #a skill has hp/mp costs, a use time, and effects
 #a skill item has an icon, an equip slot, and drop rate?
 

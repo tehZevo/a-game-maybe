@@ -1,15 +1,14 @@
 import random
 
-from game.floor_generators import FloorGenerator
+from .floor_generator import FloorGenerator
 from game.components.tiles import Stairs, Spawner
 from game.components.physics import Position
 from game.components.actor import Enemy, Player
 from game.components.graphics import BakedTileset
 from game.components.tiles import TilesetPhysics
 from game.tiles import Tileset, Floor, Wall
-from game.utils import Vector
-
 from game.monsters.slime import slime
+from game.utils import Vector
 
 SPAWNER_CHANCE = 0.5
 
@@ -102,5 +101,8 @@ class DFSGenerator(FloorGenerator):
 
     #choose random room to put stairs in
     x, y, _, _, _, _ = random.choice(rooms)
-    #create stairs to this generator
-    world.create_entity([Position(Vector(x * self.room_size + self.room_size / 2, x * self.room_size + self.room_size / 2)), Stairs(self)])
+    #TODO: pick mapdef from input mapdef
+    import game.maps as M
+    stairs_pos = Vector(x * self.room_size + self.room_size / 2, x * self.room_size + self.room_size / 2)
+
+    world.create_entity([Position(stairs_pos), Stairs(M.maze)])
