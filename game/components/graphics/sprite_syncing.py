@@ -20,4 +20,4 @@ class SpriteSyncing(Component, NetworkBehavior, SpriteListener):
 
     networking = self.get_component(C.Networking)
     if networking.is_server:
-      networking.broadcast(SpriteChanged(networking.id, sprite.path))
+      networking.broadcast_synced(SpriteChanged(networking.id, sprite.path))

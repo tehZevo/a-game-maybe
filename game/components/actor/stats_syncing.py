@@ -22,4 +22,4 @@ class StatsSyncing(Component, NetworkBehavior, StatsListener):
         mp=stats.mp,
         move_speed_multiplier=stats.move_speed_multiplier,
       )
-      networking.server_manager.server.broadcast(evt)
+      networking.broadcast_synced(evt)

@@ -10,17 +10,16 @@ class SpriteChanged:
   path: Optional[str]
 
 class SpriteChangedHandler(EventHandler):
-  def __init__(self, client_manager):
+  def __init__(self):
     super().__init__(SpriteChanged)
-    self.client_manager = client_manager
 
-  def handle(self, client, event):
+  def handle(self, client_manager, client, event):
     #TODO: this is caused by entities not being on client yet.. need to sync them when client first "sees" them
     # this either means sending actor spawned for all ents upon player join, OR having other actors/networked components spawn/despawn themselves on the client
-    if event.id not in self.client_manager.networked_entities:
+    if event.id not in client_manager.networked_entities:
       print("trying to update entity sprite with id", event.id, "but not found in networked entities...")
       return
-    ent = self.client_manager.networked_entities[event.id]
+    ent = client_manager.networked_entities[event.id]
     if ent is not None:
       print("setting sprite to", event.path)
       ent.get_component(C.Sprite).set_sprite(event.path)

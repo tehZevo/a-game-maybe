@@ -25,7 +25,7 @@ class ParticleEmitter(Component, NetworkBehavior):
 
   def start_server(self, networking):
     from game.networking.events import EmitterUpdated
-    networking.broadcast(EmitterUpdated(
+    networking.broadcast_synced(EmitterUpdated(
       id=networking.id,
       particle_path=self.particle_path,
       min_vel=self.min_vel,

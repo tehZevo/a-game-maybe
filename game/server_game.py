@@ -5,10 +5,10 @@ from game.ecs import World
 from game.save_data import SaveData
 from game.utils.constants import FPS
 from game.networking import Server
-from game.networking.server_connect_handler import ServerConnectHandler
-from game.networking.commands import PlayerMoveHandler, PlayerUseSkillHandler, PlayerInteractHandler
+import game.networking.commands as commands
 from game.utils import Vector
 import game.components as C
+import game.networking.events as E
 import game.maps as M
 
 class ServerGame:
@@ -19,11 +19,12 @@ class ServerGame:
     self.save_data = SaveData()
 
     self.server = Server(
-      connect_handlers=[ServerConnectHandler(self.save_data)],
+      connect_handlers=[],
       command_handlers=[
-        PlayerMoveHandler(),
-        PlayerUseSkillHandler(),
-        PlayerInteractHandler(),
+        commands.PlayerMoveHandler(),
+        commands.PlayerUseSkillHandler(),
+        commands.PlayerInteractHandler(),
+        commands.SyncHandler(self.save_data),
       ],
     )
     self.server.start()
@@ -55,22 +56,11 @@ class ServerGame:
     
     #store reference to game as an entity
     self.world.create_entity([C.GameMaster(self)])
-    server_manager = self.world.find_component(C.ServerManager)
-    #create players and apply save data
-    for client_id in save_data.player_data.keys():
-      player = self.world.create_entity([
-        C.Networking(),
-        C.Position(Vector(2, 2)), #TODO: hardcoded position
-        C.Player(),
-      ])
-
-      entity_id = player.get_component(C.Networking).id
-      server_manager.player_register(client_id, entity_id)
-      save_data.load_player_data(client_id, player)
   
   def transition(self, mapdef):
     world = self.generate_world()
     mapdef.generator.generate(world)
+    self.server.broadcast(E.WorldClosed())
     self.next_world = world
 
   def run(self):
@@ -95,10 +85,6 @@ class ServerGame:
       #TODO: remove/simplify 2-way coupling
       self.server.server_manager = server_manager
       self.init_world(self.save_data)
-      #grab new server manager and tell players about their new entities
-      #tell players about their new entities
-      from game.networking.events import PlayerAssigned
-      for client_id, entity_id in server_manager.player_entity_map.items():
-        self.server.send(client_id, PlayerAssigned(entity_id))
+      self.server.broadcast(E.WorldOpened())
       self.next_world = None
       self.next_server_manager = None

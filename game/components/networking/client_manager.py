@@ -1,9 +1,5 @@
 from game.ecs import Component
-from game.networking import Client
-from game.networking.events import TilesetUpdatedHandler, EntitySpawnedHandler, \
-EntityDespawnedHandler, PositionUpdatedHandler, PlayerAssignedHandler, \
-ItemSpawnedHandler, StatsUpdatedHandler, SpriteChangedHandler, \
-EmitterUpdatedHandler
+
 import game.components as C
 
 class ClientManager(Component):
@@ -19,19 +15,3 @@ class ClientManager(Component):
     ent = self.networked_entities[id]
     del self.networked_entities[id]
     return ent
-
-  def start(self):
-    self.client = Client(
-      event_handlers=[
-        PlayerAssignedHandler(self),
-        TilesetUpdatedHandler(self),
-        EntitySpawnedHandler(self),
-        ItemSpawnedHandler(self),
-        PositionUpdatedHandler(self),
-        SpriteChangedHandler(self),
-        EmitterUpdatedHandler(self),
-        EntityDespawnedHandler(self),
-        StatsUpdatedHandler(self),
-      ]
-    )
-    self.client.connect()

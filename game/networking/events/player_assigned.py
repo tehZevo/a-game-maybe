@@ -9,20 +9,17 @@ class PlayerAssigned:
   id: str
 
 class PlayerAssignedHandler(EventHandler):
-  def __init__(self, client_manager):
+  def __init__(self):
     super().__init__(PlayerAssigned)
-    self.client_manager = client_manager
 
-  def handle(self, client, event):
-    from game.components.graphics import Camera
-    from game.components.core import GameMaster
-    from game.components.ui import UIManager
-    world = self.client_manager.entity.world
-    entity = world.create_entity([PlayerController(event.id)])
+  def handle(self, client_manager, client, event):
+    import game.components as C
+    world = client_manager.entity.world
+    entity = world.create_entity([C.PlayerController(event.id)])
     #find player, set camera target, and set ui manager player
-    player = self.client_manager.networked_entities[event.id]
-    world.find_component(Camera).target = player
+    player = client_manager.networked_entities[event.id]
+    world.find_component(C.Camera).target = player
     #TODO: this feels weird
-    world.find_component(GameMaster).game.ui_manager.get_component(UIManager).set_player(player)
+    world.find_component(C.GameMaster).game.ui_manager.get_component(C.UIManager).set_player(player)
 
     print("[Client] Controlling actor with id", event.id)

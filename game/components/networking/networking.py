@@ -35,15 +35,21 @@ class Networking(Component):
         continue
       fn(component)
 
-  def broadcast(self, event):
+  def broadcast_all(self, event):
+    """Send to all clients regardless of if they've loaded the world (synced)"""
     #shorthand for self.server_manager.server.broadcast(e)
     self.server_manager.server.broadcast(event)
+  
+  def broadcast_synced(self, event):
+    """Send to all synced clients"""
+    for client_id in self.server_manager.player_entity_map.keys():
+      self.server_manager.server.send(client_id, event)
 
   def on_destroy(self):
     if self.is_server:
       #auto despawn
       self.server_manager.network_unregister(self.entity)
-      self.broadcast(EntityDespawned(self.id))
+      self.broadcast_synced(EntityDespawned(self.id))
       self.on_destroy_server()
     elif self.is_client:
       self.on_destroy_client()
@@ -56,6 +62,7 @@ class Networking(Component):
   def send_to_client(self, client_id, event):
     self.server_manager.server.send(client_id, event)
 
+  #TODO: rename to on_client_sync
   def on_client_join(self, client_id):
     self.for_all_networking(lambda c: c.on_client_join(self, client_id))
 
@@ -66,7 +73,7 @@ class Networking(Component):
     self.server_manager.network_register(self.entity)
 
     #spawn entity on start
-    self.broadcast(EntitySpawned(self.id, self.get_spawn_components()))
+    self.broadcast_synced(EntitySpawned(self.id, self.get_spawn_components()))
 
     #call start_server on all networking components
     self.for_all_networking(lambda c: c.start_server(self))

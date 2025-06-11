@@ -2,17 +2,22 @@ import pygame, sys
 from pygame.math import Vector2
 
 from game.ecs import World
-from game.components.graphics import Camera, Renderer
-from game.components.physics import Position
-from game.components.particles import ParticleSystem
-from game.components.core import GameMaster
-from game.components.ui import UIManager
-from game.components.networking import ClientManager
-from game.components.core import PlayerController
+import game.components as C
 from game.utils.constants import FPS, PPU
+from game.networking import Client
+import game.networking.events as E
+from game.networking.commands import Sync
 
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
+
+#TODO: dont like this.. have to wait for client to connect...
+class ClientConnectHandler:
+  def __init__(self):
+    pass
+  
+  def handle_connect(self, client):
+    client.send(Sync())
 
 class ClientGame:
   def __init__(self):
@@ -21,36 +26,55 @@ class ClientGame:
     self.clock = pygame.time.Clock()
     pygame.display.set_caption("Game")
 
+    self.client = Client(
+      connect_handlers=[ClientConnectHandler()],
+      event_handlers=[
+        E.PlayerAssignedHandler(),
+        E.TilesetUpdatedHandler(),
+        E.EntitySpawnedHandler(),
+        E.ItemSpawnedHandler(),
+        E.PositionUpdatedHandler(),
+        E.SpriteChangedHandler(),
+        E.EmitterUpdatedHandler(),
+        E.EntityDespawnedHandler(),
+        E.StatsUpdatedHandler(),
+        E.WorldClosedHandler(self),
+        E.WorldOpenedHandler(),
+      ]
+    )
+
     #create ui world and manager
     self.ui_world = World()
-    self.ui_manager = self.ui_world.create_entity([UIManager()])
+    self.ui_manager = self.ui_world.create_entity([C.UIManager()])
 
     self.world = World()
-    #create client
-    #TODO: create Client as property of ClientGame and pass to ClientManager?
-    self.world.create_entity([
-      ClientManager()
-    ])
     self.next_world = None
     self.init_world()
 
+    #TODO: move this back up once we havae the "spawnme" or whatever command
+    self.client.connect()
+
   def init_world(self):
-    #store reference to game as an entity
-    self.world.create_entity([GameMaster(self)])
-    #create renderer
-    self.renderer = self.world.create_entity([Renderer(self.screen)])
-    #add particle system
-    self.particle_system = self.world.create_entity([ParticleSystem()])
-    #create camera that targets player
-    self.camera = self.world.create_entity([Camera()])
+    #setup client world
+    self.world.create_entity([C.GameMaster(self)])
+    self.renderer = self.world.create_entity([C.Renderer(self.screen)])
+    self.particle_system = self.world.create_entity([C.ParticleSystem()])
+    self.camera = self.world.create_entity([C.Camera()])
+    
+    #TODO: create Client as property of ClientGame and pass to ClientManager?
+    client_manager = C.ClientManager()
+    #TODO: remove binding if possible
+    client_manager.client = self.client
+    self.client.client_manager = client_manager
+    self.world.create_entity([client_manager])
 
     #set ui manager world and player
-    uim_comp = self.ui_manager.get_component(UIManager)
+    uim_comp = self.ui_manager.get_component(C.UIManager)
     uim_comp.game_world = self.world
     # uim_comp.set_player(self.player) #TODO: uimanager needs player eventually
 
-  def transition(self, world):
-    self.next_world = world
+  def transition(self):
+    self.next_world = World()
 
   def run(self):
     while True:
@@ -63,27 +87,25 @@ class ClientGame:
 
         #control player
         keys = pygame.key.get_pressed()
-        #TODO: need a find first function (and find first component)
-        pc = self.world.find(PlayerController)
-        if len(pc) > 0:
-          pc = pc[0]
-          pc.get_component(PlayerController).handle_keys(keys)
+        player_controller = self.world.find_component(C.PlayerController)
+        if player_controller is not None:
+          player_controller.handle_keys(keys)
 
         #update world
         self.world.update()
 
         #render
-        camera_pos = self.camera.get_component(Position).pos
+        camera_pos = self.camera.get_component(C.Position).pos
         camera_offset = Vector2(*(camera_pos * PPU).tolist()) - Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
-        self.renderer.get_component(Renderer).render()
+        self.renderer.get_component(C.Renderer).render()
 
         #draw particles
-        self.particle_system.get_component(ParticleSystem).draw(self.screen, camera_offset)
+        self.particle_system.get_component(C.ParticleSystem).draw(self.screen, camera_offset)
 
         #draw UI
         self.ui_world.update()
-        self.ui_manager.get_component(UIManager).draw(self.screen)
+        self.ui_manager.get_component(C.UIManager).draw(self.screen)
 
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
 

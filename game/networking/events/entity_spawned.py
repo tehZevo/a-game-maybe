@@ -12,16 +12,16 @@ class EntitySpawned:
   component_names: list
 
 class EntitySpawnedHandler(EventHandler):
-  def __init__(self, client_manager):
+  def __init__(self):
     super().__init__(EntitySpawned)
-    self.client_manager = client_manager
 
-  def handle(self, client, event):
+  def handle(self, client_manager, client, event):
     #construct components
     classes = get_component_classes()
     components = [classes[k]() for k in event.component_names]
+    print("ent comps:", event.component_names)
     #create an entity with the provided id and components
-    entity = self.client_manager.entity.world.create_entity([
+    entity = client_manager.entity.world.create_entity([
       C.Networking(event.id),
       *components
     ])

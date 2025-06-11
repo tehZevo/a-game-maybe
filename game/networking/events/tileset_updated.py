@@ -8,18 +8,11 @@ class TilesetUpdated:
   tileset: Tileset
 
 class TilesetUpdatedHandler(EventHandler):
-  def __init__(self, client_manager):
+  def __init__(self):
     super().__init__(TilesetUpdated)
-    self.client_manager = client_manager
 
-  def handle(self, client, event):
-    from game.components.graphics import BakedTileset
-    from game.components.tiles import TilesetPhysics
-    #TODO: should i delete the old ones first?
-    world = self.client_manager.entity.world
-    world.create_entity([
-      BakedTileset(event.tileset),
-    ])
-    world.create_entity([
-      TilesetPhysics(event.tileset),
-    ])
+  def handle(self, client_manager, client, event):
+    import game.components as C
+    world = client_manager.entity.world
+    world.create_entity([C.BakedTileset(event.tileset)])
+    world.create_entity([C.TilesetPhysics(event.tileset)])

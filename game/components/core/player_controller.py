@@ -19,8 +19,7 @@ class PlayerController(Component):
     self.player = find_entity_by_id(self.entity.world, self.id)
 
   def handle_keys(self, keys):
-    from game.networking.commands import PlayerMove, PlayerUseSkill, \
-      PlayerInteract
+    from game.networking.commands import PlayerMove, PlayerUseSkill, PlayerInteract
 
     if keys[pygame.K_a]:
       self.client.send(PlayerUseSkill(SkillSlot.ALPHA))

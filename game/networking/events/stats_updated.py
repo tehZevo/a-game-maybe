@@ -17,15 +17,14 @@ class StatsUpdated:
   move_speed_multiplier: float
 
 class StatsUpdatedHandler(EventHandler):
-  def __init__(self, client_manager):
+  def __init__(self):
     super().__init__(StatsUpdated)
-    self.client_manager = client_manager
 
-  def handle(self, client, event):
-    if event.id not in self.client_manager.networked_entities:
+  def handle(self, client_manager, client, event):
+    if event.id not in client_manager.networked_entities:
       return
 
-    ent = self.client_manager.networked_entities[event.id]
+    ent = client_manager.networked_entities[event.id]
     stats = ent.get_component(C.Stats)
     stats.hp = event.hp
     stats.mp = event.mp

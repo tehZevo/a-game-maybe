@@ -12,16 +12,15 @@ class ItemSpawned:
   item: str
 
 class ItemSpawnedHandler(EventHandler):
-  def __init__(self, client_manager):
+  def __init__(self):
     super().__init__(ItemSpawned)
-    self.client_manager = client_manager
 
-  def handle(self, client, event):
-    from game.components.networking import Id
-    from game.components.item import DroppedItem
+  def handle(self, client_manager, client, event):
+    import game.components as C
 
-    entity = self.client_manager.entity.world.create_entity([
-      Id(event.id),
-      DroppedItem(items.__dict__[event.item]()),
+    #TODO: does this even work? does Id component exist anymore?
+    entity = client_manager.entity.world.create_entity([
+      C.Id(event.id),
+      C.DroppedItem(items.__dict__[event.item]()),
     ])
     print("[Client] item spawned:", event.item)
