@@ -6,6 +6,7 @@ from ..graphics import Camera, Surface, Sprite
 from ..physics import Position
 from game.utils.constants import PPU
 
+#TODO: do ppu/upscaling calc here
 #draws sprites
 class Renderer(Component):
   def __init__(self, screen):

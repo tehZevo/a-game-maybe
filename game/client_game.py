@@ -8,8 +8,10 @@ from game.networking import Client
 import game.networking.events as E
 from game.networking.commands import Sync
 
-SCREEN_WIDTH = 640
-SCREEN_HEIGHT = 480
+SCREEN_WIDTH_TILES = 16
+SCREEN_HEIGHT_TILES = 12
+SCREEN_WIDTH = PPU * SCREEN_WIDTH_TILES
+SCREEN_HEIGHT = PPU * SCREEN_HEIGHT_TILES
 
 #TODO: dont like this.. have to wait for client to connect...
 class ClientConnectHandler:

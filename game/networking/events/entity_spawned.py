@@ -19,7 +19,6 @@ class EntitySpawnedHandler(EventHandler):
     #construct components
     classes = get_component_classes()
     components = [classes[k]() for k in event.component_names]
-    print("ent comps:", event.component_names)
     #create an entity with the provided id and components
     entity = client_manager.entity.world.create_entity([
       C.Networking(event.id),
