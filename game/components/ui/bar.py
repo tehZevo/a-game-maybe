@@ -17,7 +17,7 @@ class Bar(UIComponent):
     self.border_color = (0, 0, 0)
     self.bg_color = (255, 128, 128)
 
-  def draw(self, screen):
+  def draw(self, screen, offset):
     pos = self.get_component(Position).pos
     #calculate rects
     bg_rect = pygame.Rect(pos.x, pos.y, self.width, self.height)

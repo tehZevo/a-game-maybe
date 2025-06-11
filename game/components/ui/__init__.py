@@ -1,4 +1,3 @@
-from game.components.ui.drawable import Drawable
 from game.components.ui.ui_component import UIComponent
 from game.components.ui.bar import Bar
 from game.components.ui.health_bar import HealthBar

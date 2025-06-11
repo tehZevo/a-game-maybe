@@ -48,6 +48,7 @@ class ClientGame:
     #create ui world and manager
     self.ui_world = World()
     self.ui_manager = self.ui_world.create_entity([C.UIManager()])
+    self.ui_renderer = self.ui_world.create_entity([C.Renderer(self.screen)])
 
     self.world = World()
     self.next_world = None
@@ -99,6 +100,8 @@ class ClientGame:
         #render
         camera_pos = self.camera.get_component(C.Position).pos
         camera_offset = Vector2(*(camera_pos * PPU).tolist()) - Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        #TODO: would be nice to do this in renderer, but if 2 renderers share the same screen, might be difficult
+        self.screen.fill((0, 0, 0))
 
         self.renderer.get_component(C.Renderer).render()
 
@@ -107,7 +110,7 @@ class ClientGame:
 
         #draw UI
         self.ui_world.update()
-        self.ui_manager.get_component(C.UIManager).draw(self.screen)
+        self.ui_renderer.get_component(C.Renderer).render()
 
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
 
