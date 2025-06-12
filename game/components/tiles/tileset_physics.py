@@ -1,7 +1,7 @@
 import pygame
 
 from game.ecs import Component
-from game.utils.constants import PPU, PHYS_SCALE
+from game.utils.constants import PHYS_SCALE
 
 class TilesetPhysics(Component):
   def __init__(self, tileset):

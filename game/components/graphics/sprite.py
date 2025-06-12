@@ -5,7 +5,7 @@ from game.ecs import Component
 from .drawable import Drawable
 import game.components as C
 from game.utils.image_cache import get_image
-from game.utils.constants import PPU
+from game.utils.constants import TILE_SIZE
 
 #TODO: animations
 class Sprite(Component, Drawable):
@@ -43,5 +43,5 @@ class Sprite(Component, Drawable):
   def draw(self, screen, offset):
     if self.surface is not None:
       pos = self.pos.pos
-      pos = Vector2(*(e * PPU for e in pos.tolist()))
+      pos = Vector2(*(e * TILE_SIZE for e in pos.tolist()))
       screen.blit(self.surface, pos + offset)

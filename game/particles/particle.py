@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2
 
-from game.utils.constants import PPU, DT, PIXEL_SCALE
+from game.utils.constants import TILE_SIZE, DT
 from game.utils.image_cache import get_image
 
 #TODO: tintable particles
@@ -31,7 +31,7 @@ class Particle(pygame.sprite.Sprite):
 
   def draw(self, screen, offset=None):
     #TODO: apply offset?
-    pos = self.pos * PPU
+    pos = self.pos * TILE_SIZE
     if offset is not None:
       pos -= offset
     self.rect.center = pos

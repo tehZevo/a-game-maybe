@@ -3,15 +3,18 @@ from pygame.math import Vector2
 
 from game.ecs import World
 import game.components as C
-from game.utils.constants import FPS, PPU
+from game.utils.constants import FPS, TILE_SIZE
 from game.networking import Client
 import game.networking.events as E
 from game.networking.commands import Sync
 
+SCALE_RES = 4
 SCREEN_WIDTH_TILES = 16
 SCREEN_HEIGHT_TILES = 12
-SCREEN_WIDTH = PPU * SCREEN_WIDTH_TILES
-SCREEN_HEIGHT = PPU * SCREEN_HEIGHT_TILES
+RENDER_WIDTH = TILE_SIZE * SCREEN_WIDTH_TILES
+RENDER_HEIGHT = TILE_SIZE * SCREEN_HEIGHT_TILES
+SCREEN_WIDTH = SCALE_RES * RENDER_WIDTH
+SCREEN_HEIGHT = SCALE_RES * RENDER_HEIGHT
 
 #TODO: dont like this.. have to wait for client to connect...
 class ClientConnectHandler:
@@ -48,7 +51,7 @@ class ClientGame:
     #create ui world and manager
     self.ui_world = World()
     self.ui_manager = self.ui_world.create_entity([C.UIManager()])
-    self.ui_renderer = self.ui_world.create_entity([C.Renderer(self.screen)])
+    self.ui_renderer = self.ui_world.create_entity([C.Renderer(RENDER_WIDTH, RENDER_HEIGHT)])
 
     self.world = World()
     self.next_world = None
@@ -60,7 +63,7 @@ class ClientGame:
   def init_world(self):
     #setup client world
     self.world.create_entity([C.GameMaster(self)])
-    self.renderer = self.world.create_entity([C.Renderer(self.screen)])
+    self.renderer = self.world.create_entity([C.Renderer(RENDER_WIDTH, RENDER_HEIGHT)])
     self.particle_system = self.world.create_entity([C.ParticleSystem()])
     self.camera = self.world.create_entity([C.Camera()])
     
@@ -99,18 +102,17 @@ class ClientGame:
 
         #render
         camera_pos = self.camera.get_component(C.Position).pos
-        camera_offset = Vector2(*(camera_pos * PPU).tolist()) - Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-        #TODO: would be nice to do this in renderer, but if 2 renderers share the same screen, might be difficult
+        camera_offset = Vector2(*(camera_pos * TILE_SIZE).tolist()) - Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.screen.fill((0, 0, 0))
 
-        self.renderer.get_component(C.Renderer).render()
+        self.renderer.get_component(C.Renderer).render(self.screen)
 
         #draw particles
         self.particle_system.get_component(C.ParticleSystem).draw(self.screen, camera_offset)
 
         #draw UI
         self.ui_world.update()
-        self.ui_renderer.get_component(C.Renderer).render()
+        self.ui_renderer.get_component(C.Renderer).render(self.screen)
 
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
 

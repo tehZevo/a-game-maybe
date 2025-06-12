@@ -5,7 +5,7 @@ from game.ecs import Component
 from .drawable import Drawable
 from game.components.physics import Position
 from game.utils.image_cache import get_image
-from game.utils.constants import PPU
+from game.utils.constants import TILE_SIZE
 
 #"bakes" tile images onto a surface for quicker blitting
 class BakedTileset(Component, Drawable):
@@ -18,7 +18,7 @@ class BakedTileset(Component, Drawable):
 
   def start(self):
     self.pos = self.get_component(Position)
-    self.surface = pygame.Surface((self.tileset.width * PPU, self.tileset.height * PPU))
+    self.surface = pygame.Surface((self.tileset.width * TILE_SIZE, self.tileset.height * TILE_SIZE))
 
     for x, y, tile in self.tileset.itertiles():
       self.bake(tile.image_path, x, y)
@@ -26,10 +26,10 @@ class BakedTileset(Component, Drawable):
   def bake(self, path, x, y):
     if path is not None:
       image = get_image(path)
-      self.surface.blit(image, (x * PPU, y * PPU))
+      self.surface.blit(image, (x * TILE_SIZE, y * TILE_SIZE))
   
   def draw(self, screen, offset):
     pos = self.pos.pos
-    pos = Vector2(*(e * PPU for e in pos.tolist()))
+    pos = Vector2(*(e * TILE_SIZE for e in pos.tolist()))
     screen.blit(self.surface, pos + offset)
     
