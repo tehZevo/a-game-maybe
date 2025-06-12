@@ -4,4 +4,4 @@ from game.skilleffects import RestoreHealth, RestoreMana, SelfTarget
 
 hax_heal = SkillDef([
   SelfTarget([RestoreHealth(), RestoreMana()])
-], slot=SkillSlot.BETA, icon="assets/items/skills/alpha.png")
+], slot=SkillSlot.BETA, icon=None)

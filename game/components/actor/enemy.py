@@ -17,7 +17,7 @@ class Enemy(Component):
     self.mobdef = mobdef
     #drops are instantiated here, and have a drop_rate chance of dropping each
     #TODO: populate from mobdef
-    self.drops = [Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), Hat(), SkillItem(test_alpha_skill)]
+    self.drops = [Hat(), SkillItem(test_alpha_skill)]
     self.follow_dist = 2
     self.skill = test_enemy_skill
 

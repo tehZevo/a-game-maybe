@@ -13,4 +13,4 @@ test_alpha_skill = SkillDef([
       EmitParticles(),
     ]
   )
-], mp_cost=10, slot=SkillSlot.ALPHA, icon="assets/items/skills/alpha.png")
+], mp_cost=10, slot=SkillSlot.ALPHA, icon=None)
