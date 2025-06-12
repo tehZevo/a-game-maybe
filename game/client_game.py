@@ -37,7 +37,6 @@ class ClientGame:
         E.PlayerAssignedHandler(),
         E.TilesetUpdatedHandler(),
         E.EntitySpawnedHandler(),
-        E.ItemSpawnedHandler(),
         E.PositionUpdatedHandler(),
         E.SpriteChangedHandler(),
         E.EmitterUpdatedHandler(),
@@ -50,7 +49,7 @@ class ClientGame:
 
     #create ui world and manager
     self.ui_world = World()
-    self.ui_manager = self.ui_world.create_entity([C.UIManager()])
+    self.hud = self.ui_world.create_entity([C.HUD()])
     self.ui_renderer = self.ui_world.create_entity([C.Renderer(RENDER_WIDTH, RENDER_HEIGHT)])
 
     self.world = World()
@@ -74,10 +73,9 @@ class ClientGame:
     self.client.client_manager = client_manager
     self.world.create_entity([client_manager])
 
-    #set ui manager world and player
-    uim_comp = self.ui_manager.get_component(C.UIManager)
-    uim_comp.game_world = self.world
-    # uim_comp.set_player(self.player) #TODO: uimanager needs player eventually
+    #set hud world and player
+    hud_comp = self.hud.get_component(C.HUD)
+    hud_comp.game_world = self.world
 
   def transition(self):
     self.next_world = World()

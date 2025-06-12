@@ -17,7 +17,7 @@ class DFSGenerator(FloorGenerator):
     super().__init__()
     self.floor_size = 4 #in number of rooms wide/tall
     self.room_size = 12
-    self.door_width = 2
+    self.door_width = 3
 
   def build_dfs(self):
     def oob(x, y):

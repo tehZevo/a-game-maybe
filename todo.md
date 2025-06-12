@@ -1,25 +1,18 @@
+- move gamedata into its own folder (defs go into a folder called defs)
+- hide skill slots until picked up for the first time?
 - teleporters
 - player spawn tile entity
-- network floor transitions
-  - add ability to spawn entities for a certain player
-    - call this method on player join for all entities
-- add "spawn" to network behaviors, which should generate a list of events that should be broadcast/sent to player upon spawn
+- highlight which entity the player would interact with
 - air mechanics
   - jumping
   - shadow (separate entity?)
   - skills that can only be used midair
   - skills that cannot be used midair
-- fix sprites sometimes being black
-  - i think this is due to component ordering when reconstructing on the client
-- make client ui target client's player
 - fix skill use generating tons of stats updated events
  - maybe store stat updates per game tick and then send one StatsUpdated on the next tick>
-- network particle emitters
-- spawn networked players with player data when loading new world
 - use eventcatalog to document events?
 - client side prediction :^)
-- make Networked component handle its own spawning (and despawning) on the clients?
-- split project into client, server, and common packages
+- split project into client, server, and common packages(?)
 - player radius/visibility spawning/despawning/updates
   - when player enters radius, spawn entity
   - as long as player is within radius, send updates

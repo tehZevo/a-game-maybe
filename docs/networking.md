@@ -43,6 +43,6 @@
 
 ## Events
 * PlayerAssigned: Sent when a player connects, tells the player which actor they control
-* ActorSpawned: Sent when an actor is created on the server (currently only when a player connects)
+* EntitySpawned: Sent when a networked entity is created on the server
 * PositionUpdated: Sent to update a client side entity position
 * TilesetUpdated: Sends a tileset to the client

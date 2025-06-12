@@ -1,8 +1,8 @@
 from game.ecs import Component
-import game.components as C
-
 from game.components.networking.network_behavior import NetworkBehavior
 from game.components.graphics.sprite_listener import SpriteListener
+import game.components as C
+from game.networking.events import SpriteChanged
 
 class SpriteSyncing(Component, NetworkBehavior, SpriteListener):
   def __init__(self, path=None):
@@ -15,9 +15,14 @@ class SpriteSyncing(Component, NetworkBehavior, SpriteListener):
     networking = self.get_component(C.Networking)
     networking.send_to_client(client_id, SpriteChanged(networking.id, sprite.path))
   
-  def on_sprite_changed(self, sprite):
-    from game.networking.events import SpriteChanged
+  def start_server(self, networking):
+    sprite = self.get_component(C.Sprite)
+    if sprite is None:
+      return
 
+    networking.broadcast_synced(SpriteChanged(networking.id, sprite.path))
+    
+  def on_sprite_changed(self, sprite):
     networking = self.get_component(C.Networking)
     if networking.is_server:
       networking.broadcast_synced(SpriteChanged(networking.id, sprite.path))
