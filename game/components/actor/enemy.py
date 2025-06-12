@@ -13,13 +13,9 @@ class Enemy(Component):
     super().__init__()
     self.require(C.Actor)
     self.target_distance = 5
+    self.follow_dist = 2
     self.target = None
     self.mobdef = mobdef
-    #drops are instantiated here, and have a drop_rate chance of dropping each
-    #TODO: populate from mobdef
-    self.drops = [Hat(), SkillItem(test_alpha_skill)]
-    self.follow_dist = 2
-    self.skill = test_enemy_skill
 
   def start(self):
     #make enemies 1/4 base player speed
@@ -33,7 +29,7 @@ class Enemy(Component):
     dropper = self.get_component(C.ItemDropper)
     pos = self.get_component(C.Position).pos
     #chance to drop each item based on its drop rate
-    for item in self.drops:
+    for item in self.mobdef.drops:
       if random.random() < item.drop_rate:
         dropper.drop(item, pos)
 
@@ -62,7 +58,8 @@ class Enemy(Component):
         target_pos = self.target.get_component(C.Position).pos
         dist = target_pos.distance(enemy_pos)
         if dist < self.follow_dist:
-          self.get_component(C.Actor).act(UseSkill(self.skill))
+          skill = random.choice(self.mobdef.skills)
+          self.get_component(C.Actor).act(UseSkill(skill))
         else:
           move_dir = target_pos - enemy_pos
 

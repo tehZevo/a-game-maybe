@@ -16,6 +16,6 @@ class DroppedItem(Component, Interactable):
     old_equip = entity.get_component(C.Equips).equip(self.item)
     #if we had something equipped in that slot, drop it
     if old_equip is not None:
-      entity.get_component(C.ItemDropper).drop(old_equip, entity.get_component(C.Position).pos)
+      entity.get_component(C.ItemDropper).drop(old_equip, entity.get_component(C.Position).pos.copy())
 
     self.entity.remove()

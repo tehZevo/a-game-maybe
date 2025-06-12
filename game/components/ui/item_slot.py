@@ -29,6 +29,6 @@ class ItemSlot(UIComponent):
     pos = self.get_component(Position).pos #TODO: cache pos comp
     border = get_image("assets/border.png")
     screen.blit(border, pos.tolist())
-    icon = self.get_icon()
+    icon = self.get_icon() #TODO: it would be great if we could cache the icon too
     if icon is not None:
       screen.blit(icon, (pos + Vector(2, 2)).tolist())

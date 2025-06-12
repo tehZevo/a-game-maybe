@@ -8,7 +8,7 @@ from game.networking import Client
 import game.networking.events as E
 from game.networking.commands import Sync
 
-SCALE_RES = 4
+SCALE_RES = 3
 SCREEN_WIDTH_TILES = 16
 SCREEN_HEIGHT_TILES = 12
 RENDER_WIDTH = TILE_SIZE * SCREEN_WIDTH_TILES

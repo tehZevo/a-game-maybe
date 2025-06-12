@@ -2,12 +2,14 @@
 - hide skill slots until picked up for the first time?
 - teleporters
 - player spawn tile entity
+- sync equips
 - highlight which entity the player would interact with
 - air mechanics
   - jumping
   - shadow (separate entity?)
   - skills that can only be used midair
   - skills that cannot be used midair
+- itemdefs? ttemdefs are kind of tough because of their hierarchy
 - fix skill use generating tons of stats updated events
  - maybe store stat updates per game tick and then send one StatsUpdated on the next tick>
 - use eventcatalog to document events?
@@ -24,14 +26,11 @@
 - target effects should have a selection order (nearest/random)
 - refactor skill effect targets to be a component on the skill entity
 - refactor skill effects to not store state
-- fix items getting stuck to player on pickup
 - cache component -> entity mapping so we can find entities in constant time
 - make it so target effects require LOS (flag?)
 - damage hits (basically a delay+repeat of damage)
 - add invulnerability animation
-- icon ui component to draw equips and skills
 - make ui components mountable to screen corners/edges and then use position as an offset
-- use drawable in renderer
 - improve collisions
   - remove small pixel gap on bottom/right collisions
   - fix passing through walls at high speeds
