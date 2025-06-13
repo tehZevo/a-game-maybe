@@ -3,7 +3,7 @@ import pygame
 from game.ecs import Component
 from game.utils import Vector
 from game.utils import find_entity_by_id
-from game.items import SkillSlot
+from game.items.slots import SkillSlot
 
 #client side controller, takes keyboard events, sends commands n stuff
 class PlayerController(Component):

@@ -12,7 +12,7 @@ def slot_position(x, y):
 
 ITEM_SLOTS = {
   (ArmorSlot, ArmorSlot.HAT): slot_position(0, 1),
-  (ArmorSlot, ArmorSlot.BODY): slot_position(0, 2),
+  (ArmorSlot, ArmorSlot.SUIT): slot_position(0, 2),
   (ArmorSlot, ArmorSlot.GLOVES): slot_position(0, 3),
   (ArmorSlot, ArmorSlot.SHOES): slot_position(0, 4),
   (ArmorSlot, ArmorSlot.ACCESSORY): slot_position(0, 5),

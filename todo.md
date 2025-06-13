@@ -1,3 +1,5 @@
+- specify python 3.10+ for match statement
+- change to primary/secondary weapon, not 2 weapons
 - move gamedata into its own folder (defs go into a folder called defs)
 - hide skill slots until picked up for the first time?
 - teleporters
@@ -13,6 +15,7 @@
 - fix skill use generating tons of stats updated events
  - maybe store stat updates per game tick and then send one StatsUpdated on the next tick>
 - use eventcatalog to document events?
+- maybe refactor "syncing" functionality into their respective components and make them just check for `networking` to see if we should perform syncing
 - client side prediction :^)
 - split project into client, server, and common packages(?)
 - player radius/visibility spawning/despawning/updates

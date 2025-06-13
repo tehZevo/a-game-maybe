@@ -1,12 +1,12 @@
 from . import MobDef
 from . import monster_archetypes as A
-from game.items import Hat, SkillItem
-from game.skills import test_alpha_skill, test_enemy_skill
+from game.skills import test_enemy_skill
+from game.items.registry import cloth_hat, test_alpha_skill_item
 
 slime = MobDef(
   difficulty=5,
   archetypes=[A.MOOK],
-  drops=[Hat(), SkillItem(test_alpha_skill), Hat(), SkillItem(test_alpha_skill), Hat(), SkillItem(test_alpha_skill), Hat(), SkillItem(test_alpha_skill), Hat(), SkillItem(test_alpha_skill)],
-  skills=[test_alpha_skill],
+  drops=[cloth_hat, test_alpha_skill_item, cloth_hat, test_alpha_skill_item, cloth_hat, test_alpha_skill_item, cloth_hat, test_alpha_skill_item, cloth_hat, test_alpha_skill_item],
+  skills=[test_enemy_skill],
   sprite="assets/slime.png"
 )

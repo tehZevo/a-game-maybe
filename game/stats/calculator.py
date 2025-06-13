@@ -1,9 +1,10 @@
 #TODO: use some defaults instead of an explicit hands item?
-from game.items import Hands
+from game.items import hands
 
 from . import PrimaryStat, PrimaryStats, SecondaryStats, EquipStat, EquipStats
 
 from game.components.item import Equips
+from game.items.weapon_type import weapon_physical_stat_assignment, weapon_magical_stat_assignment
 
 #physical/magical attack are based on weapon attack and the weapon stats
 
@@ -74,7 +75,7 @@ def calculate_equip_stats(entity):
 def calculate_secondary_stats(entity, primary_stats, equip_stats):
   weapon = entity.get_component(Equips).get_current_weapon()
   if weapon is None:
-    weapon = Hands()
+    weapon = hands
 
   #TODO: add secondary stats on equips
   #TODO: apply modifiers from passives/buffs/debuffs/etc
@@ -97,13 +98,15 @@ def calculate_mp(primary_stats):
   return primary_stats.WIS * WIS_MP_MULTIPLIER
 
 def calculate_phys_attack(weapon, primary_stats, equip_stats):
-  from_primary = primary_stats[weapon.physical_primary_stat.name] * PRIMARY_PATT_MULTIPLIER
-  from_secondary = primary_stats[weapon.physical_secondary_stat.name] * SECONDARY_PATT_MULTIPLIER
+  (phys_pri, phys_sec) = weapon_physical_stat_assignment(weapon)
+  from_primary = primary_stats[phys_pri.name] * PRIMARY_PATT_MULTIPLIER
+  from_secondary = primary_stats[phys_sec.name] * SECONDARY_PATT_MULTIPLIER
   return equip_stats.PATT * (from_primary + from_secondary)
 
 def calculate_mag_attack(weapon, primary_stats, equip_stats):
-  from_primary = primary_stats[weapon.magical_primary_stat.name] * PRIMARY_MATT_MULTIPLIER
-  from_secondary = primary_stats[weapon.magical_secondary_stat.name] * SECONDARY_MATT_MULTIPLIER
+  (mag_pri, mag_sec) = weapon_physical_stat_assignment(weapon)
+  from_primary = primary_stats[mag_pri.name] * PRIMARY_MATT_MULTIPLIER
+  from_secondary = primary_stats[mag_sec.name] * SECONDARY_MATT_MULTIPLIER
   return equip_stats.MATT * (from_primary + from_secondary)
 
 def calculate_phys_def(weapon, primary_stats, equip_stats):

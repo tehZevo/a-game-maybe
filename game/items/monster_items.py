@@ -1,7 +1,5 @@
-from .weapon import Weapon
+from game.items.hierarchy import Weapon
 from game.stats import EquipStats, PrimaryStats
-
-#TODO: create weapon with basic skill on it
 
 #monster weapons ironically contain both defensive and offensive stats
 def create_monster_weapon(base=10, archetypes=[]):

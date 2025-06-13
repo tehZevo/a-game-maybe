@@ -1,9 +1,12 @@
 from game.components.actor.invulnerable import Invulnerable
 from game.components.actor.damage_listener import DamageListener
 from game.components.actor.stats_listener import StatsListener
+from game.components.actor.equips_listener import EquipsListener
 from game.components.actor.stats import Stats
 from game.components.actor.actor import Actor
 from game.components.actor.enemy import Enemy
 from game.components.actor.player import Player
 from game.components.actor.actor_networking import ActorNetworking
+#TODO: move these to networking comps?
 from game.components.actor.stats_syncing import StatsSyncing
+from game.components.actor.equips_syncing import EquipsSyncing

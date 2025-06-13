@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from ..command_handler import CommandHandler
 from game.components.actor import Actor
-from game.items import SkillSlot
+from game.items.slots import SkillSlot
 
 @dataclass
 class PlayerUseSkill:

@@ -1,7 +1,6 @@
 import random
 
 from game.ecs import Component
-from game.items import Hat, SkillItem
 from game.actions import Move, UseSkill
 from game.skills import test_alpha_skill, test_enemy_skill
 from game.utils import Vector
@@ -30,7 +29,7 @@ class Enemy(Component):
     pos = self.get_component(C.Position).pos
     #chance to drop each item based on its drop rate
     for item in self.mobdef.drops:
-      if random.random() < item.drop_rate:
+      if random.random() < item.calc_drop_rate():
         dropper.drop(item, pos)
 
   def update(self):

@@ -42,6 +42,7 @@ class ClientGame:
         E.EmitterUpdatedHandler(),
         E.EntityDespawnedHandler(),
         E.StatsUpdatedHandler(),
+        E.EquipsUpdatedHandler(),
         E.WorldClosedHandler(self),
         E.WorldOpenedHandler(),
       ]
