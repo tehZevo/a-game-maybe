@@ -5,6 +5,7 @@ from . import PrimaryStat, PrimaryStats, SecondaryStats, EquipStat, EquipStats
 
 from game.components.item import Equips
 from game.items.weapon_type import weapon_physical_stat_assignment, weapon_magical_stat_assignment
+from game.items.slots import WeaponSlot
 
 #physical/magical attack are based on weapon attack and the weapon stats
 
@@ -73,7 +74,8 @@ def calculate_equip_stats(entity):
   return stats
 
 def calculate_secondary_stats(entity, primary_stats, equip_stats):
-  weapon = entity.get_component(Equips).get_current_weapon()
+  #TODO: handle 2h and secondary weapons
+  weapon = entity.get_component(Equips).weapons[WeaponSlot.PRIMARY]
   if weapon is None:
     weapon = hands
 

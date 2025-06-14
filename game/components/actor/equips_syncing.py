@@ -23,6 +23,5 @@ class EquipsSyncing(Component, NetworkBehavior, EquipsListener):
       armor=armor,
       skills=skills,
       weapons=weapons,
-      cur_weapon=equips.cur_weapon,
     )
     networking.broadcast_synced(evt)

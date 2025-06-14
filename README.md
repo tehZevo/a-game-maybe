@@ -5,7 +5,8 @@
 *[Here](docs/main.md)*
 
 ## Installation
-`pip install -r requirements.txt`
+- Requires Python 3.10+
+- `pip install -r requirements.txt`
 
 ## Usage
 ```

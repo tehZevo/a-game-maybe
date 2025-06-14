@@ -1,27 +1,26 @@
-- specify python 3.10+ for match statement
-- change to primary/secondary weapon, not 2 weapons
-- move gamedata into its own folder (defs go into a folder called defs)
-- hide skill slots until picked up for the first time?
-- teleporters
-- player spawn tile entity
-- sync equips
+- make max dropped items
+- improve performance of dropped item interactions
+- teleporters/portals
+- use skills diagonally (or at any vector)
+- generator should make a player spawn point component, which players are spawned on by the generators spawn method
 - highlight which entity the player would interact with
+- hide skill slots until picked up for the first time?
+- spritedefs?
+- chunked physics
+  - rather than quadtree, use chunk logic to only test entities in the same 9(ish) chunk neighborhood
 - air mechanics
   - jumping
   - shadow (separate entity?)
   - skills that can only be used midair
   - skills that cannot be used midair
-- itemdefs? ttemdefs are kind of tough because of their hierarchy
 - fix skill use generating tons of stats updated events
  - maybe store stat updates per game tick and then send one StatsUpdated on the next tick>
 - use eventcatalog to document events?
 - maybe refactor "syncing" functionality into their respective components and make them just check for `networking` to see if we should perform syncing
 - client side prediction :^)
-- split project into client, server, and common packages(?)
-- player radius/visibility spawning/despawning/updates
-  - when player enters radius, spawn entity
+- player visibility/chunks spawning/despawning/updates
   - as long as player is within radius, send updates
-  - when player exits radius, despawn entity
+  - when player exits chunks, despawn entity
   - might be useful to keep track of entities that can be seen by each player in the server manager
 - don't sync position every tick, interpolate
 - sync velocity
@@ -51,9 +50,7 @@
 - make 0, 0 center of sprites
 - box camera
 - add ysorting to camera
-- generator should make a player spawn point component, which players are spawned on by the generators spawn method
 - gold, health, mana drops: walk over them to pick them up
-- maybe distinction between world sprite and ui sprite
 - skill idea: "ally bomb" (or something like that): damage enemies nearby allies (target allies, then target enemies)
 - distance based delay effect (delay in seconds per unit)
 - ranged attacks will feel nicer with a bit of delay (think magic claw from maple story)

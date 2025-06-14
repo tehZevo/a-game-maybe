@@ -2,7 +2,7 @@ from game.ecs import Component
 from ..actor.player import Player
 import game.components.ui as UI
 import game.components as C
-from game.items.slots import ArmorSlot, SkillSlot
+from game.items.slots import ArmorSlot, SkillSlot, WeaponSlot
 from game.utils import Vector
 
 #TODO: we need to know how tall the screen is..
@@ -11,16 +11,18 @@ def slot_position(x, y):
   return Vector(2 + x * (24 + 2), 16 * 11 - 10 - (y * (24 + 2)))
 
 ITEM_SLOTS = {
-  (ArmorSlot, ArmorSlot.HAT): slot_position(0, 1),
-  (ArmorSlot, ArmorSlot.SUIT): slot_position(0, 2),
-  (ArmorSlot, ArmorSlot.GLOVES): slot_position(0, 3),
-  (ArmorSlot, ArmorSlot.SHOES): slot_position(0, 4),
-  (ArmorSlot, ArmorSlot.ACCESSORY): slot_position(0, 5),
-  (SkillSlot, SkillSlot.ALPHA): slot_position(0, 0),
-  (SkillSlot, SkillSlot.BETA): slot_position(1, 0),
-  (SkillSlot, SkillSlot.GAMMA): slot_position(2, 0),
-  (SkillSlot, SkillSlot.DELTA): slot_position(3, 0),
-  (SkillSlot, SkillSlot.OMEGA): slot_position(4, 0),
+  (ArmorSlot, ArmorSlot.HAT): slot_position(0, 0),
+  (ArmorSlot, ArmorSlot.SUIT): slot_position(1, 0),
+  (ArmorSlot, ArmorSlot.GLOVES): slot_position(2, 0),
+  (ArmorSlot, ArmorSlot.SHOES): slot_position(3, 0),
+  (ArmorSlot, ArmorSlot.ACCESSORY): slot_position(4, 0),
+  (WeaponSlot, WeaponSlot.PRIMARY): slot_position(5, 0),
+  (WeaponSlot, WeaponSlot.SECONDARY): slot_position(6, 0),
+  (SkillSlot, SkillSlot.ALPHA): slot_position(0, 1),
+  (SkillSlot, SkillSlot.BETA): slot_position(0, 2),
+  (SkillSlot, SkillSlot.GAMMA): slot_position(0, 3),
+  (SkillSlot, SkillSlot.DELTA): slot_position(0, 4),
+  (SkillSlot, SkillSlot.OMEGA): slot_position(0, 5),
 }
 
 class HUD(Component):

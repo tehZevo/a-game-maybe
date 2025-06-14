@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import math
 from random import gauss
+import random
 
 EPSILON = 1e-4
 
@@ -11,6 +12,11 @@ class Vector:
 
   def random():
     return Vector(gauss(0, 1), gauss(0, 1)).normalized()
+  
+  def random_disc(r=1):
+    #TODO: not uniform but good enough for now
+    dist = random.random()
+    return Vector.random() * dist
 
   def __init__(self, x=0, y=0):
     super().__init__()

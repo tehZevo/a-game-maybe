@@ -13,7 +13,6 @@ class EquipsUpdated:
   armor: dict
   skills: dict
   weapons: dict
-  cur_weapon: int
 
 class EquipsUpdatedHandler(EventHandler):
   def __init__(self):
@@ -36,4 +35,3 @@ class EquipsUpdatedHandler(EventHandler):
     equips.armor = armor
     equips.skills = skills
     equips.weapons = weapons
-    equips.cur_weapon = event.cur_weapon

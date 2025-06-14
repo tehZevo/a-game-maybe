@@ -4,7 +4,7 @@ from ..physics import Position
 from .ui_component import UIComponent
 import game.components as C
 from game.utils.image_cache import get_image
-from game.items.slots import ArmorSlot, SkillSlot
+from game.items.slots import ArmorSlot, SkillSlot, WeaponSlot
 from game.utils import Vector
 
 class ItemSlot(UIComponent):
@@ -19,8 +19,10 @@ class ItemSlot(UIComponent):
 
   def get_icon(self):
     equips = self.player.get_component(C.Equips)
-    #TODO: handle weapons
-    equips = equips.armor if self.slot_type == ArmorSlot else equips.skills
+    equips = equips.armor if self.slot_type == ArmorSlot \
+      else equips.skills if self.slot_type == SkillSlot \
+      else equips.weapons
+      
     item = equips[self.slot]
     icon = item and get_image(item.icon)
     return icon
