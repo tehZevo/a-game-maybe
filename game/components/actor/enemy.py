@@ -2,7 +2,6 @@ import random
 
 from game.ecs import Component
 from game.actions import Move, UseSkill
-from game.skills import test_alpha_skill, test_enemy_skill
 from game.utils import Vector
 from game.utils.teams import ENEMY
 import game.components as C

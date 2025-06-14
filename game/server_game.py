@@ -9,7 +9,7 @@ import game.networking.commands as commands
 from game.utils import Vector
 import game.components as C
 import game.networking.events as E
-import game.maps as M
+import game.data.maps as M
 
 class ServerGame:
   def __init__(self):

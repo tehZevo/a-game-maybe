@@ -1,4 +1,4 @@
-from . import Target
+from .target import Target
 
 class SelfTarget(Target):
   def __init__(self, children=[]):

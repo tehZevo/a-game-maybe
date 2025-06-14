@@ -1,6 +1,7 @@
-from game.skilleffects import CircleTarget, Damage, EmitParticles, Push, Rush, SelfTarget
+from game.skills.effects import CircleTarget, Damage, EmitParticles, Push, Rush, SelfTarget
 from game.items.slots import SkillSlot
-from . import SkillDef, TargetType
+from game.skills.skilldef import SkillDef
+from game.skills.target_type import TargetType
 
 test_player_skill = SkillDef([
   SelfTarget([Rush(force=5000)]),

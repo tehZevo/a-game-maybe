@@ -3,7 +3,7 @@ import copy
 from game.components.skill import Skill
 from game.components.actor import Actor
 import game.components as C
-from . import SkillEffect
+from .skill_effect import SkillEffect
 
 #TODO: max targets
 class Target(SkillEffect):

@@ -1,6 +1,6 @@
 from game.monsters import MobDef
 import game.monsters.monster_archetypes as A
-from game.skills import test_enemy_skill
+from game.data.skills import test_enemy_skill
 import game.data.items as I
 
 slime = MobDef(

@@ -1,5 +1,5 @@
 from game.components.actor import Actor, Stats, Invulnerable
-from . import SkillEffect
+from .skill_effect import SkillEffect
 
 class Damage(SkillEffect):
   def __init__(self, power=100):

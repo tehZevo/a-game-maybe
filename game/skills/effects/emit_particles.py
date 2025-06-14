@@ -1,6 +1,6 @@
 from game.components.particles import ParticleEmitter
 import game.components as C
-from . import SkillEffect
+from .skill_effect import SkillEffect
 
 class EmitParticles(SkillEffect):
   def __init__(self):

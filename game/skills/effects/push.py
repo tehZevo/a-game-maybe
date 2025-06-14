@@ -1,5 +1,5 @@
 import game.components as C
-from . import SkillEffect
+from .skill_effect import SkillEffect
 
 #push effect pushes away from a given point
 #can also be used as a pull by using a negative force

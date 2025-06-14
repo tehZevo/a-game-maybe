@@ -1,5 +1,6 @@
-from game.skilleffects import CircleTarget, Damage, EmitParticles
-from . import TargetType, SkillDef
+from game.skills.effects import CircleTarget, Damage, EmitParticles
+from game.skills.target_type import TargetType
+from game.skills.skilldef import SkillDef
 
 test_enemy_skill = SkillDef([
   CircleTarget(

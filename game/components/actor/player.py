@@ -1,7 +1,7 @@
 import pygame
 
 from game.ecs import Component
-from game.skills import test_player_skill, hax_heal
+import game.data.skills as S
 from game.actions import Move, UseSkill, Interact
 from game.items.defs import SkillItem
 from game.utils import Vector
@@ -23,8 +23,8 @@ class Player(Component, DamageListener):
     self.get_component(Team).team = PLAYER
     equips = self.get_component(Equips)
     #TODO: this should probably be save data, but we would need to inject it in the connect handler?
-    equips.equip(SkillItem(test_player_skill))
-    equips.equip(SkillItem(hax_heal))
+    equips.equip(SkillItem(S.test_player_skill))
+    equips.equip(SkillItem(S.hax_heal))
 
   def on_damage(self, attacker):
     if self.get_component(Invulnerable) is None:

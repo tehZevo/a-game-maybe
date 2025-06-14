@@ -8,6 +8,7 @@ from game.components.graphics import BakedTileset
 from game.components.tiles import TilesetPhysics
 from game.tiles import Tileset, Floor, Wall
 import game.data.mobs as Mobs
+import game.data.maps as Maps
 from game.utils import Vector
 
 SPAWNER_CHANCE = 0.5
@@ -102,7 +103,7 @@ class DFSGenerator(FloorGenerator):
     #choose random room to put stairs in
     x, y, _, _, _, _ = random.choice(rooms)
     #TODO: pick mapdef from input mapdef
-    import game.maps as M
+    
     stairs_pos = Vector(x * self.room_size + self.room_size / 2, x * self.room_size + self.room_size / 2)
 
-    world.create_entity([Position(stairs_pos), Stairs(M.maze)])
+    world.create_entity([Position(stairs_pos), Stairs(Maps.maze)])

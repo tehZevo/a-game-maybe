@@ -1,5 +1,5 @@
 from game.components.actor import Stats
-from . import SkillEffect
+from .skill_effect import SkillEffect
 
 class RestoreMana(SkillEffect):
   def __init__(self, percent=100):
