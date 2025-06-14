@@ -15,11 +15,14 @@ class EquipsSyncing(Component, NetworkBehavior, EquipsListener):
     if not networking.is_server:
       return
 
+    armor = {k: v.id if v is not None else None for k, v in equips.armor.items()}
+    skills = {k: v.id if v is not None else None for k, v in equips.skills.items()}
+    weapons = {k: v.id if v is not None else None for k, v in equips.weapons.items()}
     evt = EquipsUpdated(
       id=networking.id,
-      armor=equips.armor,
-      skills=equips.skills,
-      weapons=equips.weapons,
+      armor=armor,
+      skills=skills,
+      weapons=weapons,
       cur_weapon=equips.cur_weapon,
     )
     networking.broadcast_synced(evt)

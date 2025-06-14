@@ -1,5 +1,3 @@
-from game.networking.events import StatsUpdated
-
 from game.ecs import Component
 import game.components as C
 

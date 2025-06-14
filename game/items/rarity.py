@@ -1,5 +1,6 @@
 from enum import IntEnum
 
+#TODO: "relic"?
 Rarity = IntEnum("Rarity", ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY"])
 
 def base_drop_rate(rarity):
