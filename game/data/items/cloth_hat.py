@@ -1,4 +1,4 @@
-from game.items.hierarchy import Hat
+from game.items.defs import Hat
 
 cloth_hat = Hat(
     id="cloth_hat",

@@ -3,7 +3,7 @@ import pygame
 from game.ecs import Component
 from game.skills import test_player_skill, hax_heal
 from game.actions import Move, UseSkill, Interact
-from game.items.hierarchy import SkillItem
+from game.items.defs import SkillItem
 from game.utils import Vector
 from game.utils.teams import PLAYER
 from ..teams import Team

@@ -1,5 +1,5 @@
 #TODO: use some defaults instead of an explicit hands item?
-from game.items import hands
+from game.data.items import hands
 
 from . import PrimaryStat, PrimaryStats, SecondaryStats, EquipStat, EquipStats
 

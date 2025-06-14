@@ -2,10 +2,8 @@ import game.components as C
 from game.tiles import Wall, Floor, Tileset
 from game.utils import Vector
 from .floor_generator import FloorGenerator
-
-from game.monsters import slime
-from game.skills import test_alpha_skill
-from game.items.registry import cloth_hat, test_alpha_skill_item
+import game.data.mobs as M
+import game.data.items as I
 
 class TestFloor(FloorGenerator):
   def __init__(self):
@@ -34,9 +32,9 @@ class TestFloor(FloorGenerator):
     #create stairs to this generator
     world.create_entity([C.Position(self.stairs_pos), C.Stairs(self)])
 
-    world.create_entity([C.Position(Vector(8, 9)), C.Chest([cloth_hat, test_alpha_skill_item])])
+    world.create_entity([C.Position(Vector(8, 9)), C.Chest([I.cloth_hat, I.test_alpha_skill_item])])
 
-    world.create_entity([C.Position(self.spawner_pos), C.Spawner(slime)]) #TODO: hardcoded mobdef
+    world.create_entity([C.Position(self.spawner_pos), C.Spawner(M.slime)]) #TODO: hardcoded mobdef
 
     # #TODO: need separate spawn function that creates players with given player data
     # world.create_entity([C.Position(self.player_spawn), C.Player()])

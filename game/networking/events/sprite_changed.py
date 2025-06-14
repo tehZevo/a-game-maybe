@@ -20,5 +20,4 @@ class SpriteChangedHandler(EventHandler):
       print("trying to update entity sprite with id", event.id, "but not found in networked entities...")
       return
     ent = client_manager.networked_entities[event.id]
-    print("setting sprite to", event.path)
     ent.get_component(C.Sprite).set_sprite(event.path)

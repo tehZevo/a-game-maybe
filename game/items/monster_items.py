@@ -1,4 +1,4 @@
-from game.items.hierarchy import Weapon
+from game.items.defs import Weapon
 from game.stats import EquipStats, PrimaryStats
 
 #monster weapons ironically contain both defensive and offensive stats

@@ -1,4 +1,4 @@
-from game.items.hierarchy import Knuckles
+from game.items.defs import Knuckles
 
 #a "dummy" weapon for when you have no weapon equipped
 hands = Knuckles()

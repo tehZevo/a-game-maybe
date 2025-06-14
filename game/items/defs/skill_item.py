@@ -1,6 +1,6 @@
-from . import Item
+from .itemdef import Itemdef
 
-class SkillItem(Item):
+class SkillItem(Itemdef):
   def __init__(self, skilldef, **kwargs):
     kwargs.setdefault("icon", skilldef.icon)
     super().__init__(**kwargs)

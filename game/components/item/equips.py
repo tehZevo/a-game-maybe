@@ -1,5 +1,5 @@
 from game.ecs import Component
-from game.items.hierarchy import Armor, SkillItem
+from game.items.defs import Armor, SkillItem
 from game.items.slots import ArmorSlot, SkillSlot
 from ..core.savable import Savable
 import game.components as C

@@ -1,4 +1,4 @@
 
 def get_item(id):
-    import game.items as items
+    import game.data.items as items
     return getattr(items, id)

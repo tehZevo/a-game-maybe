@@ -3,7 +3,7 @@ from enum import IntEnum
 #TODO: "relic"?
 Rarity = IntEnum("Rarity", ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY"])
 
-def base_drop_rate(rarity):
+def rarity_drop_rate(rarity):
     match rarity:
         case Rarity.COMMON: return 1
         case Rarity.UNCOMMON: return 1/2

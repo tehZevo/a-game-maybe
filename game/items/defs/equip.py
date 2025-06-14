@@ -1,7 +1,7 @@
 from game.stats import EquipStats, PrimaryStats, SecondaryStats
-from .item import Item
+from .itemdef import Itemdef
 
-class Equip(Item):
+class Equip(Itemdef):
   def __init__(self, equip_stats=None, primary_stats=None, secondary_stats=None, **kwargs):
     super().__init__(**kwargs)
     self.equip_stats = equip_stats or EquipStats()
