@@ -1,3 +1,7 @@
+- make tile transparent when player steps behind
+- "safe area" players spawn in in next floor that lasts a short time
+- player spawn animation, set animation to "focus" (holding weapon up or something)
+- prevent walk animation when blocked by wall
 - "diagonal" sprites? would look better for players but might make weapon sprites harder
 - make monster spawners physical and targetable?
   - what if you want to grind though?

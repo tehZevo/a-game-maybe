@@ -29,14 +29,14 @@ class Renderer(Component):
   def render(self, screen):
     t = time.time()
     self.gather_draw_calls()
-    #TODO: see how expensive the copy is.. might want to do this inplace
+    #TODO: copy is currently pretty negligible with 8x8 12x12 rooms,
+    # may need to revisit removing .copy later
     self.draw_calls = self.modify_draw_calls(self.draw_calls.copy())
 
     self.surface.fill((0, 0, 0, 0))
     for (surface, pos, area, alpha) in self.draw_calls:
       #TODO: use alpha
-      #TODO: handle area
-      self.surface.blit(surface, (pos.x, pos.y))
+      self.surface.blit(surface, (pos.x, pos.y), area)
 
     #scale and draw to screen
     scaled = pygame.transform.scale(self.surface, screen.get_size())

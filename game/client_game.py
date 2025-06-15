@@ -63,9 +63,9 @@ class ClientGame:
 
   def init_world(self):
     #setup client world
-    self.world.create_entity([C.GameMaster(self, None)]) #NOTE: we'll set this when we get it from the server
+    self.world.create_entity([C.GameMaster(self, None)]) #NOTE: we'll set mapdef when we get it from the server
     self.camera = self.world.create_entity([C.Camera()])
-    self.renderer = self.world.create_entity([C.WorldRenderer(RENDER_WIDTH, RENDER_HEIGHT)]) #TODO: set camera on world renderer
+    self.renderer = self.world.create_entity([C.WorldRenderer(RENDER_WIDTH, RENDER_HEIGHT, self.camera)])
     self.particle_system = self.world.create_entity([C.ParticleSystem()])
     
     #TODO: create Client as property of ClientGame and pass to ClientManager?
