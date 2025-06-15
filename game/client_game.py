@@ -64,9 +64,9 @@ class ClientGame:
   def init_world(self):
     #setup client world
     self.world.create_entity([C.GameMaster(self, None)]) #NOTE: we'll set this when we get it from the server
-    self.renderer = self.world.create_entity([C.Renderer(RENDER_WIDTH, RENDER_HEIGHT)])
-    self.particle_system = self.world.create_entity([C.ParticleSystem()])
     self.camera = self.world.create_entity([C.Camera()])
+    self.renderer = self.world.create_entity([C.WorldRenderer(RENDER_WIDTH, RENDER_HEIGHT)]) #TODO: set camera on world renderer
+    self.particle_system = self.world.create_entity([C.ParticleSystem()])
     
     #TODO: create Client as property of ClientGame and pass to ClientManager?
     client_manager = C.ClientManager()
@@ -101,14 +101,13 @@ class ClientGame:
         self.world.update()
 
         #render
-        camera_pos = self.camera.get_component(C.Position).pos
-        camera_offset = (camera_pos * TILE_SIZE) - Vector(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.screen.fill((0, 0, 0))
-
         self.renderer.get_component(C.Renderer).render(self.screen)
 
         #draw particles
         #TODO: reenable when i fix particle lag
+        # camera_pos = self.camera.get_component(C.Position).pos
+        # camera_offset = (camera_pos * TILE_SIZE) - Vector(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         # self.particle_system.get_component(C.ParticleSystem).draw(self.screen, camera_offset)
 
         #draw UI

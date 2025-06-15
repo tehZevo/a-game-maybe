@@ -27,13 +27,13 @@ class ItemSlot(UIComponent):
     icon = item and get_image(item.icon)
     return icon
     
-  def draw(self, screen, offset):
+  def draw(self, renderer):
     if self.player is None:
       return
     
     pos = self.get_component(Position).pos #TODO: cache pos comp
     border = get_image("assets/border.png")
-    screen.blit(border, pos.tolist())
+    renderer.draw(border, pos.copy())
     icon = self.get_icon() #TODO: it would be great if we could cache the icon too
     if icon is not None:
-      screen.blit(icon, (pos + Vector(4, 4)).tolist())
+      renderer.draw(icon, pos + Vector(4, 4))

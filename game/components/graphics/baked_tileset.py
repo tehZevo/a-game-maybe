@@ -1,4 +1,3 @@
-import time
 import pygame
 from pygame.math import Vector2
 
@@ -33,29 +32,22 @@ class BakedTileset(Component, Drawable):
       print(image.get_size())
       self.surface.blit(image, (x * TILE_SIZE, y * TILE_SIZE))
   
-  def draw_unbaked(self, screen, offset):
+  def draw_unbaked(self, renderer):
     #TODO: if this is fast enough, lets switch away from baking...
     #TODO: we may also be able to bake floors but not walls
-    t = time.time()
-    pos = self.pos.pos
-    pos = (pos * TILE_SIZE + offset)
+    pos = self.pos.pos.copy()
     for x, y, tile in self.tileset.itertiles():
       #TODO: draw with height and y offset
       image_path = self.mapdef.palette[tile.tile_type]
       image = get_image(image_path)
-      tile_offset = Vector(x * TILE_SIZE, y * TILE_SIZE - tile.y * TILE_SIZE / 2)
-      screen.blit(image, (pos + tile_offset).to_pygame())
-    dt = time.time() - t
-    print("draw unbaked took", dt, "s")
+      tile_offset = Vector(x, y - tile.y / 2) #TODO: handle y-up :)
+      renderer.draw(image, pos + tile_offset)
     
-  def draw(self, screen, offset):
-    self.draw_unbaked(screen, offset)
-    return
-    t = time.time()
-    pos = self.pos.pos
-    pos = (pos * TILE_SIZE + offset).to_pygame()
+  def draw(self, renderer):
+    #TODO: reenable after refactoring rendering
+    self.draw_unbaked(renderer)
+    return 
+    
     #TODO: surface is "too small" for tile bottoms...
-    screen.blit(self.surface, pos)
-    dt = time.time() - t
-    print("draw took", dt, "s")
+    renderer.draw(self.surface, self.pos.pos.copy())
     

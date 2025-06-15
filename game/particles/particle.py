@@ -29,11 +29,11 @@ class Particle(pygame.sprite.Sprite):
     if self.life <= 0:
       self.kill()
 
-  def draw(self, screen, offset=None):
+  def draw(self, renderer):
     #TODO: apply offset?
     pos = self.pos * TILE_SIZE
     if offset is not None:
       pos -= offset
     self.rect.center = pos
-
-    screen.blit(self.image, self.rect.center)
+    #TODO: may need to fix this since rendering refactor
+    renderer.draw(self.image, self.rect.center)

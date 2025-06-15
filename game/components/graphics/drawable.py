@@ -2,5 +2,5 @@ class Drawable:
   def __init__(self):
     pass
 
-  def draw(self, screen, offset=None):
+  def draw(self, renderer):
     raise NotImplementedError

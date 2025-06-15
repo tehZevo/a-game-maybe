@@ -59,9 +59,8 @@ class Sprite(Component, Drawable):
           continue
         component.on_sprite_changed(self)
 
-  def draw(self, screen, offset):
+  def draw(self, renderer):
     if self.sprite is None or self.animation is None:
       return
-
-    pos = self.pos.pos * TILE_SIZE + offset
-    self.sprite.draw(screen, self.animation, self.time, pos)
+    
+    self.sprite.draw(renderer, self.animation, self.time, self.pos.pos.copy())

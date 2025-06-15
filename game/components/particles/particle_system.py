@@ -14,6 +14,6 @@ class ParticleSystem(Component):
   def update(self):
     self.particles.update()
 
-  def draw(self, screen, offset=None):
+  def draw(self, renderer):
     for particle in self.particles:
-      particle.draw(screen, offset)
+      particle.draw(renderer)

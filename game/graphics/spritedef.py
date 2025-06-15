@@ -4,6 +4,7 @@ import bisect
 from pygame import Vector2, Rect
 
 from game.utils.image_cache import get_image
+from game.utils.constants import TILE_SIZE
 from game.utils import Vector
 
 #TODO: ability to attach objects at points in sprites? (weapons)?
@@ -15,8 +16,8 @@ class Spritedef:
     self.animations = animations
     self.origin = Vector(*origin)
   
-  def draw(self, surface, animation, time, position):
-    self.animations[animation].draw(surface, time, position + self.origin)
+  def draw(self, renderer, animation, time, position):
+    self.animations[animation].draw(renderer, time, position + self.origin / TILE_SIZE)
 
 class SimpleSprite(Spritedef):
   def __init__(self, id, image_path, frame_width, num_frames):
@@ -58,10 +59,10 @@ class Animation:
     #TODO: better way to clamp?
     return max(0, min(bisect.bisect_left(self.frame_times, t), self.num_frames - 1))
 
-  def draw(self, surface, time, position):
+  def draw(self, renderer, time, position):
     frame = self.calc_frame(time)
     for layer in self.layers:
-      layer.draw(surface, frame, position)
+      layer.draw(renderer, frame, position)
 
 class Layer:
   def __init__(self, image_path, frame_width, num_frames, offsets=None):
@@ -82,7 +83,7 @@ class Layer:
     self.offsets = self.offsets or [[0, 0] for _ in range(self.num_frames)]
     self.offsets = [Vector(x, y) for x, y in self.offsets]
   
-  def draw(self, surface, frame, position):
+  def draw(self, renderer, frame, position):
     if self.image is None:
       #TODO: i dont like this but images were trying to be loaded at least once on the server..
       #TODO: remove if i can fix that
@@ -90,6 +91,8 @@ class Layer:
     if self.image is None:
       return
     
-    pos = Vector2(*(position + self.offsets[frame]).tolist())
-    area = Rect(frame * self.frame_width, 0, self.frame_width, self.frame_height)
-    surface.blit(self.image, pos, area)
+    #TODO: for now, we treat offset as pixels and then rescale to world space.. is there a better way?
+    offset = self.offsets[frame] / TILE_SIZE
+    pos = position + offset
+    area = [frame * self.frame_width, 0, self.frame_width, self.frame_height]
+    renderer.draw(self.image, position + offset, area=area)

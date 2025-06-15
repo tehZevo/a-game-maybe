@@ -38,9 +38,6 @@ class Icon(Component, Drawable):
 
     self.image = get_image(path)
 
-  def draw(self, screen, offset):
+  def draw(self, renderer):
     if self.image is not None:
-      pos = self.pos.pos
-      pos = pos * TILE_SIZE + offset
-      pos = Vector2(*(e for e in pos.tolist()))
-      screen.blit(self.image, pos)
+      renderer.draw(self.image, self.pos.pos.copy())

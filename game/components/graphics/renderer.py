@@ -1,11 +1,11 @@
+import time
+
 import pygame
 
 from game.ecs import Component
 import game.components as C
 from game.utils.constants import TILE_SIZE
-from game.utils import Vector
 
-#TODO: split into "screen renderer" and "world renderer" (world renderer sorts by y)
 #draws drawables
 class Renderer(Component):
   def __init__(self, width, height):
@@ -13,25 +13,35 @@ class Renderer(Component):
     self.width = width
     self.height = height
     self.surface = pygame.Surface((width, height), flags=pygame.SRCALPHA)
-    self.y_up = False #TODO: use
-    self.sort_buffer = [] #TODO: use
+    self.draw_calls = []
   
-  #TODO: rather than drawing directly to the screen, have drawables provide a list of surfaces to draw and at what positions, then have the renderer sort them
-  #def renderer.draw(surface, x, y, alpha)
-  def render(self, screen):
-    self.surface.fill((0, 0, 0, 0))
-    #TODO: set camera instead of just finding first
-    #TODO: also this is expensive
-    cameras = self.entity.world.find(C.Camera)
-    if len(cameras) > 0:
-      camera_pos = cameras[0].get_component(C.Position).pos
-      camera_offset = (camera_pos * TILE_SIZE) - Vector(self.width / 2, self.height / 2)
-    else:
-      camera_offset = Vector()
-
+  def gather_draw_calls(self):
     for drawable in self.entity.world.find_components(C.Drawable):
-      drawable.draw(self.surface, -camera_offset)
-    
+      drawable.draw(self)
+  
+  def draw(self, surface, pos, area=None, alpha=1):
+    self.draw_calls.append((surface, pos, area, alpha))
+  
+  #NOTE: override me if you want to process calls before rendering
+  def modify_draw_calls(self, calls):
+    return calls
+
+  def render(self, screen):
+    t = time.time()
+    self.gather_draw_calls()
+    #TODO: see how expensive the copy is.. might want to do this inplace
+    self.draw_calls = self.modify_draw_calls(self.draw_calls.copy())
+
+    self.surface.fill((0, 0, 0, 0))
+    for (surface, pos, area, alpha) in self.draw_calls:
+      #TODO: use alpha
+      #TODO: handle area
+      self.surface.blit(surface, (pos.x, pos.y))
+
     #scale and draw to screen
     scaled = pygame.transform.scale(self.surface, screen.get_size())
     screen.blit(scaled, (0, 0))
+    
+    self.draw_calls = []
+    dt = time.time() - t
+    print("render took", dt, "s")
