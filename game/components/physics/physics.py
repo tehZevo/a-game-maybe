@@ -18,20 +18,29 @@ class Physics(Component):
     self.friction = DEFAULT_FRICTION
     self.force = Vector()
     self.vel = Vector()
+    self.is_server = False
 
   def apply_force(self, force):
     self.force = self.force + force
 
   def start(self):
-    from ..tiles import TilesetPhysics
+    import game.components as C
     #TODO: hmm this is n squared, caching in start for now
-    self.tile_rects = self.entity.world.find_component(TilesetPhysics).rects
+    self.tile_phys = self.entity.world.find_component(C.TilePhysics)
+    self.is_server = self.entity.world.find_component(C.ServerManager) is not None
 
   def update(self):
+    #TODO: for now, no physics on client
+    if not self.is_server:
+      return
+    
     pc = self.get_component(Position)
     handle_collisions = self.get_component(Collisions) is not None
     rect = self.get_component(Rect) if handle_collisions else None
 
+    if handle_collisions:
+      tile_rects = self.tile_phys.get_rects_for_pos(pc.pos)
+    
     #two-phase physics for sliding collisions
     self.vel.x = self.vel.x + self.force.x / self.mass * DT
     dx = self.vel.x * DT
@@ -40,7 +49,7 @@ class Physics(Component):
     if handle_collisions:
       #update rect (TODO: this is so messy)
       rect.update()
-      collisions = collision_test(rect.rect, self.tile_rects)
+      collisions = collision_test(rect.rect, tile_rects)
       for other_rect in collisions:
         if dx > 0:
           rect.rect.right = other_rect.left
@@ -61,7 +70,7 @@ class Physics(Component):
     if handle_collisions:
       #update rect (TODO: this is so messy)
       rect.update()
-      collisions = collision_test(rect.rect, self.tile_rects)
+      collisions = collision_test(rect.rect, tile_rects)
       for other_rect in collisions:
         if dy > 0:
           rect.rect.bottom = other_rect.top

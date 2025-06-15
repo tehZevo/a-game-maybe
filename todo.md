@@ -1,3 +1,5 @@
+- network sync interface which defines fields to be synced automatically
+  - or at least "sync" means on spawn?
 - make tile transparent when player steps behind
 - "safe area" players spawn in in next floor that lasts a short time
 - player spawn animation, set animation to "focus" (holding weapon up or something)
@@ -15,8 +17,6 @@
 - highlight which entity the player would interact with
 - hide skill slots until picked up for the first time?
 - spritedefs?
-- chunked physics
-  - rather than quadtree, use chunk logic to only test entities in the same 9(ish) chunk neighborhood
 - air mechanics
   - jumping
   - shadow (separate entity?)

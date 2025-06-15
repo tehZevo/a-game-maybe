@@ -1,4 +1,6 @@
 from game.networking.events.tileset_updated import TilesetUpdated, TilesetUpdatedHandler
+from game.networking.events.chunk_loaded import ChunkLoaded, ChunkLoadedHandler
+from game.networking.events.chunk_unloaded import ChunkUnloaded, ChunkUnloadedHandler
 from game.networking.events.entity_spawned import EntitySpawned, EntitySpawnedHandler
 from game.networking.events.entity_despawned import EntityDespawned, EntityDespawnedHandler
 from game.networking.events.position_updated import PositionUpdated, PositionUpdatedHandler

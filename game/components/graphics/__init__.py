@@ -4,7 +4,7 @@ from game.components.graphics.sprite import Sprite
 from game.components.graphics.icon import Icon
 from game.components.graphics.renderer import Renderer
 from game.components.graphics.world_renderer import WorldRenderer
-from game.components.graphics.baked_tileset import BakedTileset
+from game.components.graphics.tile_rendering import TileRendering
 from game.components.graphics.sprite_listener import SpriteListener
 from game.components.graphics.icon_listener import IconListener
 from game.components.graphics.sprite_syncing import SpriteSyncing
