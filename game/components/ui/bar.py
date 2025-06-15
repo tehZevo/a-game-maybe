@@ -16,16 +16,16 @@ class Bar(UIComponent):
     self.color = (255, 0, 0)
     self.border_color = (0, 0, 0)
     self.bg_color = (255, 128, 128)
+    self.surface = pygame.Surface((self.width, self.height))
 
-  #TODO: fix bar drawing (draw to surface first)
   def draw(self, renderer):
-    return
     pos = self.get_component(Position).pos
     #calculate rects
-    bg_rect = pygame.Rect(pos.x, pos.y, self.width, self.height)
-    value_rect = pygame.Rect(pos.x, pos.y, self.width * (self.value / self.max_value), self.height)
+    bg_rect = pygame.Rect(0, 0, self.width, self.height)
+    value_rect = pygame.Rect(0, 0, self.width * (self.value / self.max_value), self.height)
     #draw and fill rects
     #TODO: try border radius of 1?
-    screen.fill(self.bg_color, bg_rect)
-    screen.fill(self.color, value_rect)
-    pygame.draw.rect(screen, self.border_color, bg_rect, width=1)
+    self.surface.fill(self.bg_color, bg_rect)
+    self.surface.fill(self.color, value_rect)
+    pygame.draw.rect(self.surface, self.border_color, bg_rect, width=1)
+    renderer.draw(self.surface, pos.copy())
