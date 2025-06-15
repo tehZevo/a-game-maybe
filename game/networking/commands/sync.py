@@ -18,8 +18,11 @@ class SyncHandler(CommandHandler):
     from game.networking.events import TilesetUpdated, PlayerAssigned
     #TODO: maybe make Tileset its own component that physics and baked both require?
     # that would make it harder to "change" the tileset without just destroying the entity but idk
-    ts = server_manager.entity.world.find_component(C.TilesetPhysics).tileset
-    server.send(client_id, TilesetUpdated(ts))
+    #TODO: maybe do that when we switch to chunks
+    world = server_manager.entity.world
+    ts = world.find_component(C.TilesetPhysics).tileset.pack()
+    map_id = world.find_component(C.GameMaster).mapdef.id
+    server.send(client_id, TilesetUpdated(ts, map_id))
 
     world = server_manager.entity.world
 

@@ -1,6 +1,5 @@
-from .tile import Tile
+from .tile import Tile, TileType
 
 class Floor(Tile):
   def __init__(self):
-    self.image_path = "assets/tiles/floor.png"
-    self.solid = False
+    super().__init__(TileType.FLOOR, solid=False)

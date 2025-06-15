@@ -1,28 +1,35 @@
 from dataclasses import dataclass
-from itertools import product
-from typing import List
 
-from . import Tile
+from .tile import Tile
 
-#TODO: combine tilesets (ie draw one tileset onto another)
-#TODO: somehow compress tileset for transfer.. png file?
 @dataclass
-class Tileset:
+class PackedTileset:
   width: int
   height: int
-  tiles: List[List[Tile]]
+  tiles: list
+
+class Tileset:
+  def unpack(ts):
+    tiles = [Tile.unpack(t) for t in ts.tiles]
+    return Tileset(ts.width, ts.height, tiles)
 
   def __init__(self, width, height, tiles=None):
     super().__init__()
     self.width = width
     self.height = height
-    self.tiles = [[None for _ in range(width)] for _ in range(height)] if tiles is None else tiles
+    self.tiles = [None for _ in range(width * height)] if tiles is None else tiles
+
+  def pack(self):
+    tiles = [t.pack() for t in self.tiles]
+    return PackedTileset(self.width, self.height, tiles)
 
   def set_tile(self, x, y, tile):
-    self.tiles[y][x] = tile
+    i = y * self.width + x
+    self.tiles[i] = tile
 
   def get_tile(self, x, y):
-    return self.tiles[y][x]
+    i = y * self.width + x
+    return self.tiles[i]
 
   def itertiles(self):
     return ((x, y, self.get_tile(x, y)) for x in range(self.width) for y in range(self.height) if self.get_tile(x, y) is not None)

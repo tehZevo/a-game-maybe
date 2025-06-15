@@ -63,7 +63,7 @@ class ClientGame:
 
   def init_world(self):
     #setup client world
-    self.world.create_entity([C.GameMaster(self)])
+    self.world.create_entity([C.GameMaster(self, None)]) #NOTE: we'll set this when we get it from the server
     self.renderer = self.world.create_entity([C.Renderer(RENDER_WIDTH, RENDER_HEIGHT)])
     self.particle_system = self.world.create_entity([C.ParticleSystem()])
     self.camera = self.world.create_entity([C.Camera()])

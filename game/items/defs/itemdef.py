@@ -1,7 +1,7 @@
 from game.items.rarity import Rarity, rarity_drop_rate
 from game.utils.constants import BASE_DROP_RATE
 
-class Itemdef:
+class ItemDef:
   def __init__(self, id=None, rarity=None, icon=None, mod_drop_rate=None):
     super().__init__()
     self.id = id

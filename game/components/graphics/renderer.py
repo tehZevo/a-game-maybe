@@ -5,6 +5,7 @@ import game.components as C
 from game.utils.constants import TILE_SIZE
 from game.utils import Vector
 
+#TODO: split into "screen renderer" and "world renderer" (world renderer sorts by y)
 #draws drawables
 class Renderer(Component):
   def __init__(self, width, height):
@@ -12,7 +13,11 @@ class Renderer(Component):
     self.width = width
     self.height = height
     self.surface = pygame.Surface((width, height), flags=pygame.SRCALPHA)
+    self.y_up = False #TODO: use
+    self.sort_buffer = [] #TODO: use
   
+  #TODO: rather than drawing directly to the screen, have drawables provide a list of surfaces to draw and at what positions, then have the renderer sort them
+  #def renderer.draw(surface, x, y, alpha)
   def render(self, screen):
     self.surface.fill((0, 0, 0, 0))
     #TODO: set camera instead of just finding first

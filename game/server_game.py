@@ -28,37 +28,31 @@ class ServerGame:
     )
     self.server.start()
 
-    world = self.generate_world()
+    mapdef = M.maze
+    world = self.generate_world(mapdef)
     self.world = world
+    self.next_world = None
     #TODO: remove/simplify 2-way coupling
     server_manager = self.world.find_component(C.ServerManager)
     self.server.server_manager = server_manager
     
-    mapdef = M.maze
-    mapdef.generator.generate(self.world)
-
-    self.next_world = None
-    self.init_world(self.save_data)
-
-  def generate_world(self):
+  def generate_world(self, mapdef):
+    #create new world
     world = World()
-
-    #create server manager
+    world.create_entity([C.GameMaster(self, mapdef)])
+    
+    #add server manager
     server_manager = C.ServerManager()
     world.create_entity([server_manager])
     server_manager.server = self.server
+
+    #generate using mapdef
+    mapdef.generator.generate(world)
     
     return world
 
-  #TODO: merge some of this with generate world?
-  def init_world(self, save_data):
-    
-    #store reference to game as an entity
-    self.world.create_entity([C.GameMaster(self)])
-  
   def transition(self, mapdef):
-    world = self.generate_world()
-    mapdef.generator.generate(world)
+    world = self.generate_world(mapdef)
     self.server.broadcast(E.WorldClosed())
     self.next_world = world
 
@@ -83,7 +77,6 @@ class ServerGame:
       server_manager = self.world.find_component(C.ServerManager)
       #TODO: remove/simplify 2-way coupling
       self.server.server_manager = server_manager
-      self.init_world(self.save_data)
       self.server.broadcast(E.WorldOpened())
       self.next_world = None
       self.next_server_manager = None

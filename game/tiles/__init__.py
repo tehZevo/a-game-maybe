@@ -1,4 +1,5 @@
-from game.tiles.tile import Tile
+from game.tiles.tileset import Tileset, PackedTileset
+from game.tiles.tile import Tile, TileType
 from game.tiles.floor import Floor
 from game.tiles.wall import Wall
-from game.tiles.tileset import Tileset
+from game.tiles.tile_palette import TilePalette
