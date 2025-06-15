@@ -1,7 +1,12 @@
-- make max dropped items
+- "diagonal" sprites? would look better for players but might make weapon sprites harder
+- make monster spawners physical and targetable?
+  - what if you want to grind though?
+  - maybe make spawners have a better drop rate/better items?
+- limit number of dropped items and delete oldest
 - improve performance of dropped item interactions
 - teleporters/portals
 - use skills diagonally (or at any vector)
+- avoid loading images on the server
 - generator should make a player spawn point component, which players are spawned on by the generators spawn method
 - highlight which entity the player would interact with
 - hide skill slots until picked up for the first time?

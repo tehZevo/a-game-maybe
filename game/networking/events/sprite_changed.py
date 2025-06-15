@@ -1,23 +1,29 @@
-from typing import Optional
 from dataclasses import dataclass
 
 from ..event_handler import EventHandler
 import game.components as C
+from game.data.registry import get_sprite
 
 @dataclass
 class SpriteChanged:
-  id: str
-  path: Optional[str]
+  entity_id: str
+  sprite_id: str | None
+  animation: str | None
+  time: float
+  speed: float
 
 class SpriteChangedHandler(EventHandler):
   def __init__(self):
     super().__init__(SpriteChanged)
 
   def handle(self, client_manager, client, event):
-    #TODO: this is caused by entities not being on client yet.. need to sync them when client first "sees" them
-    # this either means sending actor spawned for all ents upon player join, OR having other actors/networked components spawn/despawn themselves on the client
-    if event.id not in client_manager.networked_entities:
-      print("trying to update entity sprite with id", event.id, "but not found in networked entities...")
+    #TODO: fix this
+    if event.entity_id not in client_manager.networked_entities:
+      print("trying to update entity sprite with id", event.entity_id, "but not found in networked entities...")
       return
-    ent = client_manager.networked_entities[event.id]
-    ent.get_component(C.Sprite).set_sprite(event.path)
+    ent = client_manager.networked_entities[event.entity_id]
+    sprite = ent.get_component(C.Sprite)
+    sprite.set_sprite(get_sprite(event.sprite_id))
+    sprite.set_animation(event.animation)
+    sprite.set_speed(event.speed)
+    sprite.set_time(event.time)

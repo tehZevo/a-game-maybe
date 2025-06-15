@@ -7,11 +7,11 @@ from game.utils.constants import ITEM_PUSH_DISTANCE, ITEM_PUSH_FORCE
 class DroppedItem(Component, Interactable):
   def __init__(self, item):
     super().__init__()
-    self.require(C.Sprite, C.Physics, C.Collisions, C.PositionSyncing, C.SpriteSyncing, C.Networking)
+    self.require(C.Icon, C.Physics, C.Collisions, C.PositionSyncing, C.IconSyncing, C.Networking)
     self.item = item
 
   def start(self):
-    self.get_component(C.Sprite).set_sprite(self.item.icon)
+    self.get_component(C.Icon).set_image(self.item.icon)
   
   def update(self):
     #currently dropped items only exist on the server

@@ -7,7 +7,7 @@ from game.utils import Vector
 
 @dataclass
 class PlayerMove:
-  dir: Vector
+  dir: Vector | None
 
 class PlayerMoveHandler(CommandHandler):
   def __init__(self):

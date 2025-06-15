@@ -10,6 +10,10 @@ class Vector:
   x: float
   y: float
 
+  #TODO: meh
+  def from_pygame(v):
+    return Vector(v.x, v.y)
+
   def random():
     return Vector(gauss(0, 1), gauss(0, 1)).normalized()
   
@@ -22,6 +26,11 @@ class Vector:
     super().__init__()
     self.x = x
     self.y = y
+
+  #TODO: meh
+  def to_pygame(self):
+    from pygame import Vector2
+    return Vector2(self.x, self.y)
 
   def normalized(self):
     mag = self.magnitude()

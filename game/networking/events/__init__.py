@@ -6,6 +6,7 @@ from game.networking.events.player_assigned import PlayerAssigned, PlayerAssigne
 from game.networking.events.stats_updated import StatsUpdated, StatsUpdatedHandler
 from game.networking.events.equips_updated import EquipsUpdated, EquipsUpdatedHandler
 from game.networking.events.sprite_changed import SpriteChanged, SpriteChangedHandler
+from game.networking.events.icon_changed import IconChanged, IconChangedHandler
 from game.networking.events.emitter_updated import EmitterUpdated, EmitterUpdatedHandler
 from game.networking.events.world_closed import WorldClosed, WorldClosedHandler
 from game.networking.events.world_opened import WorldOpened, WorldOpenedHandler

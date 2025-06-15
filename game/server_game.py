@@ -1,5 +1,4 @@
 import pygame, sys
-from pygame.math import Vector2
 
 from game.ecs import World
 from game.save_data import SaveData

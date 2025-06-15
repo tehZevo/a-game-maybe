@@ -46,6 +46,8 @@ class Actor(Component):
 
   def update(self):
     stats = self.get_component(C.Stats)
+    sprite = self.get_component(C.Sprite)
+    
     if stats.hp <= 0:
       self.entity.remove()
 
@@ -57,6 +59,9 @@ class Actor(Component):
       self.action.update()
 
       if not self.action.active:
+        if self.next_action is None:
+          #TODO: need better place to set/control animations
+          sprite.set_animation("idle")
         self.action = None
 
     #start new action if old action is finished

@@ -1,47 +1,67 @@
-import pygame
-from pygame import Vector2
-
 from game.ecs import Component
 from .drawable import Drawable
 import game.components as C
 from game.utils.image_cache import get_image
-from game.utils.constants import TILE_SIZE
+from game.utils.constants import TILE_SIZE, DT
 
-#TODO: animations
 class Sprite(Component, Drawable):
-  def __init__(self, path=None):
+  def __init__(self, sprite=None, animation=None):
     super().__init__()
     self.require(C.Position)
-    self.path = path
-    self.surface = None
+    self.sprite = sprite
     self.pos = None
+    self.time = 0
+    self.speed = 1
+    self.animation = animation or "default" #TODO: interfaces with SimpleSprite animation "default"
+    self.old_animation = None
+    self.old_sprite = None
+    self.old_speed = None
+    self.manually_set_time = False
+
+  def set_sprite(self, sprite):
+    self.sprite = sprite
+    #TODO: needed?
+    # self.animation = None
+    self.set_time(0)
+
+  def set_animation(self, animation):
+    if self.animation == animation or self.sprite is None:
+      return
+    if animation not in self.sprite.animations:
+      return
+
+    self.animation = animation
+    self.set_time(0)
+  
+  def set_speed(self, speed):
+    self.speed = speed
+  
+  def set_time(self, time):
+    if time != self.time:
+      self.manually_set_time = True
+    self.time = time
 
   def start(self):
     self.pos = self.get_component(C.Position)
+
+  def update(self):
+    self.time += self.speed * DT
     
-    if self.path is not None:
-      self.set_sprite(self.path)
-
-  def set_sprite(self, path):
-    if self.path == path:
-      return
-
-    self.path = path
-
-    for component in self.entity.components.values():
-      if not isinstance(component, C.SpriteListener):
-        continue
-      component.on_sprite_changed(self)
-
-    #TODO: HACK: determine if we are on the client, and if not, do nothing!
-    #TODO: maybe move this logic to sprite networking since its behavior is different on client and server
-    if not self.entity.world.find_component(C.ClientManager):
-      return
-
-    self.surface = get_image(path)
+    #check for updates and notify listeners
+    if self.speed != self.old_speed or self.sprite != self.old_sprite \
+      or self.animation != self.old_animation or self.manually_set_time:
+      self.manually_set_time = False
+      self.old_animation = self.animation
+      self.old_speed = self.speed
+      self.old_sprite = self.sprite
+      for component in self.entity.components.values():
+        if not isinstance(component, C.SpriteListener):
+          continue
+        component.on_sprite_changed(self)
 
   def draw(self, screen, offset):
-    if self.surface is not None:
-      pos = self.pos.pos
-      pos = Vector2(*(e * TILE_SIZE for e in pos.tolist()))
-      screen.blit(self.surface, pos + offset)
+    if self.sprite is None or self.animation is None:
+      return
+
+    pos = self.pos.pos * TILE_SIZE + offset
+    self.sprite.draw(screen, self.animation, self.time, pos)

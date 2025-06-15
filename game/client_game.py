@@ -1,5 +1,4 @@
 import pygame, sys
-from pygame.math import Vector2
 
 from game.ecs import World
 import game.components as C
@@ -7,6 +6,7 @@ from game.utils.constants import FPS, TILE_SIZE
 from game.networking import Client
 import game.networking.events as E
 from game.networking.commands import Sync
+from game.utils import Vector
 
 SCALE_RES = 3
 SCREEN_WIDTH_TILES = 16
@@ -39,6 +39,7 @@ class ClientGame:
         E.EntitySpawnedHandler(),
         E.PositionUpdatedHandler(),
         E.SpriteChangedHandler(),
+        E.IconChangedHandler(),
         E.EmitterUpdatedHandler(),
         E.EntityDespawnedHandler(),
         E.StatsUpdatedHandler(),
@@ -101,13 +102,14 @@ class ClientGame:
 
         #render
         camera_pos = self.camera.get_component(C.Position).pos
-        camera_offset = Vector2(*(camera_pos * TILE_SIZE).tolist()) - Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        camera_offset = (camera_pos * TILE_SIZE) - Vector(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.screen.fill((0, 0, 0))
 
         self.renderer.get_component(C.Renderer).render(self.screen)
 
         #draw particles
-        self.particle_system.get_component(C.ParticleSystem).draw(self.screen, camera_offset)
+        #TODO: reenable when i fix particle lag
+        # self.particle_system.get_component(C.ParticleSystem).draw(self.screen, camera_offset)
 
         #draw UI
         self.ui_world.update()

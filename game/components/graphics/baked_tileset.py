@@ -30,6 +30,6 @@ class BakedTileset(Component, Drawable):
   
   def draw(self, screen, offset):
     pos = self.pos.pos
-    pos = Vector2(*(e * TILE_SIZE for e in pos.tolist()))
-    screen.blit(self.surface, pos + offset)
+    pos = (pos * TILE_SIZE + offset).to_pygame()
+    screen.blit(self.surface, pos)
     

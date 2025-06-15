@@ -12,6 +12,7 @@ class PlayerController(Component):
     self.id = id
     self.client = None
     self.player = None
+    self.previous_move_dir = None
 
   def start(self):
     from game.components.networking import ClientManager
@@ -40,6 +41,6 @@ class PlayerController(Component):
       keys[pygame.K_DOWN] - keys[pygame.K_UP]
     )
 
-    if move_dir != Vector.ZERO:
-      #send move command
+    if move_dir != self.previous_move_dir:
       self.client.send(PlayerMove(move_dir))
+      self.previous_move_dir = move_dir

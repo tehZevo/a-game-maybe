@@ -1,9 +1,9 @@
 import pygame
-from pygame.math import Vector2
 
 from game.ecs import Component
 import game.components as C
 from game.utils.constants import TILE_SIZE
+from game.utils import Vector
 
 #draws drawables
 class Renderer(Component):
@@ -20,9 +20,9 @@ class Renderer(Component):
     cameras = self.entity.world.find(C.Camera)
     if len(cameras) > 0:
       camera_pos = cameras[0].get_component(C.Position).pos
-      camera_offset = Vector2(*(camera_pos * TILE_SIZE).tolist()) - Vector2(self.width / 2, self.height / 2)
+      camera_offset = (camera_pos * TILE_SIZE) - Vector(self.width / 2, self.height / 2)
     else:
-      camera_offset = Vector2()
+      camera_offset = Vector()
 
     for drawable in self.entity.world.find_components(C.Drawable):
       drawable.draw(self.surface, -camera_offset)

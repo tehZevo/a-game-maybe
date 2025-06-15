@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from game.utils import Vector
 from ..event_handler import EventHandler
 import game.components as C
-from game.items.item_registry import get_item
+from game.data.registry import get_item
 
 #TODO: how to network items themselves?
 #TODO: we could network the ids
