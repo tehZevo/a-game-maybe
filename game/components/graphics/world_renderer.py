@@ -8,13 +8,14 @@ from game.utils.constants import TILE_SIZE
 from game.utils import Vector
 
 #TODO: consider how i want items/monstes to render when next to player
+#TODO: i might need a DrawCall class and WorldDrawCall to extend
+# so we can set an offset that doesn't affect y sorting.. or specify a manual y sort value
 def y_sort(call):
   surface, pos, area, _, _ = call
   # height = area[3] if area is not None else surface.get_size()[1]
-  return math.ceil(call[1].y)
-  # return math.ceil(pos.y + height / TILE_SIZE)
+  return math.ceil(pos.y)
+  # return math.floor(pos.y + (height / TILE_SIZE - 1))
 
-#TODO: y-sort
 #TODO: flip y
 #TODO: screen shake?
 class WorldRenderer(Renderer):
@@ -32,7 +33,6 @@ class WorldRenderer(Renderer):
       camera_offset = (-camera_pos * TILE_SIZE) + Vector(self.width / 2, self.height / 2)
     else:
       camera_offset = Vector()
-
     
     calls = sorted(calls, key=y_sort)
     return [self.transform(call, camera_offset) for call in calls]

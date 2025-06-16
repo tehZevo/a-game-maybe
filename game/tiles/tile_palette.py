@@ -5,7 +5,7 @@ class TilePalette:
         self.palette = {} if palette is None else palette
 
     def __add__(self, other):
-        return {**self.palette, **other.palette}
+        return TilePalette({**self.palette, **other.palette})
     
     def __getitem__(self, key):
         return self.palette.get(key)

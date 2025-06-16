@@ -42,7 +42,7 @@ class Networking(Component):
   
   def broadcast_synced(self, event):
     """Send to all synced clients"""
-    for client_id in self.server_manager.player_entity_map.keys():
+    for client_id in list(self.server_manager.player_entity_map.keys()):
       self.server_manager.server.send(client_id, event)
 
   def on_destroy(self):
@@ -65,7 +65,7 @@ class Networking(Component):
   #TODO: rename to on_client_sync
   def on_client_join(self, client_id):
     self.for_all_networking(lambda c: c.on_client_join(self, client_id))
-
+  
   def start_server(self):
     #set up id and server manager
     self.id = str(uuid.uuid4()) if self.id is None else self.id

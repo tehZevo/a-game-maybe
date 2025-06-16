@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from .tile import Tile
+from .empty import Empty
 
 @dataclass
 class PackedTileset:
@@ -17,10 +18,10 @@ class Tileset:
     super().__init__()
     self.width = width
     self.height = height
-    self.tiles = [None for _ in range(width * height)] if tiles is None else tiles
+    self.tiles = [Empty() for _ in range(width * height)] if tiles is None else tiles
 
   def pack(self):
-    tiles = [t.pack() for t in self.tiles]
+    tiles = [t and t.pack() for t in self.tiles]
     return PackedTileset(self.width, self.height, tiles)
 
   def set_tile(self, x, y, tile):

@@ -47,6 +47,8 @@ class TileRendering(Component, Drawable):
     
     for (cx, cy), chunk in list(self.chunks.items()).copy():
       for tx, ty, tile in chunk.itertiles():
+        if tile.tile_type == TileType.EMPTY:
+          continue
         x = cx * CHUNK_SIZE + tx
         y = cy * CHUNK_SIZE + ty
         #TODO: draw with height

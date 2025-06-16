@@ -47,6 +47,9 @@ class ChunkNetworking(Component, NetworkBehavior):
   def update_server(self, networking):
     players = networking.server_manager.player_entity_map
     for client_id, entity_id in players.items():
+      #TODO: is this check needed anymore?
+      if entity_id not in networking.server_manager.networked_entities:
+        continue
       entity = networking.server_manager.networked_entities[entity_id]
       pos = entity.get_component(C.Position).pos
       new_chunk = (math.floor(pos.x / CHUNK_SIZE), math.floor(pos.y / CHUNK_SIZE))

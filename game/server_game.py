@@ -10,7 +10,13 @@ import game.components as C
 import game.networking.events as E
 import game.data.maps as M
 
+
 class ServerGame:
+  def disconnect_handler(self, server, client_id):
+    #TODO: really want to avoid having to store server_manager on server...
+    server.server_manager.player_unregister(client_id)
+    print("client", client_id, "has disconnected")
+
   def __init__(self):
     pygame.init() #TODO: is this needed on the server?
     self.clock = pygame.time.Clock()
@@ -18,7 +24,7 @@ class ServerGame:
     self.save_data = SaveData()
 
     self.server = Server(
-      connect_handlers=[],
+      disconnect_handlers=[self.disconnect_handler],
       command_handlers=[
         commands.PlayerMoveHandler(),
         commands.PlayerUseSkillHandler(),
@@ -53,6 +59,7 @@ class ServerGame:
 
   def transition(self, mapdef):
     world = self.generate_world(mapdef)
+    #TODO: broadcast_synced?
     self.server.broadcast(E.WorldClosed())
     self.next_world = world
 

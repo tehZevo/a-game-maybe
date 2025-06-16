@@ -1,8 +1,7 @@
 from enum import IntEnum
 
 #TODO: pack all values in an integer
-
-TileType = IntEnum("TileType", ["EMPTY", "FLOOR", "WALL"])
+TileType = IntEnum("TileType", ["EMPTY", "FLOOR", "WALL"], start=0)
 
 class Tile:
   def unpack(t):

@@ -31,7 +31,7 @@ def chunk_tiles(tiles):
 class DFSGenerator(FloorGenerator):
   def __init__(self):
     super().__init__()
-    self.floor_size = 4 #in number of rooms wide/tall
+    self.floor_size = 3 #in number of rooms wide/tall
     self.room_size = 12
     self.door_width = 3
 

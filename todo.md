@@ -1,6 +1,17 @@
+- track events per second sent/received
+- how to handle pre-game setup period?
+- refactor so server has multiple worlds and then scope all events by channel?
+- after being on a floor for too long, start doing increasing dot?
+- decorator called "withcomponents" that just makes components available in scope...
+- add new skill effect that pushes enemies in the direction of the skill, and "carries" them with you
+- tintable hair/eyes/skin
+- flag for hats that hide hair, or "hat hair" sprites like maplestory
+- player death animation (and keep actor alive)
+- enemy death animation (drop items immediately but disable everything and wait for anim to finish)
+- docs are dusty
 - damage numbers
-- don't crash server when client disconnects
 - show disconnect icon above player head
+- use separate colors for skill rank/equip grade?
 - fix particles
 - "safe area" players spawn in in next floor that lasts a short time
 - player spawn animation, set animation to "focus" (holding weapon up or something)
@@ -9,6 +20,7 @@
 - make monster spawners physical and targetable?
   - what if you want to grind though?
   - maybe make spawners have a better drop rate/better items?
+- requirement of killing N mobs before progressing?
 - limit number of dropped items and delete oldest
 - improve performance of dropped item interactions
 - teleporters/portals

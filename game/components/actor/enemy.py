@@ -4,9 +4,11 @@ from game.ecs import Component
 from game.actions import Move, UseSkill
 from game.utils import Vector
 from game.utils.teams import ENEMY
+from game.components.actor import DeathListener
 import game.components as C
+from game.utils.constants import ENEMY_MOVE_SPEED
 
-class Enemy(Component):
+class Enemy(Component, DeathListener):
   def __init__(self, mobdef):
     super().__init__()
     self.require(C.Actor)
@@ -16,13 +18,12 @@ class Enemy(Component):
     self.mobdef = mobdef
 
   def start(self):
-    #make enemies 1/4 base player speed
-    self.get_component(C.Stats).move_speed_multiplier = 0.25
+    self.get_component(C.Stats).move_speed_multiplier = ENEMY_MOVE_SPEED
     if self.mobdef.sprite is not None:
       self.get_component(C.Sprite).set_sprite(self.mobdef.sprite)
     self.get_component(C.Team).team = ENEMY
 
-  def on_destroy(self):
+  def on_death(self):
     #drop items
     dropper = self.get_component(C.ItemDropper)
     pos = self.get_component(C.Position).pos
@@ -30,6 +31,8 @@ class Enemy(Component):
     for item in self.mobdef.drops:
       if random.random() < item.calc_drop_rate():
         dropper.drop(item, pos)
+    #TODO: play animation then die
+    self.entity.remove()
 
   def update(self):
     move_dir = Vector()

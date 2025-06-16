@@ -20,10 +20,19 @@ class Sprite(Component, Drawable):
     self.tint = None
     self.alpha = None
 
+  @property
+  def animation_finished(self):
+    if self.sprite is None or self.animation not in self.sprite.animations:
+      return False
+    return not self.sprite.animations[self.animation].loop and self.time >= 1
+    
   def set_sprite(self, sprite):
     self.sprite = sprite
-    #TODO: needed?
-    # self.animation = None
+    if "default" in sprite.animations:
+      self.set_animation("default")
+    else:
+      #TODO: are there any cases where we need to change sprite but KEEP our current animation id?
+      self.animation = None
     self.set_time(0)
 
   def set_animation(self, animation):

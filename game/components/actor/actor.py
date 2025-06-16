@@ -12,6 +12,7 @@ class Actor(Component):
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)
+    self.actor_alive = True
 
   def damage(self, amount):
     stats = self.get_component(C.Stats)
@@ -44,22 +45,15 @@ class Actor(Component):
     else:
       self.next_action = action
 
-  def update(self):
-    stats = self.get_component(C.Stats)
+  def update_action(self):
     sprite = self.get_component(C.Sprite)
-    
-    if stats.hp <= 0:
-      self.entity.remove()
-
-    if not self.entity.alive:
-      return
-
     #update current action
     if self.action is not None:
       self.action.update()
 
       if not self.action.active:
         if self.next_action is None:
+          #TODO: maybe we need a listener for this so player can set his animation between actions or w/e
           #TODO: need better place to set/control animations
           sprite.set_animation("idle")
         self.action = None
@@ -69,3 +63,17 @@ class Actor(Component):
       a = self.next_action
       self.next_action = None
       self.start_action(a)
+
+  def update(self):
+    stats = self.get_component(C.Stats)
+    
+    if self.actor_alive and stats.hp <= 0:
+      self.actor_alive = False
+      for listener in self.entity.find(C.DeathListener):
+        listener.on_death()
+      return
+
+    if not self.actor_alive:
+      return
+
+    self.update_action()

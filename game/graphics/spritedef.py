@@ -20,9 +20,10 @@ class Spritedef:
     self.animations[animation].draw(renderer, tint, alpha, time, position + self.origin / TILE_SIZE)
 
 class SimpleSprite(Spritedef):
-  def __init__(self, id, image_path, frame_width, num_frames):
-    l = Layer(image_path, frame_width, num_frames)
-    a = Animation(layers=[l])
+  def __init__(self, id, image_path, frame_width, num_frames, offset=None, loop=False):
+    offsets = offset and [offset for _ in range(num_frames)]
+    l = Layer(image_path, frame_width, num_frames, offsets=offsets)
+    a = Animation(layers=[l], loop=loop)
     super().__init__(id, animations={"default": a})
 
 class Animation:
