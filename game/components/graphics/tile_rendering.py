@@ -12,7 +12,7 @@ from game.utils import Vector
 from game.tiles import TileType
 
 def is_behind(px, py, tx, ty):
-  if px > tx - 1 and px < tx + 1 and py < ty and py > ty - 2:
+  if px > tx - 1 and px < tx + 1 and py < ty and py > ty - 1.5:
     return True
   return False
 
@@ -45,7 +45,7 @@ class TileRendering(Component, Drawable):
     
     player_pos = self.player.get_component(C.Position).pos
     
-    for (cx, cy), chunk in self.chunks.items():
+    for (cx, cy), chunk in list(self.chunks.items()).copy():
       for tx, ty, tile in chunk.itertiles():
         x = cx * CHUNK_SIZE + tx
         y = cy * CHUNK_SIZE + ty

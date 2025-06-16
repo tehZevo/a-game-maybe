@@ -1,5 +1,3 @@
-- network sync interface which defines fields to be synced automatically
-  - or at least "sync" means on spawn?
 - "safe area" players spawn in in next floor that lasts a short time
 - player spawn animation, set animation to "focus" (holding weapon up or something)
 - prevent walk animation when blocked by wall
@@ -10,12 +8,13 @@
 - limit number of dropped items and delete oldest
 - improve performance of dropped item interactions
 - teleporters/portals
+- network sync interface which defines fields to be synced automatically
+  - or at least "sync" means on spawn?
 - use skills diagonally (or at any vector)
 - avoid loading images on the server
 - generator should make a player spawn point component, which players are spawned on by the generators spawn method
 - highlight which entity the player would interact with
 - hide skill slots until picked up for the first time?
-- spritedefs?
 - air mechanics
   - jumping
   - shadow (separate entity?)
@@ -55,7 +54,6 @@
   - add tileset physics to this world so we can have particles bounce off walls, etc
 - reduce delay on interact (will require handling key pressed events so player cant hold to repeatedly interact)
 - fix subpixel glitchiness
-- make 0, 0 center of sprites
 - gold, health, mana drops: walk over them to pick them up
 - skill idea: "ally bomb" (or something like that): damage enemies nearby allies (target allies, then target enemies)
 - distance based delay effect (delay in seconds per unit)

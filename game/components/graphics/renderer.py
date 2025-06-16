@@ -48,4 +48,4 @@ class Renderer(Component):
     
     self.draw_calls = []
     dt = time.time() - t
-    print("render took", dt, "s")
+    # print("render took", dt, "s")

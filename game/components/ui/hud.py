@@ -23,6 +23,12 @@ ITEM_SLOTS = {
   (SkillSlot, SkillSlot.GAMMA): slot_position(0, 3),
   (SkillSlot, SkillSlot.DELTA): slot_position(0, 4),
   (SkillSlot, SkillSlot.OMEGA): slot_position(0, 5),
+
+  # (SkillSlot, SkillSlot.ALPHA): slot_position(0, 0),
+  # (SkillSlot, SkillSlot.BETA): slot_position(1, 0),
+  # (SkillSlot, SkillSlot.GAMMA): slot_position(2, 0),
+  # (SkillSlot, SkillSlot.DELTA): slot_position(3, 0),
+  # (SkillSlot, SkillSlot.OMEGA): slot_position(4, 0),
 }
 
 class HUD(Component):
