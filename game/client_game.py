@@ -1,4 +1,6 @@
-import pygame, sys
+import sys
+from collections import defaultdict
+import pygame
 
 from game.ecs import World
 import game.components as C
@@ -89,16 +91,22 @@ class ClientGame:
     while True:
       #loop until we have a world to transition to
       while self.next_world is None:
+        pressed = defaultdict(lambda: False)
+        released = defaultdict(lambda: False)
         for event in pygame.event.get():
+          if event.type == pygame.KEYDOWN:
+            pressed[event.key] = True
+          if event.type == pygame.KEYUP:
+            released[event.key] = True
           if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
         #control player
-        keys = pygame.key.get_pressed()
+        held = pygame.key.get_pressed()
         player_controller = self.world.find_component(C.PlayerController)
         if player_controller is not None:
-          player_controller.handle_keys(keys)
+          player_controller.handle_keys(pressed, held, released)
 
         #update world
         self.world.update()
