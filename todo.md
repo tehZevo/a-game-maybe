@@ -1,3 +1,6 @@
+- damage numbers
+- don't crash server when client disconnects
+- show disconnect icon above player head
 - fix particles
 - "safe area" players spawn in in next floor that lasts a short time
 - player spawn animation, set animation to "focus" (holding weapon up or something)
