@@ -1,11 +1,10 @@
-import pygame, sys
+import pygame
 
 from game.ecs import World
 from game.save_data import SaveData
 from game.utils.constants import FPS
-from game.networking import Server
+from game.networking import WebsocketServer
 import game.networking.commands as commands
-from game.utils import Vector
 import game.components as C
 import game.networking.events as E
 import game.data.maps as M
@@ -23,7 +22,7 @@ class ServerGame:
     
     self.save_data = SaveData()
 
-    self.server = Server(
+    self.server = WebsocketServer(
       disconnect_handlers=[self.disconnect_handler],
       command_handlers=[
         commands.PlayerMoveHandler(),

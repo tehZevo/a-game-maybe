@@ -5,7 +5,7 @@ import pygame
 from game.ecs import World
 import game.components as C
 from game.utils.constants import FPS, TILE_SIZE
-from game.networking import Client
+from game.networking import WebsocketClient
 import game.networking.events as E
 from game.networking.commands import Sync
 from game.utils import Vector
@@ -33,7 +33,7 @@ class ClientGame:
     self.clock = pygame.time.Clock()
     pygame.display.set_caption("Game")
 
-    self.client = Client(
+    self.client = WebsocketClient(
       connect_handlers=[ClientConnectHandler()],
       event_handlers=[
         E.PlayerAssignedHandler(),
