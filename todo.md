@@ -1,3 +1,4 @@
+- fix particles
 - "safe area" players spawn in in next floor that lasts a short time
 - player spawn animation, set animation to "focus" (holding weapon up or something)
 - prevent walk animation when blocked by wall

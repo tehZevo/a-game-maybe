@@ -11,6 +11,8 @@ class SpriteChanged:
   animation: str | None
   time: float
   speed: float
+  tint: tuple | None
+  alpha: float | None
 
 class SpriteChangedHandler(EventHandler):
   def __init__(self):
@@ -27,3 +29,5 @@ class SpriteChangedHandler(EventHandler):
     sprite.set_animation(event.animation)
     sprite.set_speed(event.speed)
     sprite.set_time(event.time)
+    sprite.tint = event.tint
+    sprite.alpha = event.alpha

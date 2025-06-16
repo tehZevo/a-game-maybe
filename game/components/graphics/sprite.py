@@ -17,6 +17,8 @@ class Sprite(Component, Drawable):
     self.old_sprite = None
     self.old_speed = None
     self.manually_set_time = False
+    self.tint = None
+    self.alpha = None
 
   def set_sprite(self, sprite):
     self.sprite = sprite
@@ -63,4 +65,4 @@ class Sprite(Component, Drawable):
     if self.sprite is None or self.animation is None:
       return
     
-    self.sprite.draw(renderer, self.animation, self.time, self.pos.pos.copy())
+    self.sprite.draw(renderer, self.tint, self.alpha, self.animation, self.time, self.pos.pos.copy())

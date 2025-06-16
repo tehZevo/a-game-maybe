@@ -16,8 +16,8 @@ class Spritedef:
     self.animations = animations
     self.origin = Vector(*origin)
   
-  def draw(self, renderer, animation, time, position):
-    self.animations[animation].draw(renderer, time, position + self.origin / TILE_SIZE)
+  def draw(self, renderer, tint, alpha, animation, time, position):
+    self.animations[animation].draw(renderer, tint, alpha, time, position + self.origin / TILE_SIZE)
 
 class SimpleSprite(Spritedef):
   def __init__(self, id, image_path, frame_width, num_frames):
@@ -59,10 +59,10 @@ class Animation:
     #TODO: better way to clamp?
     return max(0, min(bisect.bisect_left(self.frame_times, t), self.num_frames - 1))
 
-  def draw(self, renderer, time, position):
+  def draw(self, renderer, tint, alpha, time, position):
     frame = self.calc_frame(time)
     for layer in self.layers:
-      layer.draw(renderer, frame, position)
+      layer.draw(renderer, tint, alpha, frame, position)
 
 class Layer:
   def __init__(self, image_path, frame_width, num_frames, offsets=None):
@@ -83,7 +83,7 @@ class Layer:
     self.offsets = self.offsets or [[0, 0] for _ in range(self.num_frames)]
     self.offsets = [Vector(x, y) for x, y in self.offsets]
   
-  def draw(self, renderer, frame, position):
+  def draw(self, renderer, tint, alpha, frame, position):
     if self.image is None:
       #TODO: i dont like this but images were trying to be loaded at least once on the server..
       #TODO: remove if i can fix that
@@ -95,4 +95,4 @@ class Layer:
     offset = self.offsets[frame] / TILE_SIZE
     pos = position + offset
     area = [frame * self.frame_width, 0, self.frame_width, self.frame_height]
-    renderer.draw(self.image, position + offset, area=area)
+    renderer.draw(self.image, position + offset, area=area, tint=tint, alpha=alpha)

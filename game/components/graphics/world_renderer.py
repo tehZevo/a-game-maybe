@@ -9,7 +9,7 @@ from game.utils import Vector
 
 #TODO: consider how i want items/monstes to render when next to player
 def y_sort(call):
-  surface, pos, area, _ = call
+  surface, pos, area, _, _ = call
   # height = area[3] if area is not None else surface.get_size()[1]
   return math.ceil(call[1].y)
   # return math.ceil(pos.y + height / TILE_SIZE)
@@ -23,8 +23,8 @@ class WorldRenderer(Renderer):
     self.camera = camera
   
   def transform(self, call, camera_offset):
-    surface, pos, area, alpha = call
-    return [surface, pos * TILE_SIZE + camera_offset, area, alpha]
+    surface, pos, area, tint, alpha = call
+    return (surface, pos * TILE_SIZE + camera_offset, area, tint, alpha)
 
   def modify_draw_calls(self, calls):
     if self.camera is not None:

@@ -20,8 +20,8 @@ class Renderer(Component):
     for drawable in self.entity.world.find_components(C.Drawable):
       drawable.draw(self)
   
-  def draw(self, surface, pos, area=None, alpha=1):
-    self.draw_calls.append((surface, pos, area, alpha))
+  def draw(self, surface, pos, area=None, tint=None, alpha=1):
+    self.draw_calls.append((surface, pos, area, tint, alpha))
   
   #NOTE: override me if you want to process calls before rendering
   def modify_draw_calls(self, calls):
@@ -35,8 +35,11 @@ class Renderer(Component):
     self.draw_calls = self.modify_draw_calls(self.draw_calls.copy())
 
     self.surface.fill((0, 0, 0, 0))
-    for (surface, pos, area, alpha) in self.draw_calls:
-      #TODO: use alpha
+    for (surface, pos, area, tint, alpha) in self.draw_calls:
+      if tint is not None:
+        surface = surface.copy()
+        surface.fill(tint, special_flags=pygame.BLEND_MULT)
+
       #TODO: do i need to reset this?
       alpha = 255 if alpha is None else math.floor(alpha * 255)
       surface.set_alpha(alpha)
