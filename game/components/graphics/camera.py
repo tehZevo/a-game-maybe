@@ -1,7 +1,10 @@
 from game.ecs import Component
 from ..physics import Position
+from game.utils import Vector
+from game.utils.constants import CAMERA_BOX_SIZE
 
-LERP_RATE = 0.05
+def clamp_box(target, camera):
+  return max(target - CAMERA_BOX_SIZE, min(camera, target + CAMERA_BOX_SIZE))
 
 class Camera(Component):
   def __init__(self, target=None):
@@ -13,8 +16,9 @@ class Camera(Component):
     if self.target is None:
       return
 
-    #lerp towards target
     target_pos = self.target.get_component(Position).pos
     camera_pos = self.get_component(Position).pos
-    camera_pos = camera_pos + (target_pos - camera_pos) * LERP_RATE
+    x = clamp_box(target_pos.x, camera_pos.x)
+    y = clamp_box(target_pos.y, camera_pos.y)
+    camera_pos = Vector(x, y)
     self.get_component(Position).pos = camera_pos

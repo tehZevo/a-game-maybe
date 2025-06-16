@@ -10,6 +10,7 @@ ITEM_PUSH_DISTANCE = 1.25
 ITEM_PUSH_FORCE = 10
 PLAYER_INVULN_TIME = 1 #seconds
 CHUNK_SIZE = 16
+CAMERA_BOX_SIZE = 1
 
 #scale factor to use since pygame rects are int-only
 #allows for fixed point ish collisions

@@ -19,8 +19,6 @@ def overlap(old_chunk, new_chunk):
 
   return list(new - old), list(old - new)
 
-#TODO: on player dc, remove from player chunks
-#sends surrounding 9 chunks to player
 #TODO: this is spawned on client due to networkbehavior.. need a flag or separate component that controls spawning on client
 class ChunkNetworking(Component, NetworkBehavior):
   def __init__(self, chunks=None):

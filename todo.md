@@ -1,6 +1,5 @@
 - network sync interface which defines fields to be synced automatically
   - or at least "sync" means on spawn?
-- make tile transparent when player steps behind
 - "safe area" players spawn in in next floor that lasts a short time
 - player spawn animation, set animation to "focus" (holding weapon up or something)
 - prevent walk animation when blocked by wall
@@ -57,8 +56,6 @@
 - reduce delay on interact (will require handling key pressed events so player cant hold to repeatedly interact)
 - fix subpixel glitchiness
 - make 0, 0 center of sprites
-- box camera
-- add ysorting to camera
 - gold, health, mana drops: walk over them to pick them up
 - skill idea: "ally bomb" (or something like that): damage enemies nearby allies (target allies, then target enemies)
 - distance based delay effect (delay in seconds per unit)

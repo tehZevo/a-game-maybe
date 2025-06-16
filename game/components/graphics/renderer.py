@@ -1,4 +1,5 @@
 import time
+import math
 
 import pygame
 
@@ -36,6 +37,9 @@ class Renderer(Component):
     self.surface.fill((0, 0, 0, 0))
     for (surface, pos, area, alpha) in self.draw_calls:
       #TODO: use alpha
+      #TODO: do i need to reset this?
+      alpha = 255 if alpha is None else math.floor(alpha * 255)
+      surface.set_alpha(alpha)
       self.surface.blit(surface, (pos.x, pos.y), area)
 
     #scale and draw to screen
@@ -44,4 +48,4 @@ class Renderer(Component):
     
     self.draw_calls = []
     dt = time.time() - t
-    # print("render took", dt, "s")
+    print("render took", dt, "s")
