@@ -1,6 +1,6 @@
-from threading import Thread
+import asyncio
 
-from websockets.sync.client import connect
+from websockets.asyncio.client import connect
 
 from .client import Client
 
@@ -10,20 +10,17 @@ class WebsocketClient(Client):
     self.ws_url = ws_url
     self.ws = None
 
-  def connect(self):
-    def coro():
-      with connect(self.ws_url) as websocket:
-        self.ws = websocket
-        self.on_connect()
-        for message in websocket:
-          self.on_message(message)
-      self.on_disconnect()
-
-    t = Thread(target=coro, daemon=True)
-    t.start()
+  async def connect(self):
+    async with connect(self.ws_url) as websocket:
+      self.ws = websocket
+      self.on_connect()
+      async for message in websocket:
+        self.on_message(message)
+    self.on_disconnect()
 
   def send(self, command):
-    self.ws.send(self.build_command(command))
+    #TODO: is this the slowdown?
+    asyncio.create_task(self.ws.send(self.build_command(command)))
 
   def disconnect(self):
     self.ws.close()

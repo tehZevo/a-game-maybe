@@ -1,7 +1,6 @@
-import time
+import asyncio
 import uuid
 from queue import Queue, Empty
-from threading import Thread
 
 from .server import Server
 
@@ -44,24 +43,16 @@ class LocalServer(Server):
       messages += [[id, m] for m in conn.receive_all()]
     return messages
 
-  def start(self):
-    def coro():
-      while True:
-        processed_a_message = False
-        for client_id, conn in self.clients.items():
-          #TODO: add .disconnect to connection and detect it here? (e.g. client thread blows up)
-          for message in conn.receive_all():
-            self.on_message(client_id, message)
-            processed_a_message = True
-        
-        # #TODO: async rather than wait
-        # if not processed_a_message:
-        #   print("[Server] No messages received, sleeping...")
-        #   time.sleep(1)
-        time.sleep(0)
-        
-    t = Thread(target=coro, daemon=True)
-    t.start()
+  async def start(self):
+    while True:
+      processed_a_message = False
+      for client_id, conn in self.clients.items():
+        #TODO: add .disconnect to connection and detect it here? (e.g. client thread blows up)
+        for message in conn.receive_all():
+          self.on_message(client_id, message)
+          processed_a_message = True
+      
+      await asyncio.sleep(0)
 
   def send(self, id, event):
     self.clients[id].send(self.build_event(event))

@@ -16,7 +16,7 @@ class Client:
     for handler in event_handlers:
       self.register_event_handler(handler)
 
-  def connect(self):
+  async def connect(self):
     raise NotImplementedError
   
   def send(self, command):

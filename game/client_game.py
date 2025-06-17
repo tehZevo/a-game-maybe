@@ -1,3 +1,5 @@
+import asyncio
+
 import sys
 from collections import defaultdict
 import pygame
@@ -5,7 +7,6 @@ import pygame
 from game.ecs import World
 import game.components as C
 from game.utils.constants import FPS, TILE_SIZE
-from game.networking import WebsocketClient
 import game.networking.events as E
 from game.networking.commands import Sync
 from game.utils import Vector
@@ -64,9 +65,6 @@ class ClientGame:
     self.next_world = None
     self.init_world()
 
-    #TODO: move this back up once we havae the "spawnme" or whatever command
-    self.client.connect()
-
   def init_world(self):
     #setup client world
     self.world.create_entity([C.GameMaster(self, None)]) #NOTE: we'll set mapdef when we get it from the server
@@ -89,7 +87,7 @@ class ClientGame:
   def transition(self):
     self.next_world = World()
 
-  def run(self):
+  async def run(self):
     while True:
       #loop until we have a world to transition to
       while self.next_world is None:
@@ -130,6 +128,7 @@ class ClientGame:
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
 
         pygame.display.flip()
+        await asyncio.sleep(0)
 
       #TODO: handle server world transitions
       self.world = self.next_world

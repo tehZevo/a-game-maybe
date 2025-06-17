@@ -1,9 +1,10 @@
+import asyncio
+
 import pygame
 
 from game.ecs import World
 from game.save_data import SaveData
 from game.utils.constants import FPS
-from game.networking import WebsocketServer
 import game.networking.commands as commands
 import game.components as C
 import game.networking.events as E
@@ -30,7 +31,6 @@ class ServerGame:
         commands.SyncHandler(self.save_data),
       ]
     )
-    self.server.start()
 
     mapdef = M.maze
     world = self.generate_world(mapdef)
@@ -61,14 +61,15 @@ class ServerGame:
     self.server.broadcast(E.WorldClosed())
     self.next_world = world
 
-  def run(self):
+  async def run(self):
     while True:
       #loop until we have a world to transition to
       while self.next_world is None:
         #update world
         self.world.update()
-
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
+
+        await asyncio.sleep(0)
 
       #save player data and swap worlds (TODO: use generator spawn method? idk)
       server_manager = self.world.find_component(C.ServerManager)
