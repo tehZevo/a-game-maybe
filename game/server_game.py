@@ -1,10 +1,11 @@
+import time
 import asyncio
 
 import pygame
 
 from game.ecs import World
 from game.save_data import SaveData
-from game.utils.constants import FPS
+from game.utils.constants import FPS, DT
 import game.networking.commands as commands
 import game.components as C
 import game.networking.events as E
@@ -29,6 +30,7 @@ class ServerGame:
         commands.PlayerUseSkillHandler(),
         commands.PlayerInteractHandler(),
         commands.SyncHandler(self.save_data),
+        commands.PingHandler(),
       ]
     )
 
@@ -67,9 +69,9 @@ class ServerGame:
       while self.next_world is None:
         #update world
         self.world.update()
+        #doing both this and clock.tick makes game run as expected, because of course it does
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
-
-        await asyncio.sleep(0)
+        await asyncio.sleep(DT)
 
       #save player data and swap worlds (TODO: use generator spawn method? idk)
       server_manager = self.world.find_component(C.ServerManager)

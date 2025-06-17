@@ -1,6 +1,3 @@
-#TODO: WebsocketServer, LocalServer
-#TODO: WebsocketClient, BrowserClient, LocalClient
-
 - convert client/server/main loops to asyncio since i dont think pygbag supports python threads
 - track events per second sent/received
 - how to handle pre-game setup period?

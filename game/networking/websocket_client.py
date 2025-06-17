@@ -1,3 +1,4 @@
+import time
 import asyncio
 
 from websockets.asyncio.client import connect
@@ -19,7 +20,6 @@ class WebsocketClient(Client):
     self.on_disconnect()
 
   def send(self, command):
-    #TODO: is this the slowdown?
     asyncio.create_task(self.ws.send(self.build_command(command)))
 
   def disconnect(self):

@@ -35,7 +35,6 @@ class WebsocketServer(Server):
 
   def send(self, id, event):
     try:
-      #TODO: is this the slowdown?
       asyncio.create_task(self.clients[id].send(self.build_event(event)))
     except ConnectionClosed as e:
       print("failed to send to client: disconnected")

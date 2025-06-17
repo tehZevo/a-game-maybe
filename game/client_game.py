@@ -1,14 +1,15 @@
+import time
 import asyncio
-
 import sys
 from collections import defaultdict
+
 import pygame
 
 from game.ecs import World
 import game.components as C
-from game.utils.constants import FPS, TILE_SIZE
+from game.utils.constants import FPS, TILE_SIZE, DT
 import game.networking.events as E
-from game.networking.commands import Sync
+from game.networking.commands import Sync, Ping
 from game.utils import Vector
 
 SCALE_RES = 3
@@ -19,12 +20,18 @@ RENDER_HEIGHT = TILE_SIZE * SCREEN_HEIGHT_TILES
 SCREEN_WIDTH = SCALE_RES * RENDER_WIDTH
 SCREEN_HEIGHT = SCALE_RES * RENDER_HEIGHT
 
+async def annoy_server(client):
+  while True:
+    client.send(Ping(time.time()))
+    await asyncio.sleep(1)
+
 #TODO: dont like this.. have to wait for client to connect...
 class ClientConnectHandler:
   def __init__(self):
     pass
   
   def handle_connect(self, client):
+    asyncio.create_task(annoy_server(client))
     client.send(Sync())
 
 #TODO: allow setting url via ClientType class or something
@@ -53,6 +60,7 @@ class ClientGame:
         E.EquipsUpdatedHandler(),
         E.WorldClosedHandler(self),
         E.WorldOpenedHandler(),
+        E.PongHandler(),
       ]
     )
 
@@ -125,10 +133,10 @@ class ClientGame:
         self.ui_world.update()
         self.ui_renderer.get_component(C.Renderer).render(self.screen)
 
+        #doing both this and clock.tick makes game run as expected, because of course it does
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
-
         pygame.display.flip()
-        await asyncio.sleep(0)
+        await asyncio.sleep(DT)
 
       #TODO: handle server world transitions
       self.world = self.next_world
