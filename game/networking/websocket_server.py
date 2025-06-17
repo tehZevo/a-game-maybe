@@ -1,6 +1,5 @@
 from threading import Thread
 import uuid
-from enum import Enum
 
 from websockets.sync.server import serve
 from websockets.exceptions import ConnectionClosed
@@ -8,10 +7,12 @@ from websockets.exceptions import ConnectionClosed
 from .server import Server
 
 class WebsocketServer(Server):
-  def __init__(self, connect_handlers=[], disconnect_handlers=[], command_handlers=[]):
-    super().__init__(connect_handlers, disconnect_handlers, command_handlers)
+  def __init__(self, host="localhost", port=8765):
+    super().__init__()
+    self.host = host
+    self.port = port
 
-  def start(self, host="localhost", port=8765):
+  def start(self):
     def coro():
       def connection_handler(websocket):
         #generate a uuid for the client and call on connect
@@ -30,7 +31,7 @@ class WebsocketServer(Server):
         #call on disconnect with client's id
         self.on_disconnect(id)
 
-      with serve(connection_handler, host, port) as server:
+      with serve(connection_handler, self.host, self.port) as server:
         server.serve_forever() #o7
 
     t = Thread(target=coro, daemon=True)

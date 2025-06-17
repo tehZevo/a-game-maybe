@@ -1,19 +1,18 @@
 from enum import Enum
 from collections import defaultdict
 import json
-from threading import Thread
 
-from websockets.sync.client import connect
 import dacite
 
 class Client:
-  def __init__(self, connect_handlers=[], disconnect_handlers=[], event_handlers=[]):
-    self.ws = None
+  def __init__(self):
+    pass
+
+  def setup_handlers(self, connect_handlers=[], disconnect_handlers=[], event_handlers=[]):
     self.connect_handlers = connect_handlers
     self.disconnect_handlers = disconnect_handlers
     self.event_handlers = defaultdict(list)
     self.event_types = {}
-
     for handler in event_handlers:
       self.register_event_handler(handler)
 

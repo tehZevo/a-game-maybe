@@ -5,26 +5,22 @@ from websockets.sync.client import connect
 from .client import Client
 
 class WebsocketClient(Client):
-  def __init__(self, connect_handlers=[], disconnect_handlers=[], event_handlers=[]):
-    super().__init__(connect_handlers, disconnect_handlers, event_handlers)
+  def __init__(self, ws_url):
+    super().__init__()
+    self.ws_url = ws_url
     self.ws = None
 
-  def connect(self, host="localhost", port=8765):
+  def connect(self):
     def coro():
-      #TODO: allow wss://
-      with connect(f"ws://{host}:{port}") as websocket:
-        self.on_connect(websocket)
+      with connect(self.ws_url) as websocket:
+        self.ws = websocket
+        self.on_connect()
         for message in websocket:
           self.on_message(message)
       self.on_disconnect()
 
     t = Thread(target=coro, daemon=True)
     t.start()
-
-  def on_connect(self, ws):
-    self.ws = ws
-    #TODO: this feels weird
-    super().on_connect()
 
   def send(self, command):
     self.ws.send(self.build_command(command))

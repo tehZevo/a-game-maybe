@@ -5,17 +5,18 @@ import json
 import dacite
 
 class Server:
-  def __init__(self, connect_handlers=[], disconnect_handlers=[], command_handlers=[]):
+  def __init__(self):
     self.clients = {}
-    self.connect_handlers = connect_handlers
-    self.disconnect_handlers = disconnect_handlers
-    self.command_handlers = defaultdict(list)
-    self.command_types = {}
     self.server_manager = None
     #TODO: track events per second sent/received
     self.one_second = 0
     self.events_per_second = 0
 
+  def setup_handlers(self, connect_handlers=[], disconnect_handlers=[], command_handlers=[]):
+    self.connect_handlers = connect_handlers
+    self.disconnect_handlers = disconnect_handlers
+    self.command_handlers = defaultdict(list)
+    self.command_types = {}
     for handler in command_handlers:
       self.register_command_handler(handler)
 

@@ -26,14 +26,16 @@ class ClientConnectHandler:
   def handle_connect(self, client):
     client.send(Sync())
 
+#TODO: allow setting url via ClientType class or something
 class ClientGame:
-  def __init__(self):
+  def __init__(self, client):
     pygame.init()
     self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     self.clock = pygame.time.Clock()
     pygame.display.set_caption("Game")
 
-    self.client = WebsocketClient(
+    self.client = client
+    self.client.setup_handlers(
       connect_handlers=[ClientConnectHandler()],
       event_handlers=[
         E.PlayerAssignedHandler(),
