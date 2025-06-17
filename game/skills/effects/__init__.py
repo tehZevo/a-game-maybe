@@ -8,3 +8,4 @@ from game.skills.effects.push import Push
 from game.skills.effects.rush import Rush
 from game.skills.effects.restore_health import RestoreHealth
 from game.skills.effects.restore_mana import RestoreMana
+from game.skills.effects.apply_buff import ApplyBuff

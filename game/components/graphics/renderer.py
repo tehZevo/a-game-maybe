@@ -36,6 +36,7 @@ class Renderer(Component):
 
     self.surface.fill((0, 0, 0, 0))
     for (surface, pos, area, tint, alpha) in self.draw_calls:
+      #TODO: use image_utils?
       if tint is not None:
         surface = surface.copy()
         surface.fill(tint, special_flags=pygame.BLEND_MULT)
@@ -43,6 +44,7 @@ class Renderer(Component):
       #TODO: do i need to reset this?
       alpha = 255 if alpha is None else math.floor(alpha * 255)
       surface.set_alpha(alpha)
+      #TODO: use
       self.surface.blit(surface, (pos.x, pos.y), area)
 
     #scale and draw to screen

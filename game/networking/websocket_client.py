@@ -1,7 +1,7 @@
 import time
 import asyncio
 
-from websockets.asyncio.client import connect
+# from websockets.asyncio.client import connect
 
 from .client import Client
 

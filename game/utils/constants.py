@@ -13,6 +13,7 @@ PLAYER_MOVE_SPEED = 1
 ENEMY_MOVE_SPEED = 1/4.
 CHUNK_SIZE = 16
 CAMERA_BOX_SIZE = 1
+DOT_TICK_RATE = 0.5 #seconds
 
 #scale factor to use since pygame rects are int-only
 #allows for fixed point ish collisions

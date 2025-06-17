@@ -25,8 +25,9 @@ class Player(Component, DamageListener, DeathListener):
     equips = self.get_component(C.Equips)
     #TODO: this should probably be save data, but we would need to inject it in the connect handler?
     equips.equip(SkillItem(S.test_player_skill))
-    equips.equip(SkillItem(S.test_killme_skill))
     equips.equip(SkillItem(S.hax_heal))
+    equips.equip(SkillItem(S.test_buff_skill))
+    equips.equip(SkillItem(S.test_killme_skill))
 
   def on_damage(self, attacker):
     if self.get_component(C.Invulnerable) is None:
@@ -46,4 +47,3 @@ class Player(Component, DamageListener, DeathListener):
     sprite = self.get_component(C.Sprite)
     sprite.set_sprite(Sprites.tombstone)
     sprite.set_speed(4)
-    #TODO: spawn ghost

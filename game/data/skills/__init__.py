@@ -3,3 +3,4 @@ from .test_alpha_skill import test_alpha_skill
 from .test_enemy_skill import test_enemy_skill
 from .test_player_skill import test_player_skill
 from .test_killme_skill import test_killme_skill
+from .test_buff_skill import test_buff_skill

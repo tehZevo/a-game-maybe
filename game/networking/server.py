@@ -34,7 +34,7 @@ class Server:
 
   def on_connect(self, id, connection):
     """Call me with an id and connection object of your choice"""
-    #store websocket and tell handlers about connection
+    #store connection and tell handlers about connection
     self.clients[id] = connection
     for handler in self.connect_handlers:
       handler.handle_connect(self.server_manager, self, id)

@@ -43,6 +43,7 @@ class HUD(Component):
     for (slot_type, slot), pos in ITEM_SLOTS.items():
       item_slot = self.entity.world.create_entity([UI.ItemSlot(slot_type, slot), C.Position(pos)])
       self.item_slots[(slot_type, slot)] = item_slot
+    self.buff_icons = self.entity.world.create_entity([UI.BuffIcons()])
   
   def set_player(self, player):
     print("player set", player)
@@ -50,3 +51,4 @@ class HUD(Component):
     self.mana_bar.get_component(UI.ManaBar).set_player(player)
     for (_, _), item_slot in self.item_slots.items():
       item_slot.get_component(UI.ItemSlot).set_player(player)
+    self.buff_icons.get_component(UI.BuffIcons).set_player(player)

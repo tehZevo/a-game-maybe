@@ -1,3 +1,13 @@
+- network buffs for ui
+- work on stats buffs
+- move constants to base game package
+- refactor skilleffects to use state pattern like buffeffects
+- network in pygbag
+- fix pygbag slowness
+- document skilleffect "target" (maybe make interface with set_target)?
+- maybe use `__all__` in data
+- pytmx/tiled (or other) map support - use a generator to just generate chunks based on tiled map
+- exclude websockets or create packager for pygbag
 - convert client/server/main loops to asyncio since i dont think pygbag supports python threads
 - track events per second sent/received
 - how to handle pre-game setup period?

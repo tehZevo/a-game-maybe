@@ -8,7 +8,7 @@ class Actor(Component):
   def __init__(self):
     super().__init__()
     self.require(C.Physics, C.Sprite, C.Stats, C.ItemDropper, C.Equips, \
-      C.Collisions, C.Team, C.Networking, C.ActorNetworking)
+      C.Collisions, C.Buffs, C.Team, C.Networking, C.ActorNetworking)
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)
@@ -20,9 +20,14 @@ class Actor(Component):
 
     #find all damage listeners and call their on_damage
     for listener in self.entity.find(C.DamageListener):
-      #TODO: add source
+      #TODO: track source
       source = None
       listener.on_damage(source)
+  
+  def heal(self, amount):
+    #TODO: track source
+    stats = self.get_component(C.Stats)
+    stats.add_hp(amount)
 
   #TODO: maybe move to equips or skillset
   def use_skill_in_slot(self, slot):
