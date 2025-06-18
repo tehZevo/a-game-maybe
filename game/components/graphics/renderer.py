@@ -6,6 +6,7 @@ import pygame
 from game.ecs import Component
 import game.components as C
 from game.utils.constants import TILE_SIZE
+from game.utils import Vector
 
 #draws drawables
 class Renderer(Component):
@@ -20,8 +21,8 @@ class Renderer(Component):
     for drawable in self.entity.world.find_components(C.Drawable):
       drawable.draw(self)
   
-  def draw(self, surface, pos, area=None, tint=None, alpha=1):
-    self.draw_calls.append((surface, pos, area, tint, alpha))
+  def draw(self, surface, pos, area=None, tint=None, alpha=1, offset=None):
+    self.draw_calls.append((surface, pos, area, tint, alpha, offset))
   
   #NOTE: override me if you want to process calls before rendering
   def modify_draw_calls(self, calls):
@@ -35,17 +36,16 @@ class Renderer(Component):
     self.draw_calls = self.modify_draw_calls(self.draw_calls.copy())
 
     self.surface.fill((0, 0, 0, 0))
-    for (surface, pos, area, tint, alpha) in self.draw_calls:
+    for (surface, pos, area, tint, alpha, offset) in self.draw_calls:
       #TODO: use image_utils?
       if tint is not None:
         surface = surface.copy()
         surface.fill(tint, special_flags=pygame.BLEND_MULT)
 
-      #TODO: do i need to reset this?
       alpha = 255 if alpha is None else math.floor(alpha * 255)
       surface.set_alpha(alpha)
-      #TODO: use
-      self.surface.blit(surface, (pos.x, pos.y), area)
+      draw_pos = pos + (offset or Vector())
+      self.surface.blit(surface, (draw_pos.x, draw_pos.y), area)
 
     #scale and draw to screen
     scaled = pygame.transform.scale(self.surface, screen.get_size())

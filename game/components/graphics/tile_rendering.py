@@ -1,7 +1,6 @@
 import math
 
 import pygame
-from pygame.math import Vector2
 
 from game.ecs import Component
 from .drawable import Drawable
@@ -58,4 +57,4 @@ class TileRendering(Component, Drawable):
           alpha = 0.5
         else:
           alpha = 1
-        renderer.draw(image, Vector(x, y - tile.y / 2), alpha=alpha)
+        renderer.draw(image, Vector(x, y), alpha=alpha, offset=Vector(0, -tile.y / 2))

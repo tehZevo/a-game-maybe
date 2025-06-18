@@ -13,11 +13,11 @@ class SpriteSyncing(Component, NetworkBehavior, SpriteListener):
     from game.networking.events import SpriteChanged
     sprite = self.get_component(C.Sprite)
     networking = self.get_component(C.Networking)
-    evt = SpriteChanged(networking.id, sprite.sprite.id, sprite.animation, sprite.time, sprite.speed, sprite.tint, sprite.alpha)
+    evt = SpriteChanged(networking.id, sprite.sprite.id, sprite.animation, sprite.time, sprite.speed, sprite.tint, sprite.alpha, sprite.offset)
     networking.send_to_client(client_id, evt)
     
   def on_sprite_changed(self, sprite):
     networking = self.get_component(C.Networking)
     if networking.is_server:
-      evt = SpriteChanged(networking.id, sprite.sprite.id, sprite.animation, sprite.time, sprite.speed, sprite.tint, sprite.alpha)
+      evt = SpriteChanged(networking.id, sprite.sprite.id, sprite.animation, sprite.time, sprite.speed, sprite.tint, sprite.alpha, sprite.offset)
       networking.broadcast_synced(evt)

@@ -19,6 +19,7 @@ class Sprite(Component, Drawable):
     self.manually_set_time = False
     self.tint = None
     self.alpha = None
+    self.offset = None
 
   @property
   def animation_finished(self):
@@ -74,4 +75,5 @@ class Sprite(Component, Drawable):
     if self.sprite is None or self.animation is None:
       return
     
-    self.sprite.draw(renderer, self.tint, self.alpha, self.animation, self.time, self.pos.pos.copy())
+    pos = self.pos.pos.copy()
+    self.sprite.draw(renderer, self.tint, self.alpha, self.animation, self.time, pos, self.offset)

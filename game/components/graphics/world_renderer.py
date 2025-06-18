@@ -11,10 +11,10 @@ from game.utils import Vector
 #TODO: i might need a DrawCall class and WorldDrawCall to extend
 # so we can set an offset that doesn't affect y sorting.. or specify a manual y sort value
 def y_sort(call):
-  surface, pos, area, _, _ = call
-  # height = area[3] if area is not None else surface.get_size()[1]
-  return math.ceil(pos.y)
-  # return math.floor(pos.y + (height / TILE_SIZE - 1))
+  surface, pos, _, area, _, offset = call
+  height = area[3] if area is not None else surface.get_size()[1]
+  #second clause works but not sure why
+  return (pos.y - height / TILE_SIZE, -offset.y if offset else 0)
 
 #TODO: flip y
 #TODO: screen shake?
@@ -24,8 +24,10 @@ class WorldRenderer(Renderer):
     self.camera = camera
   
   def transform(self, call, camera_offset):
-    surface, pos, area, tint, alpha = call
-    return (surface, pos * TILE_SIZE + camera_offset, area, tint, alpha)
+    surface, pos, area, tint, alpha, offset = call
+    new_pos = pos * TILE_SIZE + camera_offset
+    new_offset = offset and (offset * TILE_SIZE)
+    return (surface, new_pos, area, tint, alpha, new_offset)
 
   def modify_draw_calls(self, calls):
     if self.camera is not None:

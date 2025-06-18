@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from ..event_handler import EventHandler
 import game.components as C
 from game.data.registry import get_sprite
+from game.utils import Vector
 
 @dataclass
 class SpriteChanged:
@@ -13,6 +14,7 @@ class SpriteChanged:
   speed: float
   tint: tuple | None
   alpha: float | None
+  offset: Vector | None
 
 class SpriteChangedHandler(EventHandler):
   def __init__(self):
@@ -31,3 +33,4 @@ class SpriteChangedHandler(EventHandler):
     sprite.set_time(event.time)
     sprite.tint = event.tint
     sprite.alpha = event.alpha
+    sprite.offset = event.offset
