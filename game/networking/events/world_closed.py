@@ -12,5 +12,5 @@ class WorldClosedHandler(EventHandler):
     self.client_game = client_game
 
   def handle(self, client_manager, client, event):
-    print("[Client] server says pool's closed")
+    print("[Client] Server closed world")
     self.client_game.transition()

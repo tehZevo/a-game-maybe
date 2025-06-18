@@ -1,3 +1,4 @@
+from .component import Component
 
 class Entity:
   def __init__(self):
@@ -49,3 +50,11 @@ class Entity:
 
   def __repr__(self):
     return "[" + ", ".join([e for e in self.components.keys()]) + "]"
+  
+  def __iter__(self):
+    for c in self.components.values():
+      #TODO: remove
+      if not isinstance(c, Component):
+        raise ValueError(f"{c} is not a component!")
+      yield c
+    # return iter(self.components.values())

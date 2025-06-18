@@ -21,15 +21,29 @@ class TileRendering(Component, Drawable):
     self.chunks = {}
     self.mapdef = None
     self.player = None
+    #TODO: bake floors and render instead of individual sprites
+    self.chunk_floors = {}
 
   def load_chunk(self, x, y, chunk):
     self.chunks[(x, y)] = chunk
+    self.chunk_floors[(x, y)] = self.bake_chunk_floor(chunk)
+  
+  #TODO: ignoring floor height for now...
+  def bake_chunk_floor(self, chunk):
+    surface = pygame.Surface((CHUNK_SIZE * TILE_SIZE, CHUNK_SIZE * TILE_SIZE))
+    for tx, ty, tile in chunk.itertiles():
+      if tile.tile_type != TileType.FLOOR:
+        continue
+      image = get_image(self.mapdef.palette[tile.tile_type])
+      surface.blit(image, (tx * TILE_SIZE, ty * TILE_SIZE))
+    return surface
   
   def unload_chunk(self, x, y):
     if (x, y) not in self.chunks:
       print(f"[Client] Server asked us to unload already unloaded chunk at {x}, {y}")
       return
     del self.chunks[(x, y)]
+    del self.chunk_floors[(x, y)]
   
   def draw(self, renderer):
     #TODO: wat
@@ -45,8 +59,12 @@ class TileRendering(Component, Drawable):
     player_pos = self.player.get_component(C.Position).pos
     
     for (cx, cy), chunk in list(self.chunks.items()).copy():
+      floor = self.chunk_floors[(cx, cy)]
+      #TODO: not sure why there are black gaps
+      renderer.draw(floor, Vector(cx * CHUNK_SIZE, cy * CHUNK_SIZE))
+
       for tx, ty, tile in chunk.itertiles():
-        if tile.tile_type == TileType.EMPTY:
+        if tile.tile_type == TileType.EMPTY:# or tile.tile_type == TileType.FLOOR:
           continue
         x = cx * CHUNK_SIZE + tx
         y = cy * CHUNK_SIZE + ty

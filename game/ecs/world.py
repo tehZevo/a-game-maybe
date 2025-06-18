@@ -1,3 +1,4 @@
+from collections import defaultdict
 from itertools import chain
 
 from game.ecs import Entity
@@ -5,32 +6,43 @@ from game.ecs import Entity
 class World:
   def __init__(self):
     self.entities = []
+    self.lookup = defaultdict(list)
 
   def create_entity(self, components):
     entity = Entity()
     for component in components:
       entity.add_component(component)
+    self.add_to_lookup(entity)
     self.add_entity(entity)
 
     return entity
 
+  #TODO: add to lookup when adding/remove components in entity
+  #TODO: entity dity flag?
+  def add_to_lookup(self, entity):
+    for c in entity:
+      self.lookup[c.__class__].append(entity)
+
+  def remove_from_lookup(self, entity):
+    for c in entity:
+      self.lookup[c.__class__] = [e for e in self.lookup[c.__class__] if e != entity]
+
   def add_entity(self, entity):
-    #TODO: need to prevent ability of adding a new entity to the list from another thread
-    # may have to add to a separate list and then concat with main list adfter update
-    #TODO: lock?
-    #starting entity before adding to world list prevents it from being updated in a separate thread..
-    #this avoids some crashes but feels "weird", as logically, the entity *should* be in the world before starting
     entity.world = self
-    entity.start()
     self.entities.append(entity)
+    entity.start()
 
   #returns all entities with the given component
   def find(self, component_type):
-    return [e for e in self.entities if e.get_component(component_type) is not None]
-
+    found_entities = []
+    for lookup_type, entities in self.lookup.items():
+      if issubclass(lookup_type, component_type):
+        found_entities += entities
+    return found_entities
+  
   def find_components(self, component_type):
-    #return ALL components that match
-    return list(chain.from_iterable([e.find(component_type) for e in self.find(component_type)]))
+    entities = self.find(component_type)
+    return [e.get_component(component_type) for e in entities]
 
   #shorthand
   def find_component(self, component_type):
@@ -49,6 +61,7 @@ class World:
     for e in ents:
       if not e.alive:
         e.on_destroy()
+        self.remove_from_lookup(e)
 
     #filter dead entities in original entity list
     self.entities = [e for e in self.entities if e.alive]

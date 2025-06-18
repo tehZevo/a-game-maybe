@@ -33,4 +33,5 @@ class Tileset:
     return self.tiles[i]
 
   def itertiles(self):
+    #TODO: replace with __iter__
     return ((x, y, self.get_tile(x, y)) for x in range(self.width) for y in range(self.height) if self.get_tile(x, y) is not None)
