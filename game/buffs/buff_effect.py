@@ -9,7 +9,7 @@ class BuffEffect:
     
     def update(self, buff, state):
         """Optionally return a state value/object"""
-        return None
+        return state
     
     def remove(self, buff, state):
         pass

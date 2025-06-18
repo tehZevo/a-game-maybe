@@ -24,5 +24,5 @@ class HealthBar(Component):
     if self.player is None:
       return
 
-    self.bar.max_value = self.player_stats.secondary_stats.hp
+    self.bar.max_value = self.player_stats.stats.secondary.hp
     self.bar.value = self.player_stats.hp

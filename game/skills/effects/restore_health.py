@@ -9,4 +9,4 @@ class RestoreHealth(SkillEffect):
 
   def start(self):
     stats = self.target.get_component(Stats)
-    stats.add_hp(stats.secondary_stats.hp * self.percent)
+    stats.add_hp_percent(self.percent)

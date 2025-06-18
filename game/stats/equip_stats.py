@@ -22,4 +22,6 @@ class EquipStats:
   def __mul__(self, other):
     if isinstance(other, EquipStats):
       return EquipStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: a * b))
-    return EquipStats(self.PATT * other, self.MATT * other, self.PDEF * other, self.MDEF * other)
+    return EquipStats(**{k: v * other for k, v in self.__dict__.items()})
+
+EquipStats.One = EquipStats(1, 1, 1, 1)

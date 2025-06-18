@@ -1,4 +1,4 @@
-from .buff_effect import BuffEffect
+from game.buffs import BuffEffect
 from game.utils.constants import DOT_TICK_RATE, DT
 import game.components as C
 
@@ -6,7 +6,7 @@ class HealOverTime(BuffEffect):
     def __init__(self, amount_per_power=1):
         super().__init__()
         self.amount_per_power = amount_per_power
-     
+    
     def apply(self, buff):
         return 0 #our state (time since last tick)
     

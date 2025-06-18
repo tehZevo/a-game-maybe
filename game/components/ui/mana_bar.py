@@ -24,5 +24,5 @@ class ManaBar(Component):
     if self.player is None:
       return
 
-    self.bar.max_value = self.player_stats.secondary_stats.mp
+    self.bar.max_value = self.player_stats.stats.secondary.mp
     self.bar.value = self.player_stats.mp

@@ -9,4 +9,4 @@ class RestoreMana(SkillEffect):
 
   def start(self):
     stats = self.target.get_component(Stats)
-    stats.add_mp(stats.secondary_stats.mp * self.percent)
+    stats.add_mp_percent(self.percent)

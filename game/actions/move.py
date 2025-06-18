@@ -22,7 +22,7 @@ class Move(Action):
       self.get_component(C.Actor).look_dir = look_dir
     phys = self.get_component(C.Physics)
     stats = self.get_component(C.Stats)
-    force = self.dir.normalized() * stats.secondary_stats.move_speed * stats.move_speed_multiplier
+    force = self.dir.normalized() * stats.stats.secondary.move_speed * stats.move_speed_multiplier
     phys.apply_force(force)
 
     sprite = self.get_component(C.Sprite)

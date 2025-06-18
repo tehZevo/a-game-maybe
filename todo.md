@@ -1,4 +1,5 @@
-- work on stats buffs
+- rename "equips" component to "loadout"
+- change equips to just use Stats (may also have both flat and scaled)
 - move constants to base game package
 - refactor skilleffects to use state pattern like buffeffects
 - network in pygbag
@@ -6,6 +7,8 @@
 - fix pygbag slowness
 - consider 8x8 item sprites
   - this would make rank icons very difficult
+- in towns, have dialogs that warn/recommend rank (e-ss)
+- game settings (difficulty/grindiness)
 - make index operator on entity manipulate components
 - maybe same thing on world?
 - send buffs on client spawn

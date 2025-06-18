@@ -12,8 +12,8 @@ class Damage(SkillEffect):
       return
 
     #calc damage
-    user_stats = self.user.get_component(Stats).secondary_stats
-    target_stats = self.target.get_component(Stats).secondary_stats
+    user_stats = self.user.get_component(Stats).stats.secondary
+    target_stats = self.target.get_component(Stats).stats.secondary
     #TODO: assumes physical, add constructor param for phys/mag
     damage = user_stats.phys_att * self.power / 100. - target_stats.phys_def
     #dont heal lol

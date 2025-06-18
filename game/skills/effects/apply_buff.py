@@ -4,7 +4,7 @@ import game.components as C
 
 #TODO: stacks?
 
-no_scaling = lambda equip_stats, primary_stats, secondary_stats: 0
+no_scaling = lambda stats: 0
 
 class ApplyBuff(SkillEffect):
   def __init__(self, buffdef, flat_power=0, flat_time=0, power_scaling=no_scaling, time_scaling=no_scaling):
@@ -16,11 +16,10 @@ class ApplyBuff(SkillEffect):
     self.time_scaling = time_scaling
 
   def start(self):
-    stats = self.target.get_component(C.Stats)
+    stats = self.target.get_component(C.Stats).stats
     buffs = self.target.get_component(C.Buffs)
     #calc power/time
-    a, b, c = stats.equip_stats, stats.primary_stats, stats.secondary_stats
-    power = self.flat_power + self.power_scaling(a, b, c)
-    time = self.flat_time + self.time_scaling(a, b, c)
+    power = self.flat_power + self.power_scaling(stats)
+    time = self.flat_time + self.time_scaling(stats)
     #create and apply instance
     buffs.apply_buff(self.buffdef, power, time, self.user)

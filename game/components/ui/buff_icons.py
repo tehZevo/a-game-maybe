@@ -39,14 +39,15 @@ class BuffIcons(UIComponent):
     buff_bg = get_image("assets/ui/buff_bg.png")
     pos = self.pos.pos.copy()
 
-    for buff in buffs:
+    for i, buff in enumerate(buffs):
       #TODO: flash when time < 10s?
       if buff.buffdef.icon is None:
         continue
-      
+
+      offset = Vector(i * 9, 0)
       buff_image = get_image(buff.buffdef.icon)
       t = max(buff.time / buff.initial_time, 0)
       timer_frame = image_utils.get_frame_t(timer, 8, 1 - t, clamp=True)
-      renderer.draw(buff_bg, pos)
-      renderer.draw(buff_image, pos)
-      renderer.draw(timer_frame, pos, None, (0, 0, 0), 0.5)
+      renderer.draw(buff_bg, pos + offset)
+      renderer.draw(buff_image, pos + offset)
+      renderer.draw(timer_frame, pos + offset, None, (0, 0, 0), 0.5)

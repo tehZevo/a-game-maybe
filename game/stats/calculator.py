@@ -1,11 +1,14 @@
+from functools import reduce
+
 #TODO: use some defaults instead of an explicit hands item?
 from game.data.items import hands
 
 from . import PrimaryStat, PrimaryStats, SecondaryStats, EquipStat, EquipStats
 
-from game.components.item import Equips
+import game.components as C
 from game.items.weapon_type import weapon_physical_stat_assignment, weapon_magical_stat_assignment
 from game.items.slots import WeaponSlot
+from .stats import Stats
 
 #physical/magical attack are based on weapon attack and the weapon stats
 
@@ -33,15 +36,35 @@ BASE_SECONDARY_STATS = SecondaryStats(
   move_speed=100
 )
 
+def get_modifiers(entity):
+  stats = entity.get_component(C.Stats)
+  flat = stats.flat_modifiers.values()
+  scaling = stats.scaling_modifiers.values()
+  
+  flat = reduce(lambda a, b: a + b, flat, Stats())
+  scaling = reduce(lambda a, b: a + b, scaling, Stats.One)
+  return flat, scaling
+  
 def calculate(entity):
-  primary_stats = calculate_primary_stats(entity)
-  equip_stats = calculate_equip_stats(entity)
-  secondary_stats = calculate_secondary_stats(entity, primary_stats, equip_stats)
+  flat, scaling = get_modifiers(entity)
 
-  return primary_stats, equip_stats, secondary_stats
+  base_equip_stats = get_stats_from_equips(entity)
+  equip_stats = (base_equip_stats + flat.equip) * scaling.equip
+
+  base_primary_stats = calculate_primary_stats(entity)
+  primary_stats = (base_primary_stats + flat.primary) * scaling.primary
+  
+  base_secondary_stats = calculate_secondary_stats(entity, primary_stats, equip_stats)
+  secondary_stats = (base_secondary_stats + flat.secondary) * scaling.secondary
+  
+  return Stats(
+    primary=primary_stats,
+    equip=equip_stats,
+    secondary=secondary_stats,
+  )
 
 def calculate_primary_stats(entity):
-  equips = entity.get_component(Equips)
+  equips = entity.get_component(C.Equips)
 
   #sum up primary stats
   stats = BASE_PRIMARY_STATS
@@ -54,15 +77,15 @@ def calculate_primary_stats(entity):
     if equip is not None:
       stats = stats + equip.primary_stats
 
-  #TODO: apply modifiers from passives/buffs/debuffs/etc
   return stats
 
-def calculate_equip_stats(entity):
-  equips = entity.get_component(Equips)
+#TODO: eventually this should return a full Stats
+def get_stats_from_equips(entity):
+  equips = entity.get_component(C.Equips)
 
   #sum up equip stats
   stats = BASE_EQUIP_STATS
-
+  
   for equip in equips.armor.values():
     if equip is not None:
       stats = stats + equip.equip_stats
@@ -75,7 +98,7 @@ def calculate_equip_stats(entity):
 
 def calculate_secondary_stats(entity, primary_stats, equip_stats):
   #TODO: handle 2h and secondary weapons
-  weapon = entity.get_component(Equips).weapons[WeaponSlot.PRIMARY]
+  weapon = entity.get_component(C.Equips).weapons[WeaponSlot.PRIMARY]
   if weapon is None:
     weapon = hands
 

@@ -5,7 +5,7 @@ from ..event_handler import EventHandler
 import game.components as C
 from game.stats import PrimaryStats, SecondaryStats, EquipStats
 
-#TODO: maybe need a FullStats dataclass that stores all this data
+#TODO: use full Stats class instead
 @dataclass
 class StatsUpdated:
   id: str
@@ -30,8 +30,5 @@ class StatsUpdatedHandler(EventHandler):
     stats.mp = event.mp
     stats.move_speed_multiplier = event.move_speed_multiplier
     stats.primary_stats = event.primary_stats
-    #TODO: maybe we should call recalculate instead of sending secondary stats over the wire?
     stats.secondary_stats = event.secondary_stats
     stats.equip_stats = event.equip_stats
-    #TODO: recalculate?
-    # stats.recalculate()

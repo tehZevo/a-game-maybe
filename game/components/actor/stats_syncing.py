@@ -15,9 +15,9 @@ class StatsSyncing(Component, NetworkBehavior, StatsListener):
     if networking.is_server:
       evt = StatsUpdated(
         id=networking.id,
-        primary_stats=stats.primary_stats,
-        secondary_stats=stats.secondary_stats,
-        equip_stats=stats.equip_stats,
+        primary_stats=stats.stats.primary,
+        secondary_stats=stats.stats.secondary,
+        equip_stats=stats.stats.equip,
         hp=stats.hp,
         mp=stats.mp,
         move_speed_multiplier=stats.move_speed_multiplier,

@@ -18,19 +18,18 @@ class Buffs(Component):
       or (power == existing.power and time > existing.time)
   
   def get_buff(self, buffdef):
-    return self.buffs.get(buffdef.__class__)
+    return self.buffs.get(buffdef)
 
   def apply_buff(self, buffdef, power, time, caster):
     """Returns true if buff was applied"""
-    buff_type = buffdef.__class__
-    existing = self.buffs.get(buff_type)
+    existing = self.buffs.get(buffdef)
     
     if not self.should_apply(existing, power, time):
       return False
     
     buff = Buff(buffdef, power, time, self.entity, caster)
     existing and existing.remove()
-    self.buffs[buff_type] = buff
+    self.buffs[buffdef] = buff
     buff.apply()
     self.dirty = True
     
@@ -40,7 +39,7 @@ class Buffs(Component):
     existing = self.get_buff(buffdef)
     if existing is not None:
       existing.remove()
-      del self.buffs[buffdef.__class__]
+      del self.buffs[buffdef]
       self.dirty = True
     
   def update(self):
