@@ -43,7 +43,8 @@ class Buffs(Component):
       self.dirty = True
     
   def update(self):
-    for buff in self.buffs.values():
+    for buff in list(self.buffs.values()):
+      print("updating", buff.buffdef.id)
       buff.update()
       if buff.time <= 0:
         buff.remove()
