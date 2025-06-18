@@ -22,6 +22,7 @@ class Stats(Component):
   def alert_listeners(self):
     #TODO: a single skill use generates a LOT of stats updated events lol
     #- maybe add separate events for (current) hp/mp updated
+    #TODO: use dirty flag (causes 1 tick delay)
     for listener in self.entity.find(C.StatsListener):
       listener.on_stats_changed(self)
 

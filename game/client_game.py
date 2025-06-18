@@ -61,6 +61,7 @@ class ClientGame:
         E.WorldClosedHandler(self),
         E.WorldOpenedHandler(),
         E.PongHandler(),
+        E.BuffsUpdatedHandler(),
       ]
     )
 

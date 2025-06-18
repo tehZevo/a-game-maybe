@@ -21,7 +21,14 @@ class Entity:
     #TODO: warn if component type already exists on this entity?
     self.components[component.__class__.__name__] = component
     component.register(self)
-
+  
+  def ensure_component(self, component_type):
+    component = self.get_component(component_type)
+    if component is None:
+      component = component_type()
+      self.add_component(component)
+    return component
+    
   def remove_component(self, component):
     #TODO: on remove?
     self.components = {t: c for t, c in self.components.items() if c != component}

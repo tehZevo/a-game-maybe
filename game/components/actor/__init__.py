@@ -8,8 +8,11 @@ from game.components.actor.actor import Actor
 from game.components.actor.enemy import Enemy
 from game.components.actor.player import Player
 from game.components.actor.ghost import Ghost
+from game.components.actor.buffs_syncing import BuffsSyncing
 from game.components.actor.buffs import Buffs
 from game.components.actor.actor_networking import ActorNetworking
 #TODO: move these to networking comps?
 from game.components.actor.stats_syncing import StatsSyncing
 from game.components.actor.equips_syncing import EquipsSyncing
+from .client_buffs import *
+from .buffs_listener import *

@@ -23,22 +23,30 @@ class BuffIcons(UIComponent):
   def start(self):
     pos = self.get_component(Position)
     pos.pos = Vector(32, 32)
+    self.pos = pos
 
   def draw(self, renderer):
     if self.player is None:
       return
     
-    #TODO: buff ordering? (sort?)
-    buffs = self.player.get_component(C.Buffs).buffs.values()
+    buffs = self.player.get_component(C.ClientBuffs)
+    if buffs is None:
+      return
+    buffs = buffs.buffs
+    #TODO: buff ordering? (sort? maybe a param on buffdef?)
+    buffs = self.player.get_component(C.ClientBuffs).buffs
     timer = get_image("assets/ui/buff_timer.png")
-    
+    buff_bg = get_image("assets/ui/buff_bg.png")
+    pos = self.pos.pos.copy()
+
     for buff in buffs:
       #TODO: flash when time < 10s?
       if buff.buffdef.icon is None:
         continue
       
       buff_image = get_image(buff.buffdef.icon)
-      t = buff.time / buff.initial_time
-      timer_frame = image_utils.get_frame_t(timer, 8, 1 - t)
-      renderer.draw(buff_image, pos.copy())
-      renderer.draw(timer_frame, pos.copy(), None, (0, 0, 0), 0.5)
+      t = max(buff.time / buff.initial_time, 0)
+      timer_frame = image_utils.get_frame_t(timer, 8, 1 - t, clamp=True)
+      renderer.draw(buff_bg, pos)
+      renderer.draw(buff_image, pos)
+      renderer.draw(timer_frame, pos, None, (0, 0, 0), 0.5)

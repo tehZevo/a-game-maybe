@@ -5,8 +5,6 @@ from ..event_handler import EventHandler
 import game.components as C
 from game.data.registry import get_item
 
-#TODO: how to network items themselves?
-#TODO: we could network the ids
 @dataclass
 class EquipsUpdated:
   id: str
@@ -22,10 +20,8 @@ class EquipsUpdatedHandler(EventHandler):
     if event.id not in client_manager.networked_entities:
       return
 
-    #TODO: how to handle stats being recalculated from updating equips?
-    #TODO: should we just calculate client side and send a hp/mp updated event?
+    #TODO: avoid calculating stats on client and just wait for stats updated
     #hydrate equips
-    #TODO: i think dacite converts int dict keys to str.. need to fix that
     armor = {int(k): get_item(v) if v is not None else None for k, v in event.armor.items()}
     skills = {int(k): get_item(v) if v is not None else None for k, v in event.skills.items()}
     weapons = {int(k): get_item(v) if v is not None else None for k, v in event.weapons.items()}

@@ -1,9 +1,14 @@
-- network buffs for ui
 - work on stats buffs
 - move constants to base game package
 - refactor skilleffects to use state pattern like buffeffects
 - network in pygbag
+- consider other serialization methods (bson?)
 - fix pygbag slowness
+- consider 8x8 item sprites
+  - this would make rank icons very difficult
+- make index operator on entity manipulate components
+- maybe same thing on world?
+- send buffs on client spawn
 - document skilleffect "target" (maybe make interface with set_target)?
 - maybe use `__all__` in data
 - pytmx/tiled (or other) map support - use a generator to just generate chunks based on tiled map
@@ -42,6 +47,9 @@
 - generator should make a player spawn point component, which players are spawned on by the generators spawn method
 - highlight which entity the player would interact with
 - hide skill slots until picked up for the first time?
+  - hide skill slots that are "higher level" than the highest equipped
+  - e.g. if you have a beta, show alpha and beta, but not delta +
+- slime boss that splits into 4 smaller slimes multiple times (1->4->16->64)
 - air mechanics
   - jumping
   - shadow (separate entity?)

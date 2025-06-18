@@ -6,6 +6,8 @@ class Component:
     self.entity = None
     self.required_components = set()
 
+  #TODO: rather than requiring, could we have a function like ensure_component(s)?
+  #TODO: then we could get a bunch of components at start all at once
   #accepts varargs of types
   def require(self, *types):
     self.required_components.update(types)

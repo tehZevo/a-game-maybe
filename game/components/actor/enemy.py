@@ -1,7 +1,7 @@
 import random
 
 from game.ecs import Component
-from game.actions import Move, UseSkill
+import game.actions as A
 from game.utils import Vector
 from game.utils.teams import ENEMY
 from game.components.actor import DeathListener
@@ -60,11 +60,11 @@ class Enemy(Component, DeathListener):
         dist = target_pos.distance(enemy_pos)
         if dist < self.follow_dist:
           skill = random.choice(self.mobdef.skills)
-          self.get_component(C.Actor).act(UseSkill(skill))
+          self.get_component(C.Actor).act(A.UseSkill(skill))
         else:
           move_dir = target_pos - enemy_pos
 
         #apply move action
-        self.get_component(C.Actor).act(Move(move_dir))
+        self.get_component(C.Actor).act(A.Move(move_dir))
 
     #TODO: add wandering behavior

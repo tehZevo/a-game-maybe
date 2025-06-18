@@ -35,6 +35,7 @@ class Equips(Component, Savable):
       self.skills[item.skilldef.slot] = item
 
     self.alert_listeners()
+    #TODO: make stats listen to equips?
     self.get_component(C.Stats).recalculate()
     
     return cur_equip

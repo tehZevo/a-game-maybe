@@ -1,36 +1,43 @@
 from dataclasses import dataclass
+from typing import List
 
-from game.utils import Vector
 from ..event_handler import EventHandler
 import game.components as C
-from game.data.registry import get_item
+from game.data.registry import get_buff
+from game.utils.constants import DT
 
-#TODO
+@dataclass
+class ClientBuff:
+  buffdef_id: str
+  power: float
+  initial_time: float
+  time: float
+  
+  def __init__(self, buffdef_id, power, initial_time, time):
+    self.buffdef_id = buffdef_id
+    self.buffdef = get_buff(buffdef_id)
+    self.power = power
+    self.initial_time = initial_time
+    self.time = time
+  
+  def update(self):
+    self.time -= DT
+    self.time = max(0, self.time)
+
 @dataclass
 class BuffsUpdated:
   id: str
-  armor: dict
-  skills: dict
-  weapons: dict
+  buffs: List[ClientBuff]
 
-class EquipsUpdatedHandler(EventHandler):
+class BuffsUpdatedHandler(EventHandler):
   def __init__(self):
-    super().__init__(EquipsUpdated)
+    super().__init__(BuffsUpdated)
 
   def handle(self, client_manager, client, event):
-    if event.id not in client_manager.networked_entities:
-      return
+    ent = client_manager.networked_entities.get(event.id)
 
-    #TODO: how to handle stats being recalculated from updating equips?
-    #TODO: should we just calculate client side and send a hp/mp updated event?
-    #hydrate equips
-    #TODO: i think dacite converts int dict keys to str.. need to fix that
-    armor = {int(k): get_item(v) if v is not None else None for k, v in event.armor.items()}
-    skills = {int(k): get_item(v) if v is not None else None for k, v in event.skills.items()}
-    weapons = {int(k): get_item(v) if v is not None else None for k, v in event.weapons.items()}
-    #TODO: create equips function that sets all 3 and then recalculates
-    ent = client_manager.networked_entities[event.id]
-    equips = ent.get_component(C.Equips)
-    equips.armor = armor
-    equips.skills = skills
-    equips.weapons = weapons
+    if ent is None:
+      return
+    
+    buffs = ent.ensure_component(C.ClientBuffs)
+    buffs.set_buffs(event.buffs)

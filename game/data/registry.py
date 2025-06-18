@@ -10,3 +10,7 @@ def get_sprite(id):
 def get_map(id):
     import game.data.maps as maps
     return getattr(maps, id)
+
+def get_buff(id):
+    import game.data.buffs as buffs
+    return getattr(buffs, id)
