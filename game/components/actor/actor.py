@@ -14,7 +14,14 @@ class Actor(Component):
     self.look_dir = Vector(0, -1)
     self.move_dir = self.look_dir.copy()
     self.actor_alive = True
+    self.shadow = None
 
+  def start(self):
+    self.shadow = self.entity.world.create_entity([
+      C.Position(self.entity[C.Position].pos.copy()),
+      C.Shadow()
+    ])
+    
   def damage(self, amount):
     stats = self.get_component(C.Stats)
     stats.add_hp(-amount)
@@ -72,6 +79,8 @@ class Actor(Component):
 
   def update(self):
     stats = self.get_component(C.Stats)
+    pos = self.get_component(C.Position)
+    self.shadow[C.Position].pos = pos.pos.copy()
     
     if self.actor_alive and stats.hp <= 0:
       self.actor_alive = False
@@ -83,3 +92,6 @@ class Actor(Component):
       return
 
     self.update_action()
+
+  def on_destroy(self):
+    self.shadow.remove()

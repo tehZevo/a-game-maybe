@@ -1,6 +1,6 @@
+- pygbag doesnt like adding fields to dataclasses (e.g. EquipStats.One)
 - rename "equips" component to "loadout"
 - don't sync position every tick, interpolate
-- make it possible to buffer a "face direction" between skills
 - sync velocity
 - change equips to just use Stats (may also have both flat and scaled)
 - move constants to base game package
@@ -11,8 +11,6 @@
   - this would make rank icons very difficult
 - in towns, have dialogs that warn/recommend rank (e-ss)
 - game settings (difficulty/grindiness)
-- make index operator on entity manipulate components
-- maybe same thing on world?
 - document skilleffect "target" (maybe make interface with set_target)?
 - maybe use `__all__` in data
 - pytmx/tiled (or other) map support - use a generator to just generate chunks based on tiled map

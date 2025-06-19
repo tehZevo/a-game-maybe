@@ -65,3 +65,6 @@ class World:
 
     #filter dead entities in original entity list
     self.entities = [e for e in self.entities if e.alive]
+
+  def __getitem__(self, component_type):
+    return self.find_components(component_type)

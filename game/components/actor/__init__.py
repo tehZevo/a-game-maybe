@@ -16,3 +16,4 @@ from game.components.actor.stats_syncing import StatsSyncing
 from game.components.actor.equips_syncing import EquipsSyncing
 from .client_buffs import *
 from .buffs_listener import *
+from .shadow import *

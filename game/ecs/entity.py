@@ -58,3 +58,6 @@ class Entity:
         raise ValueError(f"{c} is not a component!")
       yield c
     # return iter(self.components.values())
+
+  def __getitem__(self, component_type):
+    return self.get_component(component_type)
