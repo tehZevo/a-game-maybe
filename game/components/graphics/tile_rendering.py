@@ -8,7 +8,7 @@ import game.components as C
 from game.utils.image_cache import get_image
 from game.utils.constants import TILE_SIZE, CHUNK_SIZE
 from game.utils import Vector
-from game.tiles import TileType
+from game.tiles import TileType, is_floor, is_wall
 
 def is_behind(px, py, tx, ty):
   if px > tx - 1 and px < tx + 1 and py < ty and py > ty - 1.5:
@@ -32,8 +32,9 @@ class TileRendering(Component, Drawable):
   def bake_chunk_floor(self, chunk):
     surface = pygame.Surface((CHUNK_SIZE * TILE_SIZE, CHUNK_SIZE * TILE_SIZE))
     for tx, ty, tile in chunk.__iter__():
-      if tile.tile_type != TileType.FLOOR:
+      if not is_floor(tile.tile_type):
         continue
+      #TODO: fix AttributeError: 'NoneType' object has no attribute 'palette'
       image = get_image(self.mapdef.palette[tile.tile_type])
       surface.blit(image, (tx * TILE_SIZE, ty * TILE_SIZE))
     return surface
@@ -64,14 +65,14 @@ class TileRendering(Component, Drawable):
       renderer.draw(chunk_floor, Vector(math.floor(cx * CHUNK_SIZE), math.floor(cy * CHUNK_SIZE)))
 
       for tx, ty, tile in chunk.__iter__():
-        if tile.tile_type == TileType.EMPTY or tile.tile_type == TileType.FLOOR:
+        if tile.tile_type == TileType.EMPTY or is_floor(tile.tile_type):
           continue
         x = cx * CHUNK_SIZE + tx
         y = cy * CHUNK_SIZE + ty
         #TODO: draw with height
         #TODO: handle y-up :)
         image = get_image(self.mapdef.palette[tile.tile_type])
-        if tile.tile_type == TileType.WALL and is_behind(player_pos.x, player_pos.y, x, y):
+        if is_wall(tile.tile_type) and is_behind(player_pos.x, player_pos.y, x, y):
           alpha = 0.5
         else:
           alpha = 1

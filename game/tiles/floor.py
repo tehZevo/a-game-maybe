@@ -1,5 +1,5 @@
 from .tile import Tile, TileType
 
 class Floor(Tile):
-  def __init__(self):
-    super().__init__(TileType.FLOOR, solid=False)
+  def __init__(self, type=TileType.FLOOR):
+    super().__init__(type, solid=False)

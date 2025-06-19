@@ -53,7 +53,7 @@ class ServerGame:
     server_manager.server = self.server
 
     #generate using mapdef
-    mapdef.generator.generate(world)
+    mapdef.generator.generate(world, mapdef)
     
     return world
 

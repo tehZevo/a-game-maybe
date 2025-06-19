@@ -6,14 +6,12 @@ from .floor_generator import FloorGenerator
 from game.components.tiles import Stairs, Spawner
 from game.components.physics import Position
 from game.components.tiles import TilePhysics
-from game.tiles import Tileset, Floor, Wall
+from game.tiles import Tileset, Floor, Wall, TileType
 import game.data.mobs as Mobs
-import game.data.maps as Maps
 from game.utils import Vector
 from game.utils.constants import CHUNK_SIZE
 import game.components as C
-
-SPAWNER_CHANCE = 0.5
+from game.data.registry import get_map
 
 #TODO: make utility
 def chunk_tiles(tiles):
@@ -29,11 +27,15 @@ def chunk_tiles(tiles):
   return chunks
 
 class DFSGenerator(FloorGenerator):
-  def __init__(self):
+  def __init__(self, room_size=8, floor_size=3, door_width=2, accent=1/10, spawner_chance=0.25, next_maps=[]):
     super().__init__()
-    self.floor_size = 3 #in number of rooms wide/tall
-    self.room_size = 12
-    self.door_width = 3
+    #in number of rooms wide/tall
+    self.floor_size = floor_size
+    self.room_size = room_size
+    self.door_width = door_width
+    self.accent = accent
+    self.next_maps = next_maps
+    self.spawner_chance = spawner_chance
 
   def build_dfs(self):
     def oob(x, y):
@@ -101,14 +103,20 @@ class DFSGenerator(FloorGenerator):
     for rx, ry, north, south, east, west in rooms:
       for tx in range(self.room_size):
         for ty in range(self.room_size):
-          tile = Wall() if is_wall(tx, ty, north, south, east, west) else Floor()
+          if is_wall(tx, ty, north, south, east, west):
+            tile_type = TileType.WALL_ACCENT if random.random() < self.accent else TileType.WALL
+            tile = Wall(type=tile_type)
+          else:
+            tile_type = TileType.FLOOR_ACCENT if random.random() < self.accent else TileType.FLOOR
+            tile = Floor(type=tile_type)
+
           x = rx * self.room_size + tx
           y = ry * self.room_size + ty
           tiles[(x, y)] = tile
     return tiles
     
   #TODO: generate chunks instead of single tileset
-  def generate(self, world):
+  def generate(self, world, mapdef):
     rooms = self.build_dfs()
     tiles = self.rooms_to_tiles(rooms)
     chunks = chunk_tiles(tiles)
@@ -118,7 +126,7 @@ class DFSGenerator(FloorGenerator):
 
     for rx, ry, _, _, _, _ in rooms:
       #randomly create spawners
-      if random.random() < SPAWNER_CHANCE:
+      if random.random() < self.spawner_chance:
         world.create_entity([
           Position(Vector(rx * self.room_size + self.room_size / 2, ry * self.room_size + self.room_size / 2)),
           Spawner(Mobs.slime, radius=2, wave_time=2, wave_count=1, spawn_max=3) #TODO: hardcoded mobdef
@@ -128,4 +136,6 @@ class DFSGenerator(FloorGenerator):
     #TODO: pick mapdef from input mapdef
     x, y, _, _, _, _ = random.choice(rooms)
     stairs_pos = Vector(x * self.room_size + self.room_size / 2, x * self.room_size + self.room_size / 2)
-    world.create_entity([Position(stairs_pos), Stairs(Maps.maze)])
+    next_map_id = random.choice(self.next_maps) if len(self.next_maps) > 0 else mapdef
+    next_map = get_map(next_map_id)
+    world.create_entity([Position(stairs_pos), Stairs(next_map)])

@@ -1,1 +1,3 @@
-from .maze import maze
+from .maze import *
+from .forest import *
+from .plains import *

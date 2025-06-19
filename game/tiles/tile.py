@@ -1,8 +1,24 @@
 from enum import IntEnum
 
-#TODO: pack all values in an integer
-TileType = IntEnum("TileType", ["EMPTY", "FLOOR", "WALL"], start=0)
+TileType = IntEnum("TileType", [
+  "EMPTY",
+  "FLOOR", "FLOOR_ACCENT",
+  "WALL", "WALL_ACCENT"
+], start=0)
 
+T = TileType
+
+def is_floor(t):
+  match t:
+    case T.FLOOR | T.FLOOR_ACCENT: return True
+  return False
+
+def is_wall(t):
+  match t:
+    case T.WALL | T.WALL_ACCENT: return True
+  return False
+
+#TODO: pack all values in an integer
 class Tile:
   def unpack(t):
     return Tile(*t)
