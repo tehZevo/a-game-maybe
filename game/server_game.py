@@ -67,11 +67,13 @@ class ServerGame:
     while True:
       #loop until we have a world to transition to
       while self.next_world is None:
+        await self.server.handle_messages()
+
         #update world
         self.world.update()
         #doing both this and clock.tick makes game run as expected, because of course it does
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
-        await asyncio.sleep(DT)
+        await asyncio.sleep(0)
 
       #save player data and swap worlds (TODO: use generator spawn method? idk)
       server_manager = self.world.find_component(C.ServerManager)

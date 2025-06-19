@@ -4,6 +4,8 @@ from queue import Queue, Empty
 
 from .server import Server
 
+#TODO: reuse connection logic for client logic?
+#TODO: basically a server/client is responsible for placing messages on a queue?
 class LocalConnection:
   def __init__(self, our_messages, their_messages):
     self.messages = our_messages
@@ -43,16 +45,14 @@ class LocalServer(Server):
       messages += [[id, m] for m in conn.receive_all()]
     return messages
 
+  async def handle_messages(self):
+    for client_id, conn in self.clients.items():
+      #TODO: add .disconnect to connection and detect it here? (e.g. client thread blows up)
+      for message in conn.receive_all():
+        self.on_message(client_id, message)
+  
   async def start(self):
-    while True:
-      processed_a_message = False
-      for client_id, conn in self.clients.items():
-        #TODO: add .disconnect to connection and detect it here? (e.g. client thread blows up)
-        for message in conn.receive_all():
-          self.on_message(client_id, message)
-          processed_a_message = True
-      
-      await asyncio.sleep(0)
+    return
 
   def send(self, id, event):
     self.clients[id].send(self.build_event(event))

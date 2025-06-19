@@ -12,14 +12,10 @@ class LocalClient(Client):
   async def connect(self):
     self.connection = self.server.connect()
     self.on_connect()
-    
-    while True:
-      processed_a_message = False
-      for message in self.connection.receive_all():
-        self.on_message(message)
-        processed_a_message = True
-      
-      await asyncio.sleep(0)
+
+  async def handle_messages(self):
+    for message in self.connection.receive_all():
+      self.on_message(message)
 
   def send(self, command):
     self.connection.send(self.build_command(command))

@@ -12,7 +12,7 @@ async def main():
     
     await asyncio.gather(
         asyncio.create_task(server.start()),
-        asyncio.create_task(client.connect()),
+        asyncio.create_task(client.connect()), #TODO: just await connect, no task
         asyncio.create_task(server_game.run()),
         asyncio.create_task(client_game.run())
     )

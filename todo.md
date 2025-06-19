@@ -1,7 +1,11 @@
+- regular attack action
+- spritedef .flip so we don't have to rely on flipx in render...
 - pygbag doesnt like adding fields to dataclasses (e.g. EquipStats.One)
 - rename "equips" component to "loadout"
 - don't sync position every tick, interpolate
 - sync velocity
+- how to disable pygbag #debug?
+- refactor network servers/clients to use handle_messages and Connection logic
 - change equips to just use Stats (may also have both flat and scaled)
 - move constants to base game package
 - network in pygbag

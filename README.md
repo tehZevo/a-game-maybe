@@ -5,7 +5,7 @@
 *[Here](docs/main.md)*
 
 ## Installation
-- Requires Python 3.10+
+- Requires Python 3.12+
 - `pip install -r requirements.txt`
 
 ## Usage

@@ -12,7 +12,9 @@ import game.networking.events as E
 from game.networking.commands import Sync, Ping
 from game.utils import Vector
 
-SCALE_RES = 3
+#TODO: scaling is expensive in browser, make this a client param
+#TODO also make None NOT CALL SCALE AT ALL in renderer
+SCALE_RES = 1
 SCREEN_WIDTH_TILES = 16
 SCREEN_HEIGHT_TILES = 12
 RENDER_WIDTH = TILE_SIZE * SCREEN_WIDTH_TILES
@@ -41,6 +43,10 @@ class ClientGame:
     self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     self.clock = pygame.time.Clock()
     pygame.display.set_caption("Game")
+    #TODO: move to fps counter ui component...
+    self.frames = 0
+    self.one_second = 0
+    self.last_frame_time = time.time()
 
     self.client = client
     self.client.setup_handlers(
@@ -100,6 +106,8 @@ class ClientGame:
     while True:
       #loop until we have a world to transition to
       while self.next_world is None:
+        await self.client.handle_messages()
+
         pressed = defaultdict(lambda: False)
         released = defaultdict(lambda: False)
         for event in pygame.event.get():
@@ -137,7 +145,16 @@ class ClientGame:
         #doing both this and clock.tick makes game run as expected, because of course it does
         self.clock.tick(FPS) #limit fps TODO: remove and decouple
         pygame.display.flip()
-        await asyncio.sleep(DT)
+
+        self.frames += 1
+        self.one_second += time.time() - self.last_frame_time
+        self.last_frame_time = time.time()
+        if self.one_second >= 1:
+          print("[Client] FPS:", self.frames / self.one_second)
+          self.one_second = 0
+          self.frames = 0
+
+        await asyncio.sleep(0)
 
       #TODO: handle server world transitions
       self.world = self.next_world
