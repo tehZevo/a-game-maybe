@@ -106,7 +106,7 @@ class ClientGame:
     while True:
       #loop until we have a world to transition to
       while self.next_world is None:
-        await self.client.handle_messages()
+        self.client.handle_events()
 
         #TODO: move to util function? (make sure to convert events to list first)
         pressed = defaultdict(lambda: False)

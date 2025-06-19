@@ -67,7 +67,7 @@ class ServerGame:
     while True:
       #loop until we have a world to transition to
       while self.next_world is None:
-        await self.server.handle_messages()
+        self.server.handle_commands()
 
         #update world
         self.world.update()

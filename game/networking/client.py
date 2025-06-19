@@ -1,12 +1,15 @@
 from enum import Enum
 from collections import defaultdict
+from queue import Queue, Empty
 import json
 
 import dacite
 
+dacite_config = dacite.Config(cast=[Enum])
+
 class Client:
   def __init__(self):
-    pass
+    self.events = Queue()
 
   def setup_handlers(self, connect_handlers=[], disconnect_handlers=[], event_handlers=[]):
     self.connect_handlers = connect_handlers
@@ -25,6 +28,17 @@ class Client:
   def disconnect(self):
     raise NotImplementedError
   
+  #TODO: pass client manager or game here?
+  def handle_events(self):
+    while True:
+      try:
+        event = self.events.get_nowait()
+        #tell all handlers about command
+        for handler in self.event_handlers[event.__class__]:
+          handler.handle(self.client_manager, self, event)
+      except Empty:
+        break
+  
   def register_event_handler(self, handler):
     #add handler to list of handlers for given event type
     self.event_handlers[handler.event_type].append(handler)
@@ -42,14 +56,11 @@ class Client:
       handler.handle_disconnect(self)
   
   def on_message(self, message):
-    #parse and read event type
+    #construct event and add to queue
     message = json.loads(message)
-    event_type_name = message["type"]
-    #construct event
-    event = dacite.from_dict(self.event_types[event_type_name], message["data"], config=dacite.Config(cast=[Enum]))
-    #tell all handlers about event
-    for handler in self.event_handlers[event.__class__]:
-      handler.handle(self.client_manager, self, event)
+    event_type = self.event_types[message["type"]]
+    event = dacite.from_dict(event_type, message["data"], config=dacite_config)
+    self.events.put(event)
 
   def build_command(self, command):
     command_type = command.__class__.__name__
