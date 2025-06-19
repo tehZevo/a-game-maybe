@@ -20,6 +20,7 @@ class Move(Action):
     look_dir = Vector(0, 1) if self.dir.y > 0.5 else Vector(0, -1) if self.dir.y < -0.5 else Vector(1, 0) if self.dir.x > 0.5 else Vector(-1, 0) if self.dir.x < -0.5 else None
     if look_dir is not None:
       self.get_component(C.Actor).look_dir = look_dir
+    self.get_component(C.Actor).move_dir = self.dir or Vector.ZERO
     phys = self.get_component(C.Physics)
     stats = self.get_component(C.Stats)
     force = self.dir.normalized() * stats.stats.secondary.move_speed * stats.move_speed_multiplier

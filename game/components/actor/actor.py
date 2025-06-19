@@ -2,7 +2,7 @@ from game.ecs import Component
 import game.components as C
 
 from ..networking.networking import Networking
-from game.utils import Vector
+from game.utils import Vector, Direction, vector_to_direction
 
 class Actor(Component):
   def __init__(self):
@@ -12,6 +12,7 @@ class Actor(Component):
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)
+    self.move_dir = self.look_dir.copy()
     self.actor_alive = True
 
   def damage(self, amount):

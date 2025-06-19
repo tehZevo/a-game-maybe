@@ -10,4 +10,4 @@ class Rush(SkillEffect):
     self.force = force
 
   def start(self):
-    self.target.get_component(C.Physics).apply_force(self.target.get_component(Actor).look_dir * self.force)
+    self.target.get_component(C.Physics).apply_force(self.target.get_component(Actor).move_dir * self.force)

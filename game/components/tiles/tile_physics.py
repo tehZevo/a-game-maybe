@@ -27,14 +27,12 @@ def build_rects(cx, cy, chunk):
       while True:
         if not all([solid_tiles[(x+w2, y+h)] for w2 in range(w)]):
           break
-        print(h)
         h += 1
       if w > 0 and h > 0:
         for x2 in range(w):
           for y2 in range(h):
             solid_tiles[(x + x2, y + y2)] = False
         rects.append((x, y, w, h))
-  print(rects)
   rects = [pygame.Rect((cx * CHUNK_SIZE + x) * PHYS_SCALE, (cy * CHUNK_SIZE + y) * PHYS_SCALE, w * PHYS_SCALE, h * PHYS_SCALE) for x, y, w, h in rects]
   return rects
 

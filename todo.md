@@ -1,4 +1,7 @@
 - rename "equips" component to "loadout"
+- don't sync position every tick, interpolate
+- make it possible to buffer a "face direction" between skills
+- sync velocity
 - change equips to just use Stats (may also have both flat and scaled)
 - move constants to base game package
 - refactor skilleffects to use state pattern like buffeffects
@@ -11,12 +14,9 @@
 - game settings (difficulty/grindiness)
 - make index operator on entity manipulate components
 - maybe same thing on world?
-- send buffs on client spawn
 - document skilleffect "target" (maybe make interface with set_target)?
 - maybe use `__all__` in data
 - pytmx/tiled (or other) map support - use a generator to just generate chunks based on tiled map
-- exclude websockets or create packager for pygbag
-- convert client/server/main loops to asyncio since i dont think pygbag supports python threads
 - track events per second sent/received
 - how to handle pre-game setup period?
 - refactor so server has multiple worlds and then scope all events by channel?
@@ -25,7 +25,6 @@
 - add new skill effect that pushes enemies in the direction of the skill, and "carries" them with you
 - tintable hair/eyes/skin
 - flag for hats that hide hair, or "hat hair" sprites like maplestory
-- player death animation (and keep actor alive)
 - enemy death animation (drop items immediately but disable everything and wait for anim to finish)
 - docs are dusty
 - damage numbers
@@ -41,11 +40,9 @@
   - maybe make spawners have a better drop rate/better items?
 - requirement of killing N mobs before progressing?
 - limit number of dropped items and delete oldest
-- improve performance of dropped item interactions
 - teleporters/portals
 - network sync interface which defines fields to be synced automatically
   - or at least "sync" means on spawn?
-- use skills diagonally (or at any vector)
 - avoid loading images on the server
 - generator should make a player spawn point component, which players are spawned on by the generators spawn method
 - highlight which entity the player would interact with
@@ -67,13 +64,8 @@
   - as long as player is within radius, send updates
   - when player exits chunks, despawn entity
   - might be useful to keep track of entities that can be seen by each player in the server manager
-- don't sync position every tick, interpolate
-- sync velocity
-- greedily merge walls when creating tilesetphysics rects
 - target effects should have a selection order (nearest/random)
-- refactor skill effect targets to be a component on the skill entity
-- refactor skill effects to not store state
-- cache component -> entity mapping so we can find entities in constant time
+- refactor skill effect targets to be a component on the skill entity(?)s
 - make it so target effects require LOS (flag?)
 - damage hits (basically a delay+repeat of damage)
 - add invulnerability animation
@@ -83,7 +75,6 @@
   - fix passing through walls at high speeds
 - make collision debug drawing
 - knock back enemy if you do more than 10% of its hp?
-- make it possible to buffer a "face direction" between skills
   - does this mean allowing skills to be used in a certain direction?
 - maybe make direction component for tileentity facing direction
   - how to handle fine-grained direction for actor though? is that even needed?
@@ -91,7 +82,6 @@
 - separate ECS for particles so they dont slow down main world queries
   - add tileset physics to this world so we can have particles bounce off walls, etc
 - reduce delay on interact (will require handling key pressed events so player cant hold to repeatedly interact)
-- fix subpixel glitchiness
 - gold, health, mana drops: walk over them to pick them up
 - skill idea: "ally bomb" (or something like that): damage enemies nearby allies (target allies, then target enemies)
 - distance based delay effect (delay in seconds per unit)
