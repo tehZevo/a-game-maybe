@@ -4,7 +4,6 @@
 - sync velocity
 - change equips to just use Stats (may also have both flat and scaled)
 - move constants to base game package
-- refactor skilleffects to use state pattern like buffeffects
 - network in pygbag
 - consider other serialization methods (bson?)
 - fix pygbag slowness

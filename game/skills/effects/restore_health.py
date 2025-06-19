@@ -1,4 +1,4 @@
-from game.components.actor import Stats
+import game.components as C
 from .skill_effect import SkillEffect
 
 class RestoreHealth(SkillEffect):
@@ -7,6 +7,6 @@ class RestoreHealth(SkillEffect):
     self.target = None
     self.percent = percent
 
-  def start(self):
-    stats = self.target.get_component(Stats)
-    stats.add_hp_percent(self.percent)
+  def start(self, skill):
+    stats = skill.target.get_component(C.Stats)
+    stats.add_hp_percent(skill.percent)

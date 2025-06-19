@@ -15,11 +15,11 @@ class ApplyBuff(SkillEffect):
     self.power_scaling = power_scaling
     self.time_scaling = time_scaling
 
-  def start(self):
-    stats = self.target.get_component(C.Stats).stats
-    buffs = self.target.get_component(C.Buffs)
+  def start(self, skill):
+    stats = skill.target.get_component(C.Stats).stats
+    buffs = skill.target.get_component(C.Buffs)
     #calc power/time
     power = self.flat_power + self.power_scaling(stats)
     time = self.flat_time + self.time_scaling(stats)
     #create and apply instance
-    buffs.apply_buff(self.buffdef, power, time, self.user)
+    buffs.apply_buff(self.buffdef, power, time, skill.user)

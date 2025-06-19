@@ -7,21 +7,15 @@
 
 class SkillEffect:
   def __init__(self):
-    self.completed = True
-    self.entity = None
-    self.user = None
-    self.target = None
-    self.children = []
-    self.parent = None
-
-  #TODO: i dont like this.. skill effects shouldnt store state
-  def register(self, entity, user, parent=None):
-    self.entity = entity
-    self.user = user
-    self.parent = parent
-
-  def start(self):
     pass
 
-  def update(self):
+  def start(self, skill):
+    """Optionally return a state value/object"""
+    return None
+
+  def update(self, skill, state):
+    """Optionally return a state value/object"""
+    return state
+
+  def remove(self, skill, state):
     pass

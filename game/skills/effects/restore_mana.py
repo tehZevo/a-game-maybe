@@ -1,4 +1,4 @@
-from game.components.actor import Stats
+import game.components as C
 from .skill_effect import SkillEffect
 
 class RestoreMana(SkillEffect):
@@ -7,6 +7,6 @@ class RestoreMana(SkillEffect):
     self.target = None
     self.percent = percent
 
-  def start(self):
-    stats = self.target.get_component(Stats)
+  def start(self, skill):
+    stats = skill.target.get_component(C.Stats)
     stats.add_mp_percent(self.percent)

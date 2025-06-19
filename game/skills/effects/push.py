@@ -6,14 +6,13 @@ from .skill_effect import SkillEffect
 class Push(SkillEffect):
   def __init__(self, force=1, scale_with_distance=True):
     super().__init__()
-    self.target = None
     self.force = force
     self.scale_with_distance = scale_with_distance
 
-  def start(self):
+  def start(self, skill):
     #calc dist and direction, source location is parent skill effect
-    effect_pos = self.parent.get_component(C.Position).pos
-    target_pos = self.target.get_component(C.Position).pos
+    effect_pos = skill.parent.get_component(C.Position).pos
+    target_pos = skill.target.get_component(C.Position).pos
     dist = effect_pos.distance(target_pos)
     dir = (target_pos - effect_pos).normalized()
 
@@ -22,4 +21,4 @@ class Push(SkillEffect):
     if self.scale_with_distance:
       force = force / max(1, dist) #max with 1 to prevent low dist from sending enemies into LEO
 
-    self.target.get_component(C.Physics).apply_force(dir * force)
+    skill.target.get_component(C.Physics).apply_force(dir * force)

@@ -1,5 +1,3 @@
-import copy
-
 from game.components.skill import Skill
 from game.components.actor import Actor
 import game.components as C
@@ -11,22 +9,19 @@ class Target(SkillEffect):
     super().__init__()
     self.filters = filters
     self.children = children
-    self.user = None
 
-  def start(self):
+  def start(self, skill):
     #find all actors in range
-    actors = self.entity.world.find(Actor)
+    actors = skill.entity.world.find(Actor)
     #filter actors based on filter condition(s)
-    skill_comp = self.entity.get_component(Skill)
+    skill_comp = skill.entity.get_component(Skill)
     for filter in self.filters:
       actors = [a for a in actors if filter(skill_comp)(a)]
 
     for target in actors:
       for child in self.children:
         #create new skill effect with target
-        child = copy.copy(child)
-        child.target = target
-        self.entity.world.create_entity([
+        skill.entity.world.create_entity([
           C.Position(target.get_component(C.Position).pos),
-          Skill(child, self.user, self.entity)
+          Skill(child, skill.user, skill.entity, target=target) #TODO: set parent?
         ])
