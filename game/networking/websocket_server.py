@@ -1,8 +1,14 @@
 import asyncio
 import uuid
+import sys
 
-# from websockets.asyncio.server import serve
-# from websockets.exceptions import ConnectionClosed
+#pygame guard
+if sys.platform != "emscripten":
+  import importlib
+  server = importlib.import_module("websockets.asyncio.server")
+  serve = getattr(server, "serve")
+  ws_exc = importlib.import_module("websockets.exceptions")
+  ConnectionClosed = getattr(ws_exc, "ConnectionClosed")
 
 from .server import Server
 
@@ -26,16 +32,13 @@ class WebsocketServer(Server):
         print("failed recieve from client: disconnected")
         self.on_disconnect(id)
 
-      #TODO: is it possible to get here without experiencing ConnectionClosed?
-      #call on disconnect with client's id
-      self.on_disconnect(id)
-
     server = await serve(connection_handler, self.host, self.port)
     await server.serve_forever() #o7
 
   def send(self, id, event):
     try:
-      asyncio.create_task(self.clients[id].send(self.build_event(event)))
+      event = self.build_event(event)
+      asyncio.create_task(self.clients[id].send(event))
     except ConnectionClosed as e:
       print("failed to send to client: disconnected")
       self.on_disconnect(id)

@@ -1,15 +1,15 @@
 import asyncio
 
 from .server_game import ServerGame
-# from game.networking import WebsocketServer
-from game.networking import StreamServer
+from game.networking import WebsocketServer
+# from game.networking import StreamServer
 
 HOST = "localhost"
 PORT = 8765
 
 async def main():
-    # server = WebsocketServer(HOST, PORT)
-    server = StreamServer(HOST, PORT)
+    server = WebsocketServer(HOST, PORT)
+    # server = StreamServer(HOST, PORT)
     the_game = ServerGame(server)
     
     await asyncio.gather(

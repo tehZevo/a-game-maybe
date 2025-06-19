@@ -1,7 +1,12 @@
 import time
 import asyncio
+import sys
 
-# from websockets.asyncio.client import connect
+#pygame guard
+if sys.platform != "emscripten":
+  import importlib
+  client = importlib.import_module("websockets.asyncio.client")
+  connect = getattr(client, "connect")
 
 from .client import Client
 
