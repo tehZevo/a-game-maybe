@@ -1,25 +1,26 @@
+//js-side of the websocket connection for the pygbag-wrapped game
 
-webSocket = new WebSocket("ws://localhost:8765");
+function pythonClientConnect(url)
+{
+  webSocket = new WebSocket(url);
 
-webSocket.onopen = (_) => {
-  console.log("[Client] Connected!")
-  window.pythonClientOnOpen()
-};
+  webSocket.onopen = (_) => {
+    console.log("[Client] Connected!")
+    window.pythonClientOnOpen()
+  };
 
-webSocket.onmessage = async (event) => {
-  // console.log("[Client] Message received:", event.data)
-  window.pythonClientOnMessage(event.data)
-};
+  webSocket.onmessage = async (event) => {
+    // console.log("[Client] Message received:", event.data)
+    window.pythonClientOnMessage(event.data)
+  };
 
-webSocket.onclose = (_) => {
-  console.log("[Client] Disconnected")
-  window.pythonClientOnClose()
-};
+  webSocket.onclose = (_) => {
+    console.log("[Client] Disconnected")
+    window.pythonClientOnClose()
+  };
+}
 
-const encoder = new TextEncoder();
 function pythonClientSend(data)
 {
-  // console.log("[Client] Sending:", data)
-  //TODO: do we need the encoder?
-  webSocket.send(encoder.encode(data).buffer)
+  webSocket.send(data)
 }

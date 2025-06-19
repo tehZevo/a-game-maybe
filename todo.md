@@ -1,4 +1,5 @@
 - combine the mains/runners (mode="local", "web_multiplayer", etc)
+- stop server from crashing on client disconnect
 - regular attack action
 - spritedef .flip so we don't have to rely on flipx in render...
 - pygbag doesnt like adding fields to dataclasses (e.g. EquipStats.One)
@@ -8,9 +9,7 @@
 - how to disable pygbag #debug?
 - change equips to just use Stats (may also have both flat and scaled)
 - move constants to base game package
-- network in pygbag
 - consider other serialization methods (bson?)
-- fix pygbag slowness
 - consider 8x8 item sprites
   - this would make rank icons very difficult
 - in towns, have dialogs that warn/recommend rank (e-ss)
