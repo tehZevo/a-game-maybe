@@ -9,9 +9,9 @@ from game.utils.constants import PHYS_SCALE, CHUNK_SIZE
 
 #NOTE: rects are in world space to make physics calculations simpler to understand
 def build_rects(cx, cy, chunk):
-  #TODO: would use itertiles but it doesnt start at 0, 0
+  #TODO: would use __iter__ but it doesnt start at 0, 0
   solid_tiles = defaultdict(lambda: False)
-  solid_tiles.update({(x, y): t.solid for x, y, t in chunk.itertiles()})
+  solid_tiles.update({(x, y): t.solid for x, y, t in chunk.__iter__()})
   
   rects = []
   for y in range(CHUNK_SIZE):
