@@ -1,9 +1,11 @@
+- move main.js to assets/jsws-client.js
 - combine the mains/runners (mode="local", "web_multiplayer", etc)
 - stop server from crashing on client disconnect
 - regular attack action
 - spritedef .flip so we don't have to rely on flipx in render...
 - pygbag doesnt like adding fields to dataclasses (e.g. EquipStats.One)
 - rename "equips" component to "loadout"
+- websockets run slower than streams
 - don't sync position every tick, interpolate
 - sync velocity
 - how to disable pygbag #debug?

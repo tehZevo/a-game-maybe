@@ -2,9 +2,9 @@ import asyncio
 
 from .server_game import ServerGame
 from game.networking import WebsocketServer
-# from game.networking import StreamServer
+from game.networking import StreamServer
 
-HOST = "localhost"
+HOST = "127.0.0.1"
 PORT = 8765
 
 async def main():

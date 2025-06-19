@@ -3,12 +3,14 @@ from .client_game import ClientGame
 from game.networking import WebsocketClient
 from game.networking import StreamClient
 
-URL = "ws://localhost:8765"
+HOST = "127.0.0.1"
+PORT = 8765
+URL = f"ws://{HOST}:{PORT}"
 
 async def main():
     client = WebsocketClient(URL)
-    # client = StreamClient("localhost", 8765)
-    the_game = ClientGame(client)
+    # client = StreamClient(HOST, PORT)
+    the_game = ClientGame(client, scale_res=3)
     
     await asyncio.gather(
         asyncio.create_task(client.connect()),
