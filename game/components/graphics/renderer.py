@@ -53,10 +53,13 @@ class Renderer(Component):
       blits.append((surface, (draw_pos.x, draw_pos.y)))
     self.surface.blits(blits)
 
-    #scale and draw to screen
-    #TODO: supposedly scaling is slow in pygbag, maybe rely on hardware scaling in browser?
-    scaled = pygame.transform.scale(self.surface, screen.get_size())
-    screen.blit(scaled, (0, 0))
+    #scaling is slow in pygbag rely on hardware scaling in browser
+    #TODO: for now, just detecting if we need to scale. later: use renderer.surface in client?
+    if screen.get_size() != self.surface.get_size():
+      scaled = pygame.transform.scale(self.surface, screen.get_size())
+      screen.blit(scaled, (0, 0))
+    else:
+      screen.blit(self.surface, (0, 0))
     
     self.draw_calls = []
     dt = time.time() - t

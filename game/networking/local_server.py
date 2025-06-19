@@ -1,31 +1,15 @@
 import asyncio
 import uuid
-from queue import Queue, Empty
+from queue import Queue
 
 from .server import Server
-
-#TODO: reuse connection logic for client logic?
-#TODO: basically a server/client is responsible for placing messages on a queue?
-class LocalConnection:
-  def __init__(self, our_messages, their_messages):
-    self.messages = our_messages
-    self.their_messages = their_messages
-  
-  def send(self, message):
-    self.their_messages.put(message)
-  
-  def receive_all(self):
-    items = []
-    while True:
-      try: items.append(self.messages.get_nowait())
-      except Empty: break
-    return items
+from .connection import Connection
 
 def make_connection_pair():
   our_messages = Queue()
   their_messages = Queue()
-  connection_to_client = LocalConnection(our_messages, their_messages)
-  connection_to_server = LocalConnection(their_messages, our_messages)
+  connection_to_client = Connection(our_messages, their_messages)
+  connection_to_server = Connection(their_messages, our_messages)
 
   return connection_to_client, connection_to_server
 

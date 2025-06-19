@@ -4,11 +4,11 @@ from .client_game import ClientGame
 from .server_game import ServerGame
 from game.networking import LocalServer, LocalClient
 
-async def main():
+async def main(scale_res):
     server = LocalServer()
     client = LocalClient(server)
     server_game = ServerGame(server)
-    client_game = ClientGame(client)
+    client_game = ClientGame(client, scale_res=scale_res)
     
     await asyncio.gather(
         asyncio.create_task(server.start()),
@@ -17,4 +17,5 @@ async def main():
         asyncio.create_task(client_game.run())
     )
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main(scale_res=3))

@@ -12,15 +12,11 @@ import game.networking.events as E
 from game.networking.commands import Sync, Ping
 from game.utils import Vector
 
-#TODO: scaling is expensive in browser, make this a client param
-#TODO also make None NOT CALL SCALE AT ALL in renderer
-SCALE_RES = 1
+#TODO: move to constants?
 SCREEN_WIDTH_TILES = 16
 SCREEN_HEIGHT_TILES = 12
 RENDER_WIDTH = TILE_SIZE * SCREEN_WIDTH_TILES
 RENDER_HEIGHT = TILE_SIZE * SCREEN_HEIGHT_TILES
-SCREEN_WIDTH = SCALE_RES * RENDER_WIDTH
-SCREEN_HEIGHT = SCALE_RES * RENDER_HEIGHT
 
 async def annoy_server(client):
   while True:
@@ -38,10 +34,14 @@ class ClientConnectHandler:
 
 #TODO: allow setting url via ClientType class or something
 class ClientGame:
-  def __init__(self, client):
+  def __init__(self, client, scale_res=1):
     pygame.init()
-    self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    self.scale_res = scale_res
+    screen_width = self.scale_res * RENDER_WIDTH
+    screen_height = self.scale_res * RENDER_HEIGHT
+    self.screen = pygame.display.set_mode((screen_width, screen_height))
     self.clock = pygame.time.Clock()
+    
     pygame.display.set_caption("Game")
     #TODO: move to fps counter ui component...
     self.frames = 0
@@ -108,6 +108,7 @@ class ClientGame:
       while self.next_world is None:
         await self.client.handle_messages()
 
+        #TODO: move to util function? (make sure to convert events to list first)
         pressed = defaultdict(lambda: False)
         released = defaultdict(lambda: False)
         for event in pygame.event.get():
@@ -156,7 +157,6 @@ class ClientGame:
 
         await asyncio.sleep(0)
 
-      #TODO: handle server world transitions
       self.world = self.next_world
       self.init_world()
       self.next_world = None
