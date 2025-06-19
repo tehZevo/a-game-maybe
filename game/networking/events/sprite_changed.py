@@ -15,6 +15,7 @@ class SpriteChanged:
   tint: tuple | None
   alpha: float | None
   offset: Vector | None
+  flip_x: bool
 
 class SpriteChangedHandler(EventHandler):
   def __init__(self):
@@ -34,3 +35,4 @@ class SpriteChangedHandler(EventHandler):
     sprite.tint = event.tint
     sprite.alpha = event.alpha
     sprite.offset = event.offset
+    sprite.flip_x = event.flip_x

@@ -8,6 +8,7 @@ from game.components.actor import DeathListener
 import game.components as C
 from game.utils.constants import ENEMY_MOVE_SPEED
 
+#TODO: rename to Monster?
 class Enemy(Component, DeathListener):
   def __init__(self, mobdef):
     super().__init__()
@@ -66,5 +67,10 @@ class Enemy(Component, DeathListener):
 
         #apply move action
         self.get_component(C.Actor).act(A.Move(move_dir))
+    
+    if move_dir.x < 0:
+      self.get_component(C.Sprite).flip_x = True
+    elif move_dir.x > 0:
+      self.get_component(C.Sprite).flip_x = False
 
     #TODO: add wandering behavior
