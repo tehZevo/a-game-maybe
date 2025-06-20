@@ -27,16 +27,7 @@ class Physics(Component, NetworkBehavior):
   def start(self):
     self.tile_phys = self.entity.world.find_component(C.TilePhysics)
 
-  def update_client(self, networking):
-    pos_comp = self.get_component(C.Position)
-    self.vel += self.force / self.mass * DT
-    d_pos = self.vel * DT
-    pos_comp.pos += d_pos
-    
-    self.force = Vector()
-    self.vel = self.vel / (1 + self.friction)
-
-  def update_server(self, networking):
+  def update(self):
     pos_comp = self.get_component(C.Position)
     handle_collisions = self.get_component(C.Collisions) is not None
     rect = self.get_component(C.Rect) if handle_collisions else None

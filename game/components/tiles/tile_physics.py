@@ -37,10 +37,22 @@ def build_rects(cx, cy, chunk):
   return rects
 
 class TilePhysics(Component):
-  def __init__(self, chunks):
+  def __init__(self, chunks=None):
     super().__init__()
-    self.chunk_rects = {(x, y): build_rects(x, y, c) for (x, y), c in chunks.items()}
+    chunks = chunks or {}
+    self.chunk_rects = {}
+    for (x, y), c in chunks.items():
+      self.load_chunk(x, y, c)
   
+  def load_chunk(self, cx, cy, chunk):
+    #TODO: for now, consider chunks static once set
+    if (cx, cy) not in self.chunk_rects:
+      self.chunk_rects[(cx, cy)] = build_rects(cx, cy, chunk)
+  
+  def unload_chunk(self, cx, cy, chunk):
+    #TODO: for now, consider chunks static once set
+    raise NotImplementedError
+
   #return 9 chunks in neighborhood of pos
   #TODO: cache these for each (pos / CHUNK_SIZE) chunk
   # (takes 9x memory but prevents having to regenerate rect list)

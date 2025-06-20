@@ -16,7 +16,9 @@ class ReportPositionHandler(CommandHandler):
     super().__init__(ReportPosition)
 
   def handle(self, server_manager, server, client_id, command):
-    ent = server_manager.networked_entities[command.id]
+    ent = server_manager.networked_entities.get(command.id)
+    if ent is None:
+      return
     pos_comp = ent[C.Position]
     sync_comp = ent[C.PositionSyncing]
     if command.pos.distance(pos_comp.pos) > REPORT_POS_ERROR_THRESH:

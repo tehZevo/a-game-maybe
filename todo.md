@@ -1,3 +1,7 @@
+- networking changes:
+  - merge networking, syncing, and networked into one component type
+  - any networkable component can .spawn() the ent
+    - at which point the entity is spawned and update_server/update_client are called
 - ReportVelocity?
 - TODO: how to disasble prediction in singleplayer mode (avoid double physics calcs)
 - move main.js to assets/jsws-client.js

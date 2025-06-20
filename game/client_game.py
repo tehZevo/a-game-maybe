@@ -86,7 +86,8 @@ class ClientGame:
     self.world.create_entity([C.GameMaster(self, None)]) #NOTE: we'll set mapdef when we get it from the server
     self.camera = self.world.create_entity([C.Camera()])
     self.renderer = self.world.create_entity([C.WorldRenderer(RENDER_WIDTH, RENDER_HEIGHT, self.camera)])
-    self.tile_rendering = self.world.create_entity([C.TileRendering()])
+    self.world.create_entity([C.TileRendering()])
+    self.world.create_entity([C.TilePhysics()])
     self.particle_system = self.world.create_entity([C.ParticleSystem()])
     
     #TODO: create Client as property of ClientGame and pass to ClientManager?

@@ -8,7 +8,7 @@ class DroppedItem(Component, Interactable):
   def __init__(self, item):
     super().__init__()
     self.require(C.Icon, C.Physics, C.Collisions, C.PositionSyncing, \
-      C.VeleocitySyncing, C.IconSyncing, C.Networking)
+      C.VelocitySyncing, C.IconSyncing, C.Networking)
     self.item = item
 
   def start(self):

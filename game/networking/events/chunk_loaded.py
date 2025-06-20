@@ -18,4 +18,7 @@ class ChunkLoadedHandler(EventHandler):
     world = client_manager.entity.world
     #TODO: this is kinda expensive
     tile_rendering = world.find_component(C.TileRendering)
-    tile_rendering.load_chunk(event.x, event.y, Tileset.unpack(event.tileset))
+    tile_phys = world.find_component(C.TilePhysics)
+    chunk = Tileset.unpack(event.tileset)
+    tile_rendering.load_chunk(event.x, event.y, chunk)
+    tile_phys.load_chunk(event.x, event.y, chunk)
