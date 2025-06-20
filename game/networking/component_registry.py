@@ -6,7 +6,7 @@ def get_component_classes():
   from ..components.graphics import Sprite, SpriteSyncing, Icon, IconSyncing
   from ..components.item import DroppedItem
   from ..components.particles import ParticleEmitter
-  from ..components.physics import Position, Rect, Physics, PositionSyncing
+  from ..components.physics import Position, Rect, Physics, PositionSyncing, VelocitySyncing
   from ..components.tiles import ChunkNetworking
 
   return locals()

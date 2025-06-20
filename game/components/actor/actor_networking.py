@@ -6,4 +6,4 @@ class ActorNetworking(Component, NetworkBehavior):
   def __init__(self):
     super().__init__()
     self.require(C.PositionSyncing, C.SpriteSyncing, C.StatsSyncing, \
-      C.EquipsSyncing, C.BuffsSyncing)
+      C.EquipsSyncing, C.BuffsSyncing, C.VelocitySyncing)

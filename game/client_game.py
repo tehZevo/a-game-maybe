@@ -58,6 +58,7 @@ class ClientGame:
         E.ChunkUnloadedHandler(),
         E.EntitySpawnedHandler(),
         E.PositionUpdatedHandler(),
+        E.VelocityUpdatedHandler(),
         E.SpriteChangedHandler(),
         E.IconChangedHandler(),
         E.EmitterUpdatedHandler(),

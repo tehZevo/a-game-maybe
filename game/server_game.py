@@ -30,6 +30,7 @@ class ServerGame:
         commands.PlayerUseSkillHandler(),
         commands.PlayerInteractHandler(),
         commands.SyncHandler(self.save_data),
+        commands.ReportPositionHandler(),
         commands.PingHandler(),
       ]
     )

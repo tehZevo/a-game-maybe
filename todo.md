@@ -1,3 +1,5 @@
+- ReportVelocity?
+- TODO: how to disasble prediction in singleplayer mode (avoid double physics calcs)
 - move main.js to assets/jsws-client.js
 - combine the mains/runners (mode="local", "web_multiplayer", etc)
 - stop server from crashing on client disconnect

@@ -14,7 +14,7 @@ from game.components.networking.network_behavior import NetworkBehavior
 class ParticleEmitter(Component, NetworkBehavior):
   def __init__(self, particle_path=None, min_vel=2, max_vel=3, per_tick=10, particle_life=0.25, time=0):
     super().__init__()
-    self.require(C.Position, C.Networking, C.PositionSyncing)
+    self.require(C.Position, C.Networking, C.PositionSyncing, C.VelocitySyncing)
     self.particle_path = particle_path
     self.system = None
     self.time = time

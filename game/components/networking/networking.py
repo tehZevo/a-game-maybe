@@ -58,9 +58,11 @@ class Networking(Component):
   def spawn(self, client_id):
     self.send_to_client(client_id, EntitySpawned(self.id, self.get_spawn_components()))
 
-  #TODO: naming?
   def send_to_client(self, client_id, event):
     self.server_manager.server.send(client_id, event)
+  
+  def send_to_server(self, command):
+    self.client_manager.client.send(command)
 
   #TODO: rename to on_client_sync
   def on_client_join(self, client_id):

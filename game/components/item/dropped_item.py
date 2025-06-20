@@ -7,7 +7,8 @@ from game.utils.constants import ITEM_PUSH_DISTANCE, ITEM_PUSH_FORCE
 class DroppedItem(Component, Interactable):
   def __init__(self, item):
     super().__init__()
-    self.require(C.Icon, C.Physics, C.Collisions, C.PositionSyncing, C.IconSyncing, C.Networking)
+    self.require(C.Icon, C.Physics, C.Collisions, C.PositionSyncing, \
+      C.VeleocitySyncing, C.IconSyncing, C.Networking)
     self.item = item
 
   def start(self):

@@ -3,3 +3,4 @@ from game.networking.commands.player_use_skill import PlayerUseSkill, PlayerUseS
 from game.networking.commands.player_interact import PlayerInteract, PlayerInteractHandler
 from game.networking.commands.sync import Sync, SyncHandler
 from game.networking.commands.ping import Ping, PingHandler
+from .report_position import *

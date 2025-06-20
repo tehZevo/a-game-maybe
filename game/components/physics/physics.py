@@ -1,19 +1,20 @@
 from game.ecs import Component
 from game.utils import Vector
 from game.utils.constants import DT, PHYS_SCALE
-from game.components.physics import Position, Collisions, Rect
+import game.components as C
+from game.components.networking import NetworkBehavior
 
+#TODO: to constants?
 DEFAULT_MASS = 1
 DEFAULT_FRICTION = 0.5
 
 def collision_test(a, rects):
   return [b for b in rects if a.colliderect(b)]
 
-#TODO: could really use a basic vector class
-class Physics(Component):
+class Physics(Component, NetworkBehavior):
   def __init__(self):
     super().__init__()
-    self.require(Position)
+    self.require(C.Position)
     self.mass = DEFAULT_MASS
     self.friction = DEFAULT_FRICTION
     self.force = Vector()
@@ -24,27 +25,29 @@ class Physics(Component):
     self.force = self.force + force
 
   def start(self):
-    import game.components as C
-    #TODO: hmm this is n squared, caching in start for now
     self.tile_phys = self.entity.world.find_component(C.TilePhysics)
-    self.is_server = self.entity.world.find_component(C.ServerManager) is not None
 
-  def update(self):
-    #TODO: for now, no physics on client
-    if not self.is_server:
-      return
+  def update_client(self, networking):
+    pos_comp = self.get_component(C.Position)
+    self.vel += self.force / self.mass * DT
+    d_pos = self.vel * DT
+    pos_comp.pos += d_pos
     
-    pc = self.get_component(Position)
-    handle_collisions = self.get_component(Collisions) is not None
-    rect = self.get_component(Rect) if handle_collisions else None
+    self.force = Vector()
+    self.vel = self.vel / (1 + self.friction)
+
+  def update_server(self, networking):
+    pos_comp = self.get_component(C.Position)
+    handle_collisions = self.get_component(C.Collisions) is not None
+    rect = self.get_component(C.Rect) if handle_collisions else None
 
     if handle_collisions:
-      tile_rects = self.tile_phys.get_rects_for_pos(pc.pos)
+      tile_rects = self.tile_phys.get_rects_for_pos(pos_comp.pos)
     
     #two-phase physics for sliding collisions
     self.vel.x = self.vel.x + self.force.x / self.mass * DT
     dx = self.vel.x * DT
-    pc.pos.x = pc.pos.x + dx
+    pos_comp.pos.x += dx
 
     if handle_collisions:
       #update rect (TODO: this is so messy)
@@ -59,13 +62,13 @@ class Physics(Component):
           self.vel.x = 0
 
       #sync to rect pos
-      pc.pos.x = rect.rect.left / PHYS_SCALE
+      pos_comp.pos.x = rect.rect.left / PHYS_SCALE
       #update rect AGAIN (TODO: this is so messy)
       rect.update()
 
     self.vel.y = self.vel.y + self.force.y / self.mass * DT
     dy = self.vel.y * DT
-    pc.pos.y = pc.pos.y + dy
+    pos_comp.pos.y += dy
 
     if handle_collisions:
       #update rect (TODO: this is so messy)
@@ -80,10 +83,9 @@ class Physics(Component):
           self.vel.y = 0
 
       #sync to rect pos
-      pc.pos.y = rect.rect.top / PHYS_SCALE
+      pos_comp.pos.y = rect.rect.top / PHYS_SCALE
       #update rect AGAIN (TODO: this is so messy)
       rect.update()
-
 
     #reset force
     self.force = Vector()

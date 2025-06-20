@@ -14,6 +14,10 @@ ENEMY_MOVE_SPEED = 1/4.
 CHUNK_SIZE = 16
 CAMERA_BOX_SIZE = 1
 DOT_TICK_RATE = 0.5 #seconds
+NETWORK_POS_MAX_DIST = 1
+NETWORK_VEL_MAX_DIST = 0.1
+PHYS_REPORT_RATE = 1 #how often clients report position/velocity
+REPORT_POS_ERROR_THRESH = 1 #how off client ent pos must be in reports before server corrects
 
 #scale factor to use since pygame rects are int-only
 #allows for fixed point ish collisions
