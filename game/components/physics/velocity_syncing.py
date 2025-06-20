@@ -2,27 +2,25 @@ from game.ecs import Component
 from game.utils import Vector
 import game.components as C
 from game.components.networking.network_behavior import NetworkBehavior
-from game.utils.constants import NETWORK_VEL_MAX_DIST
+from game.utils.constants import DT, PHYS_REPORT_RATE
 import game.networking.events as E
+import game.networking.commands as Commands
 
 class VelocitySyncing(Component, NetworkBehavior):
   def __init__(self, pos=None):
     super().__init__()
-    self.require(C.Physics)
-    self.last_vel = None
+    self.require(C.Physics, C.Networking)
+    self.last_client_report_time = float("inf")
 
-  def start_server(self, networking):
-    self.phys_comp = self.get_component(C.Physics)
-    self.last_vel = self.phys_comp.vel.copy()
-  
   def on_client_join(self, networking, client_id):
-    networking = self.get_component(C.Networking)
-    event = E.VelocityUpdated(networking.id, self.phys_comp.vel)
+    event = E.VelocityUpdated(networking.id, self.entity[C.Physics].vel)
     networking.send_to_client(client_id, event)
 
-  def update_server(self, networking):
-    new_vel = self.phys_comp.vel.copy()
-    if self.last_vel.distance(new_vel) > NETWORK_VEL_MAX_DIST:
-      event = E.VelocityUpdated(networking.id, new_vel)
-      networking.broadcast_synced(event)
-      self.last_vel = new_vel
+  def update_client(self, networking):
+    self.last_client_report_time += DT
+    if self.last_client_report_time >= PHYS_REPORT_RATE:
+      self.last_client_report_time = 0
+      #TODO: fix networking id being none here (dropped item)
+      if networking.id is None:
+        return
+      networking.send_to_server(Commands.ReportVelocity(networking.id, self.entity[C.Physics].vel))

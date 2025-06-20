@@ -29,7 +29,7 @@ class Player(Component, DamageListener, DeathListener):
     equips.equip(SkillItem(S.test_buff_skill))
     equips.equip(SkillItem(S.test_killme_skill))
 
-  def on_damage(self, attacker):
+  def on_damage(self, attacker, amount):
     if self.get_component(C.Invulnerable) is None:
       self.entity.add_component(C.Invulnerable(PLAYER_INVULN_TIME))
   

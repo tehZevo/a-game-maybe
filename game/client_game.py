@@ -63,6 +63,7 @@ class ClientGame:
         E.IconChangedHandler(),
         E.EmitterUpdatedHandler(),
         E.EntityDespawnedHandler(),
+        E.MobUpdatedHandler(),
         E.StatsUpdatedHandler(),
         E.EquipsUpdatedHandler(),
         E.WorldClosedHandler(self),
@@ -105,9 +106,12 @@ class ClientGame:
     self.next_world = World()
 
   async def run(self):
+    steps = 0
     while True:
       #loop until we have a world to transition to
       while self.next_world is None:
+        steps += 1
+        print(steps)
         self.client.handle_events()
 
         #TODO: move to util function? (make sure to convert events to list first)

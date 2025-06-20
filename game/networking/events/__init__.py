@@ -15,3 +15,4 @@ from game.networking.events.world_opened import WorldOpened, WorldOpenedHandler
 from game.networking.events.pong import Pong, PongHandler
 from .buffs_updated import *
 from .velocity_updated import *
+from .mob_updated import *

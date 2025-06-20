@@ -5,6 +5,7 @@ import game.data.items as I
 import game.data.sprites as S
 
 slime = MobDef(
+  id="slime",
   difficulty=5,
   archetypes=[A.MOOK],
   drops=[I.cloth_hat, I.test_alpha_skill_item, I.wooden_longsword, I.wooden_shortsword, I.wooden_shortsword_l, I.wooden_shield],

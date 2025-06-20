@@ -1,19 +1,18 @@
-- networking changes:
-  - merge networking, syncing, and networked into one component type
-  - any networkable component can .spawn() the ent
-    - at which point the entity is spawned and update_server/update_client are called
-- ReportVelocity?
+- fix crash when entering staircases
+- sound
+- how to single target skills (e.g. enemy has target player?)
 - TODO: how to disasble prediction in singleplayer mode (avoid double physics calcs)
 - move main.js to assets/jsws-client.js
 - combine the mains/runners (mode="local", "web_multiplayer", etc)
 - stop server from crashing on client disconnect
 - regular attack action
 - spritedef .flip so we don't have to rely on flipx in render...
-- pygbag doesnt like adding fields to dataclasses (e.g. EquipStats.One)
+- networking changes:
+  - merge networking, syncing, and networked into one component type
+  - any networkable component can .spawn() the ent
+    - at which point the entity is spawned and update_server/update_client are called
 - rename "equips" component to "loadout"
 - websockets run slower than streams
-- don't sync position every tick, interpolate
-- sync velocity
 - how to disable pygbag #debug?
 - change equips to just use Stats (may also have both flat and scaled)
 - move constants to base game package
@@ -23,7 +22,6 @@
 - in towns, have dialogs that warn/recommend rank (e-ss)
 - game settings (difficulty/grindiness)
 - document skilleffect "target" (maybe make interface with set_target)?
-- maybe use `__all__` in data
 - pytmx/tiled (or other) map support - use a generator to just generate chunks based on tiled map
 - track events per second sent/received
 - how to handle pre-game setup period?

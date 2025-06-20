@@ -31,6 +31,7 @@ class ServerGame:
         commands.PlayerInteractHandler(),
         commands.SyncHandler(self.save_data),
         commands.ReportPositionHandler(),
+        commands.ReportVelocityHandler(),
         commands.PingHandler(),
       ]
     )
@@ -65,9 +66,12 @@ class ServerGame:
     self.next_world = world
 
   async def run(self):
+    steps = 0
     while True:
       #loop until we have a world to transition to
       while self.next_world is None:
+        steps += 1
+        print(steps)
         self.server.handle_commands()
 
         #update world

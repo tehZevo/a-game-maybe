@@ -4,3 +4,4 @@ from game.networking.commands.player_interact import PlayerInteract, PlayerInter
 from game.networking.commands.sync import Sync, SyncHandler
 from game.networking.commands.ping import Ping, PingHandler
 from .report_position import *
+from .report_velocity import *

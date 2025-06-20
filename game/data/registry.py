@@ -14,3 +14,7 @@ def get_map(id):
 def get_buff(id):
     import game.data.buffs as buffs
     return getattr(buffs, id)
+
+def get_mob(id):
+    import game.data.mobs as mobs
+    return getattr(mobs, id)

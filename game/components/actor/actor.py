@@ -30,7 +30,7 @@ class Actor(Component):
     for listener in self.entity.find(C.DamageListener):
       #TODO: track source
       source = None
-      listener.on_damage(source)
+      listener.on_damage(source, amount)
   
   def heal(self, amount):
     #TODO: track source

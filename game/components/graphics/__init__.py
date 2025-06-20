@@ -9,3 +9,4 @@ from game.components.graphics.sprite_listener import SpriteListener
 from game.components.graphics.icon_listener import IconListener
 from game.components.graphics.sprite_syncing import SpriteSyncing
 from game.components.graphics.icon_syncing import IconSyncing
+from .damage_number import *
