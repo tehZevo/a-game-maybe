@@ -11,7 +11,7 @@ class PositionSyncing(Component, NetworkBehavior):
     super().__init__()
     self.require(C.Position)
     self.last_pos = None
-    self.last_report_time = 0
+    self.last_report_time = float("inf")
 
   def start_client(self, networking):
     self.pos_comp = self.get_component(C.Position)
@@ -21,9 +21,8 @@ class PositionSyncing(Component, NetworkBehavior):
     self.last_pos = self.pos_comp.pos.copy()
   
   def on_client_join(self, networking, client_id):
-    networking = self.get_component(C.Networking)
     networking.send_to_client(client_id, E.PositionUpdated(networking.id, self.pos_comp.pos))
-
+  
   def update_client(self, networking):
     self.last_report_time += DT
     if self.last_report_time >= PHYS_REPORT_RATE:

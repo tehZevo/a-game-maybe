@@ -3,7 +3,6 @@ from ..core import Interactable
 import game.components as C
 from game.utils.constants import ITEM_PUSH_DISTANCE, ITEM_PUSH_FORCE
 
-
 class DroppedItem(Component, Interactable):
   def __init__(self, item):
     super().__init__()
