@@ -40,8 +40,7 @@ class PlayerController(Component):
       self.previous_move_dir = None
     
     if skill is not None:
-      #TODO: have to figure out what skill that is based on loadout
-      #self.actor.act(UseSkill(skill))
+      self.player[C.Actor].use_skill_in_slot(skill)
       self.client.send(PlayerUseSkill(skill))
       self.previous_move_dir = None
 

@@ -1,3 +1,4 @@
+- client side prediction for pushing enemies
 - fix crash when entering staircases
 - sound
 - passives on items are just buffs on the item

@@ -43,6 +43,10 @@ class Enemy(Component, NetworkBehavior, DeathListener, DamageListener):
     # ])
 
   def on_death(self):
+    #TODO: bad guard
+    is_server = self.entity.world.find_component(C.ServerManager)
+    if not is_server:
+      return
     #drop items
     dropper = self.get_component(C.ItemDropper)
     pos = self.get_component(C.Position).pos
