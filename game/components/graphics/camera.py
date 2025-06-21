@@ -1,7 +1,7 @@
 from game.ecs import Component
 from ..physics import Position
 from game.utils import Vector
-from game.utils.constants import CAMERA_BOX_SIZE
+from game.constants import CAMERA_BOX_SIZE
 
 def clamp_box(target, camera):
   return max(target - CAMERA_BOX_SIZE, min(camera, target + CAMERA_BOX_SIZE))

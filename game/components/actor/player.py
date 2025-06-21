@@ -5,7 +5,7 @@ import game.data.sprites as Sprites
 from .damage_listener import DamageListener
 from .death_listener import DeathListener
 from game.utils.teams import PLAYER
-from game.utils.constants import PLAYER_INVULN_TIME, PLAYER_MOVE_SPEED
+from game.constants import PLAYER_INVULN_TIME, PLAYER_MOVE_SPEED
 import game.components as C
 from game.utils import Vector
 import game.data.items as I

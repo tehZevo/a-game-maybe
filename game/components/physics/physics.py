@@ -1,6 +1,6 @@
 from game.ecs import Component
 from game.utils import Vector
-from game.utils.constants import DT, PHYS_SCALE
+from game.constants import DT, PHYS_SCALE
 import game.components as C
 from game.components.networking import NetworkBehavior
 

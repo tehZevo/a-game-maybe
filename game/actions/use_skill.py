@@ -1,7 +1,7 @@
 from game.components.skill.skill import Skill
 import game.components as C
 from game.components.actor.stats import Stats
-from game.utils.constants import DT
+from game.constants import DT
 from . import Action
 
 class UseSkill(Action):

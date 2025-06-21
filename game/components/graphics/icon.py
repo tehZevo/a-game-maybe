@@ -4,7 +4,7 @@ from game.ecs import Component
 from .drawable import Drawable
 import game.components as C
 from game.utils.image_cache import get_image
-from game.utils.constants import TILE_SIZE
+from game.constants import TILE_SIZE
 
 class Icon(Component, Drawable):
   def __init__(self, path=None):

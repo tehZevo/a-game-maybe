@@ -6,7 +6,7 @@ from game.utils import Vector
 from game.utils.teams import ENEMY
 from game.components.actor import DeathListener, DamageListener
 import game.components as C
-from game.utils.constants import ENEMY_MOVE_SPEED, DT
+from game.constants import ENEMY_MOVE_SPEED, DT
 from game.components.networking import NetworkBehavior
 import game.networking.events as E
 

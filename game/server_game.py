@@ -5,7 +5,7 @@ import pygame
 
 from game.ecs import World
 from game.save_data import SaveData
-from game.utils.constants import FPS, DT
+from game.constants import FPS, DT
 import game.networking.commands as commands
 import game.components as C
 import game.networking.events as E

@@ -2,7 +2,7 @@ import pygame
 
 from game.ecs import Component
 import game.components as C
-from game.utils.constants import PHYS_SCALE
+from game.constants import PHYS_SCALE
 
 class Rect(Component):
   def __init__(self):

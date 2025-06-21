@@ -1,7 +1,7 @@
 from game.ecs import Component
 import game.components as C
 from .dropped_item import DroppedItem
-from game.utils.constants import ITEM_DROP_RADIUS
+from game.constants import ITEM_DROP_RADIUS
 from game.utils import Vector
 
 class ItemDropper(Component):

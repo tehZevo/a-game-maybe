@@ -4,7 +4,7 @@ from game.ecs import Component
 from .drawable import Drawable
 
 from ..physics.position import Position
-from game.utils.constants import DT
+from game.constants import DT
 from game.utils.image_cache import get_image
 from game.utils import Vector
 import game.components as C

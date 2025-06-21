@@ -1,5 +1,5 @@
 from game.buffs import BuffEffect
-from game.utils.constants import DOT_TICK_RATE, DT
+from game.constants import DOT_TICK_RATE, DT
 import game.components as C
 
 class HealOverTime(BuffEffect):

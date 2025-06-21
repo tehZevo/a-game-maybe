@@ -4,7 +4,7 @@ import bisect
 from pygame import Vector2, Rect
 
 from game.utils.image_cache import get_image
-from game.utils.constants import TILE_SIZE
+from game.constants import TILE_SIZE
 from game.utils import Vector
 
 #TODO: ability to attach objects at points in sprites? (weapons)?

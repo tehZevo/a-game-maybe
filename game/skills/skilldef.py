@@ -1,4 +1,4 @@
-from game.utils.constants import DEFAULT_SKILL_USE_TIME
+from game.constants import DEFAULT_SKILL_USE_TIME
 from .skill_rank import SkillRank
 
 #TODO: reimpl hp/mp cost and use time as skill effects

@@ -5,7 +5,7 @@ import itertools
 import pygame
 
 from game.ecs import Component
-from game.utils.constants import PHYS_SCALE, CHUNK_SIZE
+from game.constants import PHYS_SCALE, CHUNK_SIZE
 
 #NOTE: rects are in world space to make physics calculations simpler to understand
 def build_rects(cx, cy, chunk):

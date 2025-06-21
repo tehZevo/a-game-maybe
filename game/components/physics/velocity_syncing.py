@@ -2,7 +2,7 @@ from game.ecs import Component
 from game.utils import Vector
 import game.components as C
 from game.components.networking.network_behavior import NetworkBehavior
-from game.utils.constants import DT, PHYS_REPORT_RATE
+from game.constants import DT, PHYS_REPORT_RATE
 import game.networking.events as E
 import game.networking.commands as Commands
 

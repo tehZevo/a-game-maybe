@@ -6,7 +6,7 @@ import pygame
 
 from .renderer import Renderer
 import game.components as C
-from game.utils.constants import TILE_SIZE
+from game.constants import TILE_SIZE
 from game.utils import Vector
 
 #TODO: consider how i want items/monstes to render when next to player

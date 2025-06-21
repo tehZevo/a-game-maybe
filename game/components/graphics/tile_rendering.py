@@ -6,7 +6,7 @@ from game.ecs import Component
 from .drawable import Drawable
 import game.components as C
 from game.utils.image_cache import get_image
-from game.utils.constants import TILE_SIZE, CHUNK_SIZE
+from game.constants import TILE_SIZE, CHUNK_SIZE
 from game.utils import Vector
 from game.tiles import TileType, is_floor, is_wall
 

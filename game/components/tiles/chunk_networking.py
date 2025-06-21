@@ -4,7 +4,7 @@ import itertools
 from game.ecs import Component
 import game.components as C
 from game.components.networking.network_behavior import NetworkBehavior
-from game.utils.constants import CHUNK_SIZE
+from game.constants import CHUNK_SIZE
 import game.networking.events as E
 
 def overlap(old_chunk, new_chunk):

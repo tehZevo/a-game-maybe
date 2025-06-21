@@ -7,7 +7,7 @@ from game.particles.particle import Particle
 from game.utils import Vector
 import game.components as C
 from . import ParticleSystem
-from game.utils.constants import DT
+from game.constants import DT
 from game.components.networking.network_behavior import NetworkBehavior
 
 #TODO: more emitter styles

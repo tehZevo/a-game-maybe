@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2
 
-from game.utils.constants import TILE_SIZE, DT
+from game.constants import TILE_SIZE, DT
 from game.utils.image_cache import get_image
 
 #TODO: tintable particles

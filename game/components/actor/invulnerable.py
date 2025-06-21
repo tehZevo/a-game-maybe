@@ -1,5 +1,5 @@
 from game.ecs import Component
-from game.utils.constants import DT
+from game.constants import DT
 
 #become invulnerable for [time] seconds; None for forever
 class Invulnerable(Component):

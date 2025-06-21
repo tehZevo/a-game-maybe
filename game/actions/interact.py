@@ -1,5 +1,5 @@
 from . import Action
-from game.utils.constants import DT
+from game.constants import DT
 from game.utils.find_in_range import find_in_range
 import game.components as C
 from game.components.core.interactable import Interactable

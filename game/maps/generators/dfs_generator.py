@@ -9,7 +9,7 @@ from game.components.tiles import TilePhysics
 from game.tiles import Tileset, Floor, Wall, TileType
 import game.data.mobs as Mobs
 from game.utils import Vector
-from game.utils.constants import CHUNK_SIZE
+from game.constants import CHUNK_SIZE
 import game.components as C
 from game.data.registry import get_map
 

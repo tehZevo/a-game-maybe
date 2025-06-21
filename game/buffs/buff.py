@@ -1,4 +1,4 @@
-from game.utils.constants import DT
+from game.constants import DT
 
 #an instance of a buffdef, with state for each effect
 class Buff:

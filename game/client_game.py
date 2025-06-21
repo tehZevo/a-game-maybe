@@ -7,7 +7,7 @@ import pygame
 
 from game.ecs import World
 import game.components as C
-from game.utils.constants import FPS, TILE_SIZE, DT
+from game.constants import FPS, TILE_SIZE, DT
 import game.networking.events as E
 from game.networking.commands import Sync, Ping
 from game.utils import Vector

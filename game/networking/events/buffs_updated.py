@@ -4,7 +4,7 @@ from typing import List
 from ..event_handler import EventHandler
 import game.components as C
 from game.data.registry import get_buff
-from game.utils.constants import DT
+from game.constants import DT
 
 @dataclass
 class ClientBuff:

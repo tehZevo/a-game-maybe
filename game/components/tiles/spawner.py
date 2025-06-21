@@ -2,7 +2,7 @@ import random
 
 from game.ecs import Component, Entity
 from game.utils import Vector
-from game.utils.constants import DT
+from game.constants import DT
 from . import TileEntity
 import game.components as C
 

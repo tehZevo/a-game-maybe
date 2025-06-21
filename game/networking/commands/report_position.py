@@ -4,7 +4,7 @@ from ..command_handler import CommandHandler
 from game.utils import Vector
 import game.components as C
 import game.networking.events as E
-from game.utils.constants import REPORT_POS_ERROR_THRESH
+from game.constants import REPORT_POS_ERROR_THRESH
 
 @dataclass
 class ReportPosition:
