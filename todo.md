@@ -1,3 +1,12 @@
+- regular attack action (its a skill)
+- charge
+- palettized particles
+- weapon skills
+- mobdef aggro
+  - aggro icon?
+- fix tile transparency when standing behind
+- make enemies turn to face target if not moving
+- LookAt action?
 - client side prediction for pushing enemies
 - fix crash when entering staircases
 - sound
@@ -9,7 +18,6 @@
 - combine the mains/runners (mode="local", "web_multiplayer", etc)
 - stop server from crashing on client disconnect
 - damage hits (basically a delay+repeat of damage)
-- regular attack action
 - spritedef .flip so we don't have to rely on flipx in render...
 - networking changes:
   - merge networking, syncing, and networked into one component type
@@ -38,7 +46,6 @@
 - damage numbers
 - show disconnect icon above player head
 - use separate colors for skill rank/equip grade?
-- fix particles
 - "safe area" players spawn in in next floor that lasts a short time
 - player spawn animation, set animation to "focus" (holding weapon up or something)
 - prevent walk animation when blocked by wall

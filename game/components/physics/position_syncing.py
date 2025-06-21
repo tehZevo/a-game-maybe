@@ -12,9 +12,14 @@ class PositionSyncing(Component, NetworkBehavior):
     self.require(C.Position, C.Networking)
     self.last_client_report_time = float("inf")
 
+  def make_event(self, networking):
+    return E.PositionUpdated(networking.id, self.entity[C.Position].pos)
+    
   def on_client_join(self, networking, client_id):
-    event = E.PositionUpdated(networking.id, self.entity[C.Position].pos)
-    networking.send_to_client(client_id, event)
+    networking.send_to_client(client_id, self.make_event(networking))
+  
+  def start_server(self, networking):
+    networking.broadcast_synced(self.make_event(networking))
   
   def update_client(self, networking):
     self.last_client_report_time += DT

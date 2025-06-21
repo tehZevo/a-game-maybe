@@ -25,6 +25,6 @@ class Target(SkillEffect):
       for child in self.children:
         #create new skill effect with target
         skill.entity.world.create_entity([
-          C.Position(target.get_component(C.Position).pos),
+          C.Position(target[C.Position].pos),
           Skill(child, skill.user, skill.entity, target=target) #TODO: set parent?
         ])

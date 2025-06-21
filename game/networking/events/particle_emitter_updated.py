@@ -5,7 +5,7 @@ from ..event_handler import EventHandler
 import game.components as C
 
 @dataclass
-class EmitterUpdated:
+class ParticleEmitterUpdated:
   id: str
   particle_path: str
   min_vel: float
@@ -14,9 +14,9 @@ class EmitterUpdated:
   particle_life: float
   time: float
 
-class EmitterUpdatedHandler(EventHandler):
+class ParticleEmitterUpdatedHandler(EventHandler):
   def __init__(self):
-    super().__init__(EmitterUpdated)
+    super().__init__(ParticleEmitterUpdated)
 
   def handle(self, client_manager, client, event):
     #TODO: this is caused by entities not being on client yet.. need to sync them when client first "sees" them

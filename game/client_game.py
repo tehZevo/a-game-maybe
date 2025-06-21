@@ -61,7 +61,7 @@ class ClientGame:
         E.VelocityUpdatedHandler(),
         E.SpriteChangedHandler(),
         E.IconChangedHandler(),
-        E.EmitterUpdatedHandler(),
+        E.ParticleEmitterUpdatedHandler(),
         E.EntityDespawnedHandler(),
         E.MobUpdatedHandler(),
         E.StatsUpdatedHandler(),

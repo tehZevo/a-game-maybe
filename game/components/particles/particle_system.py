@@ -1,19 +1,20 @@
-import pygame
-
 from game.ecs import Component
+from game.components.graphics import Drawable
 
-class ParticleSystem(Component):
+class ParticleSystem(Component, Drawable):
   def __init__(self):
     super().__init__()
-    self.particles = pygame.sprite.Group()
+    self.particles = []
 
-  def add_particle(self, particle):
-    #using a group to track particles but not for drawing
-    self.particles.add(particle)
+  def add(self, particle):
+    self.particles.append(particle)
 
   def update(self):
-    self.particles.update()
+    for p in self.particles:
+      p.update()
 
   def draw(self, renderer):
     for particle in self.particles:
       particle.draw(renderer)
+    
+    self.particles = [p for p in self.particles if p.life > 0]
