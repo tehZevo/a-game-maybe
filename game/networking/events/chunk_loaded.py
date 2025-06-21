@@ -16,7 +16,6 @@ class ChunkLoadedHandler(EventHandler):
   def handle(self, client_manager, client, event):
     import game.components as C
     world = client_manager.entity.world
-    #TODO: this is kinda expensive
     tile_rendering = world.find_component(C.TileRendering)
     tile_phys = world.find_component(C.TilePhysics)
     chunk = Tileset.unpack(event.tileset)

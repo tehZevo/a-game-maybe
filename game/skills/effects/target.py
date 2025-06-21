@@ -7,13 +7,16 @@ from .skill_effect import SkillEffect
 class Target(SkillEffect):
   def __init__(self, filters=[], children=[]):
     super().__init__()
+    if not isinstance(children, (list, tuple)):
+      children = [children]
+    if not isinstance(filters, (list, tuple)):
+      filters = [filters]
     self.filters = filters
     self.children = children
 
   def start(self, skill):
-    #find all actors in range
-    actors = skill.entity.world.find(Actor)
     #filter actors based on filter condition(s)
+    actors = skill.entity.world.find(Actor)
     skill_comp = skill.entity.get_component(Skill)
     for filter in self.filters:
       actors = [a for a in actors if filter(skill_comp)(a)]

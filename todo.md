@@ -1,8 +1,10 @@
 - fix crash when entering staircases
 - sound
+- passives on items are just buffs on the item
 - how to single target skills (e.g. enemy has target player?)
 - TODO: how to disasble prediction in singleplayer mode (avoid double physics calcs)
 - move main.js to assets/jsws-client.js
+- item set effects? (may force players into less creative styles)
 - combine the mains/runners (mode="local", "web_multiplayer", etc)
 - stop server from crashing on client disconnect
 - regular attack action

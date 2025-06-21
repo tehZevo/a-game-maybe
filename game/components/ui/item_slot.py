@@ -26,7 +26,7 @@ class ItemSlot(UIComponent):
       mini_icon = equip_grade_icon(item.grade)
       return mini_icon and get_image(mini_icon)
     if isinstance(item, SkillItem):
-      mini_icon = skill_rank_icon(item.rank)
+      mini_icon = skill_rank_icon(item.skilldef.rank)
       return mini_icon and get_image(mini_icon)
     return None
 
@@ -53,6 +53,8 @@ class ItemSlot(UIComponent):
     item = self.get_item()
     icon = item and get_image(item.icon)
     mini_icon = item and self.get_mini_icon(item)
+    #TODO: naming
+    other_mini_icon = item and item.mini_icon and get_image(item.mini_icon)
     rarity = item and item.rarity or Rarity.COMMON
     border_color = rarity and rarity_color(rarity)
 
@@ -64,3 +66,5 @@ class ItemSlot(UIComponent):
       renderer.draw(rank_bg, pos + Vector(14, -2))
       renderer.draw(rank_border, pos + Vector(14, -2), tint=border_color)
       renderer.draw(mini_icon, pos + Vector(16, 0), tint=border_color)
+    if other_mini_icon is not None:
+      renderer.draw(other_mini_icon, pos + Vector(4, 12), alpha=0.8)

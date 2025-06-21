@@ -8,7 +8,7 @@ slime = MobDef(
   id="slime",
   difficulty=5,
   archetypes=[A.MOOK],
-  drops=[I.cloth_hat, I.test_alpha_skill_item, I.wooden_longsword, I.wooden_shortsword, I.wooden_shortsword_l, I.wooden_shield],
+  drops=[I.cloth_hat, I.bless, I.wooden_longsword, I.wooden_shortsword, I.wooden_shortsword_l, I.wooden_shield],
   skills=[test_enemy_skill],
   sprite=S.slime
 )

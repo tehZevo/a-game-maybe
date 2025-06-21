@@ -1,12 +1,11 @@
 from enum import IntEnum
 
-#TODO: "relic"?
 Rarity = IntEnum("Rarity", ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY"])
 
 def rarity_color(rarity):
     match rarity:
-        case Rarity.COMMON: return (255, 255, 255)
-        case Rarity.UNCOMMON: return (0, 255, 0)
+        case Rarity.COMMON: return (230, 230, 230)
+        case Rarity.UNCOMMON: return (100, 230, 100)
         case Rarity.RARE: return (100, 160, 230)
         case Rarity.EPIC: return (160, 0, 255)
         case Rarity.LEGENDARY: return (230, 150, 50)
