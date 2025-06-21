@@ -36,11 +36,12 @@ class WebsocketServer(Server):
     await server.serve_forever() #o7
 
   def send(self, id, event):
-    try:
-      event = self.build_event(event)
-      asyncio.create_task(self.clients[id].send(event))
-    except ConnectionClosed as e:
-      print("failed to send to client: disconnected")
-      self.on_disconnect(id)
-    except KeyError as e:
-      print("already disconnected client", id, event)
+    async def inner(event):
+      try:
+        await self.clients[id].send(self.build_event(event))
+      except ConnectionClosed as e:
+        print(f"[Server] Failed to send to client {id}: disconnected")
+        self.on_disconnect(id)
+      except KeyError as e:
+        print(f"[Server] Failed to send to client {id}: disconnected")
+    asyncio.create_task(inner(event))

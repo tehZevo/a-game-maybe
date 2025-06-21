@@ -21,5 +21,6 @@ dev_rush = SkillDef(
   slot=SkillSlot.ALPHA,
   icon="assets/items/skills/dev_rush.png",
   mini_icon="assets/icons/dev.png",
-  rank=SkillRank.IV
+  rank=SkillRank.IV,
+  use_time=0.5
 )

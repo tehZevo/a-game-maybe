@@ -3,7 +3,7 @@ import asyncio
 from .client_game import ClientGame
 from game.networking import JSWSClient
 
-async def main():
+async def main(**kwargs):
     client = JSWSClient("ws://localhost:8765")
     the_game = ClientGame(client)
     
