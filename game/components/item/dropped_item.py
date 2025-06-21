@@ -14,8 +14,6 @@ class DroppedItem(Component, Interactable):
     self.get_component(C.Icon).set_image(self.item.icon)
   
   def update(self):
-    #currently dropped items only exist on the server
-    #move this logic to update_server when that changes
     my_pos = self.get_component(C.Position).pos
     my_phys = self.get_component(C.Physics)
     other_items = [c.entity for c in self.entity.world.find_components(DroppedItem) if c != self]
@@ -27,6 +25,10 @@ class DroppedItem(Component, Interactable):
         my_phys.apply_force(push_dir * ITEM_PUSH_FORCE)
 
   def interact(self, entity):
+    #TODO: bad guard
+    if self.entity.world.find_component(C.ServerManager) is None:
+      return
+    
     #TODO: have equips component drop the item instead?
     old_equip = entity.get_component(C.Equips).equip(self.item)
     #if we had something equipped in that slot, drop it

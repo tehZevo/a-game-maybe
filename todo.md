@@ -8,6 +8,7 @@
 - item set effects? (may force players into less creative styles)
 - combine the mains/runners (mode="local", "web_multiplayer", etc)
 - stop server from crashing on client disconnect
+- damage hits (basically a delay+repeat of damage)
 - regular attack action
 - spritedef .flip so we don't have to rely on flipx in render...
 - networking changes:
@@ -46,7 +47,6 @@
   - what if you want to grind though?
   - maybe make spawners have a better drop rate/better items?
 - requirement of killing N mobs before progressing?
-- limit number of dropped items and delete oldest
 - teleporters/portals
 - network sync interface which defines fields to be synced automatically
   - or at least "sync" means on spawn?
@@ -65,16 +65,12 @@
 - fix skill use generating tons of stats updated events
  - maybe store stat updates per game tick and then send one StatsUpdated on the next tick>
 - use eventcatalog to document events?
-- maybe refactor "syncing" functionality into their respective components and make them just check for `networking` to see if we should perform syncing
-- client side prediction :^)
 - player visibility/chunks spawning/despawning/updates
   - as long as player is within radius, send updates
   - when player exits chunks, despawn entity
   - might be useful to keep track of entities that can be seen by each player in the server manager
 - target effects should have a selection order (nearest/random)
-- refactor skill effect targets to be a component on the skill entity(?)s
 - make it so target effects require LOS (flag?)
-- damage hits (basically a delay+repeat of damage)
 - add invulnerability animation
 - make ui components mountable to screen corners/edges and then use position as an offset
 - improve collisions
@@ -86,8 +82,6 @@
 - maybe make direction component for tileentity facing direction
   - how to handle fine-grained direction for actor though? is that even needed?
 - make +y up
-- separate ECS for particles so they dont slow down main world queries
-  - add tileset physics to this world so we can have particles bounce off walls, etc
 - reduce delay on interact (will require handling key pressed events so player cant hold to repeatedly interact)
 - gold, health, mana drops: walk over them to pick them up
 - skill idea: "ally bomb" (or something like that): damage enemies nearby allies (target allies, then target enemies)

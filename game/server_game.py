@@ -48,6 +48,7 @@ class ServerGame:
     #create new world
     world = World()
     world.create_entity([C.GameMaster(self, mapdef)])
+    world.create_entity([C.DroppedItemManager()])
     
     #add server manager
     server_manager = C.ServerManager()
