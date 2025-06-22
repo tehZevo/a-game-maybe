@@ -1,12 +1,29 @@
-- game rooms
-  - states:
-    - lobby
-    - game
-  - channel vs room
-  - different channel types (login, lobby, game)
-  - rooms
-  - login has "create" and "join"
-- add --dev flag on client/server to start/join dev room (and add button to login server for "join dev room")
+- keymappings
+- leverage pygame sprites/groups to speedup rendering?
+  - means each drawable would have to track its sprites
+
+- server has channels
+  - server has default channel (for room creation/etc)
+  - clients can be placed into channels
+- servers have rooms
+  - each room has channel
+  - each room has an id (id == join code?)
+  - each room can be in one of these states:
+    - LobbyState
+    - PlayState
+- client states:
+  - MainMenuState ("Solo adventure", "create room", and "join room")
+  - LobbyState
+  - PlayState
+
+- Q:
+  - how do clients handle setting up the "default" channel?
+  - how to engineer this to scale? (in the future)
+    - login server
+    - game servers
+
+you add listeners to channels
+
 - Sequence skilleffect
 - client side predict interact
 - if mobs move a lot suddenly, send their updated position to client

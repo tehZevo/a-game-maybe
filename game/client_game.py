@@ -76,6 +76,15 @@ class ClientGame:
     #create ui world and manager
     self.ui_world = World()
     self.hud = self.ui_world.create_entity([C.HUD()])
+    self.ui_world.create_entity([
+      C.Position(Vector(32, 32)),
+      C.Menu([
+        ("Foo", lambda _: print("foo")),
+        ("Bar", lambda _: print("bar")),
+        ("Foobar", lambda _: print("foobar")),
+        ("Hello World!", lambda _: print("Hello World!"))
+      ])
+    ])
     self.ui_renderer = self.ui_world.create_entity([C.Renderer(RENDER_WIDTH, RENDER_HEIGHT)])
 
     self.world = World()
@@ -123,11 +132,12 @@ class ClientGame:
             pygame.quit()
             sys.exit()
 
-        #control player
+        #control player (and other keyhandlers like menus)
         held = pygame.key.get_pressed()
-        player_controller = self.world.find_component(C.PlayerController)
-        if player_controller is not None:
-          player_controller.handle_keys(pressed, held, released)
+        for key_handler in self.ui_world.find_components(C.KeyHandler):
+          key_handler.handle_keys(pressed, held, released)
+        for key_handler in self.world.find_components(C.KeyHandler):
+          key_handler.handle_keys(pressed, held, released)
 
         #update world
         self.world.update()
