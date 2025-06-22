@@ -1,3 +1,16 @@
+- game rooms
+  - states:
+    - lobby
+    - game
+  - channel vs room
+  - different channel types (login, lobby, game)
+  - rooms
+  - login has "create" and "join"
+- add --dev flag on client/server to start/join dev room (and add button to login server for "join dev room")
+- Sequence skilleffect
+- client side predict interact
+- if mobs move a lot suddenly, send their updated position to client
+- interact cursor
 - regular attack action (its a skill)
 - charge
 - palettized particles
@@ -6,6 +19,7 @@
   - aggro icon?
 - fix tile transparency when standing behind
 - make enemies turn to face target if not moving
+- rpc decorators
 - LookAt action?
 - client side prediction for pushing enemies
 - fix crash when entering staircases
@@ -59,14 +73,12 @@
   - or at least "sync" means on spawn?
 - avoid loading images on the server
 - generator should make a player spawn point component, which players are spawned on by the generators spawn method
-- highlight which entity the player would interact with
 - hide skill slots until picked up for the first time?
   - hide skill slots that are "higher level" than the highest equipped
   - e.g. if you have a beta, show alpha and beta, but not delta +
 - slime boss that splits into 4 smaller slimes multiple times (1->4->16->64)
 - air mechanics
   - jumping
-  - shadow (separate entity?)
   - skills that can only be used midair
   - skills that cannot be used midair
 - fix skill use generating tons of stats updated events
@@ -94,3 +106,10 @@
 - skill idea: "ally bomb" (or something like that): damage enemies nearby allies (target allies, then target enemies)
 - distance based delay effect (delay in seconds per unit)
 - ranged attacks will feel nicer with a bit of delay (think magic claw from maple story)
+
+## Milestone updates
+- Jump!
+  - add z coordinate
+  - add jumping
+- Towns
+  - Add towns/shops/gold

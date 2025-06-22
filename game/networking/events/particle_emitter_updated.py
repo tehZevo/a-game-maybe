@@ -13,6 +13,7 @@ class ParticleEmitterUpdated:
   per_tick: int
   particle_life: float
   time: float
+  flip: str
 
 class ParticleEmitterUpdatedHandler(EventHandler):
   def __init__(self):
@@ -33,3 +34,4 @@ class ParticleEmitterUpdatedHandler(EventHandler):
       emitter.per_tick = event.per_tick
       emitter.particle_life = event.particle_life
       emitter.time = event.time
+      emitter.flip = event.flip

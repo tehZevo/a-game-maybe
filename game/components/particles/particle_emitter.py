@@ -14,12 +14,11 @@ from game.components.networking.network_behavior import NetworkBehavior
 #client side emitter runs until finished, then dies
 #TODO: support fractional per tick (random or count ticks?)
 #TODO: rotation (0/90/180/270/random)
-#TODO: flip x/y/both/random
 #TODO: anim_dir: forward/reverse/random
 #TODO: loop
 #TODO: some kind of animation speed to use with loop vs time
 class ParticleEmitter(Component, NetworkBehavior):
-  def __init__(self, particle_path=None, min_vel=2, max_vel=3, per_tick=10, particle_life=0.25, time=0):
+  def __init__(self, particle_path=None, min_vel=2, max_vel=3, per_tick=10, flip="none", particle_life=0.25, time=0):
     super().__init__()
     self.require(C.Position, C.Networking, C.PositionSyncing, C.VelocitySyncing)
     self.particle_path = particle_path
@@ -29,6 +28,7 @@ class ParticleEmitter(Component, NetworkBehavior):
     self.max_vel = max_vel
     self.per_tick = per_tick
     self.particle_life = particle_life
+    self.flip = flip
     self.active = False
 
   def start_server(self, networking):
@@ -40,7 +40,8 @@ class ParticleEmitter(Component, NetworkBehavior):
       max_vel=self.max_vel,
       per_tick=self.per_tick,
       particle_life=self.particle_life,
-      time=self.time
+      time=self.time,
+      flip=self.flip
     ))
     
   def start_client(self, networking):
@@ -67,11 +68,16 @@ class ParticleEmitter(Component, NetworkBehavior):
       dir = Vector.random()
       speed = self.min_vel + random.random() * (self.max_vel - self.min_vel)
       vel = dir * speed
+      if self.flip == "random":
+        flip = random.choice(["none", "x", "y", "both"])
+      else:
+        flip = self.flip
       self.system.add(Particle(
         path=self.particle_path,
         pos=pos,
         vel=vel,
-        life=self.particle_life
+        life=self.particle_life,
+        flip=flip,
       ))
 
     self.time -= DT

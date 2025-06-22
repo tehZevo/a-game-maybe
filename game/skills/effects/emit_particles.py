@@ -10,5 +10,5 @@ class EmitParticles(SkillEffect):
     skill.entity.world.create_entity([
       #TODO: harcoded offset, need sprites to have origin at feet
       C.Position(skill.entity[C.Position].pos + Vector(0.5, 0.5)),
-      C.ParticleEmitter("assets/particles/fire.png") #TODO: hardcoded particle
+      C.ParticleEmitter("assets/particles/fire.png", flip="random") #TODO: hardcoded particle
     ])
