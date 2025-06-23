@@ -5,6 +5,8 @@ import game.components as C
 class ClientManager(Component):
   def __init__(self):
     super().__init__()
+    #TODO: rename to channel
+    self.client = None
     self.networked_entities = {}
 
   def network_register(self, entity):

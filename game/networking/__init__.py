@@ -7,3 +7,9 @@ from game.networking.websocket_client import WebsocketClient
 from game.networking.stream_client import StreamClient
 from game.networking.local_client import LocalClient
 from game.networking.jsws_client import JSWSClient
+from .play_state_event_handler import *
+from .play_state_command_handler import *
+from .lobby_state_command_handler import *
+from .game_event_handler import *
+from .room_event_handler import *
+from .room_command_handler import *

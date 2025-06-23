@@ -1,27 +1,30 @@
 import time
 import asyncio
-import sys
-from collections import defaultdict
 
 import pygame
 
-from game.ecs import World
-import game.components as C
 from game.constants import FPS, TILE_SIZE, DT
 import game.networking.events as E
-from game.networking.commands import Sync, Ping
-from game.utils import Vector
+import game.networking.commands as C
+
+from game.states import ClientPlayState, ClientLobbyState
+
+#TODO: end game state when world closes
+#TODO: add world opened handler to lobby state or some kind of loading state
 
 #TODO: move to constants?
 SCREEN_WIDTH_TILES = 16
 SCREEN_HEIGHT_TILES = 12
-RENDER_WIDTH = TILE_SIZE * SCREEN_WIDTH_TILES
-RENDER_HEIGHT = TILE_SIZE * SCREEN_HEIGHT_TILES
+FPS_MEASURE_SECONDS = 10
+
+class DummyState:
+  def step(self):
+    pass
 
 async def annoy_server(client):
   while True:
-    client.send(Ping(time.time()))
-    await asyncio.sleep(1)
+    client.default_channel.send(C.Ping(time.time()))
+    await asyncio.sleep(10)
 
 #TODO: dont like this.. have to wait for client to connect...
 class ClientConnectHandler:
@@ -29,147 +32,67 @@ class ClientConnectHandler:
     pass
   
   def handle_connect(self, client):
+    client.default_channel.send(C.CreateRoom())
     asyncio.create_task(annoy_server(client))
-    client.send(Sync())
 
-#TODO: allow setting url via ClientType class or something
 class ClientGame:
   def __init__(self, client, scale_res=1):
     pygame.init()
     self.scale_res = scale_res
-    screen_width = self.scale_res * RENDER_WIDTH
-    screen_height = self.scale_res * RENDER_HEIGHT
+    self.render_width = TILE_SIZE * SCREEN_WIDTH_TILES
+    self.render_height = TILE_SIZE * SCREEN_HEIGHT_TILES
+    screen_width = self.scale_res * self.render_width
+    screen_height = self.scale_res * self.render_height
     self.screen = pygame.display.set_mode((screen_width, screen_height))
     self.clock = pygame.time.Clock()
-    
-    pygame.display.set_caption("Game")
-    #TODO: move to fps counter ui component...
+    self.room_channel = None
+
+    pygame.display.set_caption("Game") #TODO: change
+    #TODO: move to fps counter ui component?
     self.frames = 0
-    self.one_second = 0
-    self.last_frame_time = time.time()
+    self.fps_measure_time = time.time()
 
     self.client = client
     self.client.setup_handlers(
       connect_handlers=[ClientConnectHandler()],
       event_handlers=[
-        E.PlayerAssignedHandler(),
-        E.TilesetUpdatedHandler(),
-        E.ChunkLoadedHandler(),
-        E.ChunkUnloadedHandler(),
-        E.EntitySpawnedHandler(),
-        E.PositionUpdatedHandler(),
-        E.VelocityUpdatedHandler(),
-        E.SpriteChangedHandler(),
-        E.IconChangedHandler(),
-        E.ParticleEmitterUpdatedHandler(),
-        E.EntityDespawnedHandler(),
-        E.MobUpdatedHandler(),
-        E.StatsUpdatedHandler(),
-        E.EquipsUpdatedHandler(),
-        E.WorldClosedHandler(self),
-        E.WorldOpenedHandler(),
-        E.PongHandler(),
-        E.BuffsUpdatedHandler(),
+        E.PongHandler(self),
+        E.RoomJoinedHandler(self),
       ]
     )
 
-    #create ui world and manager
-    self.ui_world = World()
-    self.hud = self.ui_world.create_entity([C.HUD()])
-    self.ui_world.create_entity([
-      C.Position(Vector(32, 32)),
-      C.Menu([
-        ("Foo", lambda _: print("foo")),
-        ("Bar", lambda _: print("bar")),
-        ("Foobar", lambda _: print("foobar")),
-        ("Hello World!", lambda _: print("Hello World!"))
-      ])
+    self.state = DummyState()
+  
+  #TODO: split up logic (send HelloLobby and await LobbyUpdated)
+  def setup_room_and_lobby(self, room_channel_id, lobby_channel_id):
+    self.room_channel = self.client.add_channel(room_channel_id)
+    self.room_channel.setup_handlers([
+      E.WorldOpenedHandler(self),
+      E.WorldClosedHandler(self),
+      E.LobbyOpenedHandler(self),
     ])
-    self.ui_renderer = self.ui_world.create_entity([C.Renderer(RENDER_WIDTH, RENDER_HEIGHT)])
+    lobby_channel = self.client.add_channel(lobby_channel_id)
+    self.state = ClientLobbyState(lobby_channel)
 
-    self.world = World()
-    self.next_world = None
-    self.init_world()
-
-  def init_world(self):
-    #setup client world
-    self.world.create_entity([C.GameMaster(self, None)]) #NOTE: we'll set mapdef when we get it from the server
-    self.camera = self.world.create_entity([C.Camera()])
-    self.renderer = self.world.create_entity([C.WorldRenderer(RENDER_WIDTH, RENDER_HEIGHT, self.camera)])
-    self.world.create_entity([C.TileRendering()])
-    self.world.create_entity([C.TilePhysics()])
-    self.particle_system = self.world.create_entity([C.ParticleSystem()])
+  def load_world(self, channel_id):
+    channel = self.client.add_channel(channel_id)
+    self.state = ClientPlayState(self, channel)
     
-    #TODO: create Client as property of ClientGame and pass to ClientManager?
-    client_manager = C.ClientManager()
-    #TODO: remove binding if possible
-    client_manager.client = self.client
-    self.client.client_manager = client_manager
-    self.world.create_entity([client_manager])
-
-    #set hud world and player
-    hud_comp = self.hud.get_component(C.HUD)
-    hud_comp.game_world = self.world
-
-  def transition(self):
-    self.next_world = World()
-
   async def run(self):
     while True:
-      #loop until we have a world to transition to
-      while self.next_world is None:
-        self.client.handle_events()
+      self.client.handle_events()
+      if self.room_channel is not None:
+        self.room_channel.handle_events()
+      self.state.step()
 
-        #TODO: move to util function? (make sure to convert events to list first)
-        pressed = defaultdict(lambda: False)
-        released = defaultdict(lambda: False)
-        for event in pygame.event.get():
-          if event.type == pygame.KEYDOWN:
-            pressed[event.key] = True
-          if event.type == pygame.KEYUP:
-            released[event.key] = True
-          if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+      #doing both this and clock.tick makes game run as expected, because of course it does
+      self.clock.tick(FPS) #limit fps TODO: decouple rendering from physics
+      pygame.display.flip()
 
-        #control player (and other keyhandlers like menus)
-        held = pygame.key.get_pressed()
-        for key_handler in self.ui_world.find_components(C.KeyHandler):
-          key_handler.handle_keys(pressed, held, released)
-        for key_handler in self.world.find_components(C.KeyHandler):
-          key_handler.handle_keys(pressed, held, released)
+      self.frames += 1
+      if time.time() - self.fps_measure_time > FPS_MEASURE_SECONDS:
+        print("[Client] FPS:", self.frames / FPS_MEASURE_SECONDS)
+        self.frames = 0
+        self.fps_measure_time = time.time()
 
-        #update world
-        self.world.update()
-
-        #render
-        self.screen.fill((0, 0, 0))
-        self.renderer.get_component(C.Renderer).render(self.screen)
-
-        #draw particles
-        #TODO: reenable when i fix particle lag
-        # camera_pos = self.camera.get_component(C.Position).pos
-        # camera_offset = (camera_pos * TILE_SIZE) - Vector(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-        # self.particle_system.get_component(C.ParticleSystem).draw(self.screen, camera_offset)
-
-        #draw UI
-        self.ui_world.update()
-        self.ui_renderer.get_component(C.Renderer).render(self.screen)
-
-        #doing both this and clock.tick makes game run as expected, because of course it does
-        self.clock.tick(FPS) #limit fps TODO: remove and decouple
-        pygame.display.flip()
-
-        self.frames += 1
-        self.one_second += time.time() - self.last_frame_time
-        self.last_frame_time = time.time()
-        if self.one_second >= 1:
-          print("[Client] FPS:", self.frames / self.one_second)
-          self.one_second = 0
-          self.frames = 0
-
-        await asyncio.sleep(0)
-
-      self.world = self.next_world
-      self.init_world()
-      self.next_world = None
+      await asyncio.sleep(0)

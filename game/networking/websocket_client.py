@@ -24,8 +24,8 @@ class WebsocketClient(Client):
         self.on_message(message)
     self.on_disconnect()
 
-  def send(self, command):
-    asyncio.create_task(self.ws.send(self.build_command(command)))
+  def send(self, message):
+    asyncio.create_task(self.ws.send(message))
 
   def disconnect(self):
     self.ws.close()

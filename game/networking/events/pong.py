@@ -1,16 +1,16 @@
 import time
 from dataclasses import dataclass
 
-from ..event_handler import EventHandler
+from game.networking import GameEventHandler
 
 @dataclass
 class Pong:
   time: float
 
-class PongHandler(EventHandler):
-  def __init__(self):
-    super().__init__(Pong)
+class PongHandler(GameEventHandler):
+  def __init__(self, game):
+    super().__init__(Pong, game)
 
-  def handle(self, client_manager, client, event):
+  def handle(self, event):
     dt = time.time() - event.time
     print("[Client] Pong! Took", dt, "seconds.")

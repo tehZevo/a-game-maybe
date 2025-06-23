@@ -1,3 +1,4 @@
+#TODO: move to play state event dir
 #TODO: replace this with C.__dict__
 def get_component_classes():
   from ..components.actor import Actor, Enemy, Invulnerable, Player, Stats, \

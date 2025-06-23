@@ -1,18 +1,18 @@
 import time
 from dataclasses import dataclass
 
-from ..command_handler import CommandHandler
-from game.networking.events import Pong
+from ..game_command_handler import GameCommandHandler
+import game.networking.events as E
 
 @dataclass
 class Ping:
   time: float
 
-class PingHandler(CommandHandler):
-  def __init__(self):
-    super().__init__(Ping)
+class PingHandler(GameCommandHandler):
+  def __init__(self, game):
+    super().__init__(Ping, game)
 
-  def handle(self, server_manager, server, client_id, command):
+  def handle(self, client_id, command):
     dt = time.time() - command.time
     print("[Server] Ping! Took", dt, "seconds.")
-    server.send(client_id, Pong(command.time))
+    self.game.server.default_channel.send(client_id, E.Pong(command.time))

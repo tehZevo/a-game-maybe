@@ -12,5 +12,5 @@ class LocalClient(Client):
     self.connection = server.connect(self)
     self.on_connect()
 
-  def send(self, command):
-    self.connection.send(self.build_command(command))
+  def send(self, message):
+    self.connection.send(message)

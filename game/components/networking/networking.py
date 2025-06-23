@@ -1,7 +1,7 @@
 import uuid
 
 from game.ecs import Component
-from game.networking.events import EntitySpawned, EntityDespawned
+import game.networking.events as E
 import game.components as C
 
 class Networking(Component):
@@ -49,14 +49,14 @@ class Networking(Component):
     if self.is_server:
       #auto despawn
       self.server_manager.network_unregister(self.entity)
-      self.broadcast_synced(EntityDespawned(self.id))
+      self.broadcast_synced(E.EntityDespawned(self.id))
       self.on_destroy_server()
     elif self.is_client:
       self.on_destroy_client()
 
   #spawn for specific player id
   def spawn(self, client_id):
-    self.send_to_client(client_id, EntitySpawned(self.id, self.get_spawn_components()))
+    self.send_to_client(client_id, E.EntitySpawned(self.id, self.get_spawn_components()))
 
   def send_to_client(self, client_id, event):
     self.server_manager.server.send(client_id, event)
@@ -75,7 +75,7 @@ class Networking(Component):
     self.server_manager.network_register(self.entity)
 
     #spawn entity on start
-    self.broadcast_synced(EntitySpawned(self.id, self.get_spawn_components()))
+    self.broadcast_synced(E.EntitySpawned(self.id, self.get_spawn_components()))
 
     #call start_server on all networking components
     self.for_all_networking(lambda c: c.start_server(self))

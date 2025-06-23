@@ -1,56 +1,52 @@
-from enum import Enum
+from uuid import uuid4
+
 from collections import defaultdict
 from queue import Queue, Empty
 import json
 
-import dacite
+from .server_channel import ServerChannel
 
-dacite_config = dacite.Config(cast=[Enum])
+#TODO: validate that client can talk on channel?
 
 class Server:
   def __init__(self):
+    self.default_channel = ServerChannel(self)
+    self.channels = {}
     self.clients = {}
-    self.server_manager = None
-    self.commands = Queue()
-    #TODO: track events per second sent/received
 
+  def create_channel(self):
+    channel_id = str(uuid4())
+    channel = ServerChannel(self, channel_id)
+    self.channels[channel_id] = channel
+    return channel
+
+  def get_channel(self, channel_id):
+    return self.channels[id]
+  
+  def remove_channel(self, channel_id):
+    del self.channels[id]
+  
+  def handle_commands(self):
+    self.default_channel.handle_commands()
+    
   def setup_handlers(self, connect_handlers=[], disconnect_handlers=[], command_handlers=[]):
     self.connect_handlers = connect_handlers
     self.disconnect_handlers = disconnect_handlers
-    self.command_handlers = defaultdict(list)
-    self.command_types = {}
-    for handler in command_handlers:
-      self.register_command_handler(handler)
+    self.default_channel.setup_handlers(command_handlers)
 
   def start(self):
     raise NotImplementedError
   
-  def send(self, id, event):
+  def send(self, id, message):
     raise NotImplementedError
   
-  #TODO: pass server manager or game here?
-  def handle_commands(self):
-    while True:
-      try:
-        (client_id, command) = self.commands.get_nowait()
-        #tell all handlers about command
-        for handler in self.command_handlers[command.__class__]:
-          handler.handle(self.server_manager, self, client_id, command)
-      except Empty: 
-        break
-  
-  def register_command_handler(self, handler):
-    #add handler to list of handlers for given event type
-    self.command_handlers[handler.command_type].append(handler)
-    #store command type for quick retrieval
-    self.command_types[handler.command_type.__name__] = handler.command_type
-
   def on_connect(self, id, connection):
     """Call me with an id and connection object of your choice"""
     #store connection and tell handlers about connection
     self.clients[id] = connection
+    self.default_channel.clients.add(id)
     for handler in self.connect_handlers:
-      handler.handle_connect(self.server_manager, self, id)
+      handler(id)
 
   def on_disconnect(self, id):
     #forget connection and tell handlers about disconnect
@@ -59,23 +55,23 @@ class Server:
       for handler in self.disconnect_handlers:
         handler(self, id)
     except KeyError as e:
-      print("client already disconnected", id)
+      print("[Server] Client already disconnected", id)
+    #remove client from all channels
+    for channel in self.channels:
+      channel.clients.remove(id)
 
-  def on_message(self, id, message):
-    #construct command and add to queue
+  def on_message(self, client_id, message):
     message = json.loads(message)
-    command_type = self.command_types[message["type"]]
-    command = dacite.from_dict(command_type, message["data"], config=dacite_config)
-    self.commands.put((id, command))
+    channel_id = message["channel"]
 
-  def build_event(self, event):
-    event_type = event.__class__.__name__
-    event = {
-      "type": event_type,
-      "data": event
-    }
-    return json.dumps(event, default=lambda o: o.__dict__)
+    channel = self.default_channel if channel_id is None else self.channels.get(channel_id)
+    if channel is None:
+      print(f"[Server] Received command for non existent channel {channel_id}: {command}")
+      return
+    
+    #NOTE: verifies if client is in channel
+    if client_id not in channel.clients:
+      print(f"[Server] Client {client_id} tried to send a command to a channel he's not in: {channel_id}, {message}")
+      return
 
-  def broadcast(self, event):
-    for id in list(self.clients.keys()):
-      self.send(id, event)
+    channel.on_message(client_id, message)

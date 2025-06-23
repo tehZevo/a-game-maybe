@@ -23,5 +23,5 @@ class LocalServer(Server):
   async def start(self):
     return
 
-  def send(self, id, event):
-    self.clients[id].on_message(self.build_event(event))
+  def send(self, id, message):
+    self.clients[id].on_message(message)

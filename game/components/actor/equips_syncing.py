@@ -1,4 +1,4 @@
-from game.networking.events import EquipsUpdated
+import game.networking.events as E
 
 from game.ecs import Component
 from game.components.networking.network_behavior import NetworkBehavior
@@ -18,7 +18,7 @@ class EquipsSyncing(Component, NetworkBehavior, EquipsListener):
     armor = {k: v.id if v is not None else None for k, v in equips.armor.items()}
     skills = {k: v.id if v is not None else None for k, v in equips.skills.items()}
     weapons = {k: v.id if v is not None else None for k, v in equips.weapons.items()}
-    return EquipsUpdated(
+    return E.EquipsUpdated(
       id=networking.id,
       armor=armor,
       skills=skills,

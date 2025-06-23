@@ -18,8 +18,8 @@ class StreamClient(Client):
       self.on_message(message.decode("utf-8"))
     self.on_disconnect()
 
-  def send(self, command):
-    self.writer.write(self.build_command(command).encode("utf-8")+b"\n")
+  def send(self, message):
+    self.writer.write(message.encode("utf-8")+b"\n")
 
   def disconnect(self):
     self.writer.close()

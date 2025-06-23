@@ -2,10 +2,10 @@ from game.ecs import Component
 from game.components.networking.network_behavior import NetworkBehavior
 from game.components.graphics.sprite_listener import SpriteListener
 import game.components as C
-from game.networking.events import SpriteChanged
+import game.networking.events as E
 
 def to_event(id, s):
-  return SpriteChanged(id, s.sprite.id, s.animation, s.time,
+  return E.SpriteChanged(id, s.sprite.id, s.animation, s.time,
     s.speed, s.tint, s.alpha, s.offset, s.flip_x)
 
 class SpriteSyncing(Component, NetworkBehavior, SpriteListener):
@@ -14,7 +14,6 @@ class SpriteSyncing(Component, NetworkBehavior, SpriteListener):
     self.require(C.Sprite, C.Networking)
   
   def on_client_join(self, networking, client_id):
-    from game.networking.events import SpriteChanged
     sprite = self.get_component(C.Sprite)
     networking = self.get_component(C.Networking)
     evt = to_event(networking.id, sprite)

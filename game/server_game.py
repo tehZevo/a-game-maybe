@@ -1,3 +1,4 @@
+from uuid import uuid4
 import time
 import asyncio
 
@@ -6,90 +7,55 @@ import pygame
 from game.ecs import World
 from game.save_data import SaveData
 from game.constants import FPS, DT
-import game.networking.commands as commands
-import game.components as C
+import game.networking.commands as C
 import game.networking.events as E
 import game.data.maps as M
 
+from .server_room import ServerRoom
+
 class ServerGame:
-  def disconnect_handler(self, server, client_id):
-    #TODO: really want to avoid having to store server_manager on server...
-    server.server_manager.player_unregister(client_id)
-    print("client", client_id, "has disconnected")
+  def disconnect_handler(self, client_id):
+    print("[Server] Client", client_id, "has disconnected")
+    self.client_room_mapping[client_id].on_disconnect(client_id)
+  
+  def connect_handler(self, client_id):
+    print("[Server] Client", client_id, "connected")
 
   def __init__(self, server):
     pygame.init() #TODO: is this needed on the server?
     self.clock = pygame.time.Clock()
-    self.save_data = SaveData()
     self.server = server
     
     self.server.setup_handlers(
       disconnect_handlers=[self.disconnect_handler],
+      connect_handlers=[self.connect_handler],
       command_handlers=[
-        commands.PlayerMoveHandler(),
-        commands.PlayerUseSkillHandler(),
-        commands.PlayerInteractHandler(),
-        commands.SyncHandler(self.save_data),
-        commands.ReportPositionHandler(),
-        commands.ReportVelocityHandler(),
-        commands.PingHandler(),
+        C.CreateRoomHandler(self),
+        C.JoinRoomHandler(self),
+        C.PingHandler(self),
       ]
     )
 
-    mapdef = M.maze
-    world = self.generate_world(mapdef)
-    self.world = world
-    self.next_world = None
-    #TODO: remove/simplify 2-way coupling
-    server_manager = self.world.find_component(C.ServerManager)
-    self.server.server_manager = server_manager
-    
-  def generate_world(self, mapdef):
-    #create new world
-    world = World()
-    world.create_entity([C.GameMaster(self, mapdef)])
-    world.create_entity([C.DroppedItemManager()])
-    
-    #add server manager
-    server_manager = C.ServerManager()
-    world.create_entity([server_manager])
-    server_manager.server = self.server
-
-    #generate using mapdef
-    mapdef.generator.generate(world, mapdef)
-    
-    return world
-
-  def transition(self, mapdef):
-    world = self.generate_world(mapdef)
-    #TODO: broadcast_synced?
-    self.server.broadcast(E.WorldClosed())
-    self.next_world = world
+    self.rooms = {}
+    self.client_room_mapping = {}
+  
+  def create_room(self):
+    channel = self.server.create_channel()
+    #TODO: make simpler join id
+    room_id = channel.id
+    room = ServerRoom(self.server, channel)
+    self.rooms[room_id] = room
+    return room, room_id
 
   async def run(self):
     while True:
-      #loop until we have a world to transition to
-      while self.next_world is None:
-        self.server.handle_commands()
-
-        #update world
-        self.world.update()
-        #doing both this and clock.tick makes game run as expected, because of course it does
-        self.clock.tick(FPS) #limit fps TODO: remove and decouple
-        await asyncio.sleep(0)
-
-      #save player data and swap worlds (TODO: use generator spawn method? idk)
-      server_manager = self.world.find_component(C.ServerManager)
-      for client_id in self.save_data.player_data.keys():
-        #TODO: we recreate server manager, so the player map is empty...
-        entity_id = server_manager.player_entity_map[client_id]
-        ent = server_manager.networked_entities[entity_id]
-        self.save_data.save_player_data(client_id, ent)
-
-      self.world = self.next_world
-      server_manager = self.world.find_component(C.ServerManager)
-      #TODO: remove/simplify 2-way coupling
-      self.server.server_manager = server_manager
-      self.server.broadcast(E.WorldOpened())
-      self.next_world = None
-      self.next_server_manager = None
+      self.server.handle_commands()
+      #TODO: make each room loop itself separately?
+      for room in self.rooms.values():
+        room.step()
+      
+      #TODO: any special room close logic?
+      self.rooms = {k: v for k, v in self.rooms.items() if not v.empty}
+      
+      self.clock.tick(FPS)
+      await asyncio.sleep(0)

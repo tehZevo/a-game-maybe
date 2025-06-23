@@ -1,4 +1,4 @@
-from game.networking.events import StatsUpdated
+import game.networking.events as E
 
 from game.ecs import Component
 from game.components.networking.network_behavior import NetworkBehavior
@@ -13,7 +13,7 @@ class StatsSyncing(Component, NetworkBehavior, StatsListener):
   def on_stats_changed(self, stats):
     networking = self.get_component(C.Networking)
     if networking.is_server:
-      evt = StatsUpdated(
+      evt = E.StatsUpdated(
         id=networking.id,
         primary_stats=stats.stats.primary,
         secondary_stats=stats.stats.secondary,

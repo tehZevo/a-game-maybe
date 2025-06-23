@@ -1,3 +1,30 @@
+- rename Sync to HelloWorld (and create HelloLobby)
+- make handlers take channels?
+- clean up old state/room channels
+- networking goal:
+client main menu
+client clicks "create game"
+server sets up room with channel
+server sends room joined with room channel id
+client sets up channel and handlers
+room waits for everyone to be ready
+room sends world opened with a channel id
+
+- current shortcut:
+client joins
+client sends create room
+
+client sends create
+server creates a room
+server sends to client RoomJoined
+client sends PlayerReady
+room creates world, sends WorldOpened
+client sets up world and then sends Sync
+
+- refactor handlers.. pass type and lambda/def..
+- playersreadyupdated
+- rename clientgame to gameclient and same for server
+- docs on gamestates
 - keymappings
 - leverage pygame sprites/groups to speedup rendering?
   - means each drawable would have to track its sprites
