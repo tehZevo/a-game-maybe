@@ -3,25 +3,25 @@ from dataclasses import dataclass
 from game.networking import PlayStateCommandHandler
 import game.components as C
 from game.utils import Vector
+import game.networking.events as E
 
 @dataclass
-class Sync:
+class HelloWorld:
   pass
 
-class SyncHandler(PlayStateCommandHandler):
+class HelloWorldHandler(PlayStateCommandHandler):
   def __init__(self, game_state, save_data):
-    super().__init__(Sync, game_state)
+    super().__init__(HelloWorld, game_state)
     self.save_data = save_data
 
   def handle(self, client_id, command):
     server_manager = self.game_state.server_manager
-    print("[Server], sync received from", client_id)
-    from game.networking.events import TilesetUpdated, PlayerAssigned
+    print("[Server], hello world received from", client_id)
     
     #TODO: send worldopened with channel id
     world = server_manager.entity.world
     map_id = world.find_component(C.GameMaster).mapdef.id
-    server_manager.server.send(client_id, TilesetUpdated(map_id))
+    server_manager.server.send(client_id, E.TilesetUpdated(map_id))
 
     world = server_manager.entity.world
 
@@ -46,4 +46,4 @@ class SyncHandler(PlayStateCommandHandler):
       networking.on_client_join(client_id)
 
     #tell the player he controls the newly spawned actor
-    server_manager.server.send(client_id, PlayerAssigned(entity_id))
+    server_manager.server.send(client_id, E.PlayerAssigned(entity_id))

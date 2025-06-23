@@ -45,3 +45,18 @@
 * PlayerAssigned: Sent when a player connects, tells the player which actor they control
 * EntitySpawned: Sent when a networked entity is created on the server
 * PositionUpdated: Sent to update a client side entity position
+
+---
+- server has channels
+  - server has default channel (for room creation/etc)
+  - clients can be placed into channels
+- servers have rooms
+  - each room has channel
+  - each room has an id
+  - each room can be in one of these states:
+    - LobbyState
+    - PlayState
+- client has states:
+  - MainMenuState
+  - LobbyState
+  - PlayState

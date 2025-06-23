@@ -14,5 +14,5 @@ class ClientLobbyState:
     #TODO: send hello lobby and await lobbystateupdated
     self.channel.send(C.PlayerReady())
     
-  def step(self):
+  def step(self, pressed, held, released):
     self.channel.handle_events()

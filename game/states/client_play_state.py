@@ -34,15 +34,6 @@ class ClientPlayState:
     #create ui world and manager
     self.ui_world = World()
     self.hud = self.ui_world.create_entity([C.HUD()])
-    self.ui_world.create_entity([
-      C.Position(Vector(32, 32)),
-      C.Menu([
-        ("Foo", lambda _: print("foo")),
-        ("Bar", lambda _: print("bar")),
-        ("Foobar", lambda _: print("foobar")),
-        ("Hello World!", lambda _: print("Hello World!"))
-      ])
-    ])
 
     self.ui_renderer = self.ui_world.create_entity([
       C.Renderer(self.game.render_width, self.game.render_height)
@@ -51,7 +42,7 @@ class ClientPlayState:
     self.world = World()
     self.init_world()
 
-    self.channel.send(commands.Sync())
+    self.channel.send(commands.HelloWorld())
 
   def init_world(self):
     #setup client world
@@ -73,24 +64,9 @@ class ClientPlayState:
     hud_comp = self.hud.get_component(C.HUD)
     hud_comp.game_world = self.world
 
-  def step(self):
+  def step(self, pressed, held, released):
     self.channel.handle_events()
 
-    #TODO: move to util function? (make sure to convert events to list first)
-    pressed = defaultdict(lambda: False)
-    released = defaultdict(lambda: False)
-    for event in pygame.event.get():
-      if event.type == pygame.KEYDOWN:
-        pressed[event.key] = True
-      if event.type == pygame.KEYUP:
-        released[event.key] = True
-      if event.type == pygame.QUIT:
-        #TODO: need to move this to client game rather than play state
-        pygame.quit()
-        sys.exit()
-
-    #control player (and other keyhandlers like menus)
-    held = pygame.key.get_pressed()
     for key_handler in self.ui_world.find_components(C.KeyHandler):
       key_handler.handle_keys(pressed, held, released)
     for key_handler in self.world.find_components(C.KeyHandler):

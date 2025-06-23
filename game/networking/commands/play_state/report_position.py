@@ -17,6 +17,7 @@ class ReportPositionHandler(PlayStateCommandHandler):
 
   def handle(self, client_id, command):
     server_manager = self.game_state.server_manager
+    server = server_manager.server
     ent = server_manager.networked_entities.get(command.id)
     if ent is None:
       return

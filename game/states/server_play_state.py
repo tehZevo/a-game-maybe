@@ -15,7 +15,7 @@ class ServerPlayState:
       commands.PlayerMoveHandler(self),
       commands.PlayerUseSkillHandler(self),
       commands.PlayerInteractHandler(self),
-      commands.SyncHandler(self, self.room.save_data),
+      commands.HelloWorldHandler(self, self.room.save_data),
       commands.ReportPositionHandler(self),
       commands.ReportVelocityHandler(self),
     ])
