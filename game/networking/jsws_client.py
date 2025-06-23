@@ -38,9 +38,8 @@ class JSWSClient(Client):
       self.on_message(message)
     self.on_disconnect()
 
-  def send(self, command):
-    command = self.build_command(command)
-    platform.window.pythonClientSend(command+"\n")
+  def send(self, message):
+    platform.window.pythonClientSend(message+"\n")
 
   def disconnect(self):
     raise NotImplementedError

@@ -11,7 +11,7 @@ if sys.platform == "emscripten":
   platform.window.canvas.style.imageRendering = "pixelated"
 
 #pygbag entrypoint
-from game.run_local import main
-# from game.run_web_networked import main
+from game.run_client import main
+from game.client_game import ClientMode
 
-asyncio.run(main(scale_res=1))
+asyncio.run(main(ClientMode.WEB, scale_res=1))

@@ -1,20 +1,8 @@
 import asyncio
-from .client_game import ClientGame
-from game.networking import WebsocketClient
-from game.networking import StreamClient
+from .client_game import ClientGame, ClientMode
 
-HOST = "127.0.0.1"
-PORT = 8765
-URL = f"ws://{HOST}:{PORT}"
+async def main(mode, scale_res=1):
+  await ClientGame(mode, scale_res=scale_res).run()
 
-async def main():
-    client = WebsocketClient(URL)
-    # client = StreamClient(HOST, PORT)
-    the_game = ClientGame(client, scale_res=3)
-    
-    await asyncio.gather(
-        asyncio.create_task(client.connect()),
-        asyncio.create_task(the_game.run()),
-    )
-
-asyncio.run(main())
+if __name__ == "__main__":
+  asyncio.run(main(ClientMode.DESKTOP, 3))

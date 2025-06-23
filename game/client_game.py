@@ -64,8 +64,8 @@ class ClientGame:
     url = "ws://127.0.0.1:8765"
     if self.mode == ClientMode.DESKTOP:
       self.client = WebsocketClient(url)
-    elif self.mode == ClientMode.DESKTOP:
-      self.client = WebsocketClient(url)
+    elif self.mode == ClientMode.WEB:
+      self.client = JSWSClient(url)
     else:
       raise ValueError("Unable to create client for mode", self.mode)
     
