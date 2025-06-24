@@ -53,6 +53,7 @@ class ClientGame:
     self.config = ClientConfig()
     self.config.load(self.mode)
     self.config.save(self.mode)
+    self.auto_ready = False #TODO: spaghetti
 
     pygame.display.set_caption("Game") #TODO: change
     #TODO: move to fps counter ui component?
@@ -121,7 +122,9 @@ class ClientGame:
     asyncio.create_task(self.server_game.run())
 
     self.client = LocalClient()
-    self.setup_client_handlers()
+    on_connect = lambda client: client.default_channel.send(C.CreateRoom())
+    self.auto_ready = True
+    self.setup_client_handlers(on_connect)
     
     asyncio.create_task(self.client.connect(self.server))
 
@@ -134,7 +137,7 @@ class ClientGame:
       E.LobbyOpenedHandler(self),
     ])
     lobby_channel = self.client.add_channel(lobby_channel_id)
-    self.state = ClientLobbyState(self, lobby_channel, join_code)
+    self.state = ClientLobbyState(self, lobby_channel, join_code, self.auto_ready)
 
   #TODO: rename function
   def load_world(self, channel_id):

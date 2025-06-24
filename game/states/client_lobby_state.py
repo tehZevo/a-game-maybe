@@ -6,10 +6,11 @@ import game.networking.commands as commands
 from game.utils import Vector
 
 class ClientLobbyState:
-  def __init__(self, game, channel, join_code):
+  def __init__(self, game, channel, join_code, auto_ready=False):
     self.game = game
     self.channel = channel
     self.join_code = join_code
+
     self.channel.setup_handlers([
       #TODO
     ])
@@ -27,8 +28,9 @@ class ClientLobbyState:
     print("[Client] Hello lobby state")
 
     #TODO: send hello lobby and await lobbystateupdated
-    # print("[Client] Join code is", join_code, "but we don't care, starting game...")
-    # self.channel.send(commands.PlayerReady())
+    if auto_ready:
+      print("[Client] Join code is", join_code, "but we don't care, starting game...")
+      self.channel.send(commands.PlayerReady())
     
   def step(self, pressed, held, released, pressed_unicode):
     self.channel.handle_events()
