@@ -2,7 +2,6 @@ import pygame
 
 from .ui_component import UIComponent
 import game.components as C
-from game.utils.image_cache import get_image
 
 from game.utils import Vector
 from game.components.core import KeyHandler
@@ -15,12 +14,12 @@ class Menu(UIComponent, KeyHandler):
     self.selection = 0
     self.max_option_length = max([len(text) for text, _ in self.options])
   
-  def handle_keys(self, pressed, held, released, unicode_pressed):
-    if pressed[pygame.K_DOWN]:
+  def handle_keys(self, kbd):
+    if kbd.pressed[pygame.K_DOWN]:
       self.down()
-    if pressed[pygame.K_UP]:
+    if kbd.pressed[pygame.K_UP]:
       self.up()
-    if pressed[pygame.K_SPACE]:
+    if kbd.pressed[pygame.K_SPACE]:
       self.select()
   
   def down(self):

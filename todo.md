@@ -1,5 +1,8 @@
+- in client side sim, in velocity syncing, assume ents have constant velocity applied?
+- move join code text field into 
 - paste into settings: server
 - desktop builds
+- text field copy/paste, selection, backspace repeat, and vertical cursor
 - store settings in local storage or filesystem
 - main menu: join game, create game, single player, settings
 - cool scrolling bg for the menu

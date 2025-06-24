@@ -13,7 +13,7 @@ class CreateRoomHandler(GameCommandHandler):
 
   def handle(self, client_id, command):
     #TODO check if client is in other rooms?
-    print("[Server] Client requested me to create a room")
+    print("[Server] Client requested to create a room")
     room, join_code = self.game.create_room()
     self.game.client_room_mapping[client_id] = join_code
     room_channel_id = room.channel.id

@@ -21,22 +21,22 @@ class PlayerController(Component, KeyHandler):
     self.player = find_entity_by_id(self.entity.world, self.id)
     self.actor = self.player.get_component(C.Actor)
 
-  def handle_keys(self, pressed, held, released):
+  def handle_keys(self, kbd):
     from game.networking.commands import PlayerMove, PlayerUseSkill, PlayerInteract
     from game.actions import UseSkill, Move
 
     skill = None
-    if pressed[pygame.K_a]:
+    if kbd.pressed[pygame.K_a]:
       skill = SkillSlot.ALPHA
-    elif pressed[pygame.K_s]:
+    elif kbd.pressed[pygame.K_s]:
       skill = SkillSlot.BETA
-    elif pressed[pygame.K_d]:
+    elif kbd.pressed[pygame.K_d]:
       skill = SkillSlot.GAMMA
-    elif pressed[pygame.K_f]:
+    elif kbd.pressed[pygame.K_f]:
       skill = SkillSlot.DELTA
-    elif pressed[pygame.K_q]:
+    elif kbd.pressed[pygame.K_q]:
       skill = SkillSlot.OMEGA
-    elif pressed[pygame.K_SPACE]:
+    elif kbd.pressed[pygame.K_SPACE]:
       self.client.send(PlayerInteract())
       self.previous_move_dir = None
     
@@ -47,8 +47,8 @@ class PlayerController(Component, KeyHandler):
 
     #create move dir from key status
     move_dir = Vector(
-      held[pygame.K_RIGHT] - held[pygame.K_LEFT],
-      held[pygame.K_DOWN] - held[pygame.K_UP]
+      kbd.held[pygame.K_RIGHT] - kbd.held[pygame.K_LEFT],
+      kbd.held[pygame.K_DOWN] - kbd.held[pygame.K_UP]
     )
 
     if move_dir != self.previous_move_dir:

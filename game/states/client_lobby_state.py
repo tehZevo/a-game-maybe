@@ -1,8 +1,9 @@
+import pygame
+
 from game.ecs import World
 import game.components as C
 import game.networking.commands as commands
 import game.networking.events as E
-import game.networking.commands as commands
 from game.utils import Vector
 
 class ClientLobbyState:
@@ -16,11 +17,6 @@ class ClientLobbyState:
     ])
 
     self.world = World()
-    self.world.create_entity([
-      C.Position(Vector(32, 32)),
-      C.TextField(lambda text: print(text), draw_length=6, max_length=5)
-    ])
-
     self.renderer = self.world.create_entity([
       C.Renderer(self.game.render_width, self.game.render_height)
     ])
@@ -32,12 +28,16 @@ class ClientLobbyState:
       print("[Client] Join code is", join_code, "but we don't care, starting game...")
       self.channel.send(commands.PlayerReady())
     
-  def step(self, pressed, held, released, pressed_unicode):
+  def step(self, keyboard):
     self.channel.handle_events()
 
     #control player (and other keyhandlers like menus)
     for key_handler in self.world.find_components(C.KeyHandler):
-      key_handler.handle_keys(pressed, held, released, pressed_unicode)
+      key_handler.handle_keys(keyboard)
+    
+    if pygame.K_RETURN in keyboard.pressed:
+      print("[Client] Sending ready!")
+      self.channel.send(commands.PlayerReady())
 
     #update world
     self.world.update()

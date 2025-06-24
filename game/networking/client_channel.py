@@ -1,3 +1,4 @@
+import traceback
 from enum import Enum
 from collections import defaultdict
 from queue import Queue, Empty
@@ -49,3 +50,5 @@ class ClientChannel:
           handler.handle(event)
       except Empty:
         break
+      except Exception:
+        print(traceback.format_exc())

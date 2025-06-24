@@ -2,7 +2,6 @@ import sys
 
 import time
 import asyncio
-from collections import defaultdict
 
 import pygame
 
@@ -15,6 +14,7 @@ from game.networking import LocalServer, LocalClient, WebsocketClient, JSWSClien
 from game.server_game import ServerGame
 from game.client_config import ClientConfig
 from game.client_mode import ClientMode
+from game.utils import Keyboard
 
 #TODO: end game state when world closes
 #TODO: add world opened handler to lobby state or some kind of loading state
@@ -73,20 +73,11 @@ class ClientGame:
     )
   
   def handle_pygame_events(self):
-    pressed = defaultdict(lambda: False)
-    released = defaultdict(lambda: False)
-    pressed_unicode = None
-    quit = False
-    for event in pygame.event.get():
-      if event.type == pygame.KEYDOWN:
-        pressed[event.key] = True
-        pressed_unicode = event.unicode
-      if event.type == pygame.KEYUP:
-        released[event.key] = True
-      if event.type == pygame.QUIT:
-        quit = True
+    events = list(pygame.event.get())
+    keyboard = Keyboard(events)
+    quit = any([e.type == pygame.QUIT for e in events])
     
-    return pressed, released, pressed_unicode, quit
+    return keyboard, quit
 
   def join_game(self, join_code):
     self.create_multiplayer_client()
@@ -151,13 +142,12 @@ class ClientGame:
       if self.room_channel is not None:
         self.room_channel.handle_events()
       
-      pressed, released, pressed_unicode, quit = self.handle_pygame_events()
+      keyboard, quit = self.handle_pygame_events()
       if quit:
         pygame.quit()
         sys.exit()
-      held = pygame.key.get_pressed()
 
-      self.state.step(pressed, held, released, pressed_unicode)
+      self.state.step(keyboard)
 
       #doing both this and clock.tick makes game run as expected, because of course it does
       self.clock.tick(FPS) #limit fps TODO: decouple rendering from physics

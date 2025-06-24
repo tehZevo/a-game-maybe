@@ -16,6 +16,9 @@ class ServerRoom:
     #TODO: dont like all the duplicate storing of player sets (channel, room, state...)
     self.players = set()
 
+    #TODO: setup handlers
+    #TODO: does a room even need a channel?
+
     lobby_channel = server.create_channel()
     self.state = ServerLobbyState(self, lobby_channel)
 

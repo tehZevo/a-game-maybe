@@ -16,14 +16,14 @@ class TextField(UIComponent, KeyHandler):
     self.max_length = max_length
     self.text = text
   
-  def handle_keys(self, pressed, held, released, unicode_pressed):
-    if pressed[pygame.K_BACKSPACE]:
+  def handle_keys(self, kbd):
+    if kbd.pressed[pygame.K_BACKSPACE]:
       self.text = self.text[:-1]
-    elif pressed[pygame.K_RETURN]:
+    elif kbd.pressed[pygame.K_RETURN]:
       self.on_submit(self.text)
     #TODO: clean
-    elif unicode_pressed is not None and not (held[pygame.K_RCTRL] or held[pygame.K_LCTRL]):
-      self.text += unicode_pressed
+    elif kbd.unicode is not None and not (kbd.held[pygame.K_RCTRL] or kbd.held[pygame.K_LCTRL]):
+      self.text += kbd.unicode
       if self.max_length is not None:
         self.text = self.text[:self.max_length]
   

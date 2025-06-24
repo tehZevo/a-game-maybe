@@ -9,25 +9,24 @@ class ClientMainMenuState:
     self.game = game
     
     self.world = World()
-    self.world.create_entity([
-      C.Position(Vector(32, 32)),
-      C.Menu([
-        #TODO: submenu for join game
-        ("Join Game", lambda _: self.game.join_game()),
-        ("Create Game", lambda _: self.game.create_game()),
-        ("Play Offline", lambda _: self.game.play_offline()),
-        ("Settings", lambda _: None)
-      ])
-    ])
+    self.ui_manager = C.UIManager()
+    self.world.create_entity([self.ui_manager])
+
+    join_code_screen = C.JoinCodeScreen(self.game)
+
+    self.ui_manager.open_menu([
+      ("Join Game", lambda _: self.ui_manager.open_screen(join_code_screen)),
+      ("Create Game", lambda _: self.game.create_game()),
+      ("Play Offline", lambda _: self.game.play_offline()),
+      ("Settings", lambda _: None)
+    ], pos=Vector(32, 32))
 
     self.renderer = self.world.create_entity([
       C.Renderer(self.game.render_width, self.game.render_height)
     ])
 
-  def step(self, pressed, held, released, unicode_pressed):
-    #control player (and other keyhandlers like menus)
-    for key_handler in self.world.find_components(C.KeyHandler):
-      key_handler.handle_keys(pressed, held, released, unicode_pressed)
+  def step(self, keyboard):
+    self.ui_manager.handle_keys(keyboard)
 
     #update world
     self.world.update()
