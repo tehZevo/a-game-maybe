@@ -64,7 +64,7 @@ class ClientPlayState:
     hud_comp = self.hud.get_component(C.HUD)
     hud_comp.game_world = self.world
 
-  def step(self, pressed, held, released):
+  def step(self, pressed, held, released, pressed_unicode):
     self.channel.handle_events()
 
     for key_handler in self.ui_world.find_components(C.KeyHandler):

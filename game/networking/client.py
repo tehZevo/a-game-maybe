@@ -39,7 +39,7 @@ class Client:
   def on_connect(self):
     #tell handlers about connection
     for handler in self.connect_handlers:
-      handler.handle_connect(self)
+      handler(self)
   
   def on_disconnect(self):
     #tell handlers about disconnect

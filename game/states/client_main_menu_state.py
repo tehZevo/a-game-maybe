@@ -1,8 +1,3 @@
-import sys
-from collections import defaultdict
-
-import pygame
-
 from game.ecs import World
 import game.components as C
 import game.networking.events as E
@@ -17,10 +12,11 @@ class ClientMainMenuState:
     self.world.create_entity([
       C.Position(Vector(32, 32)),
       C.Menu([
-        ("Singleplayer", lambda _: self.game.create_singleplayer_client()),
-        ("Multiplayer", lambda _: self.game.create_multiplayer_client()),
-        ("asdf", lambda _: print("asdf")),
-        ("asdf", lambda _: print("asdf"))
+        #TODO: submenu for join game
+        ("Join Game", lambda _: self.game.join_game()),
+        ("Create Game", lambda _: self.game.create_game()),
+        ("Play Offline", lambda _: self.game.play_offline()),
+        ("Settings", lambda _: None)
       ])
     ])
 
@@ -28,10 +24,10 @@ class ClientMainMenuState:
       C.Renderer(self.game.render_width, self.game.render_height)
     ])
 
-  def step(self, pressed, held, released):
+  def step(self, pressed, held, released, unicode_pressed):
     #control player (and other keyhandlers like menus)
     for key_handler in self.world.find_components(C.KeyHandler):
-      key_handler.handle_keys(pressed, held, released)
+      key_handler.handle_keys(pressed, held, released, unicode_pressed)
 
     #update world
     self.world.update()

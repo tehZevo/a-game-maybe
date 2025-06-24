@@ -10,6 +10,7 @@ from game.constants import FPS, DT
 import game.networking.commands as C
 import game.networking.events as E
 import game.data.maps as M
+from game.utils import create_join_code
 
 from .server_room import ServerRoom
 
@@ -40,12 +41,15 @@ class ServerGame:
     self.client_room_mapping = {}
   
   def create_room(self):
+    join_code = create_join_code()
+    while join_code in self.rooms:
+      join_code = create_join_code()
+    
     channel = self.server.create_channel()
-    #TODO: make simpler join id
-    room_id = channel.id
-    room = ServerRoom(self.server, channel)
-    self.rooms[room_id] = room
-    return room, room_id
+    room = ServerRoom(self.server, channel, join_code)
+    self.rooms[join_code] = room
+
+    return room, join_code
 
   async def run(self):
     while True:

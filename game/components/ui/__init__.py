@@ -6,3 +6,4 @@ from game.components.ui.item_slot import ItemSlot
 from game.components.ui.hud import HUD
 from game.components.ui.buff_icons import BuffIcons
 from .menu import Menu
+from .text_field import TextField

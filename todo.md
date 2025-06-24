@@ -1,3 +1,6 @@
+- paste into settings: server
+- desktop builds
+- store settings in local storage or filesystem
 - main menu: join game, create game, single player, settings
 - cool scrolling bg for the menu
 - create HelloLobby/LobbyStateUpdated
@@ -7,6 +10,7 @@
 - keymappings
 - leverage pygame sprites/groups to speedup rendering?
   - means each drawable would have to track its sprites
+  - could insert sorted (log(n) insert)
 - Sequence skilleffect
 - client side predict interact
 - if mobs move a lot suddenly, send their updated position to client

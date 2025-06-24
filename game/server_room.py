@@ -8,10 +8,12 @@ from game.states import ServerLobbyState, ServerPlayState
 #TODO: find a better place for this file?
 
 class ServerRoom:
-  def __init__(self, server, channel):
+  def __init__(self, server, channel, join_code):
     self.save_data = SaveData()
     self.server = server
     self.channel = channel
+    self.join_code = join_code
+    #TODO: dont like all the duplicate storing of player sets (channel, room, state...)
     self.players = set()
 
     lobby_channel = server.create_channel()
