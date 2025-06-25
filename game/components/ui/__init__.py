@@ -9,3 +9,4 @@ from .menu import *
 from .text_field import *
 from .ui_manager import *
 from .text_input_screen import *
+from .lobby_screen import *

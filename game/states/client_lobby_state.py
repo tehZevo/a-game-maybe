@@ -11,15 +11,21 @@ class ClientLobbyState:
     self.game = game
     self.channel = channel
     self.join_code = join_code
+    self.ready_players = set()
 
     self.channel.setup_handlers([
-      #TODO
+      E.LobbyUpdatedHandler(self)
     ])
 
     self.world = World()
     self.renderer = self.world.create_entity([
       C.Renderer(self.game.render_width, self.game.render_height)
     ])
+
+    self.ui_manager = C.UIManager()
+    self.world.create_entity([self.ui_manager])
+
+    self.ui_manager.open_screen(C.LobbyScreen(self))
     
     print("[Client] Hello lobby state")
 

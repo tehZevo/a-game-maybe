@@ -1,3 +1,7 @@
+- send lobbyupdated when players leave/join lobby or ready/unready
+- get user name before room create/join, store in config, use as default next time
+- character creator (also should be saved in config)
+  - gender, hair color, hair style, eye color
 - wifi icon to show if you're connected to the server
 - network actions
 - add on join channel? or use hello world to make the server add the client to the channel

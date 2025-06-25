@@ -2,7 +2,6 @@ import pygame
 
 from .ui_component import UIComponent
 import game.components as C
-from game.utils.image_cache import get_image
 
 from game.utils import Vector
 from game.components.core import KeyHandler

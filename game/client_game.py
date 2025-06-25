@@ -14,6 +14,7 @@ from game.networking import LocalServer, LocalClient, WebsocketClient, JSWSClien
 from game.server_game import ServerGame
 from game.client_config import ClientConfig
 from game.client_mode import ClientMode
+from game.client_room import ClientRoom
 from game.utils import Keyboard
 
 #TODO: end game state when world closes
@@ -46,6 +47,7 @@ class ClientGame:
     self.config.load()
     self.config.save()
     self.auto_ready = False #TODO: spaghetti
+    self.room = None
 
     pygame.display.set_caption("Game") #TODO: change
     #TODO: move to fps counter ui component?
@@ -127,7 +129,7 @@ class ClientGame:
     asyncio.create_task(self.client.connect(self.server))
 
   #TODO: split up logic (send HelloLobby and await LobbyUpdated)
-  def setup_room_and_lobby(self, room_channel_id, lobby_channel_id, join_code):
+  def setup_room_and_lobby(self, room_channel_id, lobby_channel_id, players, join_code):
     self.room_channel = self.client.add_channel(room_channel_id)
     self.room_channel.setup_handlers([
       E.WorldOpenedHandler(self),
@@ -135,6 +137,9 @@ class ClientGame:
       E.LobbyOpenedHandler(self),
     ])
     lobby_channel = self.client.add_channel(lobby_channel_id)
+    self.room = ClientRoom()
+    self.room.join_code = join_code
+    self.room.players = players
     self.state = ClientLobbyState(self, lobby_channel, join_code, self.auto_ready)
 
   def on_world_closed(self):
