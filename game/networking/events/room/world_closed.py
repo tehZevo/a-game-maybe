@@ -12,4 +12,5 @@ class WorldClosedHandler(RoomEventHandler):
 
   def handle(self, event):
     print("[Client] Server closed world")
-    self.game.transition()
+    #TODO: have room remove channel and throw away play state
+    game.on_world_closed()

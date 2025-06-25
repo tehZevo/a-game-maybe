@@ -5,7 +5,7 @@ import game.networking.events as E
 
 @dataclass
 class CreateRoom:
-  pass
+  initial_mapdef_id: str | None = None
 
 class CreateRoomHandler(GameCommandHandler):
   def __init__(self, game):
@@ -14,7 +14,7 @@ class CreateRoomHandler(GameCommandHandler):
   def handle(self, client_id, command):
     #TODO check if client is in other rooms?
     print("[Server] Client requested to create a room")
-    room, join_code = self.game.create_room()
+    room, join_code = self.game.create_room(command.initial_mapdef_id)
     self.game.client_room_mapping[client_id] = join_code
     room_channel_id = room.channel.id
     lobby_channel_id = room.get_lobby_channel().id

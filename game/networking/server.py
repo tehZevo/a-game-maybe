@@ -53,11 +53,14 @@ class Server:
     try:
       del self.clients[id]
       for handler in self.disconnect_handlers:
-        handler(self, id)
+        handler(id)
     except KeyError as e:
       print("[Server] Client already disconnected", id)
     #remove client from all channels
-    for channel in self.channels:
+    except Exception as e:
+      print(e)
+      exit(1)
+    for channel in self.channels.values():
       channel.clients.remove(id)
 
   def on_message(self, client_id, message):

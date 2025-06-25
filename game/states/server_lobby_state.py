@@ -24,8 +24,9 @@ class ServerLobbyState:
       self.room.begin_game()
 
   def on_disconnect(self, client_id):
-    self.server_manager.player_unregister(client_id)
-    self.players_read = set()
+    print("[Server] Client disconnected in lobby, resetting all ready states")
+    self.players_ready = set()
+    #TODO: send update to all other clients
   
   def step(self):
     self.channel.handle_commands()

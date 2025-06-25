@@ -44,4 +44,8 @@ class WebsocketServer(Server):
         self.on_disconnect(id)
       except KeyError as e:
         print(f"[Server] Failed to send to client {id}: disconnected")
+      except Exception as e:
+        print("how")
+        print(e)
+        exit(1)
     asyncio.create_task(inner(message))

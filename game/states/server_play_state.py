@@ -26,6 +26,7 @@ class ServerPlayState:
     print("[Server] Hello play state")
 
   def on_disconnect(self, client_id):
+    print("[Server] Client disconnected in play state, unregistering")
     self.server_manager.player_unregister(client_id)
   
   def generate_world(self, mapdef):
@@ -47,10 +48,7 @@ class ServerPlayState:
 
   def transition(self, mapdef):
     #TODO: make whatever called this call room.transition
-    world = self.generate_world(mapdef)
-    #TODO: broadcast_synced?
-    #TODO: room should send worldclosed instead
-    self.server.broadcast(E.WorldClosed())
+    self.room.transition(mapdef)
   
   def save(self, save_data):
     """Sync relevant world data to room save data"""

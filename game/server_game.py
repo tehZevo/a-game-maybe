@@ -17,7 +17,9 @@ from .server_room import ServerRoom
 class ServerGame:
   def disconnect_handler(self, client_id):
     print("[Server] Client", client_id, "has disconnected")
-    self.client_room_mapping[client_id].on_disconnect(client_id)
+    room_id = self.client_room_mapping[client_id]
+    room = self.rooms[room_id]
+    room.on_disconnect(client_id)
   
   def connect_handler(self, client_id):
     print("[Server] Client", client_id, "connected")
@@ -40,13 +42,13 @@ class ServerGame:
     self.rooms = {}
     self.client_room_mapping = {}
   
-  def create_room(self):
+  def create_room(self, initial_mapdef_id=None):
     join_code = create_join_code()
     while join_code in self.rooms:
       join_code = create_join_code()
     
     channel = self.server.create_channel()
-    room = ServerRoom(self.server, channel, join_code)
+    room = ServerRoom(self.server, channel, join_code, initial_mapdef_id)
     self.rooms[join_code] = room
 
     return room, join_code

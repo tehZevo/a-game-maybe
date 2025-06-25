@@ -2,13 +2,13 @@ from game.save_data import SaveData
 import game.networking.commands as C
 import game.networking.events as E
 import game.data.maps as M
-
+from game.data.registry import get_map
 from game.states import ServerLobbyState, ServerPlayState
 
 #TODO: find a better place for this file?
 
 class ServerRoom:
-  def __init__(self, server, channel, join_code):
+  def __init__(self, server, channel, join_code, initial_mapdef_id=None):
     self.save_data = SaveData()
     self.server = server
     self.channel = channel
@@ -18,6 +18,8 @@ class ServerRoom:
 
     #TODO: setup handlers
     #TODO: does a room even need a channel?
+
+    self.initial_mapdef = M.maze if initial_mapdef_id is None else get_map(initial_mapdef_id)
 
     lobby_channel = server.create_channel()
     self.state = ServerLobbyState(self, lobby_channel)
@@ -32,6 +34,7 @@ class ServerRoom:
     self.state.channel.clients.add(client_id)
   
   def on_disconnect(self, client_id):
+    print("[Server] Handling disconnect of client", client_id)
     self.players.remove(client_id)
     if self.state is not None:
       self.state.on_disconnect(client_id)
@@ -45,7 +48,7 @@ class ServerRoom:
   
   def begin_game(self):
     channel = self.server.create_channel()
-    self.state = ServerPlayState(self, M.maze, channel)
+    self.state = ServerPlayState(self, self.initial_mapdef, channel)
     self.state.channel.clients = self.channel.clients #TODO: need better ergo here
     self.channel.broadcast(E.WorldOpened(channel.id))
 

@@ -24,19 +24,11 @@ SCREEN_WIDTH_TILES = 16
 SCREEN_HEIGHT_TILES = 12
 FPS_MEASURE_SECONDS = 10
 
+#TODO: ping again
 async def annoy_server(client):
   while True:
     client.default_channel.send(C.Ping(time.time()))
     await asyncio.sleep(10)
-
-#TODO: dont like this.. have to wait for client to connect...
-class ClientConnectHandler:
-  def __init__(self):
-    pass
-  
-  def handle_connect(self, client):
-    client.default_channel.send(C.CreateRoom())
-    asyncio.create_task(annoy_server(client))
 
 class ClientGame:
   def __init__(self, mode, scale_res=1):
@@ -117,6 +109,22 @@ class ClientGame:
     self.setup_client_handlers(on_connect)
     
     asyncio.create_task(self.client.connect(self.server))
+  
+  def play_offline_dev(self):
+    import game.data.maps as M
+    #TODO: dedupe
+    #TODO: idk how i feel about storing server here
+    self.server = LocalServer()
+    self.server_game = ServerGame(self.server)
+    asyncio.create_task(self.server.start())
+    asyncio.create_task(self.server_game.run())
+
+    self.client = LocalClient()
+    on_connect = lambda client: client.default_channel.send(C.CreateRoom(M.dev_map.id))
+    self.auto_ready = True
+    self.setup_client_handlers(on_connect)
+    
+    asyncio.create_task(self.client.connect(self.server))
 
   #TODO: split up logic (send HelloLobby and await LobbyUpdated)
   def setup_room_and_lobby(self, room_channel_id, lobby_channel_id, join_code):
@@ -129,6 +137,10 @@ class ClientGame:
     lobby_channel = self.client.add_channel(lobby_channel_id)
     self.state = ClientLobbyState(self, lobby_channel, join_code, self.auto_ready)
 
+  def on_world_closed(self):
+    self.client.remove_channel(self.state.channel.id)
+    self.state = None
+  
   #TODO: rename function
   def load_world(self, channel_id):
     channel = self.client.add_channel(channel_id)

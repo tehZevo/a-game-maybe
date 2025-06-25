@@ -25,6 +25,7 @@ class ClientMainMenuState:
       ("Join Game", lambda _: self.ui_manager.open_screen(join_code_screen)),
       ("Create Game", lambda _: self.game.create_game()),
       ("Play Offline", lambda _: self.game.play_offline()),
+      ("Play Offline (dev)", lambda _: self.game.play_offline_dev()),
       ("Settings", lambda _: self.ui_manager.open_menu(settings_menu))
       #TODO: quit
       #TODO: controls setup
