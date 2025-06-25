@@ -6,9 +6,8 @@ import pygame
 
 from game.ecs import World
 from game.save_data import SaveData
-from game.constants import FPS, DT
+from game.constants import FPS, DEV_ROOM_CODE
 import game.networking.commands as C
-import game.networking.events as E
 import game.data.maps as M
 from game.utils import create_join_code
 
@@ -43,7 +42,7 @@ class ServerGame:
     self.client_room_mapping = {}
   
   def create_room(self, initial_mapdef_id=None):
-    join_code = create_join_code()
+    join_code = DEV_ROOM_CODE or create_join_code()
     while join_code in self.rooms:
       join_code = create_join_code()
     
@@ -59,6 +58,8 @@ class ServerGame:
       #TODO: make each room loop itself separately?
       for room in self.rooms.values():
         room.step()
+        if room.empty:
+          print("[Server] Room", room.join_code, "empty, closing...")
       
       #TODO: any special room close logic?
       self.rooms = {k: v for k, v in self.rooms.items() if not v.empty}

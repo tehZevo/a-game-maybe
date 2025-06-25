@@ -54,14 +54,14 @@ class Server:
       del self.clients[id]
       for handler in self.disconnect_handlers:
         handler(id)
+      for channel in self.channels.values():
+        channel.clients.remove(id)
     except KeyError as e:
-      print("[Server] Client already disconnected", id)
+      # print("[Server] Client already disconnected", id)
+      pass
     #remove client from all channels
     except Exception as e:
       print(e)
-      exit(1)
-    for channel in self.channels.values():
-      channel.clients.remove(id)
 
   def on_message(self, client_id, message):
     message = json.loads(message)
@@ -69,7 +69,7 @@ class Server:
 
     channel = self.default_channel if channel_id is None else self.channels.get(channel_id)
     if channel is None:
-      print(f"[Server] Received command for non existent channel {channel_id}: {command}")
+      print(f"[Server] Received command for non existent channel {channel_id}: {message}")
       return
     
     #NOTE: verifies if client is in channel

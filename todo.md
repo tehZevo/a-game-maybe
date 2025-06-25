@@ -1,5 +1,7 @@
 - wifi icon to show if you're connected to the server
-- fix server crash on disconnect
+- network actions
+- add on join channel? or use hello world to make the server add the client to the channel
+  - that way we wouldnt have to worry about broadcast_synced
 - support numpad enter
 - when text input field is displayed show keyboard icon and "Enter: Confirm; Esc: Cancel"
 - in client side sim, in velocity syncing, assume ents have constant velocity applied?
@@ -33,7 +35,6 @@
 - rpc decorators
 - LookAt action?
 - client side prediction for pushing enemies
-- fix crash when entering staircases
 - sound
 - passives on items are just buffs on the item
 - how to single target skills (e.g. enemy has target player?)
