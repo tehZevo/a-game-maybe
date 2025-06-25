@@ -1,3 +1,6 @@
+- wifi icon to show if you're connected to the server
+- support numpad enter
+- when text input field is displayed show keyboard icon and "Enter: Confirm; Esc: Cancel"
 - in client side sim, in velocity syncing, assume ents have constant velocity applied?
 - move join code text field into 
 - paste into settings: server

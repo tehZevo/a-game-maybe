@@ -50,9 +50,9 @@ class ClientGame:
     self.screen = pygame.display.set_mode((screen_width, screen_height))
     self.clock = pygame.time.Clock()
     self.room_channel = None
-    self.config = ClientConfig()
-    self.config.load(self.mode)
-    self.config.save(self.mode)
+    self.config = ClientConfig(self.mode)
+    self.config.load()
+    self.config.save()
     self.auto_ready = False #TODO: spaghetti
 
     pygame.display.set_caption("Game") #TODO: change
@@ -96,8 +96,7 @@ class ClientGame:
     asyncio.create_task(self.client.connect())
 
   def create_multiplayer_client(self):
-    #TODO: use url from config
-    url = "ws://127.0.0.1:8765"
+    url = "ws://" + self.config.server_url
     if self.mode == ClientMode.DESKTOP:
       self.client = WebsocketClient(url)
     elif self.mode == ClientMode.WEB:

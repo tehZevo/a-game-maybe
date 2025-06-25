@@ -13,7 +13,11 @@ class Menu(UIComponent, KeyHandler):
     self.options = options
     self.selection = 0
     self.max_option_length = max([len(text) for text, _ in self.options])
+    self.ui_manager = None
   
+  def on_destroy(self):
+    self.ui_manager.pop()
+    
   def handle_keys(self, kbd):
     if kbd.pressed[pygame.K_DOWN]:
       self.down()

@@ -9,12 +9,12 @@ from game.components.core import KeyHandler
 from game.utils import image_utils
 
 class TextField(UIComponent, KeyHandler):
-  def __init__(self, on_submit, text="", draw_length=10, max_length=None):
+  def __init__(self, on_submit, text=None, draw_length=10, max_length=None):
     super().__init__()
     self.on_submit = on_submit
     self.draw_length = draw_length
     self.max_length = max_length
-    self.text = text
+    self.text = text or ""
   
   def handle_keys(self, kbd):
     if kbd.pressed[pygame.K_BACKSPACE]:

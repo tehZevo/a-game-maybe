@@ -30,11 +30,14 @@ class UIManager(Component, KeyHandler):
   
   def open_screen(self, screen):
     self.push(screen)
+    #TODO: meh
+    screen.ui_manager = self
     self.entity.world.create_entity([screen])
   
   def open_menu(self, menu_items, pos=None, selection=0):
     pos = pos or Vector()
     menu = C.Menu(menu_items, selection)
+    menu.ui_manager = self
     self.push(menu)
     self.entity.world.create_entity([
       C.Position(pos),

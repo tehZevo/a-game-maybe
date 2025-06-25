@@ -9,25 +9,31 @@ CONFIG_KEYS = ["server_url"]
 CONFIG_PATH = "settings.json"
 
 class ClientConfig:
-  def __init__(self):
+  def __init__(self, mode):
     self.server_url = None
+    self.mode = mode
   
+  def set_server_url(self, url):
+    self.server_url = url
+    self.save()
+    print("[Client] Server url set to:", url)
+    
   def to_dict(self):
     return {k: self.__dict__[k] for k in CONFIG_KEYS}
   
   def from_dict(self, d):
     self.__dict__.update({k: d.get(k) for k in CONFIG_KEYS})
 
-  def save(self, mode):
-    if mode == ClientMode.DESKTOP:
+  def save(self):
+    if self.mode == ClientMode.DESKTOP:
       self.save_to_disk()
-    elif mode == ClientMode.WEB:
+    elif self.mode == ClientMode.WEB:
       self.save_to_local_storage()
 
-  def load(self, mode):
-    if mode == ClientMode.DESKTOP:
+  def load(self):
+    if self.mode == ClientMode.DESKTOP:
       self.load_from_disk()
-    elif mode == ClientMode.WEB:
+    elif self.mode == ClientMode.WEB:
       self.load_from_local_storage()
 
   def load_from_disk(self):

@@ -8,4 +8,4 @@ from game.components.ui.buff_icons import BuffIcons
 from .menu import *
 from .text_field import *
 from .ui_manager import *
-from .join_code_screen import *
+from .text_input_screen import *
