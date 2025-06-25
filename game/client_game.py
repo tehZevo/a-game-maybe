@@ -139,7 +139,7 @@ class ClientGame:
 
   def on_world_closed(self):
     self.client.remove_channel(self.state.channel.id)
-    self.state = None
+    # self.state = None
   
   #TODO: rename function
   def load_world(self, channel_id):
@@ -158,7 +158,8 @@ class ClientGame:
         pygame.quit()
         sys.exit()
 
-      self.state.step(keyboard)
+      if self.state is not None:
+        self.state.step(keyboard)
 
       #doing both this and clock.tick makes game run as expected, because of course it does
       self.clock.tick(FPS) #limit fps TODO: decouple rendering from physics

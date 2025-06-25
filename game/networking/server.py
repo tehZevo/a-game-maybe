@@ -21,10 +21,10 @@ class Server:
     return channel
 
   def get_channel(self, channel_id):
-    return self.channels[id]
+    return self.channels[channel_id]
   
   def remove_channel(self, channel_id):
-    del self.channels[id]
+    del self.channels[channel_id]
   
   def handle_commands(self):
     self.default_channel.handle_commands()

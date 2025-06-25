@@ -25,6 +25,8 @@ class ServerChannel:
     return json.dumps(event, default=lambda o: o.__dict__)
   
   def send(self, client_id, event):
+    if self.id is not None and self.id not in self.server.channels:
+      print("trying to send to closed channel", self.id)
     event = self.build_event(event, self.id)
     self.server.send(client_id, event)
   

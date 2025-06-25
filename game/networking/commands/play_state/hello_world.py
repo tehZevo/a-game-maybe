@@ -18,7 +18,6 @@ class HelloWorldHandler(PlayStateCommandHandler):
     server_manager = self.game_state.server_manager
     print("[Server], hello world received from", client_id)
     
-    #TODO: send worldopened with channel id
     world = server_manager.entity.world
     map_id = world.find_component(C.GameMaster).mapdef.id
     server_manager.server.send(client_id, E.TilesetUpdated(map_id))

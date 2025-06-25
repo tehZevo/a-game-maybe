@@ -55,4 +55,5 @@ class Client:
     elif channel_id in self.channels:
       self.get_channel(channel_id).on_message(message)
     else:
-      print(f"[Client] Received event for non existent channel {channel_id}: {event}")
+      print(f"[Client] Received event for non existent channel {channel_id}: {message}")
+      exit(1)

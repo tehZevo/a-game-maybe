@@ -37,6 +37,5 @@ class Particle:
     flip_x = self.flip == "x" or self.flip == "both"
     flip_y = self.flip == "y" or self.flip == "both"
     if flip_x or flip_y:
-      # print(flip_x, flip_y)
       frame = pygame.transform.flip(frame, flip_x, flip_y)
     renderer.draw(frame, self.pos)

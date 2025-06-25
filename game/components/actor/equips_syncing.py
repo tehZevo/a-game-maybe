@@ -27,7 +27,6 @@ class EquipsSyncing(Component, NetworkBehavior, EquipsListener):
 
   def on_client_join(self, networking, client_id):
     event = self.make_event(self.equips, networking)
-    print("B", event)
     networking.send_to_client(client_id, event)
 
   def on_equips_changed(self, equips):

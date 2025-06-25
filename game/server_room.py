@@ -55,7 +55,9 @@ class ServerRoom:
   def transition(self, mapdef):
     #TODO: save
     self.channel.broadcast(E.WorldClosed())
+    self.server.remove_channel(self.state.channel.id)
     channel = self.server.create_channel()
+    channel.clients = self.channel.clients
     self.state = ServerPlayState(self, mapdef, channel)
     self.channel.broadcast(E.WorldOpened(channel.id))
 
