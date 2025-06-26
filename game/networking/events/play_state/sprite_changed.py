@@ -21,19 +21,17 @@ class SpriteChangedHandler(PlayStateEventHandler):
   def __init__(self, game_state):
     super().__init__(SpriteChanged, game_state)
 
-  def handle(self, event):
-    client_manager = self.game_state.client_manager
-    #TODO: fix this
-    if event.entity_id not in client_manager.networked_entities:
-      print("trying to update entity sprite with id", event.entity_id, "but not found in networked entities...")
+  def handle(self, e):
+    manager = self.game_state.client_manager
+    ent = manager.networked_entities.get(e.entity_id)
+    if ent is None:
       return
-    ent = client_manager.networked_entities[event.entity_id]
-    sprite = ent.get_component(C.Sprite)
-    sprite.set_sprite(get_sprite(event.sprite_id))
-    sprite.set_animation(event.animation)
-    sprite.set_speed(event.speed)
-    sprite.set_time(event.time)
-    sprite.tint = event.tint
-    sprite.alpha = event.alpha
-    sprite.offset = event.offset
-    sprite.flip_x = event.flip_x
+    s = ent[C.Sprite]
+    s.set_sprite(get_sprite(e.sprite_id))
+    s.set_animation(e.animation)
+    s.set_speed(e.speed)
+    s.set_time(e.time)
+    s.tint = e.tint
+    s.alpha = e.alpha
+    s.offset = e.offset
+    s.flip_x = e.flip_x

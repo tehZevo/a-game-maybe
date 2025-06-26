@@ -12,6 +12,7 @@
 - move join code text field into 
 - paste into settings: server
 - desktop builds
+- arena mode
 - text field copy/paste, selection, backspace repeat, and vertical cursor
 - cool scrolling bg for the menu
 - create HelloLobby?
