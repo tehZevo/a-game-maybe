@@ -7,11 +7,17 @@ from game.components.core.interactable import Interactable
 INTERACT_RADIUS = 1
 
 class Interact(Action):
+  def deserialize(action_data):
+    return Interact()
+    
   def __init__(self):
     super().__init__()
     self.interruptible = False
     self.active = True
     self.use_time = 0.5
+
+  def serialize(self):
+    return {}
 
   def start(self):
     entity_pos = self.entity.get_component(C.Position).pos

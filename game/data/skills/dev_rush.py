@@ -5,6 +5,7 @@ from game.skills.target_type import TargetType
 from game.skills import SkillRank
 
 dev_rush = SkillDef(
+  "dev_rush",
   [
     SelfTarget(Rush(force=5000)),
     CircleTarget(

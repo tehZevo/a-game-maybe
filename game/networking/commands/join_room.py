@@ -24,7 +24,7 @@ class JoinRoomHandler(GameCommandHandler):
     room = self.game.rooms[command.join_code]
     #TODO: check if room is in lobby state - fail if not
     lobby_channel_id = room.state.channel.id
-    event = E.RoomJoined(room.channel.id, lobby_channel_id, room.players, command.join_code)
+    event = E.RoomJoined(room.channel.id, lobby_channel_id, list(room.players), command.join_code)
     self.game.server.default_channel.send(client_id, event)
     room.channel.clients.add(client_id)
     room.on_join(client_id)

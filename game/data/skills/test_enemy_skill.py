@@ -3,6 +3,7 @@ from game.skills.target_type import TargetType
 from game.skills.skilldef import SkillDef
 
 test_enemy_skill = SkillDef(
+  "test_enemy_skill",
   CircleTarget(
     target_type=TargetType.ENEMY,
     radius=3,

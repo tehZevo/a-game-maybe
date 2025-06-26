@@ -4,6 +4,7 @@ from game.skills.effects import RestoreHealth, RestoreMana, SelfTarget
 from game.skills import SkillRank
 
 dev_heal = SkillDef(
+  "dev_heal",
   SelfTarget([
     RestoreHealth(),
     RestoreMana()

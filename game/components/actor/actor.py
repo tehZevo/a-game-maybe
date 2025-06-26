@@ -3,6 +3,7 @@ import game.components as C
 
 from ..networking.networking import Networking
 from game.utils import Vector, Direction, vector_to_direction
+import game.networking.events as E
 
 class Actor(Component):
   def __init__(self):
@@ -48,6 +49,13 @@ class Actor(Component):
     self.act(UseSkill(skill_item.skilldef))
 
   def start_action(self, action):
+    #TODO: use decorator or something
+    server_manager = self.entity.world.find_component(C.ServerManager)
+    networking = self.entity[C.Networking]
+    if server_manager is not None:
+      event = E.ActionStarted(networking.id, action.__class__.__name__, action.serialize())
+      networking.broadcast_synced(event)
+
     self.action = action
     self.action.register(self.entity)
     self.action.start()
@@ -69,6 +77,13 @@ class Actor(Component):
           #TODO: maybe we need a listener for this so player can set his animation between actions or w/e
           #TODO: need better place to set/control animations
           sprite.set_animation("idle")
+        
+        #TODO: use decorator or something
+        server_manager = self.entity.world.find_component(C.ServerManager)
+        networking = self.entity[C.Networking]
+        if server_manager is not None:
+          event = E.ActionEnded(networking.id)
+          networking.broadcast_synced(event)
         self.action = None
 
     #start new action if old action is finished

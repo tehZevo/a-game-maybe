@@ -3,14 +3,22 @@ import game.components as C
 from game.components.actor.stats import Stats
 from game.constants import DT
 from . import Action
+from game.data.registry import get_skill
 
 class UseSkill(Action):
+  def deserialize(action_data):
+    skilldef = get_skill(action_data["skilldef"])
+    return UseSkill(skilldef)
+
   def __init__(self, skilldef):
     super().__init__()
     self.interruptible = False
     self.active = False
     self.skilldef = skilldef
     self.use_time = self.skilldef.use_time
+  
+  def serialize(self):
+    return {"skilldef": self.skilldef.id}
 
   def start(self):
     stats = self.entity.get_component(Stats)

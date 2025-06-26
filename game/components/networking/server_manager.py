@@ -6,6 +6,7 @@ class ServerManager(Component):
   def __init__(self):
     super().__init__()
     self.queue = []
+    #TODO: rename channel, because that's what it is now
     self.server = None
     self.networked_entities = {}
     self.player_entity_map = {}

@@ -5,6 +5,7 @@ from game.skills.skilldef import SkillDef
 from game.skills import SkillRank
 
 bless = SkillDef(
+  "bless",
   [
     E.SelfTarget(E.ApplyBuff(bless, 1, 10)),
     E.EmitParticles()

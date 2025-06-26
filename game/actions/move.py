@@ -3,11 +3,19 @@ from game.utils import Vector
 from . import Action
 
 class Move(Action):
+  def deserialize(action_data):
+    dir = action_data["dir"]
+    dir = dir and Vector(dir["x"], dir["y"]) 
+    return Move(dir)
+
   def __init__(self, dir):
     super().__init__()
     self.interruptible = True
     self.dir = dir
     self.active = True
+  
+  def serialize(self):
+    return {"dir": self.dir}
 
   def start(self):
     if self.dir is None or self.dir == Vector.ZERO:

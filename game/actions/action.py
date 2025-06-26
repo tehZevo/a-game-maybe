@@ -1,5 +1,12 @@
+from .action_registry import get_action_classes
+
 #by default, actions are interruptible and immediately end
 class Action:
+  def deserialize(action_type, action_data):
+    action_class = get_action_classes()[action_type]
+    action = action_class.deserialize(action_data)
+    return action
+
   def __init__(self):
     self.interruptible = True
     self.entity = None
@@ -20,3 +27,6 @@ class Action:
 
   def update(self):
     pass
+  
+  def serialize(self):
+    raise NotImplementedError

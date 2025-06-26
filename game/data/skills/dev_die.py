@@ -4,6 +4,7 @@ from game.skills.skilldef import SkillDef
 from game.skills import SkillRank
 
 dev_die = SkillDef(
+  "dev_die",
   SelfTarget(Damage(99999999)),
   slot=SkillSlot.OMEGA,
   icon="assets/items/skills/dev_die.png",

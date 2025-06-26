@@ -22,6 +22,8 @@ class ClientPlayState:
       E.PositionUpdatedHandler(self),
       E.VelocityUpdatedHandler(self),
       E.SpriteChangedHandler(self),
+      E.ActionStartedHandler(self),
+      E.ACtionEndedHandler(self),
       E.IconChangedHandler(self),
       E.ParticleEmitterUpdatedHandler(self),
       E.EntityDespawnedHandler(self),

@@ -1,9 +1,9 @@
 - send lobbyupdated when players leave/join lobby or ready/unready
 - get user name before room create/join, store in config, use as default next time
+- move to action
 - character creator (also should be saved in config)
   - gender, hair color, hair style, eye color
 - wifi icon to show if you're connected to the server
-- network actions
 - add on join channel? or use hello world to make the server add the client to the channel
   - that way we wouldnt have to worry about broadcast_synced
 - support numpad enter
@@ -13,10 +13,8 @@
 - paste into settings: server
 - desktop builds
 - text field copy/paste, selection, backspace repeat, and vertical cursor
-- store settings in local storage or filesystem
-- main menu: join game, create game, single player, settings
 - cool scrolling bg for the menu
-- create HelloLobby/LobbyStateUpdated
+- create HelloLobby?
 - clean up old state/room channels
 - refactor handlers.. pass type and lambda/def..?
 - docs on gamestates
@@ -48,6 +46,7 @@
 - combine the mains/runners (mode="local", "web_multiplayer", etc)
 - stop server from crashing on client disconnect
 - damage hits (basically a delay+repeat of damage)
+- determine items to drop based on what players have
 - spritedef .flip so we don't have to rely on flipx in render...
 - networking changes:
   - merge networking, syncing, and networked into one component type
@@ -124,6 +123,8 @@
 - ranged attacks will feel nicer with a bit of delay (think magic claw from maple story)
 
 ## Milestone updates
+- ???
+  - character customization
 - Jump!
   - add z coordinate
   - add jumping

@@ -18,3 +18,7 @@ def get_buff(id):
 def get_mob(id):
     import game.data.mobs as mobs
     return getattr(mobs, id)
+
+def get_skill(id):
+    import game.data.skills as skills
+    return getattr(skills, id)
