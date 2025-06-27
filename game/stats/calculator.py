@@ -53,10 +53,6 @@ def calculate(entity):
   base_secondary_stats = calculate_secondary_stats(entity, primary_stats, equip_stats)
   secondary_stats = (base_secondary_stats + stats_from_equips.secondary + flat.secondary) * scaling.secondary
   
-  print(equip_stats)
-  print(primary_stats)
-  print(secondary_stats)
-
   return Stats(
     primary=primary_stats,
     equip=equip_stats,
@@ -71,11 +67,11 @@ def calculate_primary_stats(entity):
 
   for equip in equips.armor.values():
     if equip is not None:
-      stats = stats + equip.primary_stats
+      stats = stats + equip.stats.primary
 
   for equip in equips.weapons.values():
     if equip is not None:
-      stats = stats + equip.primary_stats
+      stats = stats + equip.stats.primary
 
   return stats
 

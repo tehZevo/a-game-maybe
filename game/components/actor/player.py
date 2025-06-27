@@ -24,10 +24,9 @@ class Player(Component, DamageListener, DeathListener):
     self.get_component(C.Team).team = PLAYER
     equips = self.get_component(C.Equips)
     #TODO: this should probably be save data, but we would need to inject it in the connect handler?
+    equips.equip(I.wooden_shortsword)
+    equips.equip(I.cotton_robe)
     equips.equip(I.dev_rush)
-    equips.equip(I.dev_heal)
-    equips.equip(I.bless)
-    equips.equip(I.dev_die)
 
   def on_damage(self, attacker, amount):
     if self.get_component(C.Invulnerable) is None:
