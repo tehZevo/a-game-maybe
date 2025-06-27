@@ -11,7 +11,7 @@ class Move(Action):
   def __init__(self, dir):
     super().__init__()
     self.interruptible = True
-    self.dir = dir
+    self.dir = dir and dir.normalized()
     self.active = True
   
   def serialize(self):

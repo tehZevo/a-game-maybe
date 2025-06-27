@@ -1,4 +1,3 @@
-from .dev_rush import *
-from .dev_heal import *
-from .dev_die import *
-from .bless import *
+from .dev_skills import *
+from .magician_skills import *
+from .berserker_skills import *

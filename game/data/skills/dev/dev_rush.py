@@ -20,7 +20,7 @@ dev_rush = SkillDef(
   ],
   mp_cost=10,
   slot=SkillSlot.ALPHA,
-  icon="assets/items/skills/dev_rush.png",
+  icon="assets/skills/dev_rush.png",
   mini_icon="assets/icons/dev.png",
   rank=SkillRank.IV,
   use_time=0.5

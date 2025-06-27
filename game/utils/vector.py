@@ -32,6 +32,9 @@ class Vector:
     from pygame import Vector2
     return Vector2(self.x, self.y)
 
+  def angle(self):
+    return math.atan2(self.y, self.x) / (2 * math.pi) * 360
+  
   def normalized(self):
     mag = self.magnitude()
     if mag < EPSILON:

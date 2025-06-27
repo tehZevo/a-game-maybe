@@ -24,6 +24,7 @@ class Actor(Component):
     ])
     
   def damage(self, amount):
+    amount = int(amount)
     stats = self.get_component(C.Stats)
     stats.add_hp(-amount)
 
@@ -32,6 +33,12 @@ class Actor(Component):
       #TODO: track source
       source = None
       listener.on_damage(source, amount)
+    
+    server_manager = self.entity.world.find_component(C.ServerManager)
+    networking = self.entity[C.Networking]
+    if server_manager is not None:
+      event = E.ActorDamaged(networking.id, amount)
+      networking.broadcast_synced(event)
   
   def heal(self, amount):
     #TODO: track source

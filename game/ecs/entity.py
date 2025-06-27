@@ -8,7 +8,7 @@ class Entity:
     self.alive = True
 
   def start(self):
-    for component in self.components.values():
+    for component in list(self.components.values()):
       component.start()
 
   def remove(self):

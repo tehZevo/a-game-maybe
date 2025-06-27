@@ -1,30 +1,14 @@
-import math
 import random
-from collections import defaultdict
 
 from .floor_generator import FloorGenerator
 from game.components.tiles import Stairs, Spawner
 from game.components.physics import Position
-from game.components.tiles import TilePhysics
-from game.tiles import Tileset, Floor, Wall, TileType
+
 import game.data.mobs as Mobs
 from game.utils import Vector
-from game.constants import CHUNK_SIZE
 import game.components as C
 from game.data.registry import get_map
-
-#TODO: make utility
-def chunk_tiles(tiles):
-  chunks = defaultdict(lambda: Tileset(CHUNK_SIZE, CHUNK_SIZE))
-
-  for (tx, ty), tile in tiles.items():
-    cx, cy = math.floor(tx / 16), math.floor(ty / 16)
-    chunk = chunks[(cx, cy)]
-    local_x = tx - cx * CHUNK_SIZE
-    local_y = ty - cy * CHUNK_SIZE
-    chunk.set_tile(local_x, local_y, tile)
-  
-  return chunks
+from game.maps.rooms_to_tiles import rooms_to_tiles
 
 class DFSGenerator(FloorGenerator):
   def __init__(self, room_size=8, floor_size=3, door_width=2, accent=1/10, spawner_chance=0.25, next_maps=[]):
@@ -84,58 +68,24 @@ class DFSGenerator(FloorGenerator):
         rooms.append(room)
     return rooms
 
-  def rooms_to_tiles(self, rooms):
-    def is_not_doorway(u, v, n, exit):
-      if u == n:
-        if exit:
-          return v < self.door_width or v >= self.room_size - self.door_width
-        return True
-      return False
-
-    def is_wall(x, y, north, south, east, west):
-      return \
-        is_not_doorway(x, y, 0, west) or \
-        is_not_doorway(x, y, self.room_size - 1, east) or \
-        is_not_doorway(y, x, 0, north) or \
-        is_not_doorway(y, x, self.room_size - 1, south)
-        
-    tiles = {}
-    for rx, ry, north, south, east, west in rooms:
-      for tx in range(self.room_size):
-        for ty in range(self.room_size):
-          if is_wall(tx, ty, north, south, east, west):
-            tile_type = TileType.WALL_ACCENT if random.random() < self.accent else TileType.WALL
-            tile = Wall(type=tile_type)
-          else:
-            tile_type = TileType.FLOOR_ACCENT if random.random() < self.accent else TileType.FLOOR
-            tile = Floor(type=tile_type)
-
-          x = rx * self.room_size + tx
-          y = ry * self.room_size + ty
-          tiles[(x, y)] = tile
-    return tiles
-    
-  #TODO: generate chunks instead of single tileset
-  def generate(self, world, mapdef):
+  def generate(self, mapdef):
     rooms = self.build_dfs()
-    tiles = self.rooms_to_tiles(rooms)
-    chunks = chunk_tiles(tiles)
-    #TODO: move these outside (server handles creating?)
-    world.create_entity([C.TilePhysics(chunks)])
-    world.create_entity([C.ChunkNetworking(chunks)])
-
+    tiles = rooms_to_tiles(rooms, self.room_size, self.door_width, self.accent)
+    entities = []
+    
     for rx, ry, _, _, _, _ in rooms:
       #randomly create spawners
       if random.random() < self.spawner_chance:
-        world.create_entity([
+        entities.append([
           Position(Vector(rx * self.room_size + self.room_size / 2, ry * self.room_size + self.room_size / 2)),
-          Spawner(Mobs.slime, radius=2, wave_time=2, wave_count=1, spawn_max=3) #TODO: hardcoded mobdef
+          Spawner(Mobs.slime, radius=2, wave_time=5, wave_count=4, spawn_max=4) #TODO: hardcoded mobdef
         ])
 
     #choose random room to put stairs in
-    #TODO: pick mapdef from input mapdef
     x, y, _, _, _, _ = random.choice(rooms)
     stairs_pos = Vector(x * self.room_size + self.room_size / 2, x * self.room_size + self.room_size / 2)
     next_map_id = random.choice(self.next_maps) if len(self.next_maps) > 0 else mapdef
     next_map = get_map(next_map_id)
-    world.create_entity([Position(stairs_pos), Stairs(next_map)])
+    entities.append([Position(stairs_pos), Stairs(next_map)])
+
+    return tiles, entities

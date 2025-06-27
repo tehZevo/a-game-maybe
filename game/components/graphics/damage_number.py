@@ -12,7 +12,7 @@ import game.components as C
 #TODO: constants
 SEPARATION = 6 / 16
 STACK_SEPARATION = 12 / 16 #TODO: hardcoded tile size division
-DAMAGE_NUMBER_TIME = 3
+DAMAGE_NUMBER_TIME = 1
 DAMAGE_NUMBER_HEIGHT = 1
 
 class DamageNumber(Component, Drawable):
@@ -44,15 +44,13 @@ class DamageNumber(Component, Drawable):
     
     #update position
     pos_comp = self.get_component(C.Position)
-    pos_comp.pos = self.start_pos + Vector(0, self.time / DAMAGE_NUMBER_TIME * DAMAGE_NUMBER_HEIGHT)
+    pos_comp.pos = self.start_pos + Vector(0, self.time / DAMAGE_NUMBER_TIME * -DAMAGE_NUMBER_HEIGHT)
 
     #TODO: fade out for last N seconds
     if self.time >= DAMAGE_NUMBER_TIME:
       self.entity.remove()
       
-  def render(self, renderer):
-    #TODO: need to sync to client...
-    print("hi")
+  def draw(self, renderer):
     if self.delay >= 0:
       return
         
@@ -61,5 +59,4 @@ class DamageNumber(Component, Drawable):
     for x, image in reversed(list(enumerate(self.images))):
       px = pos.x + x * SEPARATION - len(self.images) / 2 * SEPARATION
       py = pos.y - self.stack * STACK_SEPARATION
-      renderer.draw(self.image, px, py)
-      screen.blit(image, rect)
+      renderer.draw(image, Vector(px, py), alpha=(1 - self.time / DAMAGE_NUMBER_TIME))

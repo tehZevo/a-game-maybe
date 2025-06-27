@@ -17,6 +17,8 @@ class Sprite(Component, Drawable):
     self.alpha = None
     self.offset = None
     self.flip_x = False
+    #TODO: use in spritedef
+    self.palette = None
     self.dirty = False
 
   @property
@@ -33,6 +35,10 @@ class Sprite(Component, Drawable):
       #TODO: are there any cases where we need to change sprite but KEEP our current animation id?
       self.animation = None
     self.set_time(0)
+    self.dirty = True
+  
+  def set_palette(self, palette):
+    self.palette = palette
     self.dirty = True
 
   def set_animation(self, animation):
@@ -67,6 +73,7 @@ class Sprite(Component, Drawable):
         if not isinstance(component, C.SpriteListener):
           continue
         component.on_sprite_changed(self)
+      self.dirty = False
 
   def draw(self, renderer):
     if self.sprite is None or self.animation is None:

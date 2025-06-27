@@ -4,7 +4,7 @@ from game.ecs import Component
 import game.actions as A
 from game.utils import Vector
 from game.utils.teams import ENEMY
-from game.components.actor import DeathListener, DamageListener
+from game.components.actor import DeathListener
 import game.components as C
 from game.constants import ENEMY_MOVE_SPEED, DT
 from game.components.networking import NetworkBehavior
@@ -15,7 +15,7 @@ MOVE_UPDATE_TIME = 1
 MOVE_DIST_THRESH = 0.5
 
 #TODO: rename to Mob?
-class Enemy(Component, NetworkBehavior, DeathListener, DamageListener):
+class Enemy(Component, NetworkBehavior, DeathListener):
   def __init__(self, mobdef=None):
     super().__init__()
     self.require(C.Actor)
@@ -34,14 +34,6 @@ class Enemy(Component, NetworkBehavior, DeathListener, DamageListener):
     if self.mobdef and self.mobdef.sprite:
       self.entity[C.Sprite].set_sprite(self.mobdef.sprite)
   
-  def on_damage(self, attacker, amount):
-    pass
-    #TODO:
-    # self.entity.world.create_entity([
-    #   C.Position(self.entity[C.Position].pos.copy()),
-    #   C.DamageNumber(amount, stack=0, delay=0)
-    # ])
-
   def on_death(self):
     #TODO: bad guard
     is_server = self.entity.world.find_component(C.ServerManager)
@@ -74,6 +66,7 @@ class Enemy(Component, NetworkBehavior, DeathListener, DamageListener):
   def on_client_join(self, networking, client_id):
     networking.send_to_client(client_id, self.mob_event(networking))
   
+  #TODO: "start_server"
   def on_start_server(self, networking):
     networking.broadcast_synced(client_id, self.mob_event(networking))
 

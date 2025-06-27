@@ -12,6 +12,6 @@ bless = SkillDef(
   ],
   mp_cost=50,
   slot=SkillSlot.GAMMA,
-  icon="assets/items/skills/bless.png",
+  icon="assets/skills/bless.png",
   rank=SkillRank.II
 )

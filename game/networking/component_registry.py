@@ -9,5 +9,6 @@ def get_component_classes():
   from ..components.particles import ParticleEmitter
   from ..components.physics import Position, Rect, Physics, PositionSyncing, VelocitySyncing
   from ..components.tiles import ChunkNetworking
+  from ..components.tiles import ChestNetworking
 
   return locals()

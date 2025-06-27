@@ -2,7 +2,9 @@ from ..core import Interactable
 from . import TileEntity
 import game.components as C
 from game.utils import Vector
+import game.data.sprites as S
 
+#TODO: constants?
 SPAWN_FORCE = 1000
 
 class Chest(TileEntity, Interactable):
@@ -12,7 +14,7 @@ class Chest(TileEntity, Interactable):
     self.items = items
 
   def start(self):
-    self.get_component(C.Sprite).set_sprite("assets/tiles/chest.png")
+    self.get_component(C.Sprite).set_sprite(S.chest)
 
   def interact(self, entity):
     dropper = self.get_component(C.ItemDropper)

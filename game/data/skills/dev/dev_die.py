@@ -7,7 +7,7 @@ dev_die = SkillDef(
   "dev_die",
   SelfTarget(Damage(99999999)),
   slot=SkillSlot.OMEGA,
-  icon="assets/items/skills/dev_die.png",
+  icon="assets/skills/dev_die.png",
   mini_icon="assets/icons/dev.png",
   rank=SkillRank.IV
 )

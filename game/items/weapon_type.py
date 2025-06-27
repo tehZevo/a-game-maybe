@@ -11,6 +11,8 @@ WeaponType = IntEnum("WeaponType", [
 ])
 W = WeaponType
 
+swingable_primaries = [W.SHORTSWORD, W.LONGSWORD, W.POLEARM, W.MACE, W.DAGGER, W.STAFF]
+
 def weapon_physical_stat_assignment(weapon_type):
     match weapon_type:
         case W.POLEARM | W.MACE: return (S.STR, S.VIT)

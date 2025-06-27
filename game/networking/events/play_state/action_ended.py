@@ -9,7 +9,7 @@ from game.utils import Vector
 class ActionEnded:
   entity_id: str
 
-class ACtionEndedHandler(PlayStateEventHandler):
+class ActionEndedHandler(PlayStateEventHandler):
   def __init__(self, game_state):
     super().__init__(ActionEnded, game_state)
 

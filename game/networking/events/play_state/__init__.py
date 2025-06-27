@@ -15,3 +15,4 @@ from .buffs_updated import *
 from .velocity_updated import *
 from .mob_updated import *
 from .particle_emitter_updated import *
+from .actor_damaged import *

@@ -1,1 +1,1 @@
-from .slime import slime
+from .slimes import *

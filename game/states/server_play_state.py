@@ -42,7 +42,7 @@ class ServerPlayState:
     server_manager.server = self.channel
 
     #generate using mapdef
-    mapdef.generator.generate(world, mapdef)
+    mapdef.generator.populate_world(world, mapdef)
     
     return world
 

@@ -15,7 +15,7 @@ class Spawner(TileEntity):
     self.wave_count = wave_count
     self.radius = radius
     self.spawned = []
-    self.remaining_wave_time = self.wave_time
+    self.remaining_wave_time = 0
     self.spawn_max = spawn_max
 
   def spawn(self):

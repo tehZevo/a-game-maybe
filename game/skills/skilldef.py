@@ -6,7 +6,10 @@ from .skill_rank import SkillRank
 #a skill item has an icon, an equip slot, and drop rate?
 
 class SkillDef:
-  def __init__(self, id, effects, rank=None, mp_cost=0, hp_cost=0, use_time=DEFAULT_SKILL_USE_TIME, slot=None, icon=None, mini_icon=None):
+  def __init__(self, id, effects, rank=None,
+    mp_cost=0, hp_cost=0, use_time=DEFAULT_SKILL_USE_TIME,
+    slot=None, icon=None, mini_icon=None,
+    weapon_filter=lambda primary, secondary: True):
     if not isinstance(effects, (list, tuple)):
       effects = [effects]
     self.id = id

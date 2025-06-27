@@ -12,10 +12,6 @@ from .stats import Stats
 
 #physical/magical attack are based on weapon attack and the weapon stats
 
-#TODO: also calculate defense stats
-#TODO: weapons and armor should have "physical/magical attack/defense" which is multiplicative
-#TODO: default physical/magical attack/defense from weapons/armor should be 1
-
 PRIMARY_PATT_MULTIPLIER = 20
 SECONDARY_PATT_MULTIPLIER = 10
 PRIMARY_MATT_MULTIPLIER = 20
@@ -28,7 +24,7 @@ DEX_ACC_MULTIPLIER = 20
 AGI_EVA_MULTIPLIER = 20
 AGI_MOVE_MULTIPLIER = 1
 
-BASE_EQUIP_STATS = EquipStats(1, 1, 1, 1)
+BASE_EQUIP_STATS = EquipStats.One()
 BASE_PRIMARY_STATS = PrimaryStats(10, 10, 10, 10, 10, 10)
 BASE_SECONDARY_STATS = SecondaryStats(
   hp=100,
@@ -47,16 +43,20 @@ def get_modifiers(entity):
   
 def calculate(entity):
   flat, scaling = get_modifiers(entity)
+  stats_from_equips = get_stats_from_equips(entity)
 
-  base_equip_stats = get_stats_from_equips(entity)
-  equip_stats = (base_equip_stats + flat.equip) * scaling.equip
+  equip_stats = (BASE_EQUIP_STATS + stats_from_equips.equip + flat.equip) * scaling.equip
 
   base_primary_stats = calculate_primary_stats(entity)
-  primary_stats = (base_primary_stats + flat.primary) * scaling.primary
+  primary_stats = (base_primary_stats + stats_from_equips.primary + flat.primary) * scaling.primary
   
   base_secondary_stats = calculate_secondary_stats(entity, primary_stats, equip_stats)
-  secondary_stats = (base_secondary_stats + flat.secondary) * scaling.secondary
+  secondary_stats = (base_secondary_stats + stats_from_equips.secondary + flat.secondary) * scaling.secondary
   
+  print(equip_stats)
+  print(primary_stats)
+  print(secondary_stats)
+
   return Stats(
     primary=primary_stats,
     equip=equip_stats,
@@ -79,20 +79,19 @@ def calculate_primary_stats(entity):
 
   return stats
 
-#TODO: eventually this should return a full Stats
 def get_stats_from_equips(entity):
   equips = entity.get_component(C.Equips)
 
   #sum up equip stats
-  stats = BASE_EQUIP_STATS
-  
+  stats = Stats()
+
   for equip in equips.armor.values():
     if equip is not None:
-      stats = stats + equip.equip_stats
+      stats = stats + equip.stats
 
   for equip in equips.weapons.values():
     if equip is not None:
-      stats = stats + equip.equip_stats
+      stats = stats + equip.stats
 
   return stats
 

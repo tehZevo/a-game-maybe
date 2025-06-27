@@ -1,3 +1,6 @@
+- interface for skilleffects with children that propagates targets and multipliers
+- skill effect multipliers (carried to children)
+- skill effect success/failure (don't continue to children if failed)
 - send lobbyupdated when players leave/join lobby or ready/unready
 - get user name before room create/join, store in config, use as default next time
 - move to action

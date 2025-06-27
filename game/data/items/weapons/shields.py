@@ -7,7 +7,6 @@ wooden_shield = Shield(
     icon="assets/items/weapons/shields/wooden_shield.png"
 )
 
-
 copper_shield = Shield(
     id="copper_shield",
     grade=G.D,

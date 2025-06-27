@@ -9,3 +9,8 @@ JOIN_CODE_CHARS = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
 
 def create_join_code(length=JOIN_CODE_LENGTH):
   return "".join(random.choice(JOIN_CODE_CHARS) for _ in range(length))
+
+def angle_distance(a, b):
+  dist = b - a
+  dist = (dist + 180) % 360 - 180
+  return dist

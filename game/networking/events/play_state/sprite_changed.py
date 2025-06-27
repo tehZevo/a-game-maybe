@@ -16,6 +16,7 @@ class SpriteChanged:
   alpha: float | None
   offset: Vector | None
   flip_x: bool
+  palette: str | None
 
 class SpriteChangedHandler(PlayStateEventHandler):
   def __init__(self, game_state):
@@ -35,3 +36,4 @@ class SpriteChangedHandler(PlayStateEventHandler):
     s.alpha = e.alpha
     s.offset = e.offset
     s.flip_x = e.flip_x
+    s.palette = e.palette
