@@ -12,3 +12,15 @@ magic_bolt = SkillItem(
   skilldef=S.magic_bolt,
   rarity=Rarity.COMMON
 )
+
+fireball = SkillItem(
+  id="fireball",
+  skilldef=S.fireball,
+  rarity=Rarity.COMMON
+)
+
+heal = SkillItem(
+  id="heal",
+  skilldef=S.heal,
+  rarity=Rarity.COMMON
+)

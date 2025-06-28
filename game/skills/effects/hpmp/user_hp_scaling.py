@@ -1,5 +1,5 @@
 import game.components as C
-from .skill_effect import SkillEffect
+from ..skill_effect import SkillEffect
 
 class UserHPScaling(SkillEffect):
   def __init__(self, children_f=lambda hp: []):

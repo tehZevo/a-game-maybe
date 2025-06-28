@@ -7,13 +7,12 @@ class Damage(SkillEffect):
     self.power = power
 
   def start(self, skill):
-    if skill.target.get_component(C.Invulnerable) is not None:
+    if skill.target[C.Invulnerable] is not None:
       return
 
     #calc damage
-    user_stats = skill.user.get_component(C.Stats).stats.secondary
-    target_stats = skill.target.get_component(C.Stats).stats.secondary
-    #TODO: assumes physical, add constructor param for phys/mag
+    user_stats = skill.user[C.Stats].stats.secondary
+    target_stats = skill.target[C.Stats].stats.secondary
     damage = user_stats.phys_att * self.power / 100. - target_stats.phys_def
     #dont heal lol
     damage = max(damage, 0)

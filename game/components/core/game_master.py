@@ -12,3 +12,4 @@ class GameMaster(Component):
     #pit enemies against players
     teams = self.get_component(TeamManager)
     teams.set_disposition("player", "enemy", Disposition.ENEMY)
+    teams.set_disposition("player", "player", Disposition.ALLY)

@@ -1,3 +1,7 @@
+- impl cooldowns
+- impl charging
+- regular attack action (its a skill)
+- weapon skills
 - send lobbyupdated when players leave/join lobby or ready/unready
 - get user name before room create/join, store in config, use as default next time
 - move skill to action dir
@@ -29,10 +33,7 @@
 - client side predict interact
 - if mobs move a lot suddenly, send their updated position to client
 - interact cursor
-- regular attack action (its a skill)
-- charge
 - palettized particles
-- weapon skills
 - mobdef aggro
   - aggro icon?
 - fix tile transparency when standing behind

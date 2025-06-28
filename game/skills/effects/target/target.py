@@ -1,5 +1,5 @@
 import game.components as C
-from .skill_effect import SkillEffect
+from ..skill_effect import SkillEffect
 
 def apply_target(skill, filters, children):
   #filter actors based on filter condition(s)
