@@ -1,7 +1,5 @@
 import pygame
 
-from ..physics import Position
-from .ui_component import UIComponent
 import game.components as C
 from game.utils.image_cache import get_image
 from game.items.slots import ArmorSlot, SkillSlot, WeaponSlot
@@ -9,8 +7,9 @@ from game.items.defs import Equip, SkillItem
 from game.skills.skill_rank import skill_rank_icon
 from game.items.equip_grade import equip_grade_icon
 from game.items.rarity import Rarity, rarity_color
-
 from game.utils import Vector, image_utils
+from ..ui_component import UIComponent
+
 
 class BuffIcons(UIComponent):
   def __init__(self):
@@ -21,7 +20,7 @@ class BuffIcons(UIComponent):
     self.player = player
   
   def start(self):
-    pos = self.get_component(Position)
+    pos = self.get_component(C.Position)
     pos.pos = Vector(32, 32)
     self.pos = pos
 

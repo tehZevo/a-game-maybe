@@ -1,17 +1,16 @@
-- interface for skilleffects with children that propagates targets and multipliers
-- skill effect multipliers (carried to children)
-- skill effect success/failure (don't continue to children if failed)
 - send lobbyupdated when players leave/join lobby or ready/unready
 - get user name before room create/join, store in config, use as default next time
-- move to action
+- move skill to action dir
 - character creator (also should be saved in config)
   - gender, hair color, hair style, eye color
 - wifi icon to show if you're connected to the server
 - add on join channel? or use hello world to make the server add the client to the channel
   - that way we wouldnt have to worry about broadcast_synced
 - support numpad enter
+- interface for skilleffects with children that propagates targets and multipliers
+- skill effect multipliers (carried to children)?
+- skill effect success/failure (don't continue to children if failed)
 - when text input field is displayed show keyboard icon and "Enter: Confirm; Esc: Cancel"
-- in client side sim, in velocity syncing, assume ents have constant velocity applied?
 - move join code text field into 
 - paste into settings: server
 - desktop builds
@@ -127,8 +126,6 @@
 - ranged attacks will feel nicer with a bit of delay (think magic claw from maple story)
 
 ## Milestone updates
-- ???
-  - character customization
 - Jump!
   - add z coordinate
   - add jumping

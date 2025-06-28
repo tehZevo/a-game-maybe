@@ -1,7 +1,7 @@
 import game.components as C
 
 from game.utils import Vector
-from .screen import Screen
+from ..screen import Screen
 
 class TextInputScreen(Screen):
   def __init__(self, on_submit, default_text=None, label="Input:", draw_length=20, max_length=None):

@@ -1,7 +1,7 @@
 import pygame
 
-from ..physics import Position
-from .ui_component import UIComponent
+import game.components as C
+from ..ui_component import UIComponent
 
 class Bar(UIComponent):
   def __init__(self):
@@ -19,7 +19,7 @@ class Bar(UIComponent):
     self.surface = pygame.Surface((self.width, self.height))
 
   def draw(self, renderer):
-    pos = self.get_component(Position).pos
+    pos = self.get_component(C.Position).pos
     #calculate rects
     bg_rect = pygame.Rect(0, 0, self.width, self.height)
     value_rect = pygame.Rect(0, 0, self.width * (self.value / self.max_value), self.height)

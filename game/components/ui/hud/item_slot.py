@@ -1,7 +1,5 @@
 import pygame
 
-from ..physics import Position
-from .ui_component import UIComponent
 import game.components as C
 from game.utils.image_cache import get_image
 from game.items.slots import ArmorSlot, SkillSlot, WeaponSlot
@@ -9,6 +7,7 @@ from game.items.defs import Equip, SkillItem
 from game.skills.skill_rank import skill_rank_icon
 from game.items.equip_grade import equip_grade_icon
 from game.items.rarity import Rarity, rarity_color
+from ..ui_component import UIComponent
 
 from game.utils import Vector
 class ItemSlot(UIComponent):
@@ -42,7 +41,7 @@ class ItemSlot(UIComponent):
     if self.player is None:
       return
     
-    pos = self.get_component(Position).pos #TODO: cache pos comp
+    pos = self.get_component(C.Position).pos #TODO: cache pos comp
     slot_bg = get_image("assets/ui/slot_bg.png")
     slot_border = get_image("assets/ui/slot_border.png")
     rank_bg = get_image("assets/ui/rank_bg.png")

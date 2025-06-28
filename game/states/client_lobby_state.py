@@ -25,7 +25,8 @@ class ClientLobbyState:
     self.ui_manager = C.UIManager()
     self.world.create_entity([self.ui_manager])
 
-    self.ui_manager.open_screen(C.LobbyScreen(self))
+    # self.ui_manager.open_screen(C.LobbyScreen(self))
+    self.ui_manager.open_screen(C.CharacterCreationScreen(self))
     
     print("[Client] Hello lobby state")
 
@@ -38,8 +39,7 @@ class ClientLobbyState:
     self.channel.handle_events()
 
     #control player (and other keyhandlers like menus)
-    for key_handler in self.world.find_components(C.KeyHandler):
-      key_handler.handle_keys(keyboard)
+    self.ui_manager.handle_keys(keyboard)
     
     if pygame.K_RETURN in keyboard.pressed:
       print("[Client] Sending ready!")

@@ -1,5 +1,4 @@
 from game.ecs import Component
-from ..actor.player import Player
 import game.components.ui as UI
 import game.components as C
 from game.items.slots import ArmorSlot, SkillSlot, WeaponSlot
