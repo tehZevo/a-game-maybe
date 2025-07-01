@@ -6,6 +6,8 @@ from game.utils import find_entity_by_id
 from game.items.slots import SkillSlot
 import game.components as C
 from .key_handler import KeyHandler
+import game.networking.commands as commands
+import game.actions as A
 
 #client side controller, takes keyboard events, sends commands n stuff
 class PlayerController(Component, KeyHandler):
@@ -22,8 +24,6 @@ class PlayerController(Component, KeyHandler):
     self.actor = self.player.get_component(C.Actor)
 
   def handle_keys(self, kbd):
-    from game.networking.commands import PlayerMove, PlayerUseSkill, PlayerInteract
-    from game.actions import UseSkill, Move
 
     skill = None
     if kbd.pressed[pygame.K_a]:
@@ -37,13 +37,21 @@ class PlayerController(Component, KeyHandler):
     elif kbd.pressed[pygame.K_q]:
       skill = SkillSlot.OMEGA
     elif kbd.pressed[pygame.K_SPACE]:
-      self.client.send(PlayerInteract())
+      self.client.send(commands.PlayerInteract())
       self.previous_move_dir = None
     
     if skill is not None:
       self.player[C.Actor].use_skill_in_slot(skill)
-      self.client.send(PlayerUseSkill(skill))
+      self.client.send(commands.PlayerUseSkill(skill))
       self.previous_move_dir = None
+      return
+    
+    if kbd.pressed[pygame.K_z]:
+      self.actor.act(A.Attack())
+      self.client.send(commands.PlayerAttack())
+      skill = SkillSlot.ALPHA
+      self.previous_move_dir = None
+      return
 
     #create move dir from key status
     move_dir = Vector(
@@ -52,6 +60,6 @@ class PlayerController(Component, KeyHandler):
     )
 
     if move_dir != self.previous_move_dir:
-      self.actor.act(Move(move_dir))
-      self.client.send(PlayerMove(move_dir))
+      self.actor.act(A.Move(move_dir))
+      self.client.send(commands.PlayerMove(move_dir))
       self.previous_move_dir = move_dir

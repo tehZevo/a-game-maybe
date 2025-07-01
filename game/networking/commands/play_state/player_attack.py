@@ -5,15 +5,15 @@ import game.actions as A
 import game.components as C
 
 @dataclass
-class PlayerInteract:
+class PlayerAttack:
   pass
 
-class PlayerInteractHandler(PlayStateCommandHandler):
+class PlayerAttackHandler(PlayStateCommandHandler):
   def __init__(self, game_state):
-    super().__init__(PlayerInteract, game_state)
+    super().__init__(PlayerAttack, game_state)
 
   def handle(self, client_id, command):
     server_manager = self.game_state.server_manager
     entity_id = server_manager.player_entity_map[client_id]
     ent = server_manager.networked_entities[entity_id]
-    ent.get_component(C.Actor).act(A.Interact())
+    ent.get_component(C.Actor).act(A.Attack())

@@ -14,7 +14,7 @@ class Interact(Action):
     super().__init__()
     self.interruptible = False
     self.active = True
-    self.use_time = 0.5
+    self.use_time = 0
 
   def serialize(self):
     return {}

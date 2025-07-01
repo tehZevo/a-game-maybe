@@ -1,12 +1,13 @@
+- make default attack target 1 enemy
+- make chests solid
+- show heal numbers
 - impl cooldowns
 - impl charging
-- regular attack action (its a skill)
 - weapon skills
 - send lobbyupdated when players leave/join lobby or ready/unready
 - get user name before room create/join, store in config, use as default next time
 - move skill to action dir
-- character creator (also should be saved in config)
-  - gender, hair color, hair style, eye color
+- save character creator in config
 - wifi icon to show if you're connected to the server
 - add on join channel? or use hello world to make the server add the client to the channel
   - that way we wouldnt have to worry about broadcast_synced

@@ -1,3 +1,4 @@
+
 def get_action_classes():
   from .interact import Interact
   from .move import Move

@@ -9,7 +9,7 @@ dev_heal = SkillDef(
     RestoreHealth(),
     RestoreMana()
   ]),
-  slot=SkillSlot.BETA,
+  slot=SkillSlot.OMEGA,
   icon="assets/skills/dev_heal.png",
   mini_icon="assets/icons/dev.png",
   rank=SkillRank.IV

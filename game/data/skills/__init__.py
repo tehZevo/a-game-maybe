@@ -5,3 +5,4 @@ from .default import *
 from .sanguine_strike import *
 from .sacrifice import *
 from .magician import *
+from .default_attack import *

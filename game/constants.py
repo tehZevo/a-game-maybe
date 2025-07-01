@@ -7,7 +7,7 @@ CHUNK_SIZE = 16
 CAMERA_BOX_SIZE = 1
 
 #### ITEMS ####################
-BASE_DROP_RATE = 1/10
+BASE_DROP_RATE = 1/100
 ITEM_DROP_RADIUS = 0.5
 ITEM_PUSH_DISTANCE = 1.25
 ITEM_PUSH_FORCE = 10
@@ -29,4 +29,4 @@ REPORT_VEL_ERROR_THRESH = 0.1 #how off client ent vel must be in reports before 
 PHYS_SCALE = 300
 
 #### OTHER NETWORKING #########
-DEV_ROOM_CODE = "11111"
+DEV_ROOM_CODE = None

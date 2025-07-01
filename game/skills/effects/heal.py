@@ -10,5 +10,4 @@ class Heal(SkillEffect):
     user_stats = skill.user[C.Stats].stats.secondary
     #TODO: assumes heal is based on matt
     healing = user_stats.mag_att * self.power / 100.
-    print(user_stats.mag_att)
     skill.target[C.Actor].heal(healing)
