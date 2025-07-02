@@ -19,7 +19,6 @@ def apply_target(skill, filters, max_targets, children):
   
   return actors
 
-#TODO: max targets
 class Target(SkillEffect):
   def __init__(self, filters=[], max_targets=1, children=[]):
     super().__init__()

@@ -1,9 +1,7 @@
-- make default attack target 1 enemy
 - make chests solid
 - show heal numbers
 - impl cooldowns
 - impl charging
-- weapon skills
 - send lobbyupdated when players leave/join lobby or ready/unready
 - get user name before room create/join, store in config, use as default next time
 - move skill to action dir

@@ -25,7 +25,7 @@ class DevMapGenerator(FloorGenerator):
     dev_chests = [
       ([I.dev_die, I.dev_heal, I.dev_rush]),
       ([I.sacrifice, I.sanguine_strike]),
-      ([I.bless, I.magic_bolt, I.fireball, I.heal]),
+      ([I.staff_of_healing, I.bless, I.magic_bolt, I.fireball, I.heal]),
     ]
     
     for i, loot in enumerate(dev_chests):
