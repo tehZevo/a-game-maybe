@@ -11,6 +11,7 @@ dev_rush = SkillDef(
     CircleTarget(
       target_type=TargetType.ENEMY,
       radius=5,
+      max_targets=6,
       children=[
         Damage(100),
         Push(force=5000),

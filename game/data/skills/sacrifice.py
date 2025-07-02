@@ -10,7 +10,7 @@ sacrifice = SkillDef(
   "sacrifice",
   [
     E.SelfTarget(E.ConsumeHP(10)),
-    E.SectorTarget(TargetType.ENEMY, angle=90, radius=3, children=[
+    E.SectorTarget(TargetType.ENEMY, angle=90, radius=3, max_targets=6, children=[
       E.UserHPScaling(lambda hp: [E.Damage(hp * 100)])
     ])
   ],

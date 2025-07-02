@@ -7,6 +7,7 @@ default_attack = SkillDef(
   E.SectorTarget(
     target_type=TargetType.ENEMY,
     radius=2,
+    max_targets=1,
     children=[E.Damage(100)]
   )
 )

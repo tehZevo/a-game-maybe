@@ -7,7 +7,7 @@ from game.items.weapon_type import swingable_primaries
 
 sanguine_strike = SkillDef(
   "sanguine_strike",
-  E.SectorTarget(TargetType.ENEMY, angle=180, radius=2, children=[
+  E.SectorTarget(TargetType.ENEMY, angle=180, radius=2, max_targets=3, children=[
     E.Damage(100),
     E.StealHP(100)
   ]),

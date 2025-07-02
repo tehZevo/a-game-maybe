@@ -8,7 +8,7 @@ import game.data.sprites as S
 
 heal = SkillDef(
   "heal",
-  E.CircleTarget(TargetType.ALLY, radius=4, children=[
+  E.CircleTarget(TargetType.ALLY, radius=4, max_targets=4, children=[
     E.Heal(100)
   ]),
   mp_cost=20,

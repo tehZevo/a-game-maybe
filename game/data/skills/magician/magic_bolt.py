@@ -8,7 +8,7 @@ import game.data.sprites as S
 
 magic_bolt = SkillDef(
   "magic_bolt",
-  E.Projectile(TargetType.ENEMY, S.magic_bolt, on_tick=[E.Damage(80)], life=0.5, speed=8),
+  E.Projectile(TargetType.ENEMY, S.magic_bolt, on_tick=[E.Damage(80)], life=0.5, speed=8, max_targets=3),
   mp_cost=20,
   slot=SkillSlot.ALPHA,
   icon="assets/skills/magic_bolt.png",

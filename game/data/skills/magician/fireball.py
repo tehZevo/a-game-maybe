@@ -8,7 +8,7 @@ import game.data.sprites as S
 
 fireball = SkillDef(
   "fireball",
-  E.Projectile(TargetType.ENEMY, S.fireball, on_tick=[E.Damage(100)], radius=2, life=0.5, speed=8),
+  E.Projectile(TargetType.ENEMY, S.fireball, on_tick=[E.Damage(100)], radius=2, life=0.5, max_targets=6, speed=8),
   mp_cost=30,
   slot=SkillSlot.ALPHA,
   icon="assets/skills/fireball.png",

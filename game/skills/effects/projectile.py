@@ -6,7 +6,7 @@ from game.skills.effects.target import apply_target
 import game.data.sprites as S
 
 class Projectile(SkillEffect):
-  def __init__(self, target_type, sprite=None, on_tick=[], on_end=[], life=1, radius=1, speed=4, max_entities_hit=1):
+  def __init__(self, target_type, sprite=None, on_tick=[], on_end=[], life=1, radius=1, speed=4, max_targets=1):
     super().__init__()
     self.target_type = target_type
     self.on_tick = on_tick
@@ -15,6 +15,7 @@ class Projectile(SkillEffect):
     self.speed = speed
     self.radius = radius
     self.sprite = sprite
+    self.max_targets = max_targets
 
   def start(self, skill):
     skill.completed = False
@@ -43,8 +44,6 @@ class Projectile(SkillEffect):
     pos = pos + dir * self.speed * DT
     skill.entity[C.Position].pos = pos
 
-    #TODO: consider max_entities_hit
-
     #basically a target effect
     filters = [
       ignore_entities_filter(ents_hit),
@@ -52,7 +51,8 @@ class Projectile(SkillEffect):
       target_type_filter(self.target_type)
     ]
 
-    new_ents_hit = apply_target(skill, filters, self.on_tick)
+    num_targets = self.max_targets - len(ents_hit)
+    new_ents_hit = apply_target(skill, filters, num_targets, self.on_tick)
     ents_hit = ents_hit + new_ents_hit
 
     life -= DT
