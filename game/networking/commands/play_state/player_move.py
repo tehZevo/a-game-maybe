@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from game.networking import PlayStateCommandHandler
 import game.actions as A
-from game.components.actor import Actor
+import game.components as C
 from game.utils import Vector
 
 @dataclass
@@ -17,4 +17,4 @@ class PlayerMoveHandler(PlayStateCommandHandler):
     server_manager = self.game_state.server_manager
     entity_id = server_manager.player_entity_map[client_id]
     ent = server_manager.networked_entities[entity_id]
-    ent.get_component(Actor).act(A.Move(command.dir))
+    ent.get_component(C.Actor).act(A.Move(command.dir))

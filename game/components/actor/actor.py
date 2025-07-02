@@ -4,6 +4,8 @@ import game.components as C
 from ..networking.networking import Networking
 from game.utils import Vector, Direction, vector_to_direction
 import game.networking.events as E
+import game.actions as A
+from game.constants import DT
 
 class Actor(Component):
   def __init__(self):
@@ -16,6 +18,7 @@ class Actor(Component):
     self.move_dir = self.look_dir.copy()
     self.actor_alive = True
     self.shadow = None
+    self.skill_cooldowns = {}
 
   def start(self):
     self.shadow = self.entity.world.create_entity([
@@ -47,13 +50,18 @@ class Actor(Component):
 
   #TODO: maybe move to equips or skillset
   def use_skill_in_slot(self, slot):
-    from game.actions import UseSkill
     skill_item = self.get_component(C.Equips).skills[slot]
-    if skill_item is None:
-      print("warning: tried to use None skill in slot", slot)
+    skilldef = skill_item and skill_item.skilldef
+    if skilldef is None:
       return
 
-    self.act(UseSkill(skill_item.skilldef))
+    if skilldef.id in self.skill_cooldowns:
+      return
+    
+    if skilldef.cooldown is not None:
+      self.skill_cooldowns[skilldef.id] = skilldef.cooldown
+    
+    self.act(A.UseSkill(skill_item.skilldef))
 
   def start_action(self, action):
     #TODO: use decorator or something
@@ -103,6 +111,11 @@ class Actor(Component):
     stats = self.get_component(C.Stats)
     pos = self.get_component(C.Position)
     self.shadow[C.Position].pos = pos.pos.copy()
+
+    for id, cd in self.skill_cooldowns.items():
+      self.skill_cooldowns[id] -= DT
+    
+    self.skill_cooldowns = {k: v for k, v in self.skill_cooldowns.items() if v > 0}
     
     if self.actor_alive and stats.hp <= 0:
       self.actor_alive = False

@@ -24,3 +24,9 @@ heal = SkillItem(
   skilldef=S.heal,
   rarity=Rarity.COMMON
 )
+
+heal_burst = SkillItem(
+  id="heal_burst",
+  skilldef=S.heal_burst,
+  rarity=Rarity.RARE
+)

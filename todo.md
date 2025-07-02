@@ -1,7 +1,8 @@
 - make chests solid
 - show heal numbers
-- impl cooldowns
+- network and show cooldowns on client side
 - impl charging
+- show charge skill cooldown on weapon
 - send lobbyupdated when players leave/join lobby or ready/unready
 - get user name before room create/join, store in config, use as default next time
 - move skill to action dir
