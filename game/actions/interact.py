@@ -1,10 +1,7 @@
 from . import Action
 from game.constants import DT
-from game.utils.find_in_range import find_in_range
 import game.components as C
 from game.components.core.interactable import Interactable
-
-INTERACT_RADIUS = 1
 
 class Interact(Action):
   def deserialize(action_data):
@@ -20,15 +17,14 @@ class Interact(Action):
     return {}
 
   def start(self):
-    entity_pos = self.entity.get_component(C.Position).pos
-
-    #TODO: sort by distance
-    interactables = find_in_range(self.entity.world, Interactable, entity_pos, INTERACT_RADIUS)
-    if len(interactables) > 0:
-      interactable = interactables[0]
-      for component in interactable.components.values():
-        if issubclass(component.__class__, Interactable):
-          component.interact(self.entity)
+    cursor = self.entity[C.InteractCursor]
+    target = cursor and cursor.interact_target
+    if target is None:
+      return
+    
+    for component in target.components.values():
+      if issubclass(component.__class__, Interactable):
+        component.interact(self.entity)
 
   def update(self):
     self.use_time -= DT

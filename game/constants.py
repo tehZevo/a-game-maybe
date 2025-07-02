@@ -20,6 +20,12 @@ PLAYER_MOVE_SPEED = 1
 ENEMY_MOVE_SPEED = 1/4.
 DOT_TICK_RATE = 0.5 #seconds
 
+#### INTERACT #################
+INTERACT_RADIUS = 1
+#TODO: test effects
+INTERACT_CURSOR_UPDATE_TIME = 0.25
+INTERACT_CURSOR_DISTANCE = 0.5
+
 #### PHYSICS ##################
 PHYS_REPORT_RATE = 1/4 #how often clients report position/velocity (seconds)
 REPORT_POS_ERROR_THRESH = 1 #how off client ent pos must be in reports before server corrects

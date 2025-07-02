@@ -1,11 +1,20 @@
 - make chests solid
+- draw interact cursor
 - show heal numbers
+- fix tile transparency when standing behind
+- sound
 - network and show cooldowns on client side
 - impl charging
+- client side prediction for pushing enemies
+- generator should make a player spawn point component, which players are spawned on by the generators spawn method
 - show charge skill cooldown on weapon
+- track events per second sent/received
 - send lobbyupdated when players leave/join lobby or ready/unready
+- damage hits (basically a delay+repeat of damage)
+- gold, health, mana drops: walk over them to pick them up
+  - breakables (pots, grass) for health/mana/gold?
 - get user name before room create/join, store in config, use as default next time
-- move skill to action dir
+- move skill to action folder
 - save character creator in config
 - wifi icon to show if you're connected to the server
 - add on join channel? or use hello world to make the server add the client to the channel
@@ -15,10 +24,8 @@
 - skill effect multipliers (carried to children)?
 - skill effect success/failure (don't continue to children if failed)
 - when text input field is displayed show keyboard icon and "Enter: Confirm; Esc: Cancel"
-- move join code text field into 
 - paste into settings: server
 - desktop builds
-- arena mode
 - text field copy/paste, selection, backspace repeat, and vertical cursor
 - cool scrolling bg for the menu
 - create HelloLobby?
@@ -30,26 +37,17 @@
   - means each drawable would have to track its sprites
   - could insert sorted (log(n) insert)
 - Sequence skilleffect
-- client side predict interact
-- if mobs move a lot suddenly, send their updated position to client
-- interact cursor
 - palettized particles
 - mobdef aggro
   - aggro icon?
-- fix tile transparency when standing behind
 - make enemies turn to face target if not moving
 - rpc decorators
 - LookAt action?
-- client side prediction for pushing enemies
-- sound
 - passives on items are just buffs on the item
 - how to single target skills (e.g. enemy has target player?)
 - TODO: how to disasble prediction in singleplayer mode (avoid double physics calcs)
 - move main.js to assets/jsws-client.js
 - item set effects? (may force players into less creative styles)
-- combine the mains/runners (mode="local", "web_multiplayer", etc)
-- stop server from crashing on client disconnect
-- damage hits (basically a delay+repeat of damage)
 - determine items to drop based on what players have
 - spritedef .flip so we don't have to rely on flipx in render...
 - networking changes:
@@ -58,25 +56,17 @@
     - at which point the entity is spawned and update_server/update_client are called
 - rename "equips" component to "loadout"
 - how to disable pygbag #debug?
-- change equips to just use Stats (may also have both flat and scaled)
 - consider other serialization methods (bson?)
-- consider 8x8 item sprites
-  - this would make rank icons very difficult
 - in towns, have dialogs that warn/recommend rank (e-ss)
 - game settings (difficulty/grindiness)
 - document skilleffect "target" (maybe make interface with set_target)?
 - pytmx/tiled (or other) map support - use a generator to just generate chunks based on tiled map
-- track events per second sent/received
-- how to handle pre-game setup period?
-- refactor so server has multiple worlds and then scope all events by channel?
 - after being on a floor for too long, start doing increasing dot?
 - decorator called "withcomponents" that just makes components available in scope...
 - add new skill effect that pushes enemies in the direction of the skill, and "carries" them with you
-- tintable hair/eyes/skin
 - flag for hats that hide hair, or "hat hair" sprites like maplestory
 - enemy death animation (drop items immediately but disable everything and wait for anim to finish)
 - docs are dusty
-- damage numbers
 - show disconnect icon above player head
 - use separate colors for skill rank/equip grade?
 - "safe area" players spawn in in next floor that lasts a short time
@@ -91,7 +81,6 @@
 - network sync interface which defines fields to be synced automatically
   - or at least "sync" means on spawn?
 - avoid loading images on the server
-- generator should make a player spawn point component, which players are spawned on by the generators spawn method
 - hide skill slots until picked up for the first time?
   - hide skill slots that are "higher level" than the highest equipped
   - e.g. if you have a beta, show alpha and beta, but not delta +
@@ -101,7 +90,7 @@
   - skills that can only be used midair
   - skills that cannot be used midair
 - fix skill use generating tons of stats updated events
- - maybe store stat updates per game tick and then send one StatsUpdated on the next tick>
+ - maybe store stat updates per game tick and then send one StatsUpdated on the next tick?
 - use eventcatalog to document events?
 - player visibility/chunks spawning/despawning/updates
   - as long as player is within radius, send updates
@@ -113,15 +102,12 @@
 - make ui components mountable to screen corners/edges and then use position as an offset
 - improve collisions
   - remove small pixel gap on bottom/right collisions
-  - fix passing through walls at high speeds
 - make collision debug drawing
 - knock back enemy if you do more than 10% of its hp?
   - does this mean allowing skills to be used in a certain direction?
 - maybe make direction component for tileentity facing direction
   - how to handle fine-grained direction for actor though? is that even needed?
 - make +y up
-- reduce delay on interact (will require handling key pressed events so player cant hold to repeatedly interact)
-- gold, health, mana drops: walk over them to pick them up
 - skill idea: "ally bomb" (or something like that): damage enemies nearby allies (target allies, then target enemies)
 - distance based delay effect (delay in seconds per unit)
 - ranged attacks will feel nicer with a bit of delay (think magic claw from maple story)
@@ -132,3 +118,4 @@
   - add jumping
 - Towns
   - Add towns/shops/gold
+- arena mode?
