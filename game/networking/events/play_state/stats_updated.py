@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from game.utils import Vector
 from game.networking import PlayStateEventHandler
 import game.components as C
-from game.stats import PrimaryStats, SecondaryStats, EquipStats
+from game.stats import Stats, PrimaryStats, SecondaryStats, EquipStats
 
 #TODO: use full Stats class instead
 @dataclass
@@ -26,10 +26,12 @@ class StatsUpdatedHandler(PlayStateEventHandler):
       return
 
     ent = client_manager.networked_entities[event.id]
-    stats = ent.get_component(C.Stats)
+    stats = ent[C.Stats]
     stats.hp = event.hp
     stats.mp = event.mp
     stats.move_speed_multiplier = event.move_speed_multiplier
-    stats.primary_stats = event.primary_stats
-    stats.secondary_stats = event.secondary_stats
-    stats.equip_stats = event.equip_stats
+    stats.stats = Stats(
+      equip=event.equip_stats,
+      primary=event.primary_stats,
+      secondary=event.secondary_stats
+    )

@@ -52,3 +52,7 @@ def draw_text(renderer, text, offset, color=(0, 0, 0)):
   surfaces = text_to_surfaces(text)
   for i, surf in enumerate(surfaces):
     renderer.draw(surf, offset + Vector(i * 8, 0), tint=color)
+
+def draw_text_lines(renderer, lines, offset, color=(0, 0, 0)):
+  for i, line in enumerate(lines):
+    draw_text(renderer, line, offset + Vector(0, i * 8), color)

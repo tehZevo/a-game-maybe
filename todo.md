@@ -1,11 +1,27 @@
-- make chests solid
 - draw interact cursor
 - show heal numbers
+- make shadows client side only
+- hp/mp recovery (hp recovers 5s after combat, mp recovers constantly)
+- stat bonus/scaling system based on equip grades equipped?
+  - e.g. if you have at least 4/5 (suit, hat, gloves, shoes, weapon) at grade B, you get 20% boost?
+  - E: 10%
+  - D: 20%
+  - C: 30%
+  - B: 40%
+  - A: 60%
+  - S: 80%
+  - SS: 100%
+- fix equips not persisting through floors
+- buff that allows you to regen hp during combat
+- buff that mitigates 25/50/100% of damage for N seconds (cooldown ~N*2s)
+- remove move speed multiplier
 - fix tile transparency when standing behind
+- fix bug where you can drop your equip by pressing interact
 - sound
 - network and show cooldowns on client side
 - impl charging
 - client side prediction for pushing enemies
+- make chests solid
 - generator should make a player spawn point component, which players are spawned on by the generators spawn method
 - show charge skill cooldown on weapon
 - track events per second sent/received
@@ -24,7 +40,6 @@
 - skill effect multipliers (carried to children)?
 - skill effect success/failure (don't continue to children if failed)
 - when text input field is displayed show keyboard icon and "Enter: Confirm; Esc: Cancel"
-- paste into settings: server
 - desktop builds
 - text field copy/paste, selection, backspace repeat, and vertical cursor
 - cool scrolling bg for the menu

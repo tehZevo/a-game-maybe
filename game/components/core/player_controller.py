@@ -52,6 +52,9 @@ class PlayerController(Component, KeyHandler):
       skill = SkillSlot.ALPHA
       self.previous_move_dir = None
       return
+    elif kbd.pressed[pygame.K_RETURN]:
+      ui_man = self.entity.world.find_component(C.GameMaster).game.ui_manager
+      ui_man.open_screen(C.StatsScreen(self.player))
 
     #create move dir from key status
     move_dir = Vector(

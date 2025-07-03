@@ -37,6 +37,8 @@ class ClientPlayState:
     #create ui world and manager
     self.ui_world = World()
     self.hud = self.ui_world.create_entity([C.HUD()])
+    self.ui_manager = self.ui_manager = C.UIManager()
+    self.ui_world.create_entity([self.ui_manager])
 
     self.ui_renderer = self.ui_world.create_entity([
       C.Renderer(self.game.render_width, self.game.render_height)
@@ -70,10 +72,11 @@ class ClientPlayState:
   def step(self, keyboard):
     self.channel.handle_events()
 
-    for key_handler in self.ui_world.find_components(C.KeyHandler):
-      key_handler.handle_keys(keyboard)
-    for key_handler in self.world.find_components(C.KeyHandler):
-      key_handler.handle_keys(keyboard)
+    if len(self.ui_manager.focus_stack) == 0:
+      for key_handler in self.world.find_components(C.KeyHandler):
+        key_handler.handle_keys(keyboard)
+    else:
+      self.ui_manager.handle_keys(keyboard)
 
     #update world
     self.world.update()

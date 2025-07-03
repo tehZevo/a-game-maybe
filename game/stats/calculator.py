@@ -12,12 +12,12 @@ from .stats import Stats
 
 #physical/magical attack are based on weapon attack and the weapon stats
 
-PRIMARY_PATT_MULTIPLIER = 20
-SECONDARY_PATT_MULTIPLIER = 10
-PRIMARY_MATT_MULTIPLIER = 20
-SECONDARY_MATT_MULTIPLIER = 10
-VIT_PDEF_MULTIPLIER = 20
-WIS_MDEF_MULTIPLIER = 20
+PRIMARY_PATT_MULTIPLIER = 2
+SECONDARY_PATT_MULTIPLIER = 1
+PRIMARY_MATT_MULTIPLIER = 2
+SECONDARY_MATT_MULTIPLIER = 1
+VIT_PDEF_MULTIPLIER = 2
+WIS_MDEF_MULTIPLIER = 2
 VIT_HP_MULTIPLIER = 20
 WIS_MP_MULTIPLIER = 20
 DEX_ACC_MULTIPLIER = 20
@@ -47,8 +47,7 @@ def calculate(entity):
 
   equip_stats = (BASE_EQUIP_STATS + stats_from_equips.equip + flat.equip) * scaling.equip
 
-  base_primary_stats = calculate_primary_stats(entity)
-  primary_stats = (base_primary_stats + stats_from_equips.primary + flat.primary) * scaling.primary
+  primary_stats = (BASE_PRIMARY_STATS + stats_from_equips.primary + flat.primary) * scaling.primary
   
   base_secondary_stats = calculate_secondary_stats(entity, primary_stats, equip_stats)
   secondary_stats = (base_secondary_stats + stats_from_equips.secondary + flat.secondary) * scaling.secondary
@@ -58,22 +57,6 @@ def calculate(entity):
     equip=equip_stats,
     secondary=secondary_stats,
   )
-
-def calculate_primary_stats(entity):
-  equips = entity.get_component(C.Equips)
-
-  #sum up primary stats
-  stats = BASE_PRIMARY_STATS
-
-  for equip in equips.armor.values():
-    if equip is not None:
-      stats = stats + equip.stats.primary
-
-  for equip in equips.weapons.values():
-    if equip is not None:
-      stats = stats + equip.stats.primary
-
-  return stats
 
 def get_stats_from_equips(entity):
   equips = entity.get_component(C.Equips)
@@ -97,8 +80,6 @@ def calculate_secondary_stats(entity, primary_stats, equip_stats):
   if weapon is None:
     weapon = hands
 
-  #TODO: add secondary stats on equips
-  #TODO: apply modifiers from passives/buffs/debuffs/etc
   return BASE_SECONDARY_STATS + SecondaryStats(
     hp=calculate_hp(primary_stats),
     mp=calculate_mp(primary_stats),

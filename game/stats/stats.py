@@ -31,7 +31,7 @@ class Stats:
       )
 
 #convenience
-Stats.Equips = lambda **kwargs: Stats(equip=EquipStats(**kwargs))
-Stats.Primary = lambda **kwargs: Stats(primary=PrimaryStats(**kwargs))
-Stats.Secondary = lambda **kwargs: Stats(secondary=SecondaryStats(**kwargs))
+Stats.Equip = lambda *args, **kwargs: Stats(equip=EquipStats(*args, **kwargs))
+Stats.Primary = lambda *args, **kwargs: Stats(primary=PrimaryStats(*args, **kwargs))
+Stats.Secondary = lambda *args, **kwargs: Stats(secondary=SecondaryStats(*args, **kwargs))
 Stats.One = Stats(EquipStats.One(), PrimaryStats.One, SecondaryStats.One)
