@@ -5,10 +5,12 @@ import game.components as C
 from game.data.registry import get_sprite
 from game.utils import Vector
 from game.actions import Action
+from game.graphics import DamageNumberType
 
 @dataclass
 class ActorDamaged:
   entity_id: str
+  damage_type: DamageNumberType
   amount: int
 
 class ActorDamagedHandler(PlayStateEventHandler):
@@ -23,5 +25,5 @@ class ActorDamagedHandler(PlayStateEventHandler):
     pos = ent[C.Position].pos.copy()
     ent.world.create_entity([
       C.Position(pos),
-      C.DamageNumber(event.amount)
+      C.DamageNumber(event.amount, event.damage_type)
     ])

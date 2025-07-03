@@ -51,15 +51,9 @@ class Stats(Component):
     self.set_hp(self.hp + hp)
     self.alert_listeners()
   
-  def add_hp_percent(self, percent):
-    self.add_hp(self.stats.secondary.hp * percent)
-
   def add_mp(self, mp):
     self.set_mp(self.mp + mp)
     self.alert_listeners()
-
-  def add_mp_percent(self, percent):
-    self.add_mp(self.stats.secondary.mp * percent)
 
   def set_hp(self, hp):
     self.hp = int(max(0, min(hp, self.stats.secondary.hp)))

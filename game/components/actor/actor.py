@@ -6,6 +6,7 @@ from game.utils import Vector, Direction, vector_to_direction
 import game.networking.events as E
 import game.actions as A
 from game.constants import DT
+from game.graphics import DamageNumberType
 
 class Actor(Component):
   def __init__(self):
@@ -40,13 +41,24 @@ class Actor(Component):
     server_manager = self.entity.world.find_component(C.ServerManager)
     networking = self.entity[C.Networking]
     if server_manager is not None:
-      event = E.ActorDamaged(networking.id, amount)
+      event = E.ActorDamaged(networking.id, DamageNumberType.NORMAL, amount)
       networking.broadcast_synced(event)
   
   def heal(self, amount):
     #TODO: track source
     stats = self.get_component(C.Stats)
     stats.add_hp(amount)
+
+    server_manager = self.entity.world.find_component(C.ServerManager)
+    networking = self.entity[C.Networking]
+    if server_manager is not None:
+      event = E.ActorDamaged(networking.id, DamageNumberType.HEAL, amount)
+      networking.broadcast_synced(event)
+  
+  def heal_mp(self, amount): 
+    #TODO: send actor damaged?
+    stats = self.get_component(C.Stats)
+    stats.add_mp(amount)
 
   #TODO: maybe move to equips or skillset
   def use_skill_in_slot(self, slot):

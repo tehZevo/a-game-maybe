@@ -8,5 +8,10 @@ class RestoreHealth(SkillEffect):
     self.percent = percent
 
   def start(self, skill):
-    stats = skill.target.get_component(C.Stats)
-    stats.add_hp_percent(self.percent)
+    stats = skill.user[C.Stats]
+    current_hp = stats.hp
+    max_hp = stats.stats.secondary.hp
+    missing_hp = max(max_hp - current_hp, 0)
+    amount_to_heal = min(missing_hp, max_hp * self.percent)
+    if amount_to_heal > 0:
+      skill.target[C.Actor].heal(amount_to_heal)

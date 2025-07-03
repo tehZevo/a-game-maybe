@@ -1,6 +1,4 @@
-- draw interact cursor
-- show heal numbers
-- make shadows client side only
+- fix shadows lagging behind actors
 - hp/mp recovery (hp recovers 5s after combat, mp recovers constantly)
 - stat bonus/scaling system based on equip grades equipped?
   - e.g. if you have at least 4/5 (suit, hat, gloves, shoes, weapon) at grade B, you get 20% boost?
@@ -19,6 +17,12 @@
 - fix bug where you can drop your equip by pressing interact
 - sound
 - network and show cooldowns on client side
+- make interact cursor not y-sorted
+- impl crits
+- crit damage number
+- per-damage-line type (eg crit/normal)
+- damage number icons (bang for crit, plus for heal)
+- damage number type for draining/restoring mp?
 - impl charging
 - client side prediction for pushing enemies
 - make chests solid

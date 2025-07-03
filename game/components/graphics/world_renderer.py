@@ -13,7 +13,7 @@ from game.utils import Vector
 #TODO: i might need a DrawCall class and WorldDrawCall to extend
 # so we can set an offset that doesn't affect y sorting.. or specify a manual y sort value
 def y_sort(call):
-  surface, pos, _, area, _, offset, _ = call
+  surface, pos, area, _, _, offset, _ = call
   height = area[3] if area is not None else surface.get_size()[1]
   #second clause works but not sure why
   return (pos.y - height / TILE_SIZE, -offset.y if offset else 0)

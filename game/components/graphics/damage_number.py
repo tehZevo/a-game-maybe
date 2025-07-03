@@ -8,6 +8,7 @@ from game.constants import DT
 from game.utils.image_cache import get_image
 from game.utils import Vector
 import game.components as C
+from game.graphics import DamageNumberType, damage_number_color
 
 #TODO: constants
 SEPARATION = 6 / 16
@@ -16,11 +17,12 @@ DAMAGE_NUMBER_TIME = 1
 DAMAGE_NUMBER_HEIGHT = 1
 
 class DamageNumber(Component, Drawable):
-  def __init__(self, number, stack=0, delay=0):
+  def __init__(self, number, damage_type=DamageNumberType.NORMAL, stack=0, delay=0):
     super().__init__()
     self.number = str(int(number))
     self.delay = delay
     self.stack = stack
+    self.damage_type = damage_type
     self.time = 0
     self.require(C.Position)
     
@@ -55,8 +57,9 @@ class DamageNumber(Component, Drawable):
       return
         
     pos = self.get_component(Position).pos
+    color = damage_number_color(self.damage_type)
 
     for x, image in reversed(list(enumerate(self.images))):
       px = pos.x + x * SEPARATION - len(self.images) / 2 * SEPARATION
       py = pos.y - self.stack * STACK_SEPARATION
-      renderer.draw(image, Vector(px, py), alpha=(1 - self.time / DAMAGE_NUMBER_TIME))
+      renderer.draw(image, Vector(px, py), alpha=(1 - self.time / DAMAGE_NUMBER_TIME), tint=color)

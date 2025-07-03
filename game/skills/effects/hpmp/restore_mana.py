@@ -8,5 +8,10 @@ class RestoreMana(SkillEffect):
     self.percent = percent
 
   def start(self, skill):
-    stats = skill.target.get_component(C.Stats)
-    stats.add_mp_percent(self.percent)
+    stats = skill.user[C.Stats]
+    current_mp = stats.mp
+    max_mp = stats.stats.secondary.mp
+    missing_mp = max(max_mp - current_mp, 0)
+    amount_to_heal = min(missing_mp, max_mp * self.percent)
+    if amount_to_heal > 0:
+      skill.target[C.Actor].heal_mp(amount_to_heal)
