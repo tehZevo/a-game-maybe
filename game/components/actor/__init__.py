@@ -19,3 +19,4 @@ from .buffs_listener import *
 from .shadow import *
 from .damage_listener import *
 from .interact_cursor import *
+from .interact_targeter import *

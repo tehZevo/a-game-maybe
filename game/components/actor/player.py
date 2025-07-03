@@ -13,7 +13,7 @@ import game.data.items as I
 class Player(Component, DamageListener, DeathListener):
   def __init__(self):
     super().__init__()
-    self.require(C.Actor, C.InteractCursor)
+    self.require(C.Actor, C.InteractTargeter)
     self.ghost = None
 
   def start(self):

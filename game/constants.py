@@ -23,6 +23,7 @@ DOT_TICK_RATE = 0.5 #seconds
 #### INTERACT #################
 INTERACT_RADIUS = 1
 #TODO: test effects
+#TODO: rename interact_target_*?
 INTERACT_CURSOR_UPDATE_TIME = 0.25
 INTERACT_CURSOR_DISTANCE = 0.5
 

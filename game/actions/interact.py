@@ -17,8 +17,8 @@ class Interact(Action):
     return {}
 
   def start(self):
-    cursor = self.entity[C.InteractCursor]
-    target = cursor and cursor.interact_target
+    targeter = self.entity[C.InteractTargeter]
+    target = targeter and targeter.interact_target
     if target is None:
       return
     

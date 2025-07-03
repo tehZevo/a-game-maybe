@@ -25,6 +25,7 @@ class ClientPlayState:
       E.ActionStartedHandler(self),
       E.ActionEndedHandler(self),
       E.ActorDamagedHandler(self),
+      E.InteractTargetUpdatedHandler(self),
       E.IconChangedHandler(self),
       E.ParticleEmitterUpdatedHandler(self),
       E.EntityDespawnedHandler(self),

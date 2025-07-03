@@ -17,6 +17,12 @@ class ServerManager(Component):
   def player_unregister(self, client_id):
     del self.player_entity_map[client_id]
 
+  def find_player_by_entity_id(self, needle):
+    for client_id, entity_id in self.player_entity_map.items():
+      if entity_id == needle:
+        return client_id
+    return None
+
   def network_register(self, entity):
     id = entity.get_component(C.Networking).id
     self.networked_entities[id] = entity
