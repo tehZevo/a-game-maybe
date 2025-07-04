@@ -5,14 +5,15 @@ from ..networking.networking import Networking
 from game.utils import Vector, Direction, vector_to_direction
 import game.networking.events as E
 import game.actions as A
-from game.constants import DT
+from game.constants import DT, IN_COMBAT_TIME
 from game.graphics import DamageNumberType
 
 class Actor(Component):
   def __init__(self):
     super().__init__()
     self.require(C.Physics, C.Sprite, C.Stats, C.ItemDropper, C.Equips, \
-      C.Collisions, C.Buffs, C.Team, C.Networking, C.ActorNetworking)
+      C.Collisions, C.Buffs, C.Team, C.Networking, C.ActorNetworking, \
+      C.HPRecovery, C.MPRecovery)
     self.action = None
     self.next_action = None
     self.look_dir = Vector(0, -1)
@@ -20,6 +21,8 @@ class Actor(Component):
     self.actor_alive = True
     self.shadow = None
     self.skill_cooldowns = {}
+    self.in_combat = False
+    self.combat_timer = 0
 
   def start(self):
     self.shadow = self.entity.world.create_entity([
@@ -27,7 +30,12 @@ class Actor(Component):
       C.Shadow()
     ])
   
+  def enter_combat(self):
+    self.in_combat = True
+    self.combat_timer = IN_COMBAT_TIME
+
   def damage_hits(self, hits):
+    self.enter_combat()
     stats = self.entity[C.Stats]
 
     for amount, crit in hits:
@@ -130,7 +138,15 @@ class Actor(Component):
       self.next_action = None
       self.start_action(a)
 
+  def update_in_combat(self):
+    if self.in_combat:
+      self.combat_timer -= DT
+    if self.in_combat and self.combat_timer <= 0:
+      self.in_combat = False
+  
   def update(self):
+    self.update_in_combat()
+    
     stats = self.get_component(C.Stats)
     pos = self.get_component(C.Position)
     self.shadow[C.Position].pos = pos.pos.copy()

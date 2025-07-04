@@ -8,7 +8,11 @@
   - A: 60%
   - S: 80%
   - SS: 100%
+- store `attack` on skills and if attack, enter combat
+- dont show heal numbers for more than max health and dont show 0 heals either
 - fix equips not persisting through floors
+- buff/skill/item descriptions
+- highlight stat scaling in skill descriptions
 - buff that allows you to regen hp during combat
 - buff that mitigates 25/50/100% of damage for N seconds (cooldown ~N*2s)
 - remove move speed multiplier
@@ -18,8 +22,6 @@
 - fix shadows lagging behind actors
 - network and show cooldowns on client side
 - make interact cursor not y-sorted
-- impl damage lines
-- per-damage-line type (eg crit/normal)
 - damage number icons (bang for crit, plus for heal)
 - damage number type for draining/restoring mp?
 - impl charging

@@ -20,3 +20,5 @@ from .shadow import *
 from .damage_listener import *
 from .interact_cursor import *
 from .interact_targeter import *
+from .hp_recovery import *
+from .mp_recovery import *
