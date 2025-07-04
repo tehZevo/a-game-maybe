@@ -10,8 +10,7 @@ from game.graphics import DamageNumberType
 @dataclass
 class ActorDamaged:
   entity_id: str
-  damage_type: DamageNumberType
-  amount: int
+  hits: list
 
 class ActorDamagedHandler(PlayStateEventHandler):
   def __init__(self, game_state):
@@ -23,7 +22,10 @@ class ActorDamagedHandler(PlayStateEventHandler):
     if ent is None:
       return
     pos = ent[C.Position].pos.copy()
-    ent.world.create_entity([
-      C.Position(pos),
-      C.DamageNumber(event.amount, event.damage_type)
-    ])
+    
+    for i, (amount, damage_type) in enumerate(event.hits):
+      ent.world.create_entity([
+        C.Position(pos),
+        C.DamageNumber(amount, damage_type, stack=i)
+      ])
+      

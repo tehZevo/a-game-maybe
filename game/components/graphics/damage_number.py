@@ -14,13 +14,14 @@ from game.graphics import DamageNumberType, damage_number_color
 SEPARATION = 6 / 16
 STACK_SEPARATION = 12 / 16 #TODO: hardcoded tile size division
 DAMAGE_NUMBER_TIME = 1
+DAMAGE_STACK_DELAY = 0.25
 DAMAGE_NUMBER_HEIGHT = 1
 
 class DamageNumber(Component, Drawable):
-  def __init__(self, number, damage_type=DamageNumberType.NORMAL, stack=0, delay=0):
+  def __init__(self, number, damage_type=DamageNumberType.NORMAL, stack=0):
     super().__init__()
     self.number = str(int(number))
-    self.delay = delay
+    self.delay = stack * DAMAGE_STACK_DELAY
     self.stack = stack
     self.damage_type = damage_type
     self.time = 0

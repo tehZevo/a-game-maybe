@@ -26,24 +26,33 @@ class Actor(Component):
       C.Position(self.entity[C.Position].pos.copy()),
       C.Shadow()
     ])
-    
-  def damage(self, amount, crit=False):
-    amount = int(amount)
-    stats = self.get_component(C.Stats)
-    stats.add_hp(-amount)
+  
+  def damage_hits(self, hits):
+    stats = self.entity[C.Stats]
 
-    #find all damage listeners and call their on_damage
-    for listener in self.entity.find(C.DamageListener):
-      #TODO: track source
-      source = None
-      listener.on_damage(source, amount)
+    for amount, crit in hits:
+      amount = int(amount)
+      stats.add_hp(-amount)
+
+      #TODO: combine hits into one event? or send hits in the event?
+      #find all damage listeners and call their on_damage
+      for listener in self.entity.find(C.DamageListener):
+        #TODO: track source
+        source = None
+        listener.on_damage(source, amount)
     
     server_manager = self.entity.world.find_component(C.ServerManager)
     networking = self.entity[C.Networking]
     if server_manager is not None:
-      damage_type = DamageNumberType.CRIT if crit else DamageNumberType.NORMAL
-      event = E.ActorDamaged(networking.id, damage_type, amount)
+      hits = [
+        (amount, DamageNumberType.CRIT if crit else DamageNumberType.NORMAL)
+        for amount, crit in hits
+      ]
+      event = E.ActorDamaged(networking.id, hits)
       networking.broadcast_synced(event)
+    
+  def damage(self, amount, crit=False):
+    self.damage_hits([(amount, crit)])
   
   def heal(self, amount):
     #TODO: track source
@@ -53,7 +62,8 @@ class Actor(Component):
     server_manager = self.entity.world.find_component(C.ServerManager)
     networking = self.entity[C.Networking]
     if server_manager is not None:
-      event = E.ActorDamaged(networking.id, DamageNumberType.HEAL, amount)
+      hits = [(amount, DamageNumberType.HEAL)]
+      event = E.ActorDamaged(networking.id, hits)
       networking.broadcast_synced(event)
   
   def heal_mp(self, amount): 

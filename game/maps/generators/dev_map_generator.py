@@ -25,7 +25,7 @@ class DevMapGenerator(FloorGenerator):
     dev_chests = [
       [I.dev_die, I.dev_heal, I.dev_rush, I.unobtanium_shortsword],
       [I.staff_of_healing, I.wooden_shortsword],
-      [I.sacrifice, I.sanguine_strike],
+      [I.sacrifice, I.sanguine_strike, I.quad_strike],
       [I.bless, I.magic_bolt, I.fireball, I.heal, I.heal_burst],
     ]
     
