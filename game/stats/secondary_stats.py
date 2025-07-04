@@ -13,6 +13,7 @@ class SecondaryStats:
   accuracy: int = 0
   evasion: int = 0
   move_speed: int = 0
+  critical: int = 0
 
   #make subscriptable
   def __getitem__(self, key):
@@ -26,4 +27,4 @@ class SecondaryStats:
       return SecondaryStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: a * b))
     return SecondaryStats(**{k: v * other for k, v in self.__dict__.items()})
 
-SecondaryStats.One = SecondaryStats(1, 1, 1, 1, 1, 1, 1, 1, 1)
+SecondaryStats.One = SecondaryStats(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)

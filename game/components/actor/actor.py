@@ -27,7 +27,7 @@ class Actor(Component):
       C.Shadow()
     ])
     
-  def damage(self, amount):
+  def damage(self, amount, crit=False):
     amount = int(amount)
     stats = self.get_component(C.Stats)
     stats.add_hp(-amount)
@@ -41,7 +41,8 @@ class Actor(Component):
     server_manager = self.entity.world.find_component(C.ServerManager)
     networking = self.entity[C.Networking]
     if server_manager is not None:
-      event = E.ActorDamaged(networking.id, DamageNumberType.NORMAL, amount)
+      damage_type = DamageNumberType.CRIT if crit else DamageNumberType.NORMAL
+      event = E.ActorDamaged(networking.id, damage_type, amount)
       networking.broadcast_synced(event)
   
   def heal(self, amount):

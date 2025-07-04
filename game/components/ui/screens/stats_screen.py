@@ -52,6 +52,7 @@ class StatsScreen(Screen):
       f"Acc.: {s.accuracy}",
       f"Eva.: {s.evasion}",
       f"Move Spd: {s.move_speed}",
+      f"Crit: {s.critical}",
     ]
     
     image_utils.draw_text_lines(renderer, left_lines, Vector(32, 32), color=(255, 255, 255))

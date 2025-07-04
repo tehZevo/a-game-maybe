@@ -1,4 +1,3 @@
-- fix shadows lagging behind actors
 - hp/mp recovery (hp recovers 5s after combat, mp recovers constantly)
 - stat bonus/scaling system based on equip grades equipped?
   - e.g. if you have at least 4/5 (suit, hat, gloves, shoes, weapon) at grade B, you get 20% boost?
@@ -16,10 +15,10 @@
 - fix tile transparency when standing behind
 - fix bug where you can drop your equip by pressing interact
 - sound
+- fix shadows lagging behind actors
 - network and show cooldowns on client side
 - make interact cursor not y-sorted
-- impl crits
-- crit damage number
+- impl damage lines
 - per-damage-line type (eg crit/normal)
 - damage number icons (bang for crit, plus for heal)
 - damage number type for draining/restoring mp?

@@ -23,6 +23,7 @@ WIS_MP_MULTIPLIER = 20
 DEX_ACC_MULTIPLIER = 20
 AGI_EVA_MULTIPLIER = 20
 AGI_MOVE_MULTIPLIER = 1
+DEX_CRIT_MULTIPLIER = 1
 
 BASE_EQUIP_STATS = EquipStats.One()
 BASE_PRIMARY_STATS = PrimaryStats(10, 10, 10, 10, 10, 10)
@@ -90,6 +91,7 @@ def calculate_secondary_stats(entity, primary_stats, equip_stats):
     accuracy=calculate_accuracy(primary_stats),
     evasion=calculate_evasion(primary_stats),
     move_speed=calculate_move_speed(primary_stats),
+    critical=calculate_critical(primary_stats),
   )
 
 def calculate_hp(primary_stats):
@@ -124,3 +126,6 @@ def calculate_evasion(primary_stats):
 
 def calculate_move_speed(primary_stats):
   return primary_stats.AGI * AGI_MOVE_MULTIPLIER
+
+def calculate_critical(primary_stats):
+  return primary_stats.DEX * DEX_CRIT_MULTIPLIER
