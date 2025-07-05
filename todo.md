@@ -1,4 +1,3 @@
-- hp/mp recovery (hp recovers 5s after combat, mp recovers constantly)
 - stat bonus/scaling system based on equip grades equipped?
   - e.g. if you have at least 4/5 (suit, hat, gloves, shoes, weapon) at grade B, you get 20% boost?
   - E: 10%
@@ -8,7 +7,6 @@
   - A: 60%
   - S: 80%
   - SS: 100%
-- store `attack` on skills and if attack, enter combat
 - dont show heal numbers for more than max health and dont show 0 heals either
 - fix equips not persisting through floors
 - buff/skill/item descriptions

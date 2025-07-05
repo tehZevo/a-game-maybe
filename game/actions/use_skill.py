@@ -1,6 +1,5 @@
 from game.components.skill.skill import Skill
 import game.components as C
-from game.components.actor.stats import Stats
 from game.constants import DT
 from . import Action
 from game.data.registry import get_skill
@@ -21,7 +20,11 @@ class UseSkill(Action):
     return {"skilldef": self.skilldef.id}
 
   def start(self):
-    stats = self.entity.get_component(Stats)
+    stats = self.entity[C.Stats]
+    actor = self.entity[C.Actor]
+
+    if self.skilldef.is_attack:
+      actor.enter_combat()
 
     #check hp/mp cost
     if stats.hp < self.skilldef.hp_cost:

@@ -6,7 +6,7 @@ from .skill_rank import SkillRank
 #a skill item has an icon, an equip slot, and drop rate?
 
 class SkillDef:
-  def __init__(self, id, effects, rank=None, cooldown=None,
+  def __init__(self, id, effects, is_attack=True, rank=None, cooldown=None,
     mp_cost=0, hp_cost=0, use_time=DEFAULT_SKILL_USE_TIME,
     slot=None, icon=None, mini_icon=None,
     weapon_filter=lambda primary, secondary: True):
@@ -22,3 +22,4 @@ class SkillDef:
     self.slot = slot
     self.icon = icon
     self.mini_icon = mini_icon
+    self.is_attack = is_attack
