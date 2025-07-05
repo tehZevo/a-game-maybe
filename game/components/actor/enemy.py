@@ -33,6 +33,7 @@ class Enemy(Component, NetworkBehavior, DeathListener):
     self.entity[C.Team].team = ENEMY
     if self.mobdef and self.mobdef.sprite:
       self.entity[C.Sprite].set_sprite(self.mobdef.sprite)
+      self.entity[C.Equips].equip(self.mobdef.weapon)
   
   def on_death(self):
     #TODO: bad guard

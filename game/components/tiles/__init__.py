@@ -5,3 +5,4 @@ from .tile_physics import TilePhysics
 from .chest import Chest
 from .chunk_networking import ChunkNetworking
 from .chest_networking import *
+from .player_spawn import *

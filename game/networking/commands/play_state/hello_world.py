@@ -24,11 +24,11 @@ class HelloWorldHandler(PlayStateCommandHandler):
 
     world = server_manager.entity.world
 
-    #TODO: call some spawn_player func
+    spawn_pos = world.find(C.PlayerSpawn)[0][C.Position].pos.copy()
     #set up player
     player = world.create_entity([
       C.Networking(),
-      C.Position(Vector(2, 2)), #TODO: hardcoded position
+      C.Position(spawn_pos),
       C.Player(),
     ])
 

@@ -1,8 +1,6 @@
 import random
 
 from .floor_generator import FloorGenerator
-from game.components.tiles import Stairs, Spawner
-from game.components.physics import Position
 
 import game.data.mobs as Mobs
 from game.utils import Vector
@@ -77,8 +75,8 @@ class DFSGenerator(FloorGenerator):
       #randomly create spawners
       if random.random() < self.spawner_chance:
         entities.append([
-          Position(Vector(rx * self.room_size + self.room_size / 2, ry * self.room_size + self.room_size / 2)),
-          Spawner(Mobs.slime, radius=2, wave_time=5, wave_count=4, spawn_max=4) #TODO: hardcoded mobdef
+          C.Position(Vector(rx * self.room_size + self.room_size / 2, ry * self.room_size + self.room_size / 2)),
+          C.Spawner(Mobs.slime, radius=2, wave_time=5, wave_count=4, spawn_max=4) #TODO: hardcoded mobdef
         ])
 
     #choose random room to put stairs in
@@ -86,6 +84,11 @@ class DFSGenerator(FloorGenerator):
     stairs_pos = Vector(x * self.room_size + self.room_size / 2, x * self.room_size + self.room_size / 2)
     next_map_id = random.choice(self.next_maps) if len(self.next_maps) > 0 else mapdef
     next_map = get_map(next_map_id)
-    entities.append([Position(stairs_pos), Stairs(next_map)])
+    entities.append([C.Position(stairs_pos), C.Stairs(next_map)])
+
+    #similarly place player spawn
+    x, y, _, _, _, _ = random.choice(rooms)
+    spawn_pos = Vector(x * self.room_size + self.room_size / 2, x * self.room_size + self.room_size / 2)
+    entities.append([C.Position(spawn_pos), C.PlayerSpawn()])
 
     return tiles, entities

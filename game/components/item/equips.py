@@ -36,7 +36,7 @@ class Equips(Component, Savable):
 
     self.alert_listeners()
     #TODO: make stats listen to equips?
-    self.get_component(C.Stats).recalculate()
+    self.entity[C.Stats].recalculate()
     
     return cur_equip
 

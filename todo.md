@@ -1,13 +1,4 @@
-- generator should make a player spawn point component, which players are spawned on by the generators spawn method
-- stat bonus/scaling system based on equip grades equipped?
-  - e.g. if you have at least 4/5 (suit, hat, gloves, shoes, weapon) at grade B, you get 20% boost?
-  - E: 10%
-  - D: 20%
-  - C: 30%
-  - B: 40%
-  - A: 60%
-  - S: 80%
-  - SS: 100%
+- stat bonus/scaling system based on equip grades equipped? (% vs flat stat? flat stat would help mage hp...)
 - fix stats not immediately syncing to client on floor transition
 - buff/skill/item descriptions
 - item, skill, and buff description pages
@@ -24,6 +15,7 @@
 - client side prediction for pushing enemies
 - make chests solid
 - show charge skill cooldown on weapon
+- impl mob stats as buffs instead of equips?
 - track events per second sent/received
 - send lobbyupdated when players leave/join lobby or ready/unready
 - move skill to actor folder

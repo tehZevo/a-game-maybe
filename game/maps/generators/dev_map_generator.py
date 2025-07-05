@@ -1,8 +1,6 @@
 import random
 
 from .floor_generator import FloorGenerator
-from game.components.tiles import Stairs, Spawner
-from game.components.physics import Position
 
 from game.tiles import Floor, Wall, TileType
 import game.data.mobs as Mobs
@@ -32,6 +30,8 @@ class DevMapGenerator(FloorGenerator):
     for i, loot in enumerate(dev_chests):
       entities.append([C.Position(Vector(4 + i * 2, 4)), C.Chest(loot)])
 
-    entities.append([Position(Vector(8, 8)), Stairs(M.maze)])
+    entities.append([C.Position(Vector(8, 8)), C.Stairs(M.maze)])
+
+    entities.append([C.Position(Vector(2, 2)), C.PlayerSpawn()])
 
     return tiles, entities

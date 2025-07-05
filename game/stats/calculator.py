@@ -18,8 +18,6 @@ PRIMARY_MATT_MULTIPLIER = 2
 SECONDARY_MATT_MULTIPLIER = 1
 VIT_PDEF_MULTIPLIER = 2
 WIS_MDEF_MULTIPLIER = 2
-VIT_HP_MULTIPLIER = 20
-WIS_MP_MULTIPLIER = 20
 DEX_ACC_MULTIPLIER = 20
 AGI_EVA_MULTIPLIER = 20
 AGI_MOVE_MULTIPLIER = 1
@@ -28,8 +26,8 @@ DEX_CRIT_MULTIPLIER = 1
 BASE_EQUIP_STATS = EquipStats.One()
 BASE_PRIMARY_STATS = PrimaryStats(10, 10, 10, 10, 10, 10)
 BASE_SECONDARY_STATS = SecondaryStats(
-  hp=100,
-  mp=50,
+  hp=50,
+  mp=30,
   move_speed=100
 )
 
@@ -95,10 +93,10 @@ def calculate_secondary_stats(entity, primary_stats, equip_stats):
   )
 
 def calculate_hp(primary_stats):
-  return primary_stats.VIT * VIT_HP_MULTIPLIER
+  return primary_stats.VIT ** 2
 
 def calculate_mp(primary_stats):
-  return primary_stats.WIS * WIS_MP_MULTIPLIER
+  return primary_stats.WIS ** 2
 
 def calculate_phys_attack(weapon, primary_stats, equip_stats):
   (phys_pri, phys_sec) = weapon_physical_stat_assignment(weapon)
