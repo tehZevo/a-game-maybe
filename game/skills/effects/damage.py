@@ -2,6 +2,7 @@ import random
 
 import game.components as C
 from .skill_effect import SkillEffect
+from game.constants import DAMAGE_SPREAD
 
 class Damage(SkillEffect):
   def __init__(self, power=100, hits=1):
@@ -16,6 +17,7 @@ class Damage(SkillEffect):
     damage = user_stats.phys_att * self.power / 100. - target_stats.phys_def
     if is_crit:
       damage = damage * crit_damage_rate
+    damage = damage * DAMAGE_SPREAD + damage * (1 - DAMAGE_SPREAD) * random.random()
     damage = max(damage, 1)
 
     return damage, is_crit

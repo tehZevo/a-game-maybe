@@ -1,6 +1,7 @@
 import game.components as C
 from ..skill_effect import SkillEffect
 
+#TODO: in order to calculate this correctly, we would have to chain this with the damage done
 class StealHP(SkillEffect):
   def __init__(self, power=100):
     super().__init__()

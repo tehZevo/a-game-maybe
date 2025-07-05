@@ -15,17 +15,20 @@ MAX_DROPPED_ITEMS = 10
 
 #### ACTOR ####################
 DEFAULT_SKILL_USE_TIME = 0.5 #seconds
-PLAYER_INVULN_TIME = 1 #seconds
 PLAYER_MOVE_SPEED = 1
 ENEMY_MOVE_SPEED = 1/4.
-DOT_TICK_RATE = 0.5 #seconds
-IN_COMBAT_TIME = 5
 
 #### STATS ####################
 HP_RECOVERY_PERCENT = 1
 MP_RECOVERY_PERCENT = 1
 HP_RECOVERY_TIME = 1
 MP_RECOVERY_TIME = 1
+
+#### COMBAT ###################
+PLAYER_INVULN_TIME = 1 #seconds
+DOT_TICK_RATE = 0.5 #seconds
+IN_COMBAT_TIME = 5
+DAMAGE_SPREAD = 0.5
 
 #### INTERACT #################
 INTERACT_RADIUS = 1
