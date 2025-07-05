@@ -8,10 +8,8 @@
   - A: 60%
   - S: 80%
   - SS: 100%
-- fix equips not persisting through floors
-  - actually, i think the issue of stats not applying through floors is because they need to be recalculated(?)
+- fix stats not immediately syncing to client on floor transition
 - buff/skill/item descriptions
-- make it so you can't steal more hp than damage actually dealt to enemy
 - item, skill, and buff description pages
 - highlight stat scaling in skill descriptions
 - remove move speed multiplier

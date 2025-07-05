@@ -12,8 +12,9 @@ class StealHP(SkillEffect):
 
     #calc damage
     user_stats = skill.user[C.Stats].stats.secondary
-    target_stats = skill.target[C.Stats].stats.secondary
+    target_stats = skill.target[C.Stats]
     #TODO: assumes physical, add constructor param for phys/mag
-    damage = user_stats.phys_att * self.power / 100. - target_stats.phys_def
+    damage = user_stats.phys_att * self.power / 100. - target_stats.stats.secondary.phys_def
     damage = max(damage, 0)
-    skill.user[C.Actor].heal(damage)
+    amount_to_heal = min(damage, target_stats.hp)
+    skill.user[C.Actor].heal(amount_to_heal)
