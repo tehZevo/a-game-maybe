@@ -56,4 +56,3 @@ class Buffs(Component):
     if self.dirty:
       self.alert_listeners()
       self.dirty = False
-      

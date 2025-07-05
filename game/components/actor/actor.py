@@ -64,24 +64,28 @@ class Actor(Component):
   
   def heal(self, amount):
     #TODO: track source
-    stats = self.get_component(C.Stats)
-    stats.add_hp(amount)
+    stats = self.entity[C.Stats]
+    amount_to_add = int(min(stats.stats.secondary.hp - stats.hp, amount))
+    stats.add_hp(amount_to_add)
+
+    if amount_to_add == 0:
+      return
 
     server_manager = self.entity.world.find_component(C.ServerManager)
     networking = self.entity[C.Networking]
     if server_manager is not None:
-      hits = [(amount, DamageNumberType.HEAL)]
+      hits = [(amount_to_add, DamageNumberType.HEAL)]
       event = E.ActorDamaged(networking.id, hits)
       networking.broadcast_synced(event)
   
   def heal_mp(self, amount): 
     #TODO: send actor damaged?
-    stats = self.get_component(C.Stats)
+    stats = self.entity[C.Stats]
     stats.add_mp(amount)
 
   #TODO: maybe move to equips or skillset
   def use_skill_in_slot(self, slot):
-    skill_item = self.get_component(C.Equips).skills[slot]
+    skill_item = self.entity[C.Equips].skills[slot]
     skilldef = skill_item and skill_item.skilldef
     if skilldef is None:
       return
@@ -113,7 +117,7 @@ class Actor(Component):
       self.next_action = action
 
   def update_action(self):
-    sprite = self.get_component(C.Sprite)
+    sprite = self.entity[C.Sprite]
     #update current action
     if self.action is not None:
       self.action.update()
@@ -147,8 +151,8 @@ class Actor(Component):
   def update(self):
     self.update_in_combat()
     
-    stats = self.get_component(C.Stats)
-    pos = self.get_component(C.Position)
+    stats = self.entity[C.Stats]
+    pos = self.entity[C.Position]
     self.shadow[C.Position].pos = pos.pos.copy()
 
     for id, cd in self.skill_cooldowns.items():

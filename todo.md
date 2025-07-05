@@ -1,3 +1,4 @@
+- generator should make a player spawn point component, which players are spawned on by the generators spawn method
 - stat bonus/scaling system based on equip grades equipped?
   - e.g. if you have at least 4/5 (suit, hat, gloves, shoes, weapon) at grade B, you get 20% boost?
   - E: 10%
@@ -7,15 +8,14 @@
   - A: 60%
   - S: 80%
   - SS: 100%
-- dont show heal numbers for more than max health and dont show 0 heals either
 - fix equips not persisting through floors
+  - actually, i think the issue of stats not applying through floors is because they need to be recalculated(?)
 - buff/skill/item descriptions
+- make it so you can't steal more hp than damage actually dealt to enemy
+- item, skill, and buff description pages
 - highlight stat scaling in skill descriptions
-- buff that allows you to regen hp during combat
-- buff that mitigates 25/50/100% of damage for N seconds (cooldown ~N*2s)
 - remove move speed multiplier
 - fix tile transparency when standing behind
-- fix bug where you can drop your equip by pressing interact
 - sound
 - fix shadows lagging behind actors
 - network and show cooldowns on client side
@@ -25,16 +25,12 @@
 - impl charging
 - client side prediction for pushing enemies
 - make chests solid
-- generator should make a player spawn point component, which players are spawned on by the generators spawn method
 - show charge skill cooldown on weapon
 - track events per second sent/received
 - send lobbyupdated when players leave/join lobby or ready/unready
-- damage hits (basically a delay+repeat of damage)
-- gold, health, mana drops: walk over them to pick them up
-  - breakables (pots, grass) for health/mana/gold?
-- get user name before room create/join, store in config, use as default next time
-- move skill to action folder
+- move skill to actor folder
 - save character creator in config
+- get user name before room create/join, store in config, use as default next time
 - wifi icon to show if you're connected to the server
 - add on join channel? or use hello world to make the server add the client to the channel
   - that way we wouldnt have to worry about broadcast_synced
@@ -136,4 +132,6 @@
   - add jumping
 - Towns
   - Add towns/shops/gold
+  - gold, health, mana drops: walk over them to pick them up
+  - breakables (pots, grass) for health/mana/gold?
 - arena mode?
