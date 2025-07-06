@@ -25,6 +25,8 @@ class DevMapGenerator(FloorGenerator):
       [I.staff_of_healing, I.wooden_shortsword],
       [I.sacrifice, I.sanguine_strike, I.quad_strike],
       [I.bless, I.magic_bolt, I.fireball, I.heal, I.heal_burst],
+      [I.cotton_robe, I.cotton_hat, I.cotton_gloves, I.cotton_shoes],
+      [I.linen_robe, I.linen_hat, I.linen_gloves, I.linen_shoes],
     ]
     
     for i, loot in enumerate(dev_chests):

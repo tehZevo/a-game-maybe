@@ -1,5 +1,5 @@
-- change all stat int types to float or add an .ensure_int() method or add impl for int magic
-- base weapon attack speed (slow, medium, fast)
+- make magic bolt magic
+- use weapon attack speed
 - stat bonus/scaling system based on equip grades equipped? (% vs flat stat? flat stat would help mage hp...)
 - fix stats not immediately syncing to client on floor transition
 - buff/skill/item descriptions
@@ -20,7 +20,6 @@
 - make chests solid
 - show charge skill cooldown on weapon
 - impl mob stats as buffs instead of equips?
-- track events per second sent/received
 - send lobbyupdated when players leave/join lobby or ready/unready
 - move skill to actor folder
 - save character creator in config
