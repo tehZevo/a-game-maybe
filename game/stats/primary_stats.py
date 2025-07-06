@@ -23,8 +23,11 @@ class PrimaryStats:
 
   def __mul__(self, other):
     if isinstance(other, PrimaryStats):
-      return PrimaryStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: int(a * b)))
-    return PrimaryStats(**{k: int(v * other) for k, v in self.__dict__.items()})
+      return PrimaryStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: a * b))
+    return PrimaryStats(**{k: v * other for k, v in self.__dict__.items()})
+  
+  def as_ints(self):
+    return PrimaryStats(**{k: int(v) for k, v in self.__dict__.items()})
 
 PrimaryStats.One = PrimaryStats(1, 1, 1, 1, 1, 1)
 PrimaryStats.Str = PrimaryStats(STR=1)

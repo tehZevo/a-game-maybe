@@ -55,7 +55,7 @@ def calculate(entity):
     primary=primary_stats,
     equip=equip_stats,
     secondary=secondary_stats,
-  )
+  ).as_ints()
 
 def get_stats_from_equips(entity):
   equips = entity.get_component(C.Equips)

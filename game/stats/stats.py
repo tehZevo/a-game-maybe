@@ -29,6 +29,13 @@ class Stats:
         self.primary * other,
         self.secondary * other
       )
+  
+  def as_ints(self):
+    return Stats(
+      self.equip.as_ints(),
+      self.primary.as_ints(),
+      self.secondary.as_ints()
+    )
 
 #convenience
 Stats.Equip = lambda *args, **kwargs: Stats(equip=EquipStats(*args, **kwargs))

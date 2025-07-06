@@ -8,7 +8,6 @@
 - remove move speed multiplier
 - fix tile transparency when standing behind
 - fix attacking in multiplayer
-- fix sector targeting
 - impl OBB targeting?
 - sound
 - fix shadows lagging behind actors

@@ -26,5 +26,8 @@ class EquipStats:
 
   def __mul__(self, other):
     if isinstance(other, EquipStats):
-      return EquipStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: int(a * b)))
-    return EquipStats(**{k: int(v * other) for k, v in self.__dict__.items()})
+      return EquipStats(**dict_op(self.__dict__, other.__dict__, lambda a, b: a * b))
+    return EquipStats(**{k: v * other for k, v in self.__dict__.items()})
+
+  def as_ints(self):
+    return EquipStats(**{k: int(v) for k, v in self.__dict__.items()})
