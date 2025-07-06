@@ -24,6 +24,14 @@ class Actor(Component):
     self.in_combat = False
     self.combat_timer = 0
 
+  @property
+  def busy(self):
+    if self.action is None:
+      return False
+    if self.action.interruptible:
+      return False
+    return True
+
   def start(self):
     self.shadow = self.entity.world.create_entity([
       C.Position(self.entity[C.Position].pos.copy()),

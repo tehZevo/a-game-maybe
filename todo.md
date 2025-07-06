@@ -1,3 +1,5 @@
+- change all stat int types to float or add an .ensure_int() method or add impl for int magic
+- base weapon attack speed (slow, medium, fast)
 - stat bonus/scaling system based on equip grades equipped? (% vs flat stat? flat stat would help mage hp...)
 - fix stats not immediately syncing to client on floor transition
 - buff/skill/item descriptions
@@ -5,6 +7,9 @@
 - highlight stat scaling in skill descriptions
 - remove move speed multiplier
 - fix tile transparency when standing behind
+- fix attacking in multiplayer
+- fix sector targeting
+- impl OBB targeting?
 - sound
 - fix shadows lagging behind actors
 - network and show cooldowns on client side

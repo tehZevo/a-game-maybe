@@ -27,6 +27,7 @@ class Enemy(Component, NetworkBehavior, DeathListener):
     self.last_move_update_time = 0
     self.move_pos = None
     self.mobdef = mobdef
+    self.moving_to_target_pos = False
 
   def start(self):
     self.entity[C.Stats].move_speed_multiplier = ENEMY_MOVE_SPEED
@@ -93,8 +94,6 @@ class Enemy(Component, NetworkBehavior, DeathListener):
       
   def update(self):
     if self.move_pos is None:
-      #TODO: don't keep updating this
-      self.entity[C.Actor].act(A.Move(None))
       return
     
     my_pos = self.entity[C.Position].pos
@@ -103,8 +102,20 @@ class Enemy(Component, NetworkBehavior, DeathListener):
       move_dir = (self.move_pos - my_pos).normalized()
       #TODO: updating sprite on the client feels weird
       self.update_sprite(move_dir)
+      #TODO: try to use self.moving_to_target_pos guard to prevent sending a ton of Move over the network
       #TODO: MoveTo action?
       self.entity[C.Actor].act(A.Move(move_dir))
+    # if not self.moving_to_target_pos and dist > MOVE_DIST_THRESH:
+    #   move_dir = (self.move_pos - my_pos).normalized()
+    #   #TODO: updating sprite on the client feels weird
+    #   self.update_sprite(move_dir)
+    #   #TODO: MoveTo action?
+    #   self.entity[C.Actor].act(A.Move(move_dir))
+    #   self.moving_to_target_pos = True
+
+    # if self.moving_to_target_pos and dist <= MOVE_DIST_THRESH:
+    #   self.entity[C.Actor].act(A.Move(None))
+    #   self.moving_to_target_pos = False
 
   def update_server(self, networking):
     enemy_pos = self.get_component(C.Position).pos
@@ -124,10 +135,11 @@ class Enemy(Component, NetworkBehavior, DeathListener):
     self.update_move_pos()
 
     target_pos = self.target[C.Position].pos
+    actor = self.entity[C.Actor]
     dist = target_pos.distance(enemy_pos)
-    if dist < self.attack_dist:
+    if dist < self.attack_dist and not actor.busy:
       skill = random.choice(self.mobdef.skills)
       self.move_pos = None
-      self.get_component(C.Actor).act(A.UseSkill(skill))
+      actor.act(A.UseSkill(skill))
       networking.broadcast_synced(self.mob_event(networking))
 

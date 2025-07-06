@@ -1,11 +1,17 @@
 from game.items.defs import Hat, Suit, Gloves, Shoes
 from game.items import EquipGrade as G
+from game.stats import equip_stats_calculator as EC
+
+#TODO: provide archetype
+#TODO: in equip, call equip stats calc with the archetype and use the part/grade multipliers
 
 ## COTTON ####
 cotton_hat = Hat(
   id="cotton_hat",
   grade=G.E,
-  icon="assets/items/armor/cloth/cotton_hat.png"
+  icon="assets/items/armor/cloth/cotton_hat.png",
+  primary_archetype=EC.cloth_int,
+  equip_archetype=EC.cloth
 )
 
 cotton_robe = Suit(

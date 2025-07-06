@@ -8,4 +8,4 @@ def create_monster_weapon(base=10, archetypes=[]):
   primary = PrimaryStats(base, base, base, base, base, base)
   for archetype in archetypes:
     equip, primary = archetype(equip, primary)
-  return Weapon(weapon_type=WeaponType.SHORTSWORD, stats=Stats(equip=equip, primary=primary))
+  return Weapon(weapon_type=WeaponType.SHORTSWORD, primary_archetype=PrimaryStats(), bonus_stats=Stats(equip=equip, primary=primary))

@@ -27,3 +27,10 @@ class PrimaryStats:
     return PrimaryStats(**{k: int(v * other) for k, v in self.__dict__.items()})
 
 PrimaryStats.One = PrimaryStats(1, 1, 1, 1, 1, 1)
+PrimaryStats.Str = PrimaryStats(STR=1)
+PrimaryStats.Vit = PrimaryStats(VIT=1)
+PrimaryStats.Dex = PrimaryStats(DEX=1)
+PrimaryStats.Agi = PrimaryStats(AGI=1)
+PrimaryStats.Int = PrimaryStats(INT=1)
+PrimaryStats.Wis = PrimaryStats(WIS=1)
+

@@ -1,3 +1,4 @@
+import time
 from uuid import uuid4
 
 from collections import defaultdict
@@ -13,6 +14,8 @@ class Server:
     self.default_channel = ServerChannel(self)
     self.channels = {}
     self.clients = {}
+    self.time_since_last_report = time.time()
+    self.messages_since_last_report = 0
 
   def create_channel(self):
     channel_id = str(uuid4())
@@ -63,9 +66,21 @@ class Server:
     except Exception as e:
       print(e)
 
+  def report_receive(self):
+    self.messages_since_last_report += 1
+    report_diff = time.time() - self.time_since_last_report
+    if report_diff > 1:
+      mps = self.messages_since_last_report / report_diff
+      print("[Server] Messages received/s:", round(mps, 2))
+      self.time_since_last_report = time.time()
+      self.messages_since_last_report = 0
+  
   def on_message(self, client_id, message):
+    self.report_receive()
+
     message = json.loads(message)
     channel_id = message["channel"]
+    # print(message)
 
     channel = self.default_channel if channel_id is None else self.channels.get(channel_id)
     if channel is None:

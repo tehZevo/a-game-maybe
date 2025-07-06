@@ -1,3 +1,4 @@
+import time
 import json
 
 from .client_channel import ClientChannel
@@ -6,6 +7,8 @@ class Client:
   def __init__(self):
     self.default_channel = ClientChannel(self)
     self.channels = {}
+    self.time_since_last_report = time.time()
+    self.messages_since_last_report = 0
   
   def add_channel(self, channel_id):
     channel = ClientChannel(self, channel_id)
@@ -46,9 +49,21 @@ class Client:
     for handler in self.disconnect_handlers:
       handler.handle_disconnect(self)
   
+  def report_receive(self):
+    self.messages_since_last_report += 1
+    report_diff = time.time() - self.time_since_last_report
+    if report_diff > 1:
+      mps = self.messages_since_last_report / report_diff
+      print("[Client] Messages received/s:", round(mps, 2))
+      self.time_since_last_report = time.time()
+      self.messages_since_last_report = 0
+  
   def on_message(self, message):
+    self.report_receive()
+    
     message = json.loads(message)
     channel_id = message["channel"]
+    # print(message)
     
     if channel_id is None:
       self.default_channel.on_message(message)
