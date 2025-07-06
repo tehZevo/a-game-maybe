@@ -8,6 +8,7 @@ default_attack = SkillDef(
     target_type=TargetType.ENEMY,
     radius=2,
     max_targets=1,
+    angle=180,
     children=[E.Damage(100)]
   )
 )

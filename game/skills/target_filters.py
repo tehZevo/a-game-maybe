@@ -20,7 +20,7 @@ def angle_filter(max_angle):
     ang_to_target = (target[C.Position].pos - source[C.Position].pos).angle()
     source_actor = source[C.Actor]
     dist = angle_distance(source_actor.look_dir.angle(), ang_to_target)
-    return dist >= -max_angle and dist <= max_angle
+    return dist >= -max_angle / 2 and dist <= max_angle / 2
   return lambda skill: lambda actor: calc(skill.user, actor)
 
 def target_type_filter(target_type):

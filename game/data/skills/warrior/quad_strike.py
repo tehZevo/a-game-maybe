@@ -11,6 +11,7 @@ quad_strike = SkillDef(
     target_type=TargetType.ENEMY,
     radius=2,
     max_targets=3,
+    angle=180,
     children=[E.Damage(70, hits=4)]
   ),
   mp_cost=30,

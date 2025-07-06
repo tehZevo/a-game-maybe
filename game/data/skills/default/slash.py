@@ -9,6 +9,7 @@ slash = SkillDef(
     E.SectorTarget(
       target_type=TargetType.ENEMY,
       radius=2,
+      angle=180,
       children=[E.Damage(10)]
     ),
   ],

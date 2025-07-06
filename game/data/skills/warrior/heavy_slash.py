@@ -11,6 +11,7 @@ heavy_slash = SkillDef(
     target_type=TargetType.ENEMY,
     radius=2,
     max_targets=3,
+    angle=180,
     children=[E.Damage(50)]
   ),
   mp_cost=15,
