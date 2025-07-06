@@ -2,7 +2,7 @@ from game.ecs import Component
 import game.components as C
 from game.components.networking import NetworkBehavior
 from game.utils.find_in_range import find_in_range
-from game.constants import DT, INTERACT_RADIUS, INTERACT_CURSOR_UPDATE_TIME, INTERACT_CURSOR_DISTANCE
+from game.constants import DT, INTERACT_RADIUS, INTERACT_TARGET_UPDATE_TIME, INTERACT_TARGET_DISTANCE
 import game.networking.events as E
 
 class InteractTargeter(Component, NetworkBehavior):
@@ -27,13 +27,13 @@ class InteractTargeter(Component, NetworkBehavior):
       self.interact_target = None
       self.send_update_to_player(networking, None)
 
-    if self.time_since_last_update < INTERACT_CURSOR_UPDATE_TIME:
+    if self.time_since_last_update < INTERACT_TARGET_UPDATE_TIME:
       return
     
     self.time_since_last_update = 0
     my_pos = self.entity[C.Position].pos
     look_dir = self.entity[C.Actor].look_dir
-    interact_center_pos = my_pos + look_dir * INTERACT_CURSOR_DISTANCE
+    interact_center_pos = my_pos + look_dir * INTERACT_TARGET_DISTANCE
 
     interactables = find_in_range(self.entity.world, C.Interactable, interact_center_pos, INTERACT_RADIUS, sort=True)
     new_target = None if len(interactables) == 0 else interactables[0]

@@ -3,10 +3,9 @@ import platform
 import json
 
 from game.client_mode import ClientMode
+from game.constants import CONFIG_PATH
 
 CONFIG_KEYS = ["server_url"]
-#TODO: constants?
-CONFIG_PATH = "settings.json"
 
 class ClientConfig:
   def __init__(self, mode):

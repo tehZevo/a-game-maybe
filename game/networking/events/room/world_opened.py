@@ -12,5 +12,5 @@ class WorldOpenedHandler(RoomEventHandler):
 
   def handle(self, event):
     print("[Client] Server opened world")
-    self.game.load_world(event.channel_id)
+    self.game.enter_play_state(event.channel_id)
     

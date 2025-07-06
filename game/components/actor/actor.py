@@ -43,6 +43,7 @@ class Actor(Component):
     self.combat_timer = IN_COMBAT_TIME
 
   def damage_hits(self, hits):
+    #TODO: track source
     self.enter_combat()
     stats = self.entity[C.Stats]
 
@@ -53,7 +54,6 @@ class Actor(Component):
       #TODO: combine hits into one event? or send hits in the event?
       #find all damage listeners and call their on_damage
       for listener in self.entity.find(C.DamageListener):
-        #TODO: track source
         source = None
         listener.on_damage(source, amount)
     
@@ -87,7 +87,6 @@ class Actor(Component):
       networking.broadcast_synced(event)
   
   def heal_mp(self, amount): 
-    #TODO: send actor damaged?
     stats = self.entity[C.Stats]
     stats.add_mp(amount)
 

@@ -1,7 +1,9 @@
+- decouple rendering from physics
 - make magic bolt magic
 - use weapon attack speed
 - stat bonus/scaling system based on equip grades equipped? (% vs flat stat? flat stat would help mage hp...)
 - fix stats not immediately syncing to client on floor transition
+- fix current hp/mp not syncing on floor transition
 - buff/skill/item descriptions
 - item, skill, and buff description pages
 - highlight stat scaling in skill descriptions
@@ -10,12 +12,14 @@
 - fix attacking in multiplayer
 - impl OBB targeting?
 - sound
+- update ready state in lobby
 - fix shadows lagging behind actors
 - network and show cooldowns on client side
 - make interact cursor not y-sorted
 - damage number icons (bang for crit, plus for heal)
 - damage number type for draining/restoring mp?
 - impl charging
+- add select border for carousels
 - client side prediction for pushing enemies
 - make chests solid
 - show charge skill cooldown on weapon
@@ -23,7 +27,7 @@
 - send lobbyupdated when players leave/join lobby or ready/unready
 - move skill to actor folder
 - save character creator in config
-- get user name before room create/join, store in config, use as default next time
+- add user name to character creator
 - wifi icon to show if you're connected to the server
 - add on join channel? or use hello world to make the server add the client to the channel
   - that way we wouldnt have to worry about broadcast_synced
@@ -66,7 +70,6 @@
 - consider other serialization methods (bson?)
 - in towns, have dialogs that warn/recommend rank (e-ss)
 - game settings (difficulty/grindiness)
-- document skilleffect "target" (maybe make interface with set_target)?
 - pytmx/tiled (or other) map support - use a generator to just generate chunks based on tiled map
 - after being on a floor for too long, start doing increasing dot?
 - decorator called "withcomponents" that just makes components available in scope...
@@ -116,8 +119,7 @@
   - how to handle fine-grained direction for actor though? is that even needed?
 - make +y up
 - skill idea: "ally bomb" (or something like that): damage enemies nearby allies (target allies, then target enemies)
-- distance based delay effect (delay in seconds per unit)
-- ranged attacks will feel nicer with a bit of delay (think magic claw from maple story)
+- skill that throws enemies into wall for extra damage
 
 ## Milestone updates
 - Jump!

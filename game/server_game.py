@@ -61,7 +61,6 @@ class ServerGame:
         if room.empty:
           print("[Server] Room", room.join_code, "empty, closing...")
       
-      #TODO: any special room close logic?
       self.rooms = {k: v for k, v in self.rooms.items() if not v.empty}
       
       self.clock.tick(FPS)

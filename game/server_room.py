@@ -16,9 +16,6 @@ class ServerRoom:
     #TODO: dont like all the duplicate storing of player sets (channel, room, state...)
     self.players = set()
 
-    #TODO: setup handlers
-    #TODO: does a room even need a channel?
-
     self.initial_mapdef = M.maze if initial_mapdef_id is None else get_map(initial_mapdef_id)
 
     lobby_channel = server.create_channel()
@@ -53,7 +50,6 @@ class ServerRoom:
     self.channel.broadcast(E.WorldOpened(channel.id))
 
   def transition(self, mapdef):
-    #TODO: save
     self.channel.broadcast(E.WorldClosed())
     self.server.remove_channel(self.state.channel.id)
     channel = self.server.create_channel()

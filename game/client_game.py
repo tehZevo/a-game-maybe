@@ -16,14 +16,10 @@ from game.client_config import ClientConfig
 from game.client_mode import ClientMode
 from game.client_room import ClientRoom
 from game.utils import Keyboard
+from game.constants import SCREEN_WIDTH_TILES, SCREEN_HEIGHT_TILES, FPS_MEASURE_RATE
 
 #TODO: end game state when world closes
 #TODO: add world opened handler to lobby state or some kind of loading state
-
-#TODO: move to constants?
-SCREEN_WIDTH_TILES = 16
-SCREEN_HEIGHT_TILES = 12
-FPS_MEASURE_SECONDS = 10
 
 #TODO: ping again
 async def annoy_server(client):
@@ -34,7 +30,7 @@ async def annoy_server(client):
 class ClientGame:
   def __init__(self, mode, scale_res=1):
     pygame.init()
-    self.mode = mode #TODO: switch client type based on this
+    self.mode = mode
     self.scale_res = scale_res
     self.render_width = TILE_SIZE * SCREEN_WIDTH_TILES
     self.render_height = TILE_SIZE * SCREEN_HEIGHT_TILES
@@ -49,7 +45,7 @@ class ClientGame:
     self.auto_ready = False #TODO: spaghetti
     self.room = None
 
-    pygame.display.set_caption("Game") #TODO: change
+    pygame.display.set_caption("Game")
     #TODO: move to fps counter ui component?
     self.frames = 0
     self.fps_measure_time = time.time()
@@ -98,7 +94,7 @@ class ClientGame:
     else:
       raise ValueError("Unable to create client for mode", self.mode)
   
-  def play_offline(self):
+  def create_local_server(self, map_id=None):
     #TODO: idk how i feel about storing server here
     self.server = LocalServer()
     self.server_game = ServerGame(self.server)
@@ -106,27 +102,18 @@ class ClientGame:
     asyncio.create_task(self.server_game.run())
 
     self.client = LocalClient()
-    on_connect = lambda client: client.default_channel.send(C.CreateRoom())
+    on_connect = lambda client: client.default_channel.send(C.CreateRoom(map_id))
     self.auto_ready = True
     self.setup_client_handlers(on_connect)
     
     asyncio.create_task(self.client.connect(self.server))
+
+  def play_offline(self):
+    self.create_local_server()
   
   def play_offline_dev(self):
     import game.data.maps as M
-    #TODO: dedupe
-    #TODO: idk how i feel about storing server here
-    self.server = LocalServer()
-    self.server_game = ServerGame(self.server)
-    asyncio.create_task(self.server.start())
-    asyncio.create_task(self.server_game.run())
-
-    self.client = LocalClient()
-    on_connect = lambda client: client.default_channel.send(C.CreateRoom(M.dev_map.id))
-    self.auto_ready = True
-    self.setup_client_handlers(on_connect)
-    
-    asyncio.create_task(self.client.connect(self.server))
+    self.create_local_server(M.dev_map.id)
 
   #TODO: split up logic (send HelloLobby and await LobbyUpdated)
   def setup_room_and_lobby(self, room_channel_id, lobby_channel_id, players, join_code):
@@ -146,8 +133,7 @@ class ClientGame:
     self.client.remove_channel(self.state.channel.id)
     # self.state = None
   
-  #TODO: rename function
-  def load_world(self, channel_id):
+  def enter_play_state(self, channel_id):
     channel = self.client.add_channel(channel_id)
     self.state = ClientPlayState(self, channel)
     
@@ -167,12 +153,12 @@ class ClientGame:
         self.state.step(keyboard)
 
       #doing both this and clock.tick makes game run as expected, because of course it does
-      self.clock.tick(FPS) #limit fps TODO: decouple rendering from physics
+      self.clock.tick(FPS)
       pygame.display.flip()
 
       self.frames += 1
-      if time.time() - self.fps_measure_time > FPS_MEASURE_SECONDS:
-        print("[Client] FPS:", self.frames / FPS_MEASURE_SECONDS)
+      if time.time() - self.fps_measure_time > FPS_MEASURE_RATE:
+        print("[Client] FPS:", self.frames / FPS_MEASURE_RATE)
         self.frames = 0
         self.fps_measure_time = time.time()
 

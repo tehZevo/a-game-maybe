@@ -5,9 +5,7 @@ import game.components as C
 class Stats(Component):
   def __init__(self):
     super().__init__()
-    #TODO: calculate
-    #because recalculate (calculate) requires armor, etc, we technically depend on a full actor
-    #but it would be better for actor to have the calculate logic i think idk
+    #because calculate requires armor, etc, we depend on a full actor
     self.require(C.Actor)
     self.hp = 1
     self.mp = 1
@@ -65,7 +63,6 @@ class Stats(Component):
 
   def recalculate(self):
     from game.stats import calculator
-    #TODO: get additions from buffs
     self.stats = calculator.calculate(self.entity)
     self.hp = min(self.hp, self.stats.secondary.hp)
     self.mp = min(self.mp, self.stats.secondary.mp)

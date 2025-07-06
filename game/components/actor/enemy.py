@@ -6,21 +6,15 @@ from game.utils import Vector
 from game.utils.teams import ENEMY
 from game.components.actor import DeathListener
 import game.components as C
-from game.constants import ENEMY_MOVE_SPEED, DT
+from game.constants import ENEMY_MOVE_SPEED, DT, ENEMY_MOVE_DIST_THRESH, ENEMY_MOVE_UPDATE_TIME, ENEMY_TARGET_DISTANCE
 from game.components.networking import NetworkBehavior
 import game.networking.events as E
-
-#TODO: constants?
-MOVE_UPDATE_TIME = 1
-MOVE_DIST_THRESH = 0.5
 
 #TODO: rename to Mob?
 class Enemy(Component, NetworkBehavior, DeathListener):
   def __init__(self, mobdef=None):
     super().__init__()
     self.require(C.Actor)
-    #TODO: make constants
-    self.target_distance = 5
     #TODO: base on skill (add advertised target range to skilldef)
     self.attack_dist = 2
     self.target = None
@@ -58,7 +52,7 @@ class Enemy(Component, NetworkBehavior, DeathListener):
       #calc distance
       player_pos = player[C.Position].pos
       dist = player_pos.distance(my_pos)
-      if dist < self.target_distance:
+      if dist < ENEMY_TARGET_DISTANCE:
         self.target = player
         return
 
@@ -69,8 +63,8 @@ class Enemy(Component, NetworkBehavior, DeathListener):
     networking.send_to_client(client_id, self.mob_event(networking))
   
   #TODO: "start_server"
-  def on_start_server(self, networking):
-    networking.broadcast_synced(client_id, self.mob_event(networking))
+  # def on_start_server(self, networking):
+  #   networking.broadcast_synced(client_id, self.mob_event(networking))
 
   def update_move_pos(self):
     net = self.entity[C.Networking]
@@ -81,7 +75,7 @@ class Enemy(Component, NetworkBehavior, DeathListener):
       return
     
     self.last_move_update_time += DT
-    if self.last_move_update_time >= MOVE_UPDATE_TIME:
+    if self.last_move_update_time >= ENEMY_MOVE_UPDATE_TIME:
       self.last_move_update_time = 0
       self.move_pos = self.target[C.Position].pos
       net.broadcast_synced(self.mob_event(net))
@@ -98,14 +92,14 @@ class Enemy(Component, NetworkBehavior, DeathListener):
     
     my_pos = self.entity[C.Position].pos
     dist = my_pos.distance(self.move_pos)
-    if dist > MOVE_DIST_THRESH:
+    if dist > ENEMY_MOVE_DIST_THRESH:
       move_dir = (self.move_pos - my_pos).normalized()
       #TODO: updating sprite on the client feels weird
       self.update_sprite(move_dir)
       #TODO: try to use self.moving_to_target_pos guard to prevent sending a ton of Move over the network
       #TODO: MoveTo action?
       self.entity[C.Actor].act(A.Move(move_dir))
-    # if not self.moving_to_target_pos and dist > MOVE_DIST_THRESH:
+    # if not self.moving_to_target_pos and dist > ENEMY_MOVE_DIST_THRESH:
     #   move_dir = (self.move_pos - my_pos).normalized()
     #   #TODO: updating sprite on the client feels weird
     #   self.update_sprite(move_dir)
@@ -113,7 +107,7 @@ class Enemy(Component, NetworkBehavior, DeathListener):
     #   self.entity[C.Actor].act(A.Move(move_dir))
     #   self.moving_to_target_pos = True
 
-    # if self.moving_to_target_pos and dist <= MOVE_DIST_THRESH:
+    # if self.moving_to_target_pos and dist <= ENEMY_MOVE_DIST_THRESH:
     #   self.entity[C.Actor].act(A.Move(None))
     #   self.moving_to_target_pos = False
 

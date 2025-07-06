@@ -1,10 +1,13 @@
 #### CORE #####################
-#TODO: decouple rendering from physics updates
 FPS = 60
 DT = 1. / FPS
 TILE_SIZE = 16
 CHUNK_SIZE = 16
 CAMERA_BOX_SIZE = 1
+CONFIG_PATH = "settings.json"
+SCREEN_WIDTH_TILES = 16
+SCREEN_HEIGHT_TILES = 12
+FPS_MEASURE_RATE = 10 #seconds
 
 #### ITEMS ####################
 BASE_DROP_RATE = 1/100
@@ -13,10 +16,20 @@ ITEM_PUSH_DISTANCE = 1.25
 ITEM_PUSH_FORCE = 10
 MAX_DROPPED_ITEMS = 10
 
+#### GRAPHICS #################
+DAMAGE_NUMBER_SEPARATION = 6 / 16 #TODO: use (currently unused in damage number animation)
+DAMAGE_NUMBER_STACK_SEPARATION = 12 / 16 #TODO: hardcoded tile size division
+DAMAGE_NUMBER_TIME = 1
+DAMAGE_NUMBER_STACK_DELAY = 0.25
+DAMAGE_NUMBER_HEIGHT = 1
+
 #### ACTOR ####################
 DEFAULT_SKILL_USE_TIME = 0.5 #seconds
 PLAYER_MOVE_SPEED = 1
 ENEMY_MOVE_SPEED = 1/4.
+ENEMY_MOVE_UPDATE_TIME = 1
+ENEMY_MOVE_DIST_THRESH = 0.5
+ENEMY_TARGET_DISTANCE = 5
 
 #### STATS ####################
 HP_RECOVERY_PERCENT = 1
@@ -32,10 +45,8 @@ DAMAGE_SPREAD = 0.5
 
 #### INTERACT #################
 INTERACT_RADIUS = 1
-#TODO: test effects
-#TODO: rename interact_target_*?
-INTERACT_CURSOR_UPDATE_TIME = 0.25
-INTERACT_CURSOR_DISTANCE = 0.5
+INTERACT_TARGET_UPDATE_TIME = 0.25
+INTERACT_TARGET_DISTANCE = 0.5
 
 #### PHYSICS ##################
 PHYS_REPORT_RATE = 1/4 #how often clients report position/velocity (seconds)
